@@ -4,9 +4,13 @@ using UnityEngine;
 
 public class AutoDeativate : MonoBehaviour
 {
-    public int deativateTime = 5;
+    public float deativateTime = 5;
 
     private void OnEnable() {
+        print("CCCCCCCCCCCCCCC" + deativateTime);
+    }
+
+    public void DelayDeativate(){
         Invoke(nameof(DeativateCurrentObject),deativateTime);
     }
 

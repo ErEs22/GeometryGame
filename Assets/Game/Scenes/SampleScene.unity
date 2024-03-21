@@ -167,7 +167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0674b812e84d86942add40cbe691f8f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultWeapon: {fileID: 6764894451183402456, guid: 46b20ee62c7550647b94e91b2e2aac0a, type: 3}
+  defaultWeapon: {fileID: 6764894451183402456, guid: 8973471eab14b0a4d9dfdbb94a6c5cbf, type: 3}
   weapons: []
 --- !u!1 &203101615
 GameObject:
@@ -203,6 +203,8 @@ MonoBehaviour:
     size: 150
   playerWeaponPools:
   - prefab: {fileID: 6764894451183402456, guid: 46b20ee62c7550647b94e91b2e2aac0a, type: 3}
+    size: 6
+  - prefab: {fileID: 6764894451183402456, guid: 8973471eab14b0a4d9dfdbb94a6c5cbf, type: 3}
     size: 6
 --- !u!4 &203101617
 Transform:

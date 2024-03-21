@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Weapon : MonoBehaviour
@@ -38,13 +34,29 @@ public class Weapon : MonoBehaviour
         }
     }
 
-    private void ReleaseProjectile(){
+    protected virtual void ReleaseProjectile(){
         GameObject newProjectile = PoolManager.Release(weaponData.projectile,muzzlePoint.position,muzzlePoint.rotation);
-        
+        newProjectile.GetComponent<Projectile>().lifeTime = weaponData.range / weaponData.projectileSpeed;
+        //TODO 子弹自动禁用
+    }
+
+    private GameObject GetClosetEnemy(){
+        float distanceBtwEnemyAndPlayer = float.MaxValue;
+        float tempDistance = 0;
+        GameObject closetEnemy = enemyManager.enemies[0].gameObject;
+        foreach (DefaultEnemy enemy in enemyManager.enemies)
+        {
+            tempDistance = Vector3.Distance(transform.position,enemy.transform.position);
+            if(tempDistance < distanceBtwEnemyAndPlayer){
+                distanceBtwEnemyAndPlayer = tempDistance;
+                closetEnemy = enemy.gameObject;
+            }
+        }
+        return closetEnemy;
     }
 
     private void TowardsClosetEnemy(){
-        Vector3 dir = Vector3.Normalize(enemyManager.GetClosetEnemyByPlayer().transform.position - transform.position);
+        Vector3 dir = Vector3.Normalize(GetClosetEnemy().transform.position - transform.position);
         float angle = Mathf.Atan2(dir.y,dir.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.AngleAxis(angle,Vector3.forward);
     }

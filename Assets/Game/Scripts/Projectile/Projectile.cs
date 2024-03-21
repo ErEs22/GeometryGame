@@ -4,7 +4,17 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    [SerializeField] private int flySpeed = 20;
+    [SerializeField]
+    private int flySpeed = 20;
+    public float lifeTime = 1f;
+
+    public void SetDelayDeativate(){
+        Invoke(nameof(Deativate),lifeTime);
+    }
+
+    private void Deativate(){
+        gameObject.SetActive(false);
+    }
 
     private void Update() {
         Fly();

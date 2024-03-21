@@ -124,9 +124,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6764894451183402455}
-  - component: {fileID: 6764894451183402453}
+  - component: {fileID: -4571293414527953051}
   m_Layer: 0
-  m_Name: DefaultWeapon
+  m_Name: Weapon_Scatter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -149,7 +149,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6764894451183402453
+--- !u!114 &-4571293414527953051
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -158,9 +158,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 6764894451183402456}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9037e989dfcbad540b2a4cf13ffbfc32, type: 3}
+  m_Script: {fileID: 11500000, guid: 054272fecfe8f664daa6b370fb84f994, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponData: {fileID: 11400000, guid: d86fb98e690d11f48a9f2fcd27444ac4, type: 2}
+  weaponData: {fileID: 11400000, guid: 794e8b232c7d63f42914b5cd49092691, type: 2}
   enemyManager: {fileID: 0}
   muzzlePoint: {fileID: 0}

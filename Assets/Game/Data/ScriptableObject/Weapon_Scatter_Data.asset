@@ -10,8 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1ac9ba4b1a3e4c24ba8e5c1b2ca76dd6, type: 3}
-  m_Name: DefaultWeapon
+  m_Name: Weapon_Scatter_Data
   m_EditorClassIdentifier: 
   projectile: {fileID: 3994106403445518885, guid: c5f15d73f3e39b2479f712dbbf505e09, type: 3}
   baseDamage: 10
-  fireInterval: 0.2
+  fireInterval: 0.5
+  range: 5
+  projectileSpeed: 30
