@@ -5,7 +5,7 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     [SerializeField]
-    private int flySpeed = 20;
+    public int flySpeed = 20;
     public float lifeTime = 1f;
 
     public void SetDelayDeativate(){
@@ -22,5 +22,9 @@ public class Projectile : MonoBehaviour
 
     private void Fly(){
         transform.Translate(transform.right * flySpeed * Time.deltaTime,Space.World);
+    }
+
+    protected virtual void HitEnemy(){
+        
     }
 }

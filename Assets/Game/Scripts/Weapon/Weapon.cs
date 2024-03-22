@@ -1,3 +1,4 @@
+using System.Transactions;
 using UnityEngine;
 
 public class Weapon : MonoBehaviour
@@ -29,15 +30,20 @@ public class Weapon : MonoBehaviour
             fireCountDown += Time.deltaTime;
             if(fireCountDown > weaponData.fireInterval){
                 fireCountDown = 0;
-                ReleaseProjectile();
+                Fire();
             }
         }
     }
 
-    protected virtual void ReleaseProjectile(){
-        GameObject newProjectile = PoolManager.Release(weaponData.projectile,muzzlePoint.position,muzzlePoint.rotation);
-        newProjectile.GetComponent<Projectile>().lifeTime = weaponData.range / weaponData.projectileSpeed;
-        //TODO 子弹自动禁用
+    protected virtual void Fire(){
+        ReleaseSingleProjectile(weaponData.projectile,muzzlePoint.position,transform.rotation);
+    }
+
+    protected virtual void ReleaseSingleProjectile(GameObject projectile,Vector3 muzzlePos,Quaternion rotation){
+        Projectile newProjectile = PoolManager.Release(projectile,muzzlePos,rotation).GetComponent<Projectile>();
+        newProjectile.lifeTime = weaponData.range / weaponData.projectileSpeed;
+        newProjectile.flySpeed = weaponData.projectileSpeed;
+        newProjectile.SetDelayDeativate();
     }
 
     private GameObject GetClosetEnemy(){
@@ -56,6 +62,7 @@ public class Weapon : MonoBehaviour
     }
 
     private void TowardsClosetEnemy(){
+        if(enemyManager.enemies.Count <= 0) return;
         Vector3 dir = Vector3.Normalize(GetClosetEnemy().transform.position - transform.position);
         float angle = Mathf.Atan2(dir.y,dir.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.AngleAxis(angle,Vector3.forward);

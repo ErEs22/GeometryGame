@@ -5,7 +5,8 @@ using UnityEngine;
 public class EnemyManager : MonoBehaviour
 {
     public List<DefaultEnemy> enemies = new List<DefaultEnemy>();
-    private GameObject player;
+    [HideInInspector]
+    public GameObject player;
 
     private void OnEnable() {
         player = GameObject.FindWithTag(GameConstant.playerTag);

@@ -15,3 +15,5 @@ MonoBehaviour:
   projectile: {fileID: 3994106403445518885, guid: c5f15d73f3e39b2479f712dbbf505e09, type: 3}
   baseDamage: 10
   fireInterval: 0.2
+  range: 15
+  projectileSpeed: 20
