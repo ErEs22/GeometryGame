@@ -20,7 +20,7 @@ public class WeaponManager : MonoBehaviour
     private void GenerateWeaponSlot(int slotCount){
         //清空武器列表
         weapons.Clear();
-        Vector3[] pos = EyreUtility.GenerateCirclePoints(slotCount);
+        Vector3[] pos = EyreUtility.GenerateCirclePoints(transform.position,slotCount);
         for(int i = 0; i < pos.Length; i++){
             GameObject newObject = PoolManager.Release(defaultWeapon);
             Weapon newWeapon = newObject.GetComponent<Weapon>();

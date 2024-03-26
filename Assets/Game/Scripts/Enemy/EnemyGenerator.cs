@@ -13,7 +13,7 @@ public class EnemyGenerator : MonoBehaviour
 
     private void Start() {
         enemyManager = GetComponent<EnemyManager>();
-        playerPos = enemyManager.player.transform.position;
+        playerPos = GlobalVar.playerObj.transform.position;
         GenerateEnemy();
     }
 
