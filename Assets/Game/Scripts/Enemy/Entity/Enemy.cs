@@ -9,7 +9,7 @@ public class Enemy : MonoBehaviour,ITakeDamage
     private EnemyManager enemyManager;
 
     private void Update() {
-        // MoveToPlayer();
+        MoveToPlayer();
     }
 
     public void Init(EnemyManager enemyManager){
