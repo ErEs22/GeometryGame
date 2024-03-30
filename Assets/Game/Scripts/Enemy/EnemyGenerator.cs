@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -14,9 +15,14 @@ public class EnemyGenerator : MonoBehaviour
     private void Start() {
         enemyManager = GetComponent<EnemyManager>();
         playerPos = GlobalVar.playerObj.transform.position;
-        GenerateEnemy();
+        GenerateEnemysInRandomPos(15);
+        GenerateEnemysAroundPoint(Vector3.zero,15);
     }
 
+    /// <summary>
+    /// 获取距离玩家有一定距离的安全位置
+    /// </summary>
+    /// <returns></returns>
     Vector2 GetPosAwayFromPlayer(){
         float playerLeftSafeDis = playerPos.x - thresholdDisToPlayer + generateRange.x;
         float playerRightSaveDis = generateRange.x - playerPos.x + thresholdDisToPlayer;
@@ -36,9 +42,21 @@ public class EnemyGenerator : MonoBehaviour
         return new Vector2(rangeX,rangeY);
     }
 
-    void GenerateEnemy(){
-        for(int i = 0; i < 10; i++){
-            enemyManager.enemies.Add(PoolManager.Release(enemy,GetPosAwayFromPlayer()).GetComponent<DefaultEnemy>());
+    void GenerateEnemysInRandomPos(int count){
+        for(int i = 0; i < count; i++){
+            Enemy newEnemy = PoolManager.Release(enemy,GetPosAwayFromPlayer()).GetComponent<Enemy>();
+            enemyManager.enemies.Add(newEnemy);
+            newEnemy.Init(enemyManager);
+        }
+    }
+
+    void GenerateEnemysAroundPoint(Vector3 center,int count){
+        float radius = Mathf.Ceil(count / 6f) + 1;
+        for (int i = 0; i < count; i++)
+        {
+            Enemy newEnemy = PoolManager.Release(enemy,Random.insideUnitCircle * radius).GetComponent<Enemy>();
+            enemyManager.enemies.Add(newEnemy);
+            newEnemy.Init(enemyManager);
         }
     }
 }

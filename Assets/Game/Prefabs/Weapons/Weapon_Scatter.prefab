@@ -163,4 +163,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponData: {fileID: 11400000, guid: 794e8b232c7d63f42914b5cd49092691, type: 2}
   enemyManager: {fileID: 0}
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 64
   muzzlePoint: {fileID: 0}

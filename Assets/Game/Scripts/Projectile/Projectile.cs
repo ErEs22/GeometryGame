@@ -8,23 +8,43 @@ public class Projectile : MonoBehaviour
     public int flySpeed = 20;
     public float lifeTime = 1f;
 
-    public void SetDelayDeativate(){
-        Invoke(nameof(Deativate),lifeTime);
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        Hit(other.gameObject);
     }
 
-    private void Deativate(){
+    protected virtual void Hit(GameObject hitObject)
+    {
+        //根据碰到的物体的Tag来确定受击影响
+        switch (hitObject.tag)
+        {
+            case "Player":
+                break;
+            case "Enemy":
+                hitObject.GetComponent<ITakeDamage>().TakeDamage();
+                break;
+            default: break;
+        }
+    }
+
+    public void SetDelayDeativate()
+    {
+        Invoke(nameof(Deativate), lifeTime);
+    }
+
+    private void Deativate()
+    {
         gameObject.SetActive(false);
     }
 
-    private void Update() {
+    private void Update()
+    {
         Fly();
     }
 
-    private void Fly(){
-        transform.Translate(transform.right * flySpeed * Time.deltaTime,Space.World);
-    }
-
-    protected virtual void HitEnemy(){
-        
+    private void Fly()
+    {
+        transform.Translate(transform.right * flySpeed * Time.deltaTime, Space.World);
     }
 }
