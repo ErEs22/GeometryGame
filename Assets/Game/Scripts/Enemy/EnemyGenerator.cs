@@ -16,7 +16,7 @@ public class EnemyGenerator : MonoBehaviour
         enemyManager = GetComponent<EnemyManager>();
         playerPos = GlobalVar.playerObj.transform.position;
         GenerateEnemysInRandomPos(15);
-        GenerateEnemysAroundPoint(Vector3.zero,15);
+        GenerateEnemysAroundPoint(Vector2.zero,15);
     }
 
     /// <summary>
@@ -50,11 +50,12 @@ public class EnemyGenerator : MonoBehaviour
         }
     }
 
-    void GenerateEnemysAroundPoint(Vector3 center,int count){
+    void GenerateEnemysAroundPoint(Vector2 center,int count){
         float radius = Mathf.Ceil(count / 6f) + 1;
         for (int i = 0; i < count; i++)
         {
-            Enemy newEnemy = PoolManager.Release(enemy,Random.insideUnitCircle * radius).GetComponent<Enemy>();
+            Vector2 randomPos = Random.insideUnitCircle * radius + center;
+            Enemy newEnemy = PoolManager.Release(enemy,randomPos).GetComponent<Enemy>();
             enemyManager.enemies.Add(newEnemy);
             newEnemy.Init(enemyManager);
         }
