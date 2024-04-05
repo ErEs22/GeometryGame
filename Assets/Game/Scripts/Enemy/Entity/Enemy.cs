@@ -18,9 +18,9 @@ public class Enemy : MonoBehaviour,ITakeDamage
 
     private void MoveToPlayer()
     {
-        float disToPlayer = Vector3.Distance(GlobalVar.playerObj.transform.position,transform.position);
+        float disToPlayer = Vector3.Distance(GlobalVar.playerObj.position,transform.position);
         if(disToPlayer < 0.1f) return;
-        Vector3 dirToPlayer = GlobalVar.playerObj.transform.position - transform.position;
+        Vector3 dirToPlayer = GlobalVar.playerObj.position - transform.position;
         float angle = Mathf.Atan2(dirToPlayer.y,dirToPlayer.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.AngleAxis(angle,transform.forward);
         transform.Translate(transform.right * moveSpeed * Time.deltaTime,Space.World);
