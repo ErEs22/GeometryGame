@@ -223,6 +223,8 @@ MonoBehaviour:
   enemyPools:
   - prefab: {fileID: 5483854102640718222, guid: 6e4e7eccf09e19b47a90b8d9967e806d, type: 3}
     size: 100
+  - prefab: {fileID: 5836960803617581082, guid: 383f1ef67f4b65b49a4c4cf162a70d4e, type: 3}
+    size: 100
 --- !u!4 &203101617
 Transform:
   m_ObjectHideFlags: 0
@@ -595,7 +597,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 978a1c16ca814a54eab9c70b9f14441b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemy: {fileID: 5483854102640718222, guid: 6e4e7eccf09e19b47a90b8d9967e806d, type: 3}
+  enemy: {fileID: 5836960803617581082, guid: 383f1ef67f4b65b49a4c4cf162a70d4e, type: 3}
   point: {fileID: 771223531}
 --- !u!1 &771223531
 GameObject:
@@ -608,7 +610,7 @@ GameObject:
   - component: {fileID: 771223532}
   - component: {fileID: 771223533}
   m_Layer: 0
-  m_Name: Circle
+  m_Name: TestCircle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerState : MonoBehaviour, ITakeDamage
 {
-    public void TakeDamage()
+    public void TakeDamage(float damage)
     {
     }
 }

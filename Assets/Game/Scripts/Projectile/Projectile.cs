@@ -7,6 +7,7 @@ public class Projectile : MonoBehaviour
     [SerializeField]
     public int flySpeed = 20;
     public float lifeTime = 1f;
+    public float damage = 0;
 
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -22,7 +23,7 @@ public class Projectile : MonoBehaviour
             case "Player":
                 break;
             case "Enemy":
-                hitObject.GetComponent<ITakeDamage>().TakeDamage();
+                hitObject.GetComponent<ITakeDamage>().TakeDamage(damage);
                 break;
             default: break;
         }

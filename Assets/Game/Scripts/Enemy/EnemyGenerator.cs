@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.GameCenter;
 using Random = UnityEngine.Random;
 
 public class EnemyGenerator : MonoBehaviour
@@ -14,10 +15,12 @@ public class EnemyGenerator : MonoBehaviour
     EnemyManager enemyManager;
     Vector2 playerPos;
 
-    struct RadDis{
+    struct RadDis
+    {
         public float radius;
         public int side;
-        public RadDis(float radius,int side){
+        public RadDis(float radius, int side)
+        {
             this.radius = radius;
             this.side = side;
         }
@@ -25,7 +28,7 @@ public class EnemyGenerator : MonoBehaviour
 
     private void OnEnable()
     {
-        SetCrossPoint();
+        // SetCrossPoint();
     }
 
     private void Start()
@@ -67,6 +70,46 @@ public class EnemyGenerator : MonoBehaviour
     }
 
     /// <summary>
+    /// 在矩形范围内生成随机点，排除指定圆内的点
+    /// </summary>
+    /// <param name="circleCenter">排除圆的圆心</param>
+    /// <param name="circleRadius">排除圆的半径</param>
+    /// <returns>随机点</returns>
+    private Vector2 GenerateRandomPosInRectExcludeCircle(Vector2 circleCenter, float circleRadius)
+    {
+        Vector2 randomPos = new Vector2(Random.Range(-50, 50), Random.Range(-50, 50));
+        while (Vector2.Distance(randomPos, circleCenter) < circleRadius)
+        {
+            randomPos = new Vector2(Random.Range(-50, 50), Random.Range(-50, 50));
+        }
+        return randomPos;
+    }
+
+    /// <summary>
+    /// 以指定点为原点在矩形范围内生成随机点，排除指定圆内的点
+    /// </summary>
+    /// <param name="relatePos">指定点</param>
+    /// <param name="circleCenter">排除圆的圆心</param>
+    /// <param name="circleRadius">排除圆的半径</param>
+    /// <param name="rectWidth">矩形宽</param>
+    /// <param name="rectHeight">矩形高</param>
+    /// <returns>随机点</returns>
+    private Vector2 GenerateRandomPosInRectByPosExcludeCircle(Vector2 relatePos, Vector2 circleCenter, float circleRadius, float rectWidth, float rectHeight)
+    {
+        Vector2 randomPos = new Vector2(Random.Range(-rectWidth / 2, rectWidth / 2), Random.Range(-rectHeight / 2, rectHeight / 2));
+        randomPos = randomPos + relatePos;
+        while(Vector2.Distance(randomPos,circleCenter) < circleRadius)
+        {
+            randomPos = new Vector2(Random.Range(-rectWidth / 2, rectWidth / 2), Random.Range(-rectHeight / 2, rectHeight / 2));
+            randomPos = randomPos + relatePos;
+        }
+        randomPos.x = Mathf.Clamp(randomPos.x,-50,50);
+        randomPos.y = Mathf.Clamp(randomPos.y,-50,50);
+        return randomPos;
+    }
+
+#if false
+    /// <summary>
     /// 在指定矩形内生成随机二维位置，排除指定圆内的点
     /// </summary>
     /// <param name="circleCenter">排除圆内点圆的圆心</param>
@@ -74,69 +117,69 @@ public class EnemyGenerator : MonoBehaviour
     /// <returns></returns>
     Vector2 GenerateRandomPosInRectExcludeCircle(Vector2 circleCenter, float circleRadius)
     {
-        //TODO 优化不必要的步骤，补全注释
+        //获取随机角度（以弧度表示）
         float randomAngle = Random.Range(0f, 359.9f) * Mathf.Deg2Rad;
         float minRadius = circleRadius;
-        float maxRadius = float.MaxValue;
         List<RadDis> disList = new List<RadDis>();
         //计算圆心到从圆心随机角度射出的直线与x = 50的交点的距离
-        float xBoundPositiveDis = 50 / Mathf.Cos(randomAngle);
+        float xBoundPositiveDis = (50 - circleCenter.x) / Mathf.Cos(randomAngle);
         disList.Add(new RadDis(xBoundPositiveDis,xBoundPositiveDis > 0 ? 0 : 1));
-        float xBoundPositiveYPos = xBoundPositiveDis * Mathf.Sin(randomAngle);
-        Vector2 xBoundNegativeCrossPos = new Vector2(50, xBoundPositiveYPos);
+        // float xBoundPositiveYPos = xBoundPositiveDis * Mathf.Sin(randomAngle);
+        // Vector2 xBoundNegativeCrossPos = new Vector2(50, xBoundPositiveYPos);
+
         //计算圆心到从圆心随机角度射出的直线与y = 50的交点的距离
-        float yBoundPositiveDis = 50 / Mathf.Sin(randomAngle);
+        float yBoundPositiveDis = (50 - circleCenter.y) / Mathf.Sin(randomAngle);
         disList.Add(new RadDis(yBoundPositiveDis,yBoundPositiveDis > 0 ? 0 : 1));
-        float yBoundPositiveXPos = yBoundPositiveDis * Mathf.Cos(randomAngle);
-        Vector2 yBoundPositiveCrossPos = new Vector2(yBoundPositiveXPos, 50);
-        //当中较短的距离为矩形内的有效距离
-        float effectiveDis1 = xBoundPositiveDis > yBoundPositiveDis ? xBoundPositiveDis : yBoundPositiveDis;
+        // float yBoundPositiveXPos = yBoundPositiveDis * Mathf.Cos(randomAngle);
+        // Vector2 yBoundPositiveCrossPos = new Vector2(yBoundPositiveXPos, 50);
 
         //计算圆心到从圆心随机角度射出的直线与x = -50的交的距离点
-        float xBoundNegativeDis = -50 / Mathf.Cos(randomAngle);
+        float xBoundNegativeDis = (-50 - circleCenter.x) / Mathf.Cos(randomAngle);
         disList.Add(new RadDis(xBoundNegativeDis,xBoundNegativeDis > 0 ? 0 : 1));
-        float xBoundNegativeYPos = xBoundNegativeDis * Mathf.Sin(randomAngle);
-        Vector2 xBoundPositiveCrossPos = new Vector2(-50, xBoundNegativeYPos);
-        //计算圆心到从圆心随机角度射出的直线与y = -50的交的距离点
-        float yBoundNegativeDis = -50 / Mathf.Sin(randomAngle);
-        disList.Add(new RadDis(yBoundNegativeDis,yBoundNegativeDis > 0 ? 0 : 1));
-        float yBoundNegativeXPos = yBoundNegativeDis * Mathf.Cos(randomAngle);
-        Vector2 yBoundNegativeCrossPos = new Vector2(yBoundNegativeXPos, -50);
-        //当中较短的距离为矩形内的有效距离
-        float effectiveDis2 = xBoundNegativeDis > yBoundNegativeDis ? xBoundNegativeDis : yBoundNegativeDis;
-        print(xBoundPositiveDis);
-        print(yBoundPositiveDis);
-        print(xBoundNegativeDis);
-        print(yBoundNegativeDis);
+        // float xBoundNegativeYPos = xBoundNegativeDis * Mathf.Sin(randomAngle);
+        // Vector2 xBoundPositiveCrossPos = new Vector2(-50, xBoundNegativeYPos);
 
+        //计算圆心到从圆心随机角度射出的直线与y = -50的交的距离点
+        float yBoundNegativeDis = (-50 - circleCenter.y) / Mathf.Sin(randomAngle);
+        disList.Add(new RadDis(yBoundNegativeDis,yBoundNegativeDis > 0 ? 0 : 1));
+        // float yBoundNegativeXPos = yBoundNegativeDis * Mathf.Cos(randomAngle);
+        // Vector2 yBoundNegativeCrossPos = new Vector2(yBoundNegativeXPos, -50);
+
+        //将距离进行排序，从小到大，第二三位为当前角度直线与矩形边框相交点的有效距离，正值代表正向，负值代表反向
         disList.Sort(delegate(RadDis x,RadDis y){
             return x.radius.CompareTo(y.radius);
         });
-        print(randomAngle);
-        foreach (var value in disList)
+        foreach (var dis in disList )
         {
-            print(value.radius + "------ " + value.side);
+            print(dis.radius);
         }
-        if (Random.Range(0f, 1f) > 0.5)
+        float negativeRadius = Mathf.Clamp(Mathf.Abs(disList[1].radius) - minRadius,0,float.MaxValue);
+        float positiveRadius = Mathf.Clamp(disList[2].radius - minRadius,0,float.MaxValue) + negativeRadius;
+        float chance = negativeRadius / positiveRadius;
+        print(chance);
+        //随机取正向或反向的距离范围
+        if (Random.Range(0f, 1f) < chance)
         {
             float randomRadius = Random.Range(minRadius,Mathf.Abs(disList[1].radius));
-            float angle = randomAngle + Mathf.PI * disList[1].side;
-            return new Vector2(randomRadius * Mathf.Cos(angle),randomRadius * Mathf.Sin(angle));
+            float angle = randomAngle + Mathf.PI;
+            return new Vector2(randomRadius * Mathf.Cos(angle) + circleCenter.x,randomRadius * Mathf.Sin(angle) + circleCenter.y);
         }
         else
         {
             float randomRadius = Random.Range(minRadius,Mathf.Abs(disList[2].radius));
-            float angle = randomAngle + Mathf.PI * disList[2].side;
-            return new Vector2(randomRadius * Mathf.Cos(angle),randomRadius * Mathf.Sin(angle));
+            float angle = randomAngle;
+            return new Vector2(randomRadius * Mathf.Cos(angle) + circleCenter.x,randomRadius * Mathf.Sin(angle) + circleCenter.y);
         }
     }
+#endif
 
     void SetCrossPoint()
     {
+        Vector2 relatePos = GenerateRandomPosInRectExcludeCircle(new Vector2(40, 40), 20);
         for (int i = 0; i < 100; i++)
         {
-            Transform point = Instantiate(this.point,transform).transform;
-            point.position = GenerateRandomPosInRectExcludeCircle(Vector2.zero,20);
+            Transform point = Instantiate(this.point, transform).transform;
+            point.position = GenerateRandomPosInRectByPosExcludeCircle(relatePos,new Vector2(40,40),20,30,20);
         }
     }
 

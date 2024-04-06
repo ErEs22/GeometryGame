@@ -57,6 +57,7 @@ public class Weapon : MonoBehaviour
         Projectile newProjectile = PoolManager.Release(projectile, muzzlePos, rotation).GetComponent<Projectile>();
         newProjectile.lifeTime = weaponData.range / weaponData.projectileSpeed;
         newProjectile.flySpeed = weaponData.projectileSpeed;
+        newProjectile.damage = weaponData.baseDamage;
         newProjectile.SetDelayDeativate();
     }
 
