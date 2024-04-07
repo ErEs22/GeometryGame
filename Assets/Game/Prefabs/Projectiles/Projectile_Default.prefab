@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 542134360240597276}
   - component: {fileID: 542134360240597279}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,9 +95,9 @@ GameObject:
   - component: {fileID: 6506474156604497366}
   - component: {fileID: 555634143047246691}
   - component: {fileID: 3247432781959257430}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Projectile_Default
-  m_TagString: Untagged
+  m_TagString: PlayerProjectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -132,6 +132,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   flySpeed: 20
   lifeTime: 1
+  damage: 0
 --- !u!70 &3247432781959257430
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

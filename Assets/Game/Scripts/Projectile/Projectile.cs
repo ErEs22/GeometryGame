@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    [SerializeField]
+    [HideInInspector]
     public int flySpeed = 20;
+    [HideInInspector]
     public float lifeTime = 1f;
+    [HideInInspector]
     public float damage = 0;
-
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -17,16 +18,7 @@ public class Projectile : MonoBehaviour
 
     protected virtual void Hit(GameObject hitObject)
     {
-        //根据碰到的物体的Tag来确定受击影响
-        switch (hitObject.tag)
-        {
-            case "Player":
-                break;
-            case "Enemy":
-                hitObject.GetComponent<ITakeDamage>().TakeDamage(damage);
-                break;
-            default: break;
-        }
+        hitObject.GetComponent<ITakeDamage>().TakeDamage(damage);
     }
 
     public void SetDelayDeativate()

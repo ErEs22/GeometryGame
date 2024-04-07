@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 542134360240597276}
   - component: {fileID: 542134360240597279}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -93,11 +93,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6506474156604497366}
-  - component: {fileID: 555634143047246691}
   - component: {fileID: 8113745064558431852}
-  m_Layer: 0
+  - component: {fileID: -3778357563982360521}
+  m_Layer: 7
   m_Name: Projectile_Cannon
-  m_TagString: Untagged
+  m_TagString: PlayerProjectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -118,20 +118,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &555634143047246691
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3994106403445518885}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 89eb524db957b2d48a927e34dcfa5433, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  flySpeed: 20
-  lifeTime: 1
 --- !u!70 &8113745064558431852
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -148,3 +134,18 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 1.2, y: 0.6}
   m_Direction: 1
+--- !u!114 &-3778357563982360521
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3994106403445518885}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b4dd80041a0a7d49a80ce5d833c34a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flySpeed: 20
+  lifeTime: 1
+  damage: 1

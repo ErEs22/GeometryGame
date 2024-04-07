@@ -9,18 +9,33 @@ using UnityEngine;
 public class Enemy : MonoBehaviour, ITakeDamage
 {
     [SerializeField]
-    private EnemyData_SO enemyData;
-    private float maxHP = 0;
-    private float HP = 0;
-    private float moveSpeed = 5f;
+    protected EnemyData_SO enemyData;
+    protected float maxHP = 0;
+    protected float HP = 0;
+    protected float moveSpeed = 5f;
     private EnemyManager enemyManager;
+    protected float distanceToPlayer;
+
+    /// <summary>
+    /// NOTE!! Dont add Behaviour in here,this will be call first when poolmanager instantiate this object
+    /// If you wan to do something when you instantiate a enemy ,do it in the Init function!!!
+    /// </summary>
+    private void OnEnable()
+    {
+    }
 
     private void Update()
     {
+        CaculateDistanceToPlayer();
         MoveToPlayer();
     }
 
-    public void Init(EnemyManager enemyManager)
+    protected virtual void Skill()
+    {
+
+    }
+
+    public virtual void Init(EnemyManager enemyManager)
     {
         this.enemyManager = enemyManager;
         maxHP = enemyData.HP;
@@ -28,10 +43,14 @@ public class Enemy : MonoBehaviour, ITakeDamage
         moveSpeed = enemyData.moveSpeed;
     }
 
+    private void CaculateDistanceToPlayer()
+    {
+        distanceToPlayer = Vector3.Distance(GlobalVar.playerObj.position,transform.position);
+    }
+
     protected virtual void MoveToPlayer()
     {
-        float disToPlayer = Vector3.Distance(GlobalVar.playerObj.position, transform.position);
-        if (disToPlayer < 0.1f) return;
+        if (distanceToPlayer < 0.1f) return;
         Vector3 dirToPlayer = GlobalVar.playerObj.position - transform.position;
         float angle = Mathf.Atan2(dirToPlayer.y, dirToPlayer.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.AngleAxis(angle, transform.forward);
@@ -47,7 +66,7 @@ public class Enemy : MonoBehaviour, ITakeDamage
         //击中效果
         transform.DOScale(2f, 0.05f).OnComplete(() =>
         {
-            transform.DOScale(1f,0.05f);
+            transform.DOScale(1f, 0.05f);
         });
         if (HP <= 0)
         {

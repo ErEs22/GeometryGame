@@ -3,18 +3,24 @@ using UnityEngine;
 
 public class PoolManager : MonoBehaviour
 {
-
+    //TODO 优化对象池管理，自动添加对象以生成对象池
     static Dictionary<GameObject, Pool> dictionary;
 
-    [SerializeField] Pool[] playerProjectilePools;
-    [SerializeField] Pool[] playerWeaponPools;
-    [SerializeField] Pool[] enemyPools;
+    [SerializeField]
+    Pool[] playerProjectilePools;
+    [SerializeField]
+    Pool[] enemyProjectilePools;
+    [SerializeField]
+    Pool[] playerWeaponPools;
+    [SerializeField]
+    Pool[] enemyPools;
 
     void Awake()
     {
         dictionary = new Dictionary<GameObject, Pool>();
 
         Initialize(playerProjectilePools);
+        Initialize(enemyProjectilePools);
         Initialize(playerWeaponPools);
         Initialize(enemyPools);
     }
@@ -23,6 +29,7 @@ public class PoolManager : MonoBehaviour
     void OnDestroy()
     {
         CheckPoolSize(playerProjectilePools);
+        CheckPoolSize(enemyProjectilePools);
         CheckPoolSize(playerWeaponPools);
         CheckPoolSize(enemyPools);
     }
