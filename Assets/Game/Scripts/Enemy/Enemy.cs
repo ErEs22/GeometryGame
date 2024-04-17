@@ -6,14 +6,15 @@ using UnityEngine;
 /// <summary>
 /// 敌人基类
 /// </summary>
-public class Enemy : MonoBehaviour, ITakeDamage
+public class Enemy : MonoBehaviour, ITakeDamage,IHeal
 {
     [SerializeField]
     protected EnemyData_SO enemyData;
     protected float maxHP = 0;
+    [DisplayOnly][SerializeField]
     protected float HP = 0;
     protected float moveSpeed = 5f;
-    private EnemyManager enemyManager;
+    protected EnemyManager enemyManager;
     protected float distanceToPlayer;
 
     /// <summary>
@@ -27,7 +28,7 @@ public class Enemy : MonoBehaviour, ITakeDamage
     private void Update()
     {
         CaculateDistanceToPlayer();
-        MoveToPlayer();
+        HandleMovement();
     }
 
     protected virtual void Skill()
@@ -48,7 +49,7 @@ public class Enemy : MonoBehaviour, ITakeDamage
         distanceToPlayer = Vector3.Distance(GlobalVar.playerObj.position,transform.position);
     }
 
-    protected virtual void MoveToPlayer()
+    protected virtual void HandleMovement()
     {
         if (distanceToPlayer < 0.1f) return;
         Vector3 dirToPlayer = GlobalVar.playerObj.position - transform.position;
@@ -81,5 +82,10 @@ public class Enemy : MonoBehaviour, ITakeDamage
             gameObject.SetActive(false);
             enemyManager.enemies.Remove(this);
         });
+    }
+
+    public void Heal(float healHP)
+    {
+        HP = Mathf.Clamp(HP + healHP,0,maxHP);
     }
 }

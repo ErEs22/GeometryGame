@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class NoMovementEnemy : Enemy
 {
-    protected override void MoveToPlayer()
+    protected override void HandleMovement()
     {
         
     }

@@ -9,9 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b1750ed2366e7e4d99a5e3042fb4802, type: 3}
-  m_Name: Enemy_Default_Data
+  m_Script: {fileID: 11500000, guid: b343650be299f1249a971ff37fbec987, type: 3}
+  m_Name: Enemy_Heal_Data
   m_EditorClassIdentifier: 
-  HP: 10000
-  moveSpeed: 5
+  HP: 100000
+  moveSpeed: 20
   damage: 1
+  healHP: 100000
+  healRange: 5
+  healObjectMask:
+    serializedVersion: 2
+    m_Bits: 64

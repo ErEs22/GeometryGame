@@ -20,4 +20,10 @@ public class EnemyManager : MonoBehaviour
         }
         return closetEnemy;
     }
+
+    public GameObject GetOneRandomEnemyInList()
+    {
+        int randomIndex = Random.Range(0,enemies.Count);
+        return enemies[randomIndex].gameObject;
+    }
 }

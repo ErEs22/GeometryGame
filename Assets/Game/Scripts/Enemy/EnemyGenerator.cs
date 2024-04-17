@@ -10,6 +10,7 @@ using Random = UnityEngine.Random;
 public class EnemyGenerator : MonoBehaviour
 {
     public GameObject enemy;
+    public GameObject specificEnemy;
     float thresholdDisToPlayer = 5f;
     public GameObject point;
     EnemyManager enemyManager;
@@ -29,14 +30,17 @@ public class EnemyGenerator : MonoBehaviour
     private void OnEnable()
     {
         // SetCrossPoint();
+        enemyManager = GetComponent<EnemyManager>();
+        playerPos = GlobalVar.playerObj.position;
+        GenerateEnemysInRandomPos(1);
+        GenerateEnemysInRandomPos(specificEnemy,1);
     }
 
     private void Start()
     {
-        enemyManager = GetComponent<EnemyManager>();
-        playerPos = GlobalVar.playerObj.position;
-        GenerateEnemysInRandomPos(15);
-        GenerateEnemysAroundPoint(Vector2.zero, 15);
+        // enemyManager = GetComponent<EnemyManager>();
+        // playerPos = GlobalVar.playerObj.position;
+        // GenerateEnemysInRandomPos(15);
     }
 
     /// <summary>
@@ -69,45 +73,6 @@ public class EnemyGenerator : MonoBehaviour
         return new Vector2(rangeX, rangeY);
     }
 
-    /// <summary>
-    /// 在矩形范围内生成随机点，排除指定圆内的点
-    /// </summary>
-    /// <param name="circleCenter">排除圆的圆心</param>
-    /// <param name="circleRadius">排除圆的半径</param>
-    /// <returns>随机点</returns>
-    private Vector2 GenerateRandomPosInRectExcludeCircle(Vector2 circleCenter, float circleRadius)
-    {
-        Vector2 randomPos = new Vector2(Random.Range(-50, 50), Random.Range(-50, 50));
-        while (Vector2.Distance(randomPos, circleCenter) < circleRadius)
-        {
-            randomPos = new Vector2(Random.Range(-50, 50), Random.Range(-50, 50));
-        }
-        return randomPos;
-    }
-
-    /// <summary>
-    /// 以指定点为原点在矩形范围内生成随机点，排除指定圆内的点
-    /// </summary>
-    /// <param name="relatePos">指定点</param>
-    /// <param name="circleCenter">排除圆的圆心</param>
-    /// <param name="circleRadius">排除圆的半径</param>
-    /// <param name="rectWidth">矩形宽</param>
-    /// <param name="rectHeight">矩形高</param>
-    /// <returns>随机点</returns>
-    private Vector2 GenerateRandomPosInRectByPosExcludeCircle(Vector2 relatePos, Vector2 circleCenter, float circleRadius, float rectWidth, float rectHeight)
-    {
-        Vector2 randomPos = new Vector2(Random.Range(-rectWidth / 2, rectWidth / 2), Random.Range(-rectHeight / 2, rectHeight / 2));
-        randomPos = randomPos + relatePos;
-        while(Vector2.Distance(randomPos,circleCenter) < circleRadius)
-        {
-            randomPos = new Vector2(Random.Range(-rectWidth / 2, rectWidth / 2), Random.Range(-rectHeight / 2, rectHeight / 2));
-            randomPos = randomPos + relatePos;
-        }
-        randomPos.x = Mathf.Clamp(randomPos.x,-50,50);
-        randomPos.y = Mathf.Clamp(randomPos.y,-50,50);
-        return randomPos;
-    }
-
 #if false
     /// <summary>
     /// 在指定矩形内生成随机二维位置，排除指定圆内的点
@@ -115,7 +80,7 @@ public class EnemyGenerator : MonoBehaviour
     /// <param name="circleCenter">排除圆内点圆的圆心</param>
     /// <param name="circleRadius">排除圆内点圆的半径</param>
     /// <returns></returns>
-    Vector2 GenerateRandomPosInRectExcludeCircle(Vector2 circleCenter, float circleRadius)
+    Vector2 EyreUtility.GenerateRandomPosInRectExcludeCircle(Vector2 circleCenter, float circleRadius)
     {
         //获取随机角度（以弧度表示）
         float randomAngle = Random.Range(0f, 359.9f) * Mathf.Deg2Rad;
@@ -175,11 +140,11 @@ public class EnemyGenerator : MonoBehaviour
 
     void SetCrossPoint()
     {
-        Vector2 relatePos = GenerateRandomPosInRectExcludeCircle(new Vector2(40, 40), 20);
+        Vector2 relatePos = EyreUtility.GenerateRandomPosInRectExcludeCircle(new Vector2(40, 40), 20);
         for (int i = 0; i < 100; i++)
         {
             Transform point = Instantiate(this.point, transform).transform;
-            point.position = GenerateRandomPosInRectByPosExcludeCircle(relatePos,new Vector2(40,40),20,30,20);
+            point.position = EyreUtility.GenerateRandomPosInRectByPosExcludeCircle(relatePos,new Vector2(40,40),20,30,20);
         }
     }
 
@@ -187,18 +152,27 @@ public class EnemyGenerator : MonoBehaviour
     {
         for (int i = 0; i < count; i++)
         {
-            Enemy newEnemy = PoolManager.Release(enemy, GetPosAwayFromPlayer()).GetComponent<Enemy>();
+            Enemy newEnemy = PoolManager.Release(enemy, EyreUtility.GenerateRandomPosInRectExcludeCircle(playerPos,5)).GetComponent<Enemy>();
             enemyManager.enemies.Add(newEnemy);
             newEnemy.Init(enemyManager);
         }
     }
 
+    void GenerateEnemysInRandomPos(GameObject enemy,int count)
+    {
+        for (int i = 0; i < count; i++)
+        {
+            Enemy newEnemy = PoolManager.Release(enemy, EyreUtility.GenerateRandomPosInRectExcludeCircle(playerPos,5)).GetComponent<Enemy>();
+            enemyManager.enemies.Add(newEnemy);
+            newEnemy.Init(enemyManager);
+        }
+    }
     void GenerateEnemysAroundPoint(Vector2 center, int count)
     {
         float radius = Mathf.Ceil(count / 6f) + 1;
         for (int i = 0; i < count; i++)
         {
-            Vector2 randomPos = Random.insideUnitCircle * radius + center;
+            Vector2 randomPos = EyreUtility.GenerateRandomPosInRectByPosExcludeCircle(center,playerPos,5,5,5);
             Enemy newEnemy = PoolManager.Release(enemy, randomPos).GetComponent<Enemy>();
             enemyManager.enemies.Add(newEnemy);
             newEnemy.Init(enemyManager);

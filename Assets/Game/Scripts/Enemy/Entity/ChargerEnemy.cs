@@ -21,7 +21,7 @@ public class ChargerEnemy : Enemy
         });
     }
 
-    protected override void MoveToPlayer()
+    protected override void HandleMovement()
     {
         if(isCharging) return;
         //检查与玩家的距离，到了冲刺距离则停止移动，开始冲刺
@@ -31,7 +31,7 @@ public class ChargerEnemy : Enemy
         }
         else
         {
-            base.MoveToPlayer();
+            base.HandleMovement();
         }
     }
 }
