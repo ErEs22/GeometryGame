@@ -16,6 +16,7 @@ public class Enemy : MonoBehaviour, ITakeDamage,IHeal
     protected float moveSpeed = 5f;
     protected EnemyManager enemyManager;
     protected float distanceToPlayer;
+    protected Vector3 moveDir;
 
     /// <summary>
     /// NOTE!! Dont add Behaviour in here,this will be call first when poolmanager instantiate this object
@@ -46,14 +47,14 @@ public class Enemy : MonoBehaviour, ITakeDamage,IHeal
 
     private void CaculateDistanceToPlayer()
     {
-        distanceToPlayer = Vector3.Distance(GlobalVar.playerObj.position,transform.position);
+        distanceToPlayer = Vector3.Distance(GlobalVar.playerTrans.position,transform.position);
     }
 
     protected virtual void HandleMovement()
     {
         if (distanceToPlayer < 0.1f) return;
-        Vector3 dirToPlayer = GlobalVar.playerObj.position - transform.position;
-        float angle = Mathf.Atan2(dirToPlayer.y, dirToPlayer.x) * Mathf.Rad2Deg;
+        moveDir = GlobalVar.playerTrans.position - transform.position;
+        float angle = Mathf.Atan2(moveDir.y, moveDir.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.AngleAxis(angle, transform.forward);
         transform.Translate(transform.right * moveSpeed * Time.deltaTime, Space.World);
     }

@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class GlobalVar : MonoBehaviour
 {
-    public static Transform playerObj;
+    public static Transform playerTrans;
 
     private void Awake() {
-        playerObj = GameObject.FindGameObjectWithTag(GameConstant.playerTag).transform;
+        playerTrans = GameObject.FindGameObjectWithTag(GameConstant.playerTag).transform;
     }
 }

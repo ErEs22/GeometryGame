@@ -12,7 +12,7 @@ public class EnemyManager : MonoBehaviour
         GameObject closetEnemy = enemies[0].gameObject;
         foreach (Enemy enemy in enemies)
         {
-            tempDistance = Vector3.Distance(GlobalVar.playerObj.position,enemy.transform.position);
+            tempDistance = Vector3.Distance(GlobalVar.playerTrans.position,enemy.transform.position);
             if(tempDistance < distanceBtwEnemyAndPlayer){
                 distanceBtwEnemyAndPlayer = tempDistance;
                 closetEnemy = enemy.gameObject;

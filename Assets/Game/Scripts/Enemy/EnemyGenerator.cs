@@ -31,7 +31,7 @@ public class EnemyGenerator : MonoBehaviour
     {
         // SetCrossPoint();
         enemyManager = GetComponent<EnemyManager>();
-        playerPos = GlobalVar.playerObj.position;
+        playerPos = GlobalVar.playerTrans.position;
         GenerateEnemysInRandomPos(1);
         GenerateEnemysInRandomPos(specificEnemy,1);
     }

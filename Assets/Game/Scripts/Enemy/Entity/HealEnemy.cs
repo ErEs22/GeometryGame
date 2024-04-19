@@ -5,21 +5,21 @@ using UnityEngine;
 public class HealEnemy : Enemy
 {
     GameObject moveTarget;
-    Vector3 moveDir;
+    EnemyData_WithHealing_SO newEnemyData;
 
     public override void Init(EnemyManager enemyManager)
     {
         base.Init(enemyManager);
+        newEnemyData = (EnemyData_WithHealing_SO)enemyData;
         InvokeRepeating(nameof(Skill), 3, 3);
     }
 
     protected override void Skill()
     {
-        EnemyData_WithHealing_SO thisEnemyData = (EnemyData_WithHealing_SO)enemyData;
-        Collider2D[] healAllies = Physics2D.OverlapCircleAll(transform.position, thisEnemyData.healRange, thisEnemyData.healObjectMask);
+        Collider2D[] healAllies = Physics2D.OverlapCircleAll(transform.position, newEnemyData.healRange, newEnemyData.healObjectMask);
         foreach (Collider2D heal in healAllies)
         {
-            heal.GetComponent<IHeal>().Heal(thisEnemyData.healHP);
+            heal.GetComponent<IHeal>().Heal(newEnemyData.healHP);
         }
     }
 

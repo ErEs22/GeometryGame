@@ -13,7 +13,7 @@ public class FollowPlayer : MonoBehaviour
     }
 
     private void FollowingPlayer(){
-        Vector3 targetPos = Vector3.Lerp(transform.position,GlobalVar.playerObj.position,followReactTime);
+        Vector3 targetPos = Vector3.Lerp(transform.position,GlobalVar.playerTrans.position,followReactTime);
         targetPos.z = -10;
         transform.position = targetPos;
     }

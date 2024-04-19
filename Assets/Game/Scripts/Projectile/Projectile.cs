@@ -36,7 +36,7 @@ public class Projectile : MonoBehaviour
         Fly();
     }
 
-    private void Fly()
+    protected virtual void Fly()
     {
         transform.Translate(transform.right * flySpeed * Time.deltaTime, Space.World);
     }
