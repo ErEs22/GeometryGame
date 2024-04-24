@@ -4,6 +4,14 @@ using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
+    [Range(0.0f,1.0f)]
+    public float centeringMoveWeight = 0.3f;
+    [Range(0.0f,1.0f)]
+    public float avoideMoveWeight = 0.3f;
+    [Range(0.0f,1.0f)]
+    public float alignmentWeight = 0.3f;
+    public float collisionRiskDistanceThreshold = 10;
+    public float nearbyDistanceThreshold = 6;
     public List<Enemy> enemies = new List<Enemy>();
 
     public GameObject GetClosetEnemyByPlayer(){

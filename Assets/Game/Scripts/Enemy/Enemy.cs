@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 /// <summary>
 /// 敌人基类
@@ -16,7 +18,17 @@ public class Enemy : MonoBehaviour, ITakeDamage,IHeal
     protected float moveSpeed = 5f;
     protected EnemyManager enemyManager;
     protected float distanceToPlayer;
-    protected Vector3 moveDir;
+    protected Vector3 moveDir = Vector3.right;
+    /// <summary>
+    /// 附近一定距离范围内所有敌人
+    /// </summary>
+    [SerializeField]
+    protected List<Transform> nearbyEnemys = new List<Transform>();
+    /// <summary>
+    /// 附近一定距离范围内有碰撞危险的所有敌人
+    /// </summary>
+    [SerializeField]
+    protected List<Transform> collisionRiskEnemys = new List<Transform>();
 
     /// <summary>
     /// NOTE!! Dont add Behaviour in here,this will be call first when poolmanager instantiate this object
@@ -28,7 +40,9 @@ public class Enemy : MonoBehaviour, ITakeDamage,IHeal
 
     private void Update()
     {
+        UpdateEnemyList();
         CaculateDistanceToPlayer();
+        UpdateMoveDirection();
         HandleMovement();
     }
 
@@ -50,20 +64,57 @@ public class Enemy : MonoBehaviour, ITakeDamage,IHeal
         distanceToPlayer = Vector3.Distance(GlobalVar.playerTrans.position,transform.position);
     }
 
+    protected virtual void UpdateMoveDirection()
+    {
+        // if(Mouse.current.leftButton.isPressed){
+        //     moveDir = Camera.main.ScreenToWorldPoint((Vector3)Mouse.current.position.value - transform.position);
+        //     moveDir.Normalize();
+        // }
+        // else
+        // {
+        //     moveDir = Vector3.right;
+        // }
+        // return;
+        if(distanceToPlayer < 0.1f)
+        {
+            moveDir = Vector3.zero;
+        }
+        else
+        {
+            moveDir = GlobalVar.playerTrans.position - transform.position;
+            moveDir.Normalize();
+        }
+    }
+
     protected virtual void HandleMovement()
     {
-        if (distanceToPlayer < 0.1f) return;
-        moveDir = GlobalVar.playerTrans.position - transform.position;
+        moveDir.Normalize();
+        moveDir *= moveSpeed;
+        //计算集群移动方向
+        Vector3 centerVel = GetCenteringVelocity(nearbyEnemys);
+        moveDir = Vector3.Lerp(moveDir,moveDir + centerVel * enemyManager.centeringMoveWeight,enemyManager.centeringMoveWeight);
+        // moveDir += centerVel * enemyManager.centeringMoveWeight;
+        // print("centerVel" + centerVel * enemyManager.centeringMoveWeight);
+        Vector3 avoideVel = GetAvoideVelocity(collisionRiskEnemys);
+        moveDir = Vector3.Lerp(moveDir,moveDir + avoideVel * enemyManager.avoideMoveWeight,enemyManager.avoideMoveWeight);
+        // moveDir += avoideVel * enemyManager.avoideMoveWeight;
+        // print("AvoideVel" + avoideVel * enemyManager.avoideMoveWeight);
+        Vector3 alignmentVel = GetAlignmentVelocity(nearbyEnemys);
+        moveDir = Vector3.Lerp(moveDir,moveDir + alignmentVel * enemyManager.alignmentWeight,enemyManager.alignmentWeight);
+        // moveDir += alignmentVel * enemyManager.alignmentWeight;
+        // moveDir.Normalize();
+
         float angle = Mathf.Atan2(moveDir.y, moveDir.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.AngleAxis(angle, transform.forward);
-        transform.Translate(transform.right * moveSpeed * Time.deltaTime, Space.World);
+        transform.Translate(transform.right * moveDir.magnitude * Time.deltaTime, Space.World);
+        print("Magnitude" + moveDir.magnitude);
     }
 
     public virtual void TakeDamage(float damage)
     {
         //血量已经小于零则不做计算
         if (HP <= 0) return;
-        Debug.Log(this + " is taking damage,decrease " + damage + "HP");
+        // Debug.Log(this + " is taking damage,decrease " + damage + "HP");
         HP = Mathf.Clamp(HP - damage, 0, maxHP);
         //击中效果
         transform.DOScale(2f, 0.05f).OnComplete(() =>
@@ -88,5 +139,78 @@ public class Enemy : MonoBehaviour, ITakeDamage,IHeal
     public void Heal(float healHP)
     {
         HP = Mathf.Clamp(HP + healHP,0,maxHP);
+    }
+
+    #region 集群运动计算
+
+    protected void UpdateEnemyList()
+    {
+        collisionRiskEnemys.Clear();
+        nearbyEnemys.Clear();
+        foreach (Enemy enemy in enemyManager.enemies)
+        {
+            if(enemy == this) continue;
+            if(Vector3.Distance(transform.position,enemy.transform.position) < enemyManager.collisionRiskDistanceThreshold)
+            {
+                collisionRiskEnemys.Add(enemy.transform);
+            }
+            else if(Vector3.Distance(transform.position,enemy.transform.position) < enemyManager.nearbyDistanceThreshold)
+            {
+                nearbyEnemys.Add(enemy.transform);
+            }
+        }
+    }
+
+    protected Vector3 GetCenteringVelocity(List<Transform> nearbyEnemys)
+    {
+        if(nearbyEnemys.Count == 0)
+        {
+            return Vector3.zero;
+        }
+        Vector3 nearbyEnemysCenterPos = new Vector3();
+        foreach (Transform enemy in nearbyEnemys)
+        {
+            nearbyEnemysCenterPos += enemy.position;
+        }
+        nearbyEnemysCenterPos /= nearbyEnemys.Count;
+        return nearbyEnemysCenterPos - transform.position;
+    }
+
+    protected Vector3 GetAvoideVelocity(List<Transform> collisionRiskEnemys)
+    {
+        if(collisionRiskEnemys.Count == 0)
+        {
+            return Vector3.zero;
+        }
+        Vector3 avoideVel = new Vector3();
+        foreach (Transform enemy in collisionRiskEnemys)
+        {
+            avoideVel += (transform.position - enemy.position).normalized * moveSpeed;
+        }
+        avoideVel /= collisionRiskEnemys.Count;
+        return avoideVel;
+    }
+
+    protected Vector3 GetAlignmentVelocity(List<Transform> nearbyEnemys)
+    {
+        if(nearbyEnemys.Count == 0)
+        {
+            return Vector3.zero;
+        }
+        Vector3 alignmentVel = new Vector3();
+        foreach (Transform enemy in nearbyEnemys)
+        {
+            alignmentVel += enemy.GetComponent<Enemy>().moveDir;
+        }
+        alignmentVel /= nearbyEnemys.Count;
+        return alignmentVel;
+    }
+    #endregion
+
+    private void OnDrawGizmosSelected() {
+        Handles.color = Color.green;
+        Handles.DrawWireDisc(transform.position,Vector3.forward,enemyManager.nearbyDistanceThreshold);
+        Handles.color = Color.red;
+        Handles.DrawWireDisc(transform.position,Vector3.forward,enemyManager.collisionRiskDistanceThreshold);
     }
 }

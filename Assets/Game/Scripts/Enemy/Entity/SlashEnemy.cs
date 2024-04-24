@@ -31,20 +31,17 @@ public class SlashEnemy : Enemy
         damageObject.transform.position = playerTrans.position;
     }
 
-    protected override void HandleMovement()
+    protected override void UpdateMoveDirection()
     {
         if(Vector3.Distance(playerTrans.position,transform.position) < newEnemyData.runawayDistance)
         {
             //Run away
             runAwayPos = playerTrans.position.normalized * -25;
             moveDir = Vector3.Normalize((runAwayPos - transform.position) + (transform.position - playerTrans.position));
-            float angle = Mathf.Atan2(moveDir.y, moveDir.x) * Mathf.Rad2Deg;
-            transform.rotation = Quaternion.AngleAxis(angle, transform.forward);
-            transform.Translate(transform.right * moveSpeed * Time.deltaTime, Space.World);
         }
         else
         {
-            base.HandleMovement();
+            base.UpdateMoveDirection();
         }
     }
 }

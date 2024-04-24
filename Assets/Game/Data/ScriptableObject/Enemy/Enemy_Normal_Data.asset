@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Enemy_Normal_Data
   m_EditorClassIdentifier: 
   HP: 10000
-  moveSpeed: 5
+  moveSpeed: 10
   damage: 1
