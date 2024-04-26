@@ -12,11 +12,13 @@ public class ChargerEnemy : Enemy
     {
         isCharging = true;
         Vector3 targetPos = transform.position + transform.right * 10;
-        moveSpeed = 0;
+        targetPos.x = Mathf.Clamp(targetPos.x,-GlobalVar.mapWidth,GlobalVar.mapWidth);
+        targetPos.y = Mathf.Clamp(targetPos.y,-GlobalVar.mapHeight,GlobalVar.mapHeight);
+        MoveSpeed = 0;
         transform.
         transform.DOMove(targetPos, 1).SetDelay(0.5f).OnComplete(() =>
         {
-            moveSpeed = enemyData.moveSpeed;
+            MoveSpeed = enemyData.moveSpeed;
             isCharging = false;
         });
     }

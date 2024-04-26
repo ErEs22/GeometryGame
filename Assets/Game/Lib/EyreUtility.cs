@@ -27,10 +27,10 @@ public static class EyreUtility{
     /// <returns>随机点</returns>
     public static Vector2 GenerateRandomPosInRectExcludeCircle(Vector2 circleCenter, float circleRadius)
     {
-        Vector2 randomPos = new Vector2(Random.Range(-50, 50), Random.Range(-50, 50));
+        Vector2 randomPos = new Vector2(Random.Range(-GlobalVar.mapWidth, GlobalVar.mapHeight), Random.Range(-GlobalVar.mapWidth,GlobalVar.mapHeight));
         while (Vector2.Distance(randomPos, circleCenter) < circleRadius)
         {
-            randomPos = new Vector2(Random.Range(-50, 50), Random.Range(-50, 50));
+            randomPos = new Vector2(Random.Range(-GlobalVar.mapWidth,GlobalVar.mapHeight), Random.Range(-GlobalVar.mapWidth,GlobalVar.mapHeight));
         }
         return randomPos;
     }
@@ -43,7 +43,7 @@ public static class EyreUtility{
     /// <returns>随机点</returns>
     public static Vector2 GenerateRandomPosInRect()
     {
-        Vector2 randomPos = new Vector2(Random.Range(-50, 50), Random.Range(-50, 50));
+        Vector2 randomPos = new Vector2(Random.Range(-GlobalVar.mapWidth,GlobalVar.mapHeight), Random.Range(-GlobalVar.mapWidth,GlobalVar.mapHeight));
         return randomPos;
     }
 
@@ -65,8 +65,8 @@ public static class EyreUtility{
             randomPos = new Vector2(Random.Range(-rectWidth / 2, rectWidth / 2), Random.Range(-rectHeight / 2, rectHeight / 2));
             randomPos = randomPos + relatePos;
         }
-        randomPos.x = Mathf.Clamp(randomPos.x,-50,50);
-        randomPos.y = Mathf.Clamp(randomPos.y,-50,50);
+        randomPos.x = Mathf.Clamp(randomPos.x,-GlobalVar.mapWidth,GlobalVar.mapHeight);
+        randomPos.y = Mathf.Clamp(randomPos.y,-GlobalVar.mapWidth,GlobalVar.mapHeight);
         return randomPos;
     }
 

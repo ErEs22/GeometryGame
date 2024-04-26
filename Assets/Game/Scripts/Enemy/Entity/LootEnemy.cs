@@ -12,7 +12,7 @@ public class LootEnemy : Enemy
         Vector3 dir = targetPos - transform.position;
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.AngleAxis(angle, transform.forward);
-        transform.Translate(transform.right * moveSpeed * Time.deltaTime, Space.World);
+        transform.Translate(transform.right * MoveSpeed * Time.deltaTime, Space.World);
     }
 
     private void TrySetNewTargetPos()

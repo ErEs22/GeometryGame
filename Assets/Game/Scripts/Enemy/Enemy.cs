@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEditor;
 using UnityEngine;
@@ -8,14 +9,30 @@ using UnityEngine.InputSystem;
 /// <summary>
 /// 敌人基类
 /// </summary>
-public class Enemy : MonoBehaviour, ITakeDamage,IHeal
+public class Enemy : MonoBehaviour, ITakeDamage, IHeal
 {
     [SerializeField]
     protected EnemyData_SO enemyData;
     protected float maxHP = 0;
-    [DisplayOnly][SerializeField]
+    [DisplayOnly]
+    [SerializeField]
     protected float HP = 0;
-    protected float moveSpeed = 5f;
+    private float moveSpeed = 5f;
+    protected float MoveSpeed
+    {
+        get
+        {
+            return moveSpeed * (1 + speedEffectPercent * 0.01f);
+        }
+        set
+        {
+            moveSpeed = value;
+        }
+    }
+    /// <summary>
+    /// 速度影响百分比值（整数值 10%=>10）
+    /// </summary>
+    public int speedEffectPercent = 0;
     protected EnemyManager enemyManager;
     protected float distanceToPlayer;
     protected Vector3 moveDir = Vector3.right;
@@ -56,12 +73,35 @@ public class Enemy : MonoBehaviour, ITakeDamage,IHeal
         this.enemyManager = enemyManager;
         maxHP = enemyData.HP;
         HP = enemyData.HP;
-        moveSpeed = enemyData.moveSpeed;
+        MoveSpeed = enemyData.moveSpeed;
+    }
+
+    public async void ApplyStatusChangeInTime(StatusType statusType, int percentChange, float effectTime)
+    {
+        switch (statusType)
+        {
+            case StatusType.HP:
+                break;
+            case StatusType.MoveSpeed:
+                speedEffectPercent += percentChange;
+                break;
+            default: break;
+        }
+        await UniTask.Delay((int)(effectTime * 1000));
+        switch(statusType)
+        {
+            case StatusType.HP:
+                break;
+            case StatusType.MoveSpeed:
+                speedEffectPercent -= percentChange;
+                break;
+            default:break;
+        }
     }
 
     private void CaculateDistanceToPlayer()
     {
-        distanceToPlayer = Vector3.Distance(GlobalVar.playerTrans.position,transform.position);
+        distanceToPlayer = Vector3.Distance(GlobalVar.playerTrans.position, transform.position);
     }
 
     protected virtual void UpdateMoveDirection()
@@ -75,7 +115,7 @@ public class Enemy : MonoBehaviour, ITakeDamage,IHeal
         //     moveDir = Vector3.right;
         // }
         // return;
-        if(distanceToPlayer < 0.1f)
+        if (distanceToPlayer < 0.1f)
         {
             moveDir = Vector3.zero;
         }
@@ -89,18 +129,18 @@ public class Enemy : MonoBehaviour, ITakeDamage,IHeal
     protected virtual void HandleMovement()
     {
         moveDir.Normalize();
-        moveDir *= moveSpeed;
+        moveDir *= MoveSpeed;
         //计算集群移动方向
         Vector3 centerVel = GetCenteringVelocity(nearbyEnemys);
-        moveDir = Vector3.Lerp(moveDir,moveDir + centerVel * enemyManager.centeringMoveWeight,enemyManager.centeringMoveWeight);
+        moveDir = Vector3.Lerp(moveDir, moveDir + centerVel * enemyManager.centeringMoveWeight, enemyManager.centeringMoveWeight);
         // moveDir += centerVel * enemyManager.centeringMoveWeight;
         // print("centerVel" + centerVel * enemyManager.centeringMoveWeight);
         Vector3 avoideVel = GetAvoideVelocity(collisionRiskEnemys);
-        moveDir = Vector3.Lerp(moveDir,moveDir + avoideVel * enemyManager.avoideMoveWeight,enemyManager.avoideMoveWeight);
+        moveDir = Vector3.Lerp(moveDir, moveDir + avoideVel * enemyManager.avoideMoveWeight, enemyManager.avoideMoveWeight);
         // moveDir += avoideVel * enemyManager.avoideMoveWeight;
         // print("AvoideVel" + avoideVel * enemyManager.avoideMoveWeight);
         Vector3 alignmentVel = GetAlignmentVelocity(nearbyEnemys);
-        moveDir = Vector3.Lerp(moveDir,moveDir + alignmentVel * enemyManager.alignmentWeight,enemyManager.alignmentWeight);
+        moveDir = Vector3.Lerp(moveDir, moveDir + alignmentVel * enemyManager.alignmentWeight, enemyManager.alignmentWeight);
         // moveDir += alignmentVel * enemyManager.alignmentWeight;
         // moveDir.Normalize();
 
@@ -138,7 +178,7 @@ public class Enemy : MonoBehaviour, ITakeDamage,IHeal
 
     public void Heal(float healHP)
     {
-        HP = Mathf.Clamp(HP + healHP,0,maxHP);
+        HP = Mathf.Clamp(HP + healHP, 0, maxHP);
     }
 
     #region 集群运动计算
@@ -149,12 +189,12 @@ public class Enemy : MonoBehaviour, ITakeDamage,IHeal
         nearbyEnemys.Clear();
         foreach (Enemy enemy in enemyManager.enemies)
         {
-            if(enemy == this) continue;
-            if(Vector3.Distance(transform.position,enemy.transform.position) < enemyManager.collisionRiskDistanceThreshold)
+            if (enemy == this) continue;
+            if (Vector3.Distance(transform.position, enemy.transform.position) < enemyManager.collisionRiskDistanceThreshold)
             {
                 collisionRiskEnemys.Add(enemy.transform);
             }
-            else if(Vector3.Distance(transform.position,enemy.transform.position) < enemyManager.nearbyDistanceThreshold)
+            else if (Vector3.Distance(transform.position, enemy.transform.position) < enemyManager.nearbyDistanceThreshold)
             {
                 nearbyEnemys.Add(enemy.transform);
             }
@@ -163,7 +203,7 @@ public class Enemy : MonoBehaviour, ITakeDamage,IHeal
 
     protected Vector3 GetCenteringVelocity(List<Transform> nearbyEnemys)
     {
-        if(nearbyEnemys.Count == 0)
+        if (nearbyEnemys.Count == 0)
         {
             return Vector3.zero;
         }
@@ -178,14 +218,14 @@ public class Enemy : MonoBehaviour, ITakeDamage,IHeal
 
     protected Vector3 GetAvoideVelocity(List<Transform> collisionRiskEnemys)
     {
-        if(collisionRiskEnemys.Count == 0)
+        if (collisionRiskEnemys.Count == 0)
         {
             return Vector3.zero;
         }
         Vector3 avoideVel = new Vector3();
         foreach (Transform enemy in collisionRiskEnemys)
         {
-            avoideVel += (transform.position - enemy.position).normalized * moveSpeed;
+            avoideVel += (transform.position - enemy.position).normalized * MoveSpeed;
         }
         avoideVel /= collisionRiskEnemys.Count;
         return avoideVel;
@@ -193,7 +233,7 @@ public class Enemy : MonoBehaviour, ITakeDamage,IHeal
 
     protected Vector3 GetAlignmentVelocity(List<Transform> nearbyEnemys)
     {
-        if(nearbyEnemys.Count == 0)
+        if (nearbyEnemys.Count == 0)
         {
             return Vector3.zero;
         }
@@ -207,10 +247,11 @@ public class Enemy : MonoBehaviour, ITakeDamage,IHeal
     }
     #endregion
 
-    private void OnDrawGizmosSelected() {
+    private void OnDrawGizmosSelected()
+    {
         Handles.color = Color.green;
-        Handles.DrawWireDisc(transform.position,Vector3.forward,enemyManager.nearbyDistanceThreshold);
+        Handles.DrawWireDisc(transform.position, Vector3.forward, enemyManager.nearbyDistanceThreshold);
         Handles.color = Color.red;
-        Handles.DrawWireDisc(transform.position,Vector3.forward,enemyManager.collisionRiskDistanceThreshold);
+        Handles.DrawWireDisc(transform.position, Vector3.forward, enemyManager.collisionRiskDistanceThreshold);
     }
 }

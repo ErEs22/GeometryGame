@@ -41,6 +41,6 @@ public class HealEnemy : Enemy
         moveDir = moveTarget.transform.position - transform.position;
         float angle = Mathf.Atan2(moveDir.y, moveDir.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.AngleAxis(angle, transform.forward);
-        transform.Translate(transform.right * moveSpeed * Time.deltaTime, Space.World);
+        transform.Translate(transform.right * MoveSpeed * Time.deltaTime, Space.World);
     }
 }
