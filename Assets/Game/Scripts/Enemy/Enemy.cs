@@ -11,6 +11,7 @@ using UnityEngine.InputSystem;
 /// </summary>
 public class Enemy : MonoBehaviour, ITakeDamage, IHeal
 {
+    public new string name;
     [SerializeField]
     protected EnemyData_SO enemyData;
     protected float maxHP = 0;
@@ -18,6 +19,7 @@ public class Enemy : MonoBehaviour, ITakeDamage, IHeal
     [SerializeField]
     protected float HP = 0;
     private float moveSpeed = 5f;
+    public int showlevel = 1;
     protected float MoveSpeed
     {
         get
@@ -74,6 +76,8 @@ public class Enemy : MonoBehaviour, ITakeDamage, IHeal
         maxHP = enemyData.HP;
         HP = enemyData.HP;
         MoveSpeed = enemyData.moveSpeed;
+        showlevel = enemyData.showlevel;
+        name = enemyData.name;
     }
 
     public async void ApplyStatusChangeInTime(StatusType statusType, int percentChange, float effectTime)

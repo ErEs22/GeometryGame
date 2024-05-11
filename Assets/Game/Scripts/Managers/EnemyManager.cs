@@ -12,7 +12,10 @@ public class EnemyManager : MonoBehaviour
     public float alignmentWeight = 0.3f;
     public float collisionRiskDistanceThreshold = 10;
     public float nearbyDistanceThreshold = 6;
-    public List<Enemy> enemies = new List<Enemy>();
+    public List<Enemy> enemies = new List<Enemy>();//游戏内正在活动的敌人
+    public List<GameObject> currentLevelEnemys = new List<GameObject>();//当前关卡可生成的敌人种类
+    public List<EnemyData_SO> allEnemysData = new List<EnemyData_SO>();//游戏内所有敌人数据
+    public List<GameObject> allEnemys = new List<GameObject>();//游戏内所有敌人
 
     public GameObject GetClosetEnemyByPlayer(){
         float distanceBtwEnemyAndPlayer = float.MaxValue;
@@ -29,9 +32,27 @@ public class EnemyManager : MonoBehaviour
         return closetEnemy;
     }
 
-    public GameObject GetOneRandomEnemyInList()
+    public GameObject GetEnemyInEnemyListRandomly()
     {
         int randomIndex = Random.Range(0,enemies.Count);
         return enemies[randomIndex].gameObject;
+    }
+
+    public void SetCurrentEnemyList()
+    {
+        currentLevelEnemys.Clear();
+        foreach (EnemyData_SO enemy in allEnemysData)
+        {
+            if(enemy.showlevel <= LevelManager.currentLevel)
+            {
+                currentLevelEnemys.Add(allEnemys.Find((x => x.name == enemy.name)));
+            }
+        }
+    }
+
+    public GameObject GetEnemyInCurrentEnemyListRandomly()
+    {
+        int randomIndex = Random.Range(0,currentLevelEnemys.Count);
+        return currentLevelEnemys[randomIndex];
     }
 }

@@ -158,7 +158,7 @@ public class EnemyGenerator : MonoBehaviour
         }
     }
 
-    void GenerateEnemysInRandomPos(GameObject enemy,int count)
+    public void GenerateEnemysInRandomPos(GameObject enemy,int count)
     {
         for (int i = 0; i < count; i++)
         {
@@ -167,7 +167,7 @@ public class EnemyGenerator : MonoBehaviour
             newEnemy.Init(enemyManager);
         }
     }
-    void GenerateEnemysAroundPoint(Vector2 center, int count)
+    public void GenerateEnemysAroundPoint(Vector2 center, int count)
     {
         float radius = Mathf.Ceil(count / 6f) + 1;
         for (int i = 0; i < count; i++)

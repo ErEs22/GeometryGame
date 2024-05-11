@@ -27,11 +27,11 @@ public class HealEnemy : Enemy
     {
         if (moveTarget == null || !moveTarget.activeSelf)
         {
-            moveTarget = enemyManager.GetOneRandomEnemyInList();
+            moveTarget = enemyManager.GetEnemyInEnemyListRandomly();
         }
         else if(Vector3.Distance(transform.position,moveTarget.transform.position) < 0.2f)
         {
-            moveTarget = enemyManager.GetOneRandomEnemyInList();
+            moveTarget = enemyManager.GetEnemyInEnemyListRandomly();
         }
     }
 
