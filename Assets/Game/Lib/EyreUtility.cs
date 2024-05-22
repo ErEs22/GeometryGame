@@ -70,5 +70,93 @@ public static class EyreUtility{
         return randomPos;
     }
 
+    public static float Divide(float number,float divideBy)
+    {
+        return number / divideBy;
+    }
+
+    public static float Divide(int number,float divideBy)
+    {
+        return (float)number / divideBy;
+    }
+
+    public static float Divide(int number,int divideBy)
+    {
+        return (float)number / (float)divideBy;
+    }
+
+    public static float Distance2D(Vector2 point1, Vector2 point2)
+    {
+        float xDis = Mathf.Abs(point1.x - point2.x);
+        float yDis = Mathf.Abs(point2.y - point1.y);
+        return Mathf.Sqrt(xDis * xDis + yDis * yDis);
+    }
+
+    public static float Distance2D(Vector3 point1, Vector3 point2)
+    {
+        float xDis = point1.x - point2.x;
+        float yDis = point2.y - point1.y;
+        return Mathf.Sqrt(xDis * xDis + yDis * yDis);
+    }
+
+    public static float Distance2DSquare(Vector2 point1,Vector2 point2)
+    {
+        float xDis = point1.x - point2.x;
+        float yDis = point1.y - point2.y;
+        return xDis * xDis + yDis * yDis;
+    }
+
+    public static float Distance2DSquare(Vector3 point1,Vector3 point2)
+    {
+        float xDis = point1.x - point2.x;
+        float yDis = point1.y - point2.y;
+        return xDis * xDis + yDis * yDis;
+    }
+
+    public static float Distance3D(Vector3 point1,Vector3 point2)
+    {
+        float xDis = point1.x - point2.x;
+        float yDis = point1.y - point2.y;
+        float zDis = point1.z - point2.z;
+        return Mathf.Sqrt(xDis * xDis + yDis * yDis + zDis * zDis);
+    }
+
+    public static float Distance3DSquare(Vector3 point1,Vector3 point2)
+    {
+        float xDis = point1.x - point2.x;
+        float yDis = point1.y - point2.y;
+        float zDis = point1.z - point2.z;
+        return xDis * xDis + yDis * yDis + zDis * zDis;
+    }
+
+    public static bool DistanceCompare2D(Vector2 point1,Vector2 point2,float targetDistance,CompareSign compareSign)
+    {
+        switch (compareSign)
+        {
+            case CompareSign.Equals:
+                return Distance2DSquare(point1,point2) == targetDistance;
+            case CompareSign.Greater:
+                return Distance2DSquare(point1,point2) > targetDistance;
+            case CompareSign.Less:
+                return Distance2DSquare(point1,point2) < targetDistance;
+            default:
+                return true;
+        }
+    }
+
+    public static bool DistanceCompare2D(float regiondisSquare,float targetDis,CompareSign compareSign)
+    {
+        switch(compareSign)
+        {
+            case CompareSign.Equals:
+                return regiondisSquare == targetDis * targetDis;
+            case CompareSign.Greater:
+                return regiondisSquare > targetDis * targetDis;
+            case CompareSign.Less:
+                return regiondisSquare < targetDis * targetDis;
+            default:
+                return true;
+        }
+    }
 
 }

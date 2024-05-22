@@ -1,10 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.SocialPlatforms.GameCenter;
 using Random = UnityEngine.Random;
 
 public class EnemyGenerator : MonoBehaviour
@@ -32,8 +26,8 @@ public class EnemyGenerator : MonoBehaviour
         // SetCrossPoint();
         enemyManager = GetComponent<EnemyManager>();
         playerPos = GlobalVar.playerTrans.position;
-        GenerateEnemysAroundPoint(Vector3.zero,30);
-        GenerateEnemysInRandomPos(specificEnemy,1);
+        // GenerateEnemysAroundPoint(Vector3.zero,30);
+        // GenerateEnemysInRandomPos(specificEnemy,1);
     }
 
     private void Start()

@@ -36,7 +36,7 @@ public class Enemy : MonoBehaviour, ITakeDamage, IHeal
     /// </summary>
     public int speedEffectPercent = 0;
     protected EnemyManager enemyManager;
-    protected float distanceToPlayer;
+    protected float distanceToPlayerSq;
     protected Vector3 moveDir = Vector3.right;
     /// <summary>
     /// 附近一定距离范围内所有敌人
@@ -59,7 +59,7 @@ public class Enemy : MonoBehaviour, ITakeDamage, IHeal
 
     private void Update()
     {
-        UpdateEnemyList();
+        // UpdateEnemyList();
         CaculateDistanceToPlayer();
         UpdateMoveDirection();
         HandleMovement();
@@ -105,7 +105,7 @@ public class Enemy : MonoBehaviour, ITakeDamage, IHeal
 
     private void CaculateDistanceToPlayer()
     {
-        distanceToPlayer = Vector3.Distance(GlobalVar.playerTrans.position, transform.position);
+        distanceToPlayerSq = EyreUtility.Distance2DSquare(GlobalVar.playerTrans.position, transform.position);
     }
 
     protected virtual void UpdateMoveDirection()
@@ -119,7 +119,7 @@ public class Enemy : MonoBehaviour, ITakeDamage, IHeal
         //     moveDir = Vector3.right;
         // }
         // return;
-        if (distanceToPlayer < 0.1f)
+        if (EyreUtility.DistanceCompare2D(distanceToPlayerSq,0.1f,CompareSign.Less))
         {
             moveDir = Vector3.zero;
         }
@@ -132,6 +132,13 @@ public class Enemy : MonoBehaviour, ITakeDamage, IHeal
 
     protected virtual void HandleMovement()
     {
+        //Default Move Caculation
+        float angle1 = Mathf.Atan2(moveDir.y,moveDir.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.AngleAxis(angle1,transform.forward);
+        transform.Translate(transform.right * moveDir.magnitude * Time.deltaTime,Space.World);
+        return;
+
+        //Crowed Base Move Behaviour
         moveDir.Normalize();
         moveDir *= MoveSpeed;
         //计算集群移动方向
@@ -151,7 +158,6 @@ public class Enemy : MonoBehaviour, ITakeDamage, IHeal
         float angle = Mathf.Atan2(moveDir.y, moveDir.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.AngleAxis(angle, transform.forward);
         transform.Translate(transform.right * moveDir.magnitude * Time.deltaTime, Space.World);
-        print("Magnitude" + moveDir.magnitude);
     }
 
     public virtual void TakeDamage(float damage)
@@ -171,8 +177,10 @@ public class Enemy : MonoBehaviour, ITakeDamage, IHeal
         }
     }
 
-    protected virtual void Die()
+    public virtual void Die()
     {
+        //死亡后血量应为零
+        HP = 0;
         transform.DOScale(2f, 0.05f).OnComplete(() =>
         {
             gameObject.SetActive(false);
@@ -189,16 +197,17 @@ public class Enemy : MonoBehaviour, ITakeDamage, IHeal
 
     protected void UpdateEnemyList()
     {
+        //TODO 优化性能
         collisionRiskEnemys.Clear();
         nearbyEnemys.Clear();
         foreach (Enemy enemy in enemyManager.enemies)
         {
             if (enemy == this) continue;
-            if (Vector3.Distance(transform.position, enemy.transform.position) < enemyManager.collisionRiskDistanceThreshold)
+            if (EyreUtility.DistanceCompare2D(EyreUtility.Distance2DSquare(transform.position,enemy.transform.position),enemyManager.collisionRiskDistanceThreshold,CompareSign.Less))
             {
                 collisionRiskEnemys.Add(enemy.transform);
             }
-            else if (Vector3.Distance(transform.position, enemy.transform.position) < enemyManager.nearbyDistanceThreshold)
+            else if (EyreUtility.DistanceCompare2D(EyreUtility.Distance2DSquare(transform.position,enemy.transform.position),enemyManager.nearbyDistanceThreshold,CompareSign.Less))
             {
                 nearbyEnemys.Add(enemy.transform);
             }

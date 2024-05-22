@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76911ec2d15aefb429170517c46f6d08, type: 3}
   m_Name: Enemy_Slash_Data
   m_EditorClassIdentifier: 
-  HP: 100000
+  name: SlashEnemy
+  HP: 100
   moveSpeed: 10
   damage: 1
+  showlevel: 1
   projectile: {fileID: 2093875944032654269, guid: cbfc3c0c4a6bacf49a04822aa6c47d31, type: 3}
   runawayDistance: 10

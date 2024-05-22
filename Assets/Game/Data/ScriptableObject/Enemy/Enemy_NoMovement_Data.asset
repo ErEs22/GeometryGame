@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b1750ed2366e7e4d99a5e3042fb4802, type: 3}
   m_Name: Enemy_NoMovement_Data
   m_EditorClassIdentifier: 
-  HP: 30
+  name: NoMovementEnemy
+  HP: 100
   moveSpeed: 0
   damage: 0
+  showlevel: 1

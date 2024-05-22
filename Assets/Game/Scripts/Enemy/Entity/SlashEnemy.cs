@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 public class SlashEnemy : Enemy
@@ -13,12 +14,17 @@ public class SlashEnemy : Enemy
         base.Init(enemyManager);
         newEnemyData = (EnemyData_WithProjectile_Runaway_SO)enemyData;
         playerTrans = GlobalVar.playerTrans;
-        InvokeRepeating(nameof(Skill),3,3);
+        Skill();
     }
 
-    protected override void Skill()
+    protected override async void Skill()
     {
-        Invoke(nameof(ReleaseDamageObject),1);
+        while(HP > 0)
+        {
+            Debug.Log("SlashEnemy 使用特殊技能");
+            Invoke(nameof(ReleaseDamageObject),1);
+            await UniTask.Delay(3000);
+        }
     }
 
     private void ReleaseDamageObject()

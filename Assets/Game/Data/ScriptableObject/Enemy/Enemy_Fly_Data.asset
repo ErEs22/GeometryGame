@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe36575410b2f424ea53c1cddef6da62, type: 3}
   m_Name: Enemy_Fly_Data
   m_EditorClassIdentifier: 
-  HP: 10
+  name: FlyEnemy
+  HP: 100
   moveSpeed: 5
   damage: 1
+  showlevel: 1
   projectile: {fileID: 3994106403445518885, guid: eb7329fd41853844eb05cbed865bd920, type: 3}

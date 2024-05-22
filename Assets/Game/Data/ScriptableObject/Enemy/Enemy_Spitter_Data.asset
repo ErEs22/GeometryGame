@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe36575410b2f424ea53c1cddef6da62, type: 3}
   m_Name: Enemy_Spitter_Data
   m_EditorClassIdentifier: 
-  HP: 10
+  name: SpitterEnemy
+  HP: 100
   moveSpeed: 5
   damage: 1
+  showlevel: 1
   projectile: {fileID: 3994106403445518885, guid: 66218b1182b4e91469ba51eab84f106b, type: 3}

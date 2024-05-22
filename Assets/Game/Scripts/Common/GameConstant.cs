@@ -8,5 +8,6 @@ public static class GameConstant
 
     //-------------------GlobalConfig
     public static Vector2 gameActiveRect = new Vector2(50,50);
+    public static int maxLevel = 20;
     //-------------------
 }

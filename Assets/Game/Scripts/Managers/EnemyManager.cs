@@ -55,4 +55,12 @@ public class EnemyManager : MonoBehaviour
         int randomIndex = Random.Range(0,currentLevelEnemys.Count);
         return currentLevelEnemys[randomIndex];
     }
+
+    public void ClearAllEnemy()
+    {
+        foreach (var enemy in enemies)
+        {
+            enemy.Die();
+        }
+    }
 }

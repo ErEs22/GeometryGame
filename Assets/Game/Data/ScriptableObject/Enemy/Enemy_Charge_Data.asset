@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b1750ed2366e7e4d99a5e3042fb4802, type: 3}
   m_Name: Enemy_Charge_Data
   m_EditorClassIdentifier: 
-  HP: 20000
+  name: ChargeEnemy
+  HP: 100
   moveSpeed: 7
   damage: 1
+  showlevel: 1

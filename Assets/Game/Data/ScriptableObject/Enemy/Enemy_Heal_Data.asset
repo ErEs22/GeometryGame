@@ -12,9 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b343650be299f1249a971ff37fbec987, type: 3}
   m_Name: Enemy_Heal_Data
   m_EditorClassIdentifier: 
-  HP: 100000
+  name: HealEnemy
+  HP: 100
   moveSpeed: 20
   damage: 1
+  showlevel: 1
   healHP: 100000
   healRange: 5
   healObjectMask:

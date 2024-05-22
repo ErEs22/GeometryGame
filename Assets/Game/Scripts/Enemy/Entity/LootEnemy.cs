@@ -23,7 +23,7 @@ public class LootEnemy : Enemy
         }
     }
 
-    protected override void Die()
+    public override void Die()
     {
         //TODO 掉落箱子和材料
         base.Die();

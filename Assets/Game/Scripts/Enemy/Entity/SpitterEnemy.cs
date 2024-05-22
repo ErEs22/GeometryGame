@@ -7,7 +7,6 @@ public class SpitterEnemy : Enemy
     EnemyData_WithProjectile_SO newEnemyData;
     protected override void Skill()
     {
-        print("Use Skill");
         InvokeRepeating(nameof(ReleaseSingleProjectile),2,2);
     }
 
@@ -20,7 +19,6 @@ public class SpitterEnemy : Enemy
 
     protected virtual void ReleaseSingleProjectile()
     {
-        print(newEnemyData.projectile);
         Vector3 dir = Vector3.Normalize(GlobalVar.playerTrans.position - transform.position);
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
@@ -31,7 +29,7 @@ public class SpitterEnemy : Enemy
         newProjectile.SetDelayDeativate();
     }
 
-    protected override void Die()
+    public override void Die()
     {
         CancelInvoke(nameof(ReleaseSingleProjectile));
         base.Die();
