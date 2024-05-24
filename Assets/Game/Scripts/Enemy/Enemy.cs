@@ -11,6 +11,7 @@ using UnityEngine.InputSystem;
 /// </summary>
 public class Enemy : MonoBehaviour, ITakeDamage, IHeal
 {
+    public GameObject dropItem;
     public new string name;
     [SerializeField]
     protected EnemyData_SO enemyData;
@@ -63,6 +64,23 @@ public class Enemy : MonoBehaviour, ITakeDamage, IHeal
         CaculateDistanceToPlayer();
         UpdateMoveDirection();
         HandleMovement();
+    }
+
+    private void OnTriggerEnter2D(Collider2D other) {
+        HitObjcet(other);
+    }
+
+    private void HitObjcet(Collider2D otherCollider)
+    {
+        otherCollider.TryGetComponent<ITakeDamage>(out ITakeDamage damageObject);
+        if(damageObject != null)
+        {
+            damageObject.TakeDamage(enemyData.damage);
+        }
+        else
+        {
+            // Debug.Log("碰到的物体没有继承ITakeDamage接口，若需要处理，请继承该接口");
+        }
     }
 
     protected virtual void Skill()
@@ -133,34 +151,35 @@ public class Enemy : MonoBehaviour, ITakeDamage, IHeal
     protected virtual void HandleMovement()
     {
         //Default Move Caculation
+        moveDir *= MoveSpeed;
         float angle1 = Mathf.Atan2(moveDir.y,moveDir.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.AngleAxis(angle1,transform.forward);
         transform.Translate(transform.right * moveDir.magnitude * Time.deltaTime,Space.World);
         return;
 
         //Crowed Base Move Behaviour
-        moveDir.Normalize();
-        moveDir *= MoveSpeed;
-        //计算集群移动方向
-        Vector3 centerVel = GetCenteringVelocity(nearbyEnemys);
-        moveDir = Vector3.Lerp(moveDir, moveDir + centerVel * enemyManager.centeringMoveWeight, enemyManager.centeringMoveWeight);
-        // moveDir += centerVel * enemyManager.centeringMoveWeight;
-        // print("centerVel" + centerVel * enemyManager.centeringMoveWeight);
-        Vector3 avoideVel = GetAvoideVelocity(collisionRiskEnemys);
-        moveDir = Vector3.Lerp(moveDir, moveDir + avoideVel * enemyManager.avoideMoveWeight, enemyManager.avoideMoveWeight);
-        // moveDir += avoideVel * enemyManager.avoideMoveWeight;
-        // print("AvoideVel" + avoideVel * enemyManager.avoideMoveWeight);
-        Vector3 alignmentVel = GetAlignmentVelocity(nearbyEnemys);
-        moveDir = Vector3.Lerp(moveDir, moveDir + alignmentVel * enemyManager.alignmentWeight, enemyManager.alignmentWeight);
-        // moveDir += alignmentVel * enemyManager.alignmentWeight;
         // moveDir.Normalize();
+        // moveDir *= MoveSpeed;
+        // //计算集群移动方向
+        // Vector3 centerVel = GetCenteringVelocity(nearbyEnemys);
+        // moveDir = Vector3.Lerp(moveDir, moveDir + centerVel * enemyManager.centeringMoveWeight, enemyManager.centeringMoveWeight);
+        // // moveDir += centerVel * enemyManager.centeringMoveWeight;
+        // // print("centerVel" + centerVel * enemyManager.centeringMoveWeight);
+        // Vector3 avoideVel = GetAvoideVelocity(collisionRiskEnemys);
+        // moveDir = Vector3.Lerp(moveDir, moveDir + avoideVel * enemyManager.avoideMoveWeight, enemyManager.avoideMoveWeight);
+        // // moveDir += avoideVel * enemyManager.avoideMoveWeight;
+        // // print("AvoideVel" + avoideVel * enemyManager.avoideMoveWeight);
+        // Vector3 alignmentVel = GetAlignmentVelocity(nearbyEnemys);
+        // moveDir = Vector3.Lerp(moveDir, moveDir + alignmentVel * enemyManager.alignmentWeight, enemyManager.alignmentWeight);
+        // // moveDir += alignmentVel * enemyManager.alignmentWeight;
+        // // moveDir.Normalize();
 
-        float angle = Mathf.Atan2(moveDir.y, moveDir.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.AngleAxis(angle, transform.forward);
-        transform.Translate(transform.right * moveDir.magnitude * Time.deltaTime, Space.World);
+        // float angle = Mathf.Atan2(moveDir.y, moveDir.x) * Mathf.Rad2Deg;
+        // transform.rotation = Quaternion.AngleAxis(angle, transform.forward);
+        // transform.Translate(transform.right * moveDir.magnitude * Time.deltaTime, Space.World);
     }
 
-    public virtual void TakeDamage(float damage)
+    public virtual void TakeDamage(int damage)
     {
         //血量已经小于零则不做计算
         if (HP <= 0) return;
@@ -181,6 +200,8 @@ public class Enemy : MonoBehaviour, ITakeDamage, IHeal
     {
         //死亡后血量应为零
         HP = 0;
+        //释放掉落经验球
+        PoolManager.Release(dropItem,transform.position).GetComponent<ExpBall>().Init();
         transform.DOScale(2f, 0.05f).OnComplete(() =>
         {
             gameObject.SetActive(false);
@@ -197,7 +218,7 @@ public class Enemy : MonoBehaviour, ITakeDamage, IHeal
 
     protected void UpdateEnemyList()
     {
-        //TODO 优化性能
+        //TODO 优化性能,四叉树
         collisionRiskEnemys.Clear();
         nearbyEnemys.Clear();
         foreach (Enemy enemy in enemyManager.enemies)

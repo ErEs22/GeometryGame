@@ -7,7 +7,7 @@ public class UIManager : MonoBehaviour
     private UIBase[] allUI;
 
     private void Awake() {
-        allUI = GetComponentsInChildren<UIBase>();
+        allUI = GetComponentsInChildren<UIBase>(true);
     }
 
     private void Start() {
@@ -28,6 +28,7 @@ public class UIManager : MonoBehaviour
     {
         foreach (var ui in allUI)
         {
+            ui.InitUI();
             ui.CloseUI();
         }
     }

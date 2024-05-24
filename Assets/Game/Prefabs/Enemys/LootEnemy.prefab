@@ -147,8 +147,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 156824c7ba158ec429ab1770568d7c5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dropItem: {fileID: 7987173864283598468, guid: e7d7ce21a90d0c24dbecba49146448a4, type: 3}
+  name: 
   enemyData: {fileID: 11400000, guid: aec6fbc6bbf362841a9da7406502b232, type: 2}
   HP: 0
+  showlevel: 1
+  speedEffectPercent: 0
+  nearbyEnemys: []
+  collisionRiskEnemys: []
 --- !u!1 &6512309491971383873
 GameObject:
   m_ObjectHideFlags: 0

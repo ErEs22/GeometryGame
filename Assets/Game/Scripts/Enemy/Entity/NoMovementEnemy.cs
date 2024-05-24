@@ -10,7 +10,7 @@ public class NoMovementEnemy : Enemy
         
     }
 
-    public override void TakeDamage(float damage)
+    public override void TakeDamage(int damage)
     {
         base.TakeDamage(damage);
     }

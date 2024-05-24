@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
 
-    public static int currentLevel = 19;
+    public static int currentLevel = 15;
+    private int playerUpgradeCount = 0;
     public static LevelStatus levelStatus = LevelStatus.Running;
     EnemyGenerator enemyGenerator;
     EnemyManager enemyManager;
@@ -19,14 +21,37 @@ public class LevelManager : MonoBehaviour
 
     private void OnEnable() {
         EventManager.instance.onStartLevel += StartLevel;
+        EventManager.instance.onPlayerUpgradeCountIncrease += IncreasePlayerUpgradeCount;
     }
 
     private void OnDisable() {
         EventManager.instance.onStartLevel -= StartLevel;
+        EventManager.instance.onPlayerUpgradeCountIncrease -= IncreasePlayerUpgradeCount;
     }
 
     private void Start() {
-        StartLevel();
+        StartGame();
+    }
+
+    private void IncreasePlayerUpgradeCount()
+    {
+        playerUpgradeCount++;
+    }
+
+    private void ClearPlayerUpgradeCount()
+    {
+        playerUpgradeCount = 0;
+    }
+
+    private void StartGame()
+    {
+        Debug.Log("当前关卡：" + currentLevel);
+        EventManager.instance.OnOpenUI(UIID.PlayerStatusBar);
+        EventManager.instance.OnInitPlayerStatus();
+        ClearPlayerUpgradeCount();
+        StartLevelCountDown();
+        enemyManager.SetCurrentEnemyList();
+        StartSpawnEnemy();
     }
 
     /// <summary>
@@ -35,6 +60,9 @@ public class LevelManager : MonoBehaviour
     private void StartLevel()
     {
         currentLevel++;
+        Debug.Log("当前关卡：" + currentLevel);
+        EventManager.instance.OnOpenUI(UIID.PlayerStatusBar);
+        ClearPlayerUpgradeCount();
         StartLevelCountDown();
         enemyManager.SetCurrentEnemyList();
         StartSpawnEnemy();
@@ -53,11 +81,13 @@ public class LevelManager : MonoBehaviour
     {
         levelStatus = LevelStatus.Ended;
         enemyManager.ClearAllEnemy();
+        EventManager.instance.OnCloseUI(UIID.PlayerStatusBar);
         if(currentLevel < 20)
         {
             GlobalVar.gameStatus = GameStatus.SkillUI;
             //TODO 当前关卡结束，弹出技能页面，清除屏幕敌人
-            EventManager.instance.OnOpenUI(UIID.SkillMenu);
+            EventManager.instance.OnOpenUI(UIID.UpgradeMenu);
+            EventManager.instance.OnShowUpgradeRewardCount(playerUpgradeCount);
         }
         else if(currentLevel == 20)
         {
@@ -77,11 +107,45 @@ public class LevelManager : MonoBehaviour
     {
         if(levelStatus == LevelStatus.Ended) return;
         int enemySpawnCount = GetLevelSpawnEnemysInWaves();
-        for (int i = 0; i < enemySpawnCount; i++)
+
+        //TODO三个特殊关卡
+        switch(currentLevel)
         {
-            enemyGenerator.GenerateEnemysInRandomPos(enemyManager.GetEnemyInCurrentEnemyListRandomly(), 1);
+            case 5:
+                enemyGenerator.GenerateEnemysAroundPoint(enemyManager.GetEnemyInCurrentEnemyListByName(EnemyName.NormalEnemy),enemySpawnCount);
+                await UniTask.Delay(500);
+                for(int i = 0; i < Mathf.FloorToInt(enemySpawnCount / 2); i++)
+                {
+                    enemyGenerator.GenerateEnemysInRandomPos(enemyManager.GetEnemyInCurrentEnemyListRandomly(),1);
+                }
+                await UniTask.Delay(GetLevelSpawnEnemysInterval() - 500);
+            break;
+            case 10:
+                enemyGenerator.GenerateEnemysAroundPoint(enemyManager.GetEnemyInCurrentEnemyListByName(EnemyName.FlyEnemy),enemySpawnCount);
+                await UniTask.Delay(500);
+                for(int i = 0; i < Mathf.FloorToInt(enemySpawnCount / 2); i++)
+                {
+                    enemyGenerator.GenerateEnemysInRandomPos(enemyManager.GetEnemyInCurrentEnemyListRandomly(),1);
+                }
+                await UniTask.Delay(GetLevelSpawnEnemysInterval() - 500);
+            break;
+            case 15:
+                enemyGenerator.GenerateEnemysAroundPoint(enemyManager.GetEnemyInCurrentEnemyListByName(EnemyName.HunterEnemy),enemySpawnCount);
+                await UniTask.Delay(500);
+                for(int i = 0; i < Mathf.FloorToInt(enemySpawnCount / 2); i++)
+                {
+                    enemyGenerator.GenerateEnemysInRandomPos(enemyManager.GetEnemyInCurrentEnemyListRandomly(),1);
+                }
+                await UniTask.Delay(GetLevelSpawnEnemysInterval() - 500);
+            break;
+            default:
+                for (int i = 0; i < enemySpawnCount; i++)
+                {
+                    enemyGenerator.GenerateEnemysInRandomPos(enemyManager.GetEnemyInCurrentEnemyListRandomly(), 1);
+                }
+                await UniTask.Delay(GetLevelSpawnEnemysInterval());
+            break;
         }
-        await UniTask.Delay(GetLevelSpawnEnemysInterval());
         StartSpawnEnemy();
     }
 
@@ -92,7 +156,7 @@ public class LevelManager : MonoBehaviour
 
     private int GetLevelSpawnEnemysInterval()
     {
-        return (int)(1000 * (1 - (0.02f * currentLevel)));
+        return (int)(1000 * (2 - (0.02f * currentLevel)));
     }
 
     private int GetLevelTime()

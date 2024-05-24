@@ -8,6 +8,10 @@ public class UIFinishMenu : UIBase
     //------------End
     private Button btn_MainMenu;
 
+    private void Awake() {
+        btn_MainMenu = GameObject.Find(path_Btn_MainMenu).GetComponent<Button>();
+    }
+
     private void OnEnable() {
         btn_MainMenu.onClick.AddListener(OnMainMenuClick);
     }
@@ -16,10 +20,9 @@ public class UIFinishMenu : UIBase
         btn_MainMenu.onClick.RemoveAllListeners();
     }
 
-    protected override void InitUI()
+    public override void InitUI()
     {
         uiID = UIID.FinishMenu;
-        btn_MainMenu = GameObject.Find(path_Btn_MainMenu).GetComponent<Button>();
     }
 
     private void OnMainMenuClick()

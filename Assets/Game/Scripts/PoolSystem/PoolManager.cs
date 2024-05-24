@@ -14,6 +14,8 @@ public class PoolManager : MonoBehaviour
     Pool[] playerWeaponPools;
     [SerializeField]
     Pool[] enemyPools;
+    [SerializeField]
+    Pool[] dropItemPools;
 
     void Awake()
     {
@@ -23,6 +25,7 @@ public class PoolManager : MonoBehaviour
         Initialize(enemyProjectilePools);
         Initialize(playerWeaponPools);
         Initialize(enemyPools);
+        Initialize(dropItemPools);
     }
 
     #if UNITY_EDITOR
@@ -32,6 +35,7 @@ public class PoolManager : MonoBehaviour
         CheckPoolSize(enemyProjectilePools);
         CheckPoolSize(playerWeaponPools);
         CheckPoolSize(enemyPools);
+        CheckPoolSize(dropItemPools);
     }
     #endif
 

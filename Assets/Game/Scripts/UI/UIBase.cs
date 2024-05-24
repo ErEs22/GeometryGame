@@ -6,10 +6,10 @@ public class UIBase :MonoBehaviour
     public UIID uiID;
 
     private void Awake() {
-        InitUI();
+        // InitUI();
     }
 
-    protected virtual void InitUI()
+    public virtual void InitUI()
     {
 
     }

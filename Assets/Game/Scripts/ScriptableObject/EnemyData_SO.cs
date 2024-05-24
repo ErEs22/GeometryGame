@@ -8,6 +8,6 @@ public class EnemyData_SO : ScriptableObject
     public new string name;
     public float HP = 10;
     public float moveSpeed = 5;
-    public float damage = 1;
+    public int damage = 1;
     public int showlevel = 1;
 }

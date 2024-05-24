@@ -10,6 +10,10 @@ public class UISkillMenu : UIBase
     //------------End
     private Button btn_StartLevel;
 
+    private void Awake() {
+        btn_StartLevel = GameObject.Find(path_btn_StartLevel).GetComponent<Button>();
+    }
+
     private void OnEnable() {
         btn_StartLevel.onClick.AddListener(OnStartLevelClick);
     }
@@ -19,10 +23,9 @@ public class UISkillMenu : UIBase
         btn_StartLevel.onClick.RemoveAllListeners();
     }
 
-    protected override void InitUI()
+    public override void InitUI()
     {
         uiID = UIID.SkillMenu;
-        btn_StartLevel = GameObject.Find(path_btn_StartLevel).GetComponent<Button>();
     }
 
     private void OnStartLevelClick()

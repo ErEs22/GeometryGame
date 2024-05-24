@@ -146,6 +146,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28681ef5c899aad4ba59b12b5aff9680, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dropItem: {fileID: 7987173864283598468, guid: e7d7ce21a90d0c24dbecba49146448a4, type: 3}
   name: 
   enemyData: {fileID: 11400000, guid: fd0140eaf51db6145bce74ec30244657, type: 2}
   HP: 0

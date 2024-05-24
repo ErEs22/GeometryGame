@@ -56,6 +56,19 @@ public class EnemyManager : MonoBehaviour
         return currentLevelEnemys[randomIndex];
     }
 
+    public GameObject GetEnemyInCurrentEnemyListByName(string name)
+    {
+        foreach (var enemy in currentLevelEnemys)
+        {
+            if(enemy.name == name)
+            {
+                return enemy;
+            }
+        }
+        Debug.LogWarning("Cant find enemy " + name + " in currentLevelEnemys");
+        return null;
+    }
+
     public void ClearAllEnemy()
     {
         foreach (var enemy in enemies)

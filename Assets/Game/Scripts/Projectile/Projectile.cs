@@ -9,16 +9,24 @@ public class Projectile : MonoBehaviour
     [HideInInspector]
     public float lifeTime = 1f;
     [HideInInspector]
-    public float damage = 0;
+    public int damage = 0;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Hit(other.gameObject);
+        Hit(other);
     }
 
-    protected virtual void Hit(GameObject hitObject)
+    protected virtual void Hit(Collider2D otherCollider)
     {
-        hitObject.GetComponent<ITakeDamage>().TakeDamage(damage);
+        otherCollider.TryGetComponent<ITakeDamage>(out ITakeDamage damageObject);
+        if(damageObject != null)
+        {
+            damageObject.TakeDamage(damage);
+        }
+        else
+        {
+            Debug.Log("碰到的物体没有继承ITakeDamage接口，若需要处理，请继承该接口");
+        }
     }
 
     public void SetDelayDeativate()

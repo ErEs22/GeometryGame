@@ -6,7 +6,7 @@ public class EnemyGenerator : MonoBehaviour
     public GameObject enemy;
     public GameObject specificEnemy;
     float thresholdDisToPlayer = 5f;
-    public GameObject point;
+    private GameObject point;
     EnemyManager enemyManager;
     Vector2 playerPos;
 
@@ -156,20 +156,27 @@ public class EnemyGenerator : MonoBehaviour
     {
         for (int i = 0; i < count; i++)
         {
-            Enemy newEnemy = PoolManager.Release(enemy, EyreUtility.GenerateRandomPosInRectExcludeCircle(playerPos,5)).GetComponent<Enemy>();
-            enemyManager.enemies.Add(newEnemy);
-            newEnemy.Init(enemyManager);
+            GenerateEnemy(enemy,EyreUtility.GenerateRandomPosInRectExcludeCircle(playerPos,5));
         }
     }
-    public void GenerateEnemysAroundPoint(Vector2 center, int count)
+    public void GenerateEnemysAroundPoint(GameObject enemy, int count)
     {
-        float radius = Mathf.Ceil(count / 6f) + 1;
+        // float radius = Mathf.Ceil(count / 6f) + 1;
+        Vector2 randomCenterPos = EyreUtility.GenerateRandomPosInRectExcludeCircle(playerPos,5);
         for (int i = 0; i < count; i++)
         {
-            Vector2 randomPos = EyreUtility.GenerateRandomPosInRectByPosExcludeCircle(center,playerPos,5,10,10);
-            Enemy newEnemy = PoolManager.Release(enemy, randomPos).GetComponent<Enemy>();
-            enemyManager.enemies.Add(newEnemy);
-            newEnemy.Init(enemyManager);
+            Vector2 randomPos = EyreUtility.GenerateRandomPosInRectByPosExcludeCircle(randomCenterPos,playerPos,5,10,10);
+            GenerateEnemy(enemy,randomPos);
         }
+    }
+
+    public void GenerateEnemy(GameObject enemy,Vector2 pos)
+    {
+        //关卡结束后停止生成敌人
+        if(LevelManager.levelStatus == LevelStatus.Ended) return;
+
+        Enemy newEnemy = PoolManager.Release(enemy, pos).GetComponent<Enemy>();
+        enemyManager.enemies.Add(newEnemy);
+        newEnemy.Init(enemyManager);
     }
 }
