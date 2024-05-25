@@ -20,6 +20,7 @@ public class EventManager : MonoBehaviour
     public event UnityAction onCollectExpBall = delegate{};
     public event UnityAction<int> onShowUpgradeRewardCount = delegate{};
     public event UnityAction onPlayerUpgradeCountIncrease = delegate{};
+    public event UnityAction<PlayerProperty,int> onUpdatePlayerProperty = delegate{};
 
     private void Awake() {
         if(instance == null)
@@ -91,5 +92,10 @@ public class EventManager : MonoBehaviour
     public void OnPlayerUpgradeCountIncrease()
     {
         onPlayerUpgradeCountIncrease.Invoke();
+    }
+
+    public void OnUpdatePlayerProperty(PlayerProperty playerProperty,int changeValue)
+    {
+        onUpdatePlayerProperty.Invoke(playerProperty,changeValue);
     }
 }

@@ -7,7 +7,7 @@ using UnityEngine;
 public class LevelManager : MonoBehaviour
 {
 
-    public static int currentLevel = 15;
+    public static int currentLevel = 5;
     private int playerUpgradeCount = 0;
     public static LevelStatus levelStatus = LevelStatus.Running;
     EnemyGenerator enemyGenerator;
@@ -30,7 +30,7 @@ public class LevelManager : MonoBehaviour
     }
 
     private void Start() {
-        StartGame();
+        // StartGame();
     }
 
     private void IncreasePlayerUpgradeCount()
@@ -81,7 +81,6 @@ public class LevelManager : MonoBehaviour
     {
         levelStatus = LevelStatus.Ended;
         enemyManager.ClearAllEnemy();
-        EventManager.instance.OnCloseUI(UIID.PlayerStatusBar);
         if(currentLevel < 20)
         {
             GlobalVar.gameStatus = GameStatus.SkillUI;

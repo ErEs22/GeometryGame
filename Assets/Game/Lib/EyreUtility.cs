@@ -159,4 +159,30 @@ public static class EyreUtility{
         }
     }
 
+    public static int[] GetRandomNumbersInBetween(int min,int max,int numCount)
+    {
+        int[] result = new int[numCount];
+        int[] sampleArr = new int[max - min + 1];
+        for(int i = 0; i <= max - min; i++)
+        {
+            sampleArr[i] = min + i;
+        }
+        int last = sampleArr.Length - 1;
+        for (int i = last; i >= 0; --i)
+        {
+            // 从当0~当前索引位之间，选择一个数
+            int selection = Random.Range(0,i + 1);
+
+            // 索引位对应的数据交换
+            int temp = sampleArr[i];
+            sampleArr[i] = sampleArr[selection];
+            sampleArr[selection] = temp;
+        }
+        for(int i = 0; i < numCount; i++)
+        {
+            result[i] = sampleArr[i];
+        }
+        return result;
+    }
+
 }

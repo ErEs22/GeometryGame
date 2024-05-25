@@ -12,6 +12,7 @@ public class UIManager : MonoBehaviour
 
     private void Start() {
         InitUIWindow();
+        OpenUI(UIID.UpgradeMenu);
     }
 
     private void OnEnable() {

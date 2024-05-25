@@ -11,7 +11,7 @@ public class UISkillMenu : UIBase
     private Button btn_StartLevel;
 
     private void Awake() {
-        btn_StartLevel = GameObject.Find(path_btn_StartLevel).GetComponent<Button>();
+        btn_StartLevel = transform.Find(path_btn_StartLevel).GetComponent<Button>();
     }
 
     private void OnEnable() {

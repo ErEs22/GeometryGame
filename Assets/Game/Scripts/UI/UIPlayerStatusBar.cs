@@ -20,10 +20,10 @@ public class UIPlayerStatusBar : UIBase
     private TextMeshProUGUI text_ExpValue;
 
     private void Awake() {
-        image_Front_Health = GameObject.Find(path_Image_Front_Health).GetComponent<Image>();
-        image_Front_Exp = GameObject.Find(path_Image_Front_Exp).GetComponent<Image>();
-        text_HealthValue = GameObject.Find(path_Text_Health).GetComponent<TextMeshProUGUI>();
-        text_ExpValue = GameObject.Find(path_Text_Exp).GetComponent<TextMeshProUGUI>();
+        image_Front_Health = transform.Find(path_Image_Front_Health).GetComponent<Image>();
+        image_Front_Exp = transform.Find(path_Image_Front_Exp).GetComponent<Image>();
+        text_HealthValue = transform.Find(path_Text_Health).GetComponent<TextMeshProUGUI>();
+        text_ExpValue = transform.Find(path_Text_Exp).GetComponent<TextMeshProUGUI>();
     }
 
     private void OnEnable() {

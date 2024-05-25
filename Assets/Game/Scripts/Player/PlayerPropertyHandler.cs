@@ -23,6 +23,14 @@ public class PlayerPropertyHandler : MonoBehaviour
     {
         maxHP = playerState.playerData.HP;
     }
+    
+    private void OnEnable() {
+        EventManager.instance.onUpdatePlayerProperty += UpdatePlayerProperties;
+    }
+
+    private void OnDisable() {
+        EventManager.instance.onUpdatePlayerProperty -= UpdatePlayerProperties;
+    }
 
     public void UpdatePlayerProperties(PlayerProperty playerProperty,int changeValue)
     {

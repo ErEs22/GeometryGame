@@ -9,7 +9,7 @@ public class UIFinishMenu : UIBase
     private Button btn_MainMenu;
 
     private void Awake() {
-        btn_MainMenu = GameObject.Find(path_Btn_MainMenu).GetComponent<Button>();
+        btn_MainMenu = transform.Find(path_Btn_MainMenu).GetComponent<Button>();
     }
 
     private void OnEnable() {

@@ -89,6 +89,7 @@ public class PlayerState : MonoBehaviour, ITakeDamage
         this.criticalRate = criticalRate * 0.01f;
         this.attackRange = playerData.attackRange + attackRange;
         this.moveSpeed = Mathf.FloorToInt(playerData.moveSpeed * (1 + (moveSpeed * 0.01f)));
+        EventManager.instance.OnUpdateHealthBar(HP,this.maxHP);
     }
 
     public void TakeDamage(int damage)
