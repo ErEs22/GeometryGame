@@ -30,7 +30,7 @@ public class LevelManager : MonoBehaviour
     }
 
     private void Start() {
-        // StartGame();
+        StartGame();
     }
 
     private void IncreasePlayerUpgradeCount()
@@ -85,7 +85,14 @@ public class LevelManager : MonoBehaviour
         {
             GlobalVar.gameStatus = GameStatus.SkillUI;
             //TODO 当前关卡结束，弹出技能页面，清除屏幕敌人
-            EventManager.instance.OnOpenUI(UIID.UpgradeMenu);
+            if(playerUpgradeCount > 0)
+            {
+                EventManager.instance.OnOpenUI(UIID.UpgradeMenu);
+            }
+            else
+            {
+                EventManager.instance.OnOpenUI(UIID.SkillMenu);
+            }
             EventManager.instance.OnShowUpgradeRewardCount(playerUpgradeCount);
         }
         else if(currentLevel == 20)
@@ -95,6 +102,7 @@ public class LevelManager : MonoBehaviour
             EventManager.instance.OnOpenUI(UIID.FinishMenu);
             Debug.Log("游戏结束，当前关卡：" + currentLevel + "关");
         }
+        EventManager.instance.OnLevelEnd();
     }
     private void UpdateGameAndLevelStatusWhenLevelStart()
     {

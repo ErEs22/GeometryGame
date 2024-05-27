@@ -18,6 +18,7 @@ public class UIUpgradeMenu : UIBase
     public GameObject upgradeTipPrefab;
     public GameObject upgradeItemPrefab;
     public UpgradeItemData_SO[] itemDatas;
+    private int upgradeCount;
 
     private void Awake() {
         btn_Refresh = transform.Find(path_Btn_Refresh).GetComponentInParent<Button>();
@@ -29,6 +30,7 @@ public class UIUpgradeMenu : UIBase
     private void OnEnable() {
         btn_Refresh.onClick.AddListener(OnRefreshClick);
         EventManager.instance.onShowUpgradeRewardCount += UpgradeRewardCount;
+        EventManager.instance.onUpgradeButtonClick += OnUpgradeButtonClick;
         GenerateUpgradeItems(4);
     }
 
@@ -36,12 +38,21 @@ public class UIUpgradeMenu : UIBase
     {
         btn_Refresh.onClick.RemoveAllListeners();
         EventManager.instance.onShowUpgradeRewardCount -= UpgradeRewardCount;
-        ClearAllChilds();
+        EventManager.instance.onUpgradeButtonClick -= OnUpgradeButtonClick;
+        ClearAllChildTips();
     }
 
-    private void ClearAllChilds()
+    private void ClearAllChildTips()
     {
         for(int i = 0; i < upgradeCountTip.transform.childCount; i++)
+        {
+            Destroy(upgradeCountTip.transform.GetChild(i).gameObject);
+        }
+    }
+
+    private void ReduceTips(int reduceCount)
+    {
+        for(int i = 0; i < reduceCount; i++)
         {
             Destroy(upgradeCountTip.transform.GetChild(i).gameObject);
         }
@@ -59,6 +70,7 @@ public class UIUpgradeMenu : UIBase
 
     private void UpgradeRewardCount(int count)
     {
+        upgradeCount = count;
         text_UpgradeRewardCount.text = "UpgradeRewardCount:" + count;
         for(int i = 0; i < count; i++)
         {
@@ -86,5 +98,20 @@ public class UIUpgradeMenu : UIBase
     private void RefreshAllItems()
     {
         GenerateUpgradeItems(4);
+    }
+
+    private void OnUpgradeButtonClick()
+    {
+        Mathf.Clamp(--upgradeCount,0,int.MaxValue);
+        ReduceTips(1);
+        if(upgradeCount <= 0)
+        {
+            CloseUI();
+            EventManager.instance.OnOpenUI(UIID.SkillMenu);
+        }
+        else
+        {
+            RefreshAllItems();
+        }
     }
 }

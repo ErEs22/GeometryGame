@@ -18,6 +18,7 @@ public class PlayerState : MonoBehaviour, ITakeDamage
     private int moveSpeed = 10;
     private int exp = 0;
     private int coin = 0;
+    private int bonusCoin = 0;
     private int currentPlayerLevel = 1;
 
     private void Awake() {
@@ -26,11 +27,13 @@ public class PlayerState : MonoBehaviour, ITakeDamage
     private void OnEnable() {
         EventManager.instance.onInitPlayerStatus += InitData;
         EventManager.instance.onCollectExpBall += CollectExpBall;
+        EventManager.instance.onChangeBonusCoinCount += ChangeBonusCoinCount;
     }
 
     private void OnDisable() {
         EventManager.instance.onInitPlayerStatus -= InitData;
         EventManager.instance.onCollectExpBall -= CollectExpBall;
+        EventManager.instance.onChangeBonusCoinCount -= ChangeBonusCoinCount;
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
@@ -70,6 +73,13 @@ public class PlayerState : MonoBehaviour, ITakeDamage
             EventManager.instance.OnPlayerUpgradeCountIncrease();
         }
         EventManager.instance.OnUpdateExpBar(currentPlayerLevel,exp,currentLevelExpRequire);
+        EventManager.instance.OnUpdateCoinCount(coin);
+    }
+
+    private void ChangeBonusCoinCount(int changeValue)
+    {
+        bonusCoin += changeValue;
+        EventManager.instance.OnUpdateBonusCoinCount(bonusCoin);
     }
 
     private int GetCurrentLevelExpRequire()

@@ -12,7 +12,8 @@ public class UIManager : MonoBehaviour
 
     private void Start() {
         InitUIWindow();
-        OpenUI(UIID.UpgradeMenu);
+        // OpenUI(UIID.UpgradeMenu);
+        // OpenUI(UIID.PlayerStatusBar);
     }
 
     private void OnEnable() {

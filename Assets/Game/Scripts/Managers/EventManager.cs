@@ -13,6 +13,8 @@ public class EventManager : MonoBehaviour
     public event UnityAction onStartLevel = delegate{};
     public event UnityAction<int,int> onUpdateHealthBar = delegate{};
     public event UnityAction<int,int,int> onUpdateExpBar = delegate{};
+    public event UnityAction<int> onUpdateCoinCount = delegate{};
+    public event UnityAction<int> onUpdateBonusCoinCount = delegate{};
     public event UnityAction<int> onInitStatusBar = delegate{};
     public event UnityAction onInitPlayerStatus = delegate{};
     public event UnityAction<Color,Color> onHealthBarFlash = delegate{};
@@ -21,6 +23,9 @@ public class EventManager : MonoBehaviour
     public event UnityAction<int> onShowUpgradeRewardCount = delegate{};
     public event UnityAction onPlayerUpgradeCountIncrease = delegate{};
     public event UnityAction<PlayerProperty,int> onUpdatePlayerProperty = delegate{};
+    public event UnityAction<int> onChangeBonusCoinCount = delegate{};
+    public event UnityAction onLevelEnd = delegate{};
+    public event UnityAction onUpgradeButtonClick = delegate{};
 
     private void Awake() {
         if(instance == null)
@@ -57,6 +62,16 @@ public class EventManager : MonoBehaviour
     public void OnUpdateExpBar(int currentPlayerLevel,int currentExp,int currentLevelMaxExp)
     {
         onUpdateExpBar.Invoke(currentPlayerLevel,currentExp,currentLevelMaxExp);
+    }
+
+    public void OnUpdateCoinCount(int coinCount)
+    {
+        onUpdateCoinCount.Invoke(coinCount);
+    }
+
+    public void OnUpdateBonusCoinCount(int bonusCoinCount)
+    {
+        onUpdateBonusCoinCount.Invoke(bonusCoinCount);
     }
 
     public void OnInitStatusBar(int maxHP)
@@ -97,5 +112,20 @@ public class EventManager : MonoBehaviour
     public void OnUpdatePlayerProperty(PlayerProperty playerProperty,int changeValue)
     {
         onUpdatePlayerProperty.Invoke(playerProperty,changeValue);
+    }
+
+    public void OnChangeBonusCoinCount(int changeValue)
+    {
+        onChangeBonusCoinCount.Invoke(changeValue);
+    }
+
+    public void OnLevelEnd()
+    {
+        onLevelEnd.Invoke();
+    }
+
+    public void OnUpgradeButtonClick()
+    {
+        onUpgradeButtonClick.Invoke();
     }
 }

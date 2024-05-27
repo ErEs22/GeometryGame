@@ -79,5 +79,6 @@ public class UpgradeItem : MonoBehaviour
     private void OnUpgradeBtnClick()
     {
         EventManager.instance.OnUpdatePlayerProperty(itemData.effectProperty,itemData.valueAmount);
+        EventManager.instance.OnUpgradeButtonClick();
     }
 }
