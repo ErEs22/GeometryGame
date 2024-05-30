@@ -32,33 +32,33 @@ public class PlayerPropertyHandler : MonoBehaviour
         EventManager.instance.onUpdatePlayerProperty -= UpdatePlayerProperties;
     }
 
-    public void UpdatePlayerProperties(PlayerProperty playerProperty,int changeValue)
+    public void UpdatePlayerProperties(PlayerProperty playerProperty,int changeAmount)
     {
         switch(playerProperty)
         {
             case PlayerProperty.MaxHP:
-                maxHP += changeValue;
+                maxHP += changeAmount;
             break;
             case PlayerProperty.HPRegeneration:
-                hpRegeneration += changeValue;
+                hpRegeneration += changeAmount;
             break;
             case PlayerProperty.StealHP:
-                stealHP += changeValue;
+                stealHP += changeAmount;
             break;
             case PlayerProperty.DamageMul:
-                damageMul += changeValue;
+                damageMul += changeAmount;
             break;
             case PlayerProperty.AttackSpeed:
-                attackSpeed += changeValue;
+                attackSpeed += changeAmount;
             break;
             case PlayerProperty.CriticalRate:
-                criticalRate += changeValue;
+                criticalRate += changeAmount;
             break;
             case PlayerProperty.AttackRange:
-                attackRange += changeValue;
+                attackRange += changeAmount;
             break;
             case PlayerProperty.MoveSpeed:
-                moveSpeed += changeValue;
+                moveSpeed += changeAmount;
             break;
         }
         playerState.UpdatePlayerStatus(maxHP,hpRegeneration,stealHP,damageMul,attackSpeed,criticalRate,attackRange,moveSpeed);

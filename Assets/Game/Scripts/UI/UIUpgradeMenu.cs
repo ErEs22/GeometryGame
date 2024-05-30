@@ -9,28 +9,61 @@ public class UIUpgradeMenu : UIBase
     private string path_Text_UpgradeRewardCount = "Text_UpgradeRewardCount";
     private string path_UpgradeCountTip = "UpgradeCountTip";
     private string path_UpgradeItems = "UpgradeItems";
+    private string path_Health_PropertyValue = "PlayerStatusInfo/Properties/Health/Text_PropertyValue";
+    private string path_HPRegeneration_PropertyValue = "PlayerStatusInfo/Properties/HPRegeneration/Text_PropertyValue";
+    private string path_StealHP_PropertyValue = "PlayerStatusInfo/Properties/StealHP/Text_PropertyValue";
+    private string path_DamageMul_PropertyValue = "PlayerStatusInfo/Properties/DamageMul/Text_PropertyValue";
+    private string path_AttackSpeed_PropertyValue = "PlayerStatusInfo/Properties/AttackSpeed/Text_PropertyValue";
+    private string path_CriticalRate_PropertyValue = "PlayerStatusInfo/Properties/CriticalRate/Text_PropertyValue";
+    private string path_AttackRange_PropertyValue = "PlayerStatusInfo/Properties/AttackRange/Text_PropertyValue";
+    private string path_MoveSpeed_PropertyValue = "PlayerStatusInfo/Properties/MoveSpeed/Text_PropertyValue";
     //------------
 
     private Button btn_Refresh;
     private Transform upgradeItemsParent;
     private TextMeshProUGUI text_UpgradeRewardCount;
+    private TextMeshProUGUI text_Health_PropertyValue;
+    private TextMeshProUGUI text_HPRegeneration_PropertyValue;
+    private TextMeshProUGUI text_StealHP_PropertyValue;
+    private TextMeshProUGUI text_DamageMul_PropertyValue;
+    private TextMeshProUGUI text_AttackSpeed_PropertyValue;
+    private TextMeshProUGUI text_CriticalRate_PropertyValue;
+    private TextMeshProUGUI text_AttackRange_PropertyValue;
+    private TextMeshProUGUI text_MoveSpeed_PropertyValue;
     private GameObject upgradeCountTip;
     public GameObject upgradeTipPrefab;
     public GameObject upgradeItemPrefab;
     public UpgradeItemData_SO[] itemDatas;
     private int upgradeCount;
+    private int healthPropertyValue;
+    private int hpRegenerationPropertyValue;
+    private int stealHPPropertyValue;
+    private int damageMulPropertyValue;
+    private int attackSpeedPropertyValue;
+    private int criticalRatePropertyValue;
+    private int attackRangePropertyValue;
+    private int moveSpeedPropertyValue;
 
     private void Awake() {
         btn_Refresh = transform.Find(path_Btn_Refresh).GetComponentInParent<Button>();
         text_UpgradeRewardCount = transform.Find(path_Text_UpgradeRewardCount).GetComponent<TextMeshProUGUI>();
         upgradeCountTip = transform.Find(path_UpgradeCountTip).gameObject;
-        upgradeItemsParent = transform.Find(path_UpgradeItems).transform;
+        upgradeItemsParent = transform.Find(path_UpgradeItems);
+        text_Health_PropertyValue = transform.Find(path_Health_PropertyValue).GetComponent<TextMeshProUGUI>();
+        text_HPRegeneration_PropertyValue = transform.Find(path_HPRegeneration_PropertyValue).GetComponent<TextMeshProUGUI>();
+        text_StealHP_PropertyValue = transform.Find(path_StealHP_PropertyValue).GetComponent<TextMeshProUGUI>();
+        text_DamageMul_PropertyValue = transform.Find(path_DamageMul_PropertyValue).GetComponent<TextMeshProUGUI>();
+        text_AttackSpeed_PropertyValue = transform.Find(path_AttackSpeed_PropertyValue).GetComponent<TextMeshProUGUI>();
+        text_CriticalRate_PropertyValue = transform.Find(path_CriticalRate_PropertyValue).GetComponent<TextMeshProUGUI>();
+        text_AttackRange_PropertyValue = transform.Find(path_AttackRange_PropertyValue).GetComponent<TextMeshProUGUI>();
+        text_MoveSpeed_PropertyValue = transform.Find(path_MoveSpeed_PropertyValue).GetComponent<TextMeshProUGUI>();
     }
 
     private void OnEnable() {
         btn_Refresh.onClick.AddListener(OnRefreshClick);
         EventManager.instance.onShowUpgradeRewardCount += UpgradeRewardCount;
         EventManager.instance.onUpgradeButtonClick += OnUpgradeButtonClick;
+        EventManager.instance.onUpdatePlayerProperty += UpdatePlayerStatusPropertiesUI;
         GenerateUpgradeItems(4);
     }
 
@@ -39,6 +72,7 @@ public class UIUpgradeMenu : UIBase
         btn_Refresh.onClick.RemoveAllListeners();
         EventManager.instance.onShowUpgradeRewardCount -= UpgradeRewardCount;
         EventManager.instance.onUpgradeButtonClick -= OnUpgradeButtonClick;
+        EventManager.instance.onUpdatePlayerProperty -= UpdatePlayerStatusPropertiesUI;
         ClearAllChildTips();
     }
 
@@ -112,6 +146,45 @@ public class UIUpgradeMenu : UIBase
         else
         {
             RefreshAllItems();
+        }
+    }
+
+    private void UpdatePlayerStatusPropertiesUI(PlayerProperty playerProperty,int propertyValue)
+    {
+        switch(playerProperty)
+        {
+            case PlayerProperty.MaxHP:
+                healthPropertyValue += propertyValue;
+                text_Health_PropertyValue.text = healthPropertyValue.ToString();
+            break;
+            case PlayerProperty.HPRegeneration:
+                hpRegenerationPropertyValue += propertyValue;
+                text_HPRegeneration_PropertyValue.text = hpRegenerationPropertyValue.ToString();
+            break;
+            case PlayerProperty.StealHP:
+                stealHPPropertyValue += propertyValue;
+                text_StealHP_PropertyValue.text = stealHPPropertyValue.ToString() + "%";
+            break;
+            case PlayerProperty.DamageMul:
+                damageMulPropertyValue += propertyValue;
+                text_DamageMul_PropertyValue.text = damageMulPropertyValue.ToString() + "%";
+            break;
+            case PlayerProperty.AttackSpeed:
+                attackSpeedPropertyValue += propertyValue;
+                text_AttackSpeed_PropertyValue.text = attackSpeedPropertyValue.ToString() + "%";
+            break;
+            case PlayerProperty.CriticalRate:
+                criticalRatePropertyValue += propertyValue;
+                text_CriticalRate_PropertyValue.text = criticalRatePropertyValue.ToString() + "%";
+            break;
+            case PlayerProperty.AttackRange:
+                attackRangePropertyValue += propertyValue;
+                text_AttackRange_PropertyValue.text = attackRangePropertyValue.ToString();
+            break;
+            case PlayerProperty.MoveSpeed:
+                moveSpeedPropertyValue += propertyValue;
+                text_MoveSpeed_PropertyValue.text = moveSpeedPropertyValue.ToString() + "%";
+            break;
         }
     }
 }
