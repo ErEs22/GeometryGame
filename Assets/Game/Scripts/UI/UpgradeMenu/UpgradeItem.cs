@@ -53,13 +53,13 @@ public class UpgradeItem : MonoBehaviour
                 text_ItemDescription.text = sign + itemData.valueAmount + "HP";
             break;
             case PlayerProperty.HPRegeneration:
-                text_ItemDescription.text = sign + itemData.valueAmount + "%HPRegeneration";
+                text_ItemDescription.text = sign + itemData.valueAmount + "HPRegeneration";
             break;
             case PlayerProperty.StealHP:
                 text_ItemDescription.text = sign + itemData.valueAmount + "%StealHP";
             break;
             case PlayerProperty.DamageMul:
-                text_ItemDescription.text = sign + itemData.valueAmount + "Damage";
+                text_ItemDescription.text = sign + itemData.valueAmount + "%Damage";
             break;
             case PlayerProperty.AttackSpeed:
                 text_ItemDescription.text = sign + itemData.valueAmount + "%AttackSpeed";

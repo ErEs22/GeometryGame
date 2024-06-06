@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UISkillMenu : UIBase
+public class UIShopMenu : UIBase
 {
     //------------UIComponentRelatePath
     string path_btn_StartLevel = "Btn_StartLevel";
@@ -25,7 +25,7 @@ public class UISkillMenu : UIBase
 
     public override void InitUI()
     {
-        uiID = UIID.SkillMenu;
+        uiID = UIID.ShopMenu;
     }
 
     private void OnStartLevelClick()

@@ -1,3 +1,6 @@
+using System;
+using UnityEngine;
+
 public enum StatusType
 {
     HP,
@@ -21,7 +24,7 @@ public enum GameStatus
 
 public enum UIID
 {
-    SkillMenu,
+    ShopMenu,
     PauseMenu,
     FinishMenu,
     PlayerStatusBar,
@@ -46,6 +49,17 @@ public enum PlayerProperty
     MoveSpeed,
 }
 
+public enum WeaponProperty
+{
+    Damage,
+    CriticalMul,
+    FireInterval,
+    PushBack,
+    AttackRange,
+    StealHP,
+    DamageThrough
+}
+
 public static class EnemyName
 {
     public const string NormalEnemy = "NormalEnemy";
@@ -66,4 +80,27 @@ public static class GameTag
     public const string EnemyProjectile = "EnemyProjectile";
     public const string PlayerProjectile = "PlayerProjectile";
     public const string DropItem = "DropItem";
+}
+
+public static class GameColor
+{
+    public static Color ShopItem_Locked = Color.white;
+    public static Color ShopItem_Level01 = new Color(0, 0, 0, 0);
+    public static Color ShopItem_Level02 = Color.blue;
+    public static Color ShopItem_Level03 = new Color(160f/255f, 32f/255f, 240f/255f);
+    public static Color ShopItem_Level04 = Color.red;
+}
+
+[Serializable]
+public class ShopPropPropertyPair
+{
+    public PlayerProperty playerProperty;
+    public int changeAmount;
+}
+
+[Serializable]
+public class ShopWeaponPropertyPair
+{
+    public WeaponProperty weaponProperty;
+    public float propertyValue;
 }

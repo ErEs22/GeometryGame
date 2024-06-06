@@ -12,11 +12,13 @@ public class LevelManager : MonoBehaviour
     public static LevelStatus levelStatus = LevelStatus.Running;
     EnemyGenerator enemyGenerator;
     EnemyManager enemyManager;
+    PlayerState playerState;
 
     private void Awake()
     {
         enemyGenerator = GetComponent<EnemyGenerator>();
         enemyManager = GetComponent<EnemyManager>();
+        playerState = FindObjectOfType<PlayerState>();
     }
 
     private void OnEnable() {
@@ -88,10 +90,11 @@ public class LevelManager : MonoBehaviour
             if(playerUpgradeCount > 0)
             {
                 EventManager.instance.OnOpenUI(UIID.UpgradeMenu);
+                EventManager.instance.OnInitPlayerProperties(playerState.playerData);
             }
             else
             {
-                EventManager.instance.OnOpenUI(UIID.SkillMenu);
+                EventManager.instance.OnOpenUI(UIID.ShopMenu);
             }
             EventManager.instance.OnShowUpgradeRewardCount(playerUpgradeCount);
         }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -26,6 +27,7 @@ public class EventManager : MonoBehaviour
     public event UnityAction<int> onChangeBonusCoinCount = delegate{};
     public event UnityAction onLevelEnd = delegate{};
     public event UnityAction onUpgradeButtonClick = delegate{};
+    public event UnityAction<PlayerData_SO> onInitPlayerProperties = delegate{};
 
     private void Awake() {
         if(instance == null)
@@ -127,5 +129,10 @@ public class EventManager : MonoBehaviour
     public void OnUpgradeButtonClick()
     {
         onUpgradeButtonClick.Invoke();
+    }
+
+    public void OnInitPlayerProperties(PlayerData_SO playerData_SO)
+    {
+        onInitPlayerProperties.Invoke(playerData_SO);
     }
 }

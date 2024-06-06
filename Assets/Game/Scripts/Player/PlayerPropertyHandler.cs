@@ -5,14 +5,14 @@ using UnityEngine;
 public class PlayerPropertyHandler : MonoBehaviour
 {
     private PlayerState playerState;
-    private int maxHP = 100;
-    private int hpRegeneration = 1;
-    private int stealHP = 5;
-    private int damageMul = 0;
-    private int attackSpeed = 0;
-    private int criticalRate = 0;
-    private int attackRange = 0;
-    private int moveSpeed = 0;
+    public static int maxHP = 100;
+    public static int hpRegeneration = 1;
+    public static int stealHP = 5;
+    public static int damageMul = 0;
+    public static int attackSpeed = 0;
+    public static int criticalRate = 0;
+    public static int attackRange = 0;
+    public static int moveSpeed = 0;
 
     private void Awake() {
         playerState = GetComponent<PlayerState>();

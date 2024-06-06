@@ -61,6 +61,7 @@ public class UIUpgradeMenu : UIBase
 
     private void OnEnable() {
         btn_Refresh.onClick.AddListener(OnRefreshClick);
+        EventManager.instance.onInitPlayerProperties += InitPlayerProperties;
         EventManager.instance.onShowUpgradeRewardCount += UpgradeRewardCount;
         EventManager.instance.onUpgradeButtonClick += OnUpgradeButtonClick;
         EventManager.instance.onUpdatePlayerProperty += UpdatePlayerStatusPropertiesUI;
@@ -73,7 +74,22 @@ public class UIUpgradeMenu : UIBase
         EventManager.instance.onShowUpgradeRewardCount -= UpgradeRewardCount;
         EventManager.instance.onUpgradeButtonClick -= OnUpgradeButtonClick;
         EventManager.instance.onUpdatePlayerProperty -= UpdatePlayerStatusPropertiesUI;
+        EventManager.instance.onInitPlayerProperties -= InitPlayerProperties;
         ClearAllChildTips();
+    }
+
+    private void InitPlayerProperties(PlayerData_SO playerData)
+    {
+        //TODO初始化玩家属性，每个角色基本属性不同
+        text_Health_PropertyValue.text = playerData.HP.ToString();
+        text_HPRegeneration_PropertyValue.text = playerData.hpRegeneraePerSecond.ToString();
+        text_StealHP_PropertyValue.text = (playerData.stealHPRate * 100).ToString() + "%";
+        text_DamageMul_PropertyValue.text = ((playerData.damageMul - 1) * 100).ToString() + "%";
+        text_AttackSpeed_PropertyValue.text = ((playerData.attakSpeedMul - 1) * 100).ToString() + "%";
+        text_CriticalRate_PropertyValue.text = playerData.criticalRate.ToString() + "%";
+        text_AttackRange_PropertyValue.text = "0";
+        text_MoveSpeed_PropertyValue.text = playerData.moveSpeed.ToString() + "%";
+        //TODO加载玩家存档，当玩家有处在游戏中的的存档
     }
 
     private void ClearAllChildTips()
@@ -141,7 +157,7 @@ public class UIUpgradeMenu : UIBase
         if(upgradeCount <= 0)
         {
             CloseUI();
-            EventManager.instance.OnOpenUI(UIID.SkillMenu);
+            EventManager.instance.OnOpenUI(UIID.ShopMenu);
         }
         else
         {
