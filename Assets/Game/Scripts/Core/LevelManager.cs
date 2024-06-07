@@ -7,7 +7,7 @@ using UnityEngine;
 public class LevelManager : MonoBehaviour
 {
 
-    public static int currentLevel = 5;
+    public static int currentLevel = 1;
     private int playerUpgradeCount = 0;
     public static LevelStatus levelStatus = LevelStatus.Running;
     EnemyGenerator enemyGenerator;

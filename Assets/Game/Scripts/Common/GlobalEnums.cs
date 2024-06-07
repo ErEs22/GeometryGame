@@ -104,3 +104,9 @@ public class ShopWeaponPropertyPair
     public WeaponProperty weaponProperty;
     public float propertyValue;
 }
+
+public enum ShopItemType
+{
+    Prop,
+    Weapon
+}

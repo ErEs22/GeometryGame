@@ -14,12 +14,12 @@ public class UIBase :MonoBehaviour
 
     }
 
-    public void OpenUI()
+    public virtual void OpenUI()
     {
         gameObject.SetActive(true);
     }
 
-    public void CloseUI()
+    public virtual void CloseUI()
     {
         gameObject.SetActive(false);
     }

@@ -6,32 +6,93 @@ using UnityEngine.UI;
 
 public class ShopItem_Weapon : ShopItem
 {
-    //------------Path
-    private const string path_Img_ItemIcon = "ItemInfo/Img_ItemIcon";
-    private const string path_Text_ItemName = "ItemInfo/Text_ItemName";
-    private const string path_Properties = "ItemInfo/Properties";
-    //------------
     public ShopItemData_Weapon_SO itemData;
-    private Image Img_ItemIcon;
-    private TextMeshProUGUI text_ItemName;
-    private Transform propertiesTrans;
-
-    private void Awake() {
-        Img_ItemIcon = transform.Find(path_Img_ItemIcon).GetComponent<Image>();
-        text_ItemName = transform.Find(path_Text_ItemName).GetComponent<TextMeshProUGUI>();
-        propertiesTrans = transform.Find(path_Properties);
-    }
 
     private void OnEnable() {
-        InitItemProperties();
+        btn_Purchase.onClick.AddListener(OnBtnPurchaseClick);
+        btn_Lock.onClick.AddListener(OnBtnLockClick);
     }
 
     private void OnDisable()
     {
+        btn_Purchase.onClick.RemoveAllListeners();
+        btn_Lock.onClick.RemoveAllListeners();
         ClearItemProperties();
     }
 
-    private void InitItemProperties()
+    private void OnBtnPurchaseClick()
+    {
+        int coinCount = GameCoreData.PlayerData.coin;
+        if(!isAffordable){
+            Debug.Log("Not Enough Coin to Purchase it!");
+            return;
+        }
+        if(coinCount >= itemData.itemCost)
+        {
+            coinCount = Mathf.Clamp(coinCount - itemData.itemCost,0,int.MaxValue);
+            GameCoreData.PlayerData.coin = coinCount;
+        }
+        EventManager.instance.OnUpdateCoinCount();
+    }
+
+    private void OnBtnLockClick()
+    {
+        isLocked = !isLocked;
+        Image img_Lock = btn_Lock.GetComponent<Image>();
+        if(isLocked)
+        {
+            img_Lock.color = Color.white;
+        }
+        else
+        {
+            img_Lock.color = Color.grey;
+        }
+    }
+
+    /// <summary>
+    /// 更新物品UI的信息，包括属性，是否可购买
+    /// </summary>
+    /// <param name="isAffordable">能否购买</param>
+    public override void UpdateUIInfo()
+    {
+        Image img_Lock = btn_Lock.GetComponent<Image>();
+        if(isLocked)
+        {
+            img_Lock.color = Color.white;
+        }
+        else
+        {
+            img_Lock.color= Color.grey;
+        }
+        if(GameCoreData.PlayerData.coin >= itemData.itemCost)
+        {
+            isAffordable = true;
+        }
+        else
+        {
+            isAffordable = false;
+        }
+        TextMeshProUGUI text = btn_Purchase.GetComponentInChildren<TextMeshProUGUI>();
+        if(isAffordable)
+        {
+            text.color = Color.black;
+        }
+        else
+        {
+            text.color = Color.red;
+        }
+        for(int i = 0; i < itemData.ItemProperties.Count; i++)
+        {
+            TextMeshProUGUI textComp = propertiesTrans.GetChild(i).GetComponent<TextMeshProUGUI>();
+            ShopWeaponPropertyPair data = itemData.ItemProperties[i];
+            SetPropertyText(textComp,data.weaponProperty,data.propertyValue);
+        }
+    }
+
+    /// <summary>
+    /// 初始化物品属性栏，生成对应数量的属性文本对象并设置对应数据
+    /// </summary>
+    public void InitItemProperties()
     {
         Img_ItemIcon.sprite = itemData.itemIcon;
         text_ItemName.text = itemData.itemName;
@@ -58,25 +119,25 @@ public class ShopItem_Weapon : ShopItem
         switch(weaponProperty)
         {
             case WeaponProperty.Damage:
-                textComp.text = "Damage:" + propertyValue;
+                textComp.text = "Damage:" + propertyValue * (PlayerPropertyHandler.damageMul * 0.01f + 1);
             break;
             case WeaponProperty.CriticalMul:
                 textComp.text = "CriticalMul:" + propertyValue;
             break;
             case WeaponProperty.FireInterval:
-                textComp.text = "FireInterval" + propertyValue;
+                textComp.text = "FireInterval:" + (propertyValue / (PlayerPropertyHandler.attackSpeed * 0.01f + 1)).ToString("F2");
             break;
             case WeaponProperty.PushBack:
-                textComp.text = "PushBack" + propertyValue;
+                textComp.text = "PushBack:" + propertyValue;
             break;
             case WeaponProperty.AttackRange:
-                textComp.text = "AttackRange" + propertyValue;
+                textComp.text = "AttackRange:" + (propertyValue + PlayerPropertyHandler.attackRange).ToString();
             break;
             case WeaponProperty.StealHP:
-                textComp.text = "StealHP" + propertyValue;
+                textComp.text = "StealHP:" + (propertyValue + PlayerPropertyHandler.stealHP).ToString();
             break;
             case WeaponProperty.DamageThrough:
-                textComp.text = "DamageThrough" + propertyValue;
+                textComp.text = "DamageThrough:" + propertyValue;
             break;
         }
     }

@@ -14,7 +14,7 @@ public class EventManager : MonoBehaviour
     public event UnityAction onStartLevel = delegate{};
     public event UnityAction<int,int> onUpdateHealthBar = delegate{};
     public event UnityAction<int,int,int> onUpdateExpBar = delegate{};
-    public event UnityAction<int> onUpdateCoinCount = delegate{};
+    public event UnityAction onUpdateCoinCount = delegate{};
     public event UnityAction<int> onUpdateBonusCoinCount = delegate{};
     public event UnityAction<int> onInitStatusBar = delegate{};
     public event UnityAction onInitPlayerStatus = delegate{};
@@ -28,6 +28,7 @@ public class EventManager : MonoBehaviour
     public event UnityAction onLevelEnd = delegate{};
     public event UnityAction onUpgradeButtonClick = delegate{};
     public event UnityAction<PlayerData_SO> onInitPlayerProperties = delegate{};
+    public event UnityAction<int> onShopItemPurchase = delegate{};
 
     private void Awake() {
         if(instance == null)
@@ -66,9 +67,9 @@ public class EventManager : MonoBehaviour
         onUpdateExpBar.Invoke(currentPlayerLevel,currentExp,currentLevelMaxExp);
     }
 
-    public void OnUpdateCoinCount(int coinCount)
+    public void OnUpdateCoinCount()
     {
-        onUpdateCoinCount.Invoke(coinCount);
+        onUpdateCoinCount.Invoke();
     }
 
     public void OnUpdateBonusCoinCount(int bonusCoinCount)
@@ -134,5 +135,10 @@ public class EventManager : MonoBehaviour
     public void OnInitPlayerProperties(PlayerData_SO playerData_SO)
     {
         onInitPlayerProperties.Invoke(playerData_SO);
+    }
+
+    public void OnShopItemPurchase(int cost)
+    {
+        onShopItemPurchase.Invoke(cost);
     }
 }

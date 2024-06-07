@@ -17,7 +17,6 @@ public class PlayerState : MonoBehaviour, ITakeDamage
     private int attackRange = 450;
     private int moveSpeed = 10;
     private int exp = 0;
-    private int coin = 0;
     private int bonusCoin = 0;
     private int currentPlayerLevel = 1;
 
@@ -64,7 +63,7 @@ public class PlayerState : MonoBehaviour, ITakeDamage
     {
         int currentLevelExpRequire = GetCurrentLevelExpRequire();
         exp++;
-        coin++;
+        GameCoreData.PlayerData.coin++;
         if(exp >= currentLevelExpRequire)
         {
             //角色升级
@@ -73,7 +72,7 @@ public class PlayerState : MonoBehaviour, ITakeDamage
             EventManager.instance.OnPlayerUpgradeCountIncrease();
         }
         EventManager.instance.OnUpdateExpBar(currentPlayerLevel,exp,currentLevelExpRequire);
-        EventManager.instance.OnUpdateCoinCount(coin);
+        EventManager.instance.OnUpdateCoinCount();
     }
 
     private void ChangeBonusCoinCount(int changeValue)

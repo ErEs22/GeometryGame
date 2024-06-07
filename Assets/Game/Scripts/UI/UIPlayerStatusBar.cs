@@ -79,9 +79,9 @@ public class UIPlayerStatusBar : UIBase
         image_Front_Exp.fillAmount = EyreUtility.Divide(currentExp,currentLevelMaxExp);
     }
 
-    private void UpdateCoinCount(int coinCount)
+    private void UpdateCoinCount()
     {
-        text_CoinCount.text = coinCount.ToString();
+        text_CoinCount.text = GameCoreData.PlayerData.coin.ToString();
     }
 
     private void UpdateBonusCoinCount(int bonusCoinCount)
