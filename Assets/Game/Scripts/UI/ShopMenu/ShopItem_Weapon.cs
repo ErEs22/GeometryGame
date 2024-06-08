@@ -33,6 +33,7 @@ public class ShopItem_Weapon : ShopItem
             GameCoreData.PlayerData.coin = coinCount;
         }
         EventManager.instance.OnUpdateCoinCount();
+        EventManager.instance.OnAddShopItemToInventory(itemData);
     }
 
     private void OnBtnLockClick()
@@ -81,10 +82,10 @@ public class ShopItem_Weapon : ShopItem
         {
             text.color = Color.red;
         }
-        for(int i = 0; i < itemData.ItemProperties.Count; i++)
+        for(int i = 0; i < itemData.itemProperties.Count; i++)
         {
-            TextMeshProUGUI textComp = propertiesTrans.GetChild(i).GetComponent<TextMeshProUGUI>();
-            ShopWeaponPropertyPair data = itemData.ItemProperties[i];
+            TextMeshProUGUI textComp = trans_PropertiesParent.GetChild(i).GetComponent<TextMeshProUGUI>();
+            ShopWeaponPropertyPair data = itemData.itemProperties[i];
             SetPropertyText(textComp,data.weaponProperty,data.propertyValue);
         }
     }
@@ -94,23 +95,23 @@ public class ShopItem_Weapon : ShopItem
     /// </summary>
     public void InitItemProperties()
     {
-        Img_ItemIcon.sprite = itemData.itemIcon;
+        img_ItemIcon.sprite = itemData.itemIcon;
         text_ItemName.text = itemData.itemName;
-        GameObject text_Property = propertiesTrans.GetChild(0).gameObject;
-        SetPropertyText(text_Property.GetComponent<TextMeshProUGUI>(),itemData.ItemProperties[0].weaponProperty,itemData.ItemProperties[0].propertyValue);
-        for(int i = 1; i < itemData.ItemProperties.Count; i++)
+        GameObject text_Property = trans_PropertiesParent.GetChild(0).gameObject;
+        SetPropertyText(text_Property.GetComponent<TextMeshProUGUI>(),itemData.itemProperties[0].weaponProperty,itemData.itemProperties[0].propertyValue);
+        for(int i = 1; i < itemData.itemProperties.Count; i++)
         {
-            TextMeshProUGUI textComp = Instantiate(text_Property,propertiesTrans).GetComponent<TextMeshProUGUI>();
-            ShopWeaponPropertyPair data = itemData.ItemProperties[i];
+            TextMeshProUGUI textComp = Instantiate(text_Property,trans_PropertiesParent).GetComponent<TextMeshProUGUI>();
+            ShopWeaponPropertyPair data = itemData.itemProperties[i];
             SetPropertyText(textComp,data.weaponProperty,data.propertyValue);
         }
     }
 
     private void ClearItemProperties()
     {
-        for(int i = 1; i < propertiesTrans.childCount; i++)
+        for(int i = 1; i < trans_PropertiesParent.childCount; i++)
         {
-            Destroy(propertiesTrans.GetChild(i).gameObject);
+            Destroy(trans_PropertiesParent.GetChild(i).gameObject);
         }
     }
 

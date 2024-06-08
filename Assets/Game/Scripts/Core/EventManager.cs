@@ -29,6 +29,7 @@ public class EventManager : MonoBehaviour
     public event UnityAction onUpgradeButtonClick = delegate{};
     public event UnityAction<PlayerData_SO> onInitPlayerProperties = delegate{};
     public event UnityAction<int> onShopItemPurchase = delegate{};
+    public event UnityAction<ShopItemData_SO> onAddShopItemToInventory = delegate{};
 
     private void Awake() {
         if(instance == null)
@@ -140,5 +141,10 @@ public class EventManager : MonoBehaviour
     public void OnShopItemPurchase(int cost)
     {
         onShopItemPurchase.Invoke(cost);
+    }
+
+    public void OnAddShopItemToInventory(ShopItemData_SO itemData)
+    {
+        onAddShopItemToInventory.Invoke(itemData);
     }
 }

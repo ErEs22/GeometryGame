@@ -13,20 +13,30 @@ public class UIShopMenu : UIBase
     string path_Text_CoinCount = "Shop/Text_CoinCount";
     string path_PropInventoryParent = "PropInventory/Scroll View/Viewport/Items";
     string path_WeaponInventoryParent = "WeaponInventory/Items";
+    string path_PropInfoPanel = "PropInventory/ItemPropInfoPanel";
+    string path_WeaponInfoPanel = "WeaponInventory/ItemWeaponInfoPanel";
     //------------End
     private Button btn_StartLevel;
     private Button btn_Refresh;
     private Transform trans_ItemsParent;
     private Transform trans_PropInventoryParent;
     private Transform trans_WeaponInventoryParent;
+    private PropInfoPanel propInfoPanel;
+    private WeaponInfoPanel weaponInfoPanel;
     private TextMeshProUGUI text_CoinCount;
     [SerializeField]
     private GameObject prefab_ShopItem_Prop;
     [SerializeField]
     private GameObject prefab_ShopItem_Weapon;
     [SerializeField]
+    private GameObject prefab_InventoryItem_Prop;
+    [SerializeField]
+    private GameObject prefab_InventoryItem_Weapon;
+    [SerializeField]
     private List<ShopItemData_SO> allItemDatas = new List<ShopItemData_SO>();
-    private List<ShopItem> allItems = new List<ShopItem>();
+    private List<ShopItem> allShopItems = new List<ShopItem>();
+    private List<Item_Prop> allPropInventoryItems = new List<Item_Prop>();
+    private List<Item_Weapon> allWeaponInventoryItems = new List<Item_Weapon>();
 
     private void Awake()
     {
@@ -36,6 +46,8 @@ public class UIShopMenu : UIBase
         trans_ItemsParent = transform.Find(path_Items);
         trans_PropInventoryParent = transform.Find(path_PropInventoryParent);
         trans_WeaponInventoryParent = transform.Find(path_WeaponInventoryParent);
+        propInfoPanel = transform.Find(path_PropInfoPanel).GetComponent<PropInfoPanel>();
+        weaponInfoPanel = transform.Find(path_WeaponInfoPanel).GetComponent<WeaponInfoPanel>();
     }
 
     private void OnEnable()
@@ -44,6 +56,7 @@ public class UIShopMenu : UIBase
         btn_Refresh.onClick.AddListener(OnBtnRefreshClick);
         EventManager.instance.onUpdateCoinCount += UpdateCoinCountText;
         EventManager.instance.onUpdateCoinCount += UpdateAllItemsUIInfo;
+        EventManager.instance.onAddShopItemToInventory += AddShopItemToInventory;
     }
 
     private void OnDisable()
@@ -52,6 +65,7 @@ public class UIShopMenu : UIBase
         btn_Refresh.onClick.RemoveAllListeners();
         EventManager.instance.onUpdateCoinCount -= UpdateCoinCountText;
         EventManager.instance.onUpdateCoinCount -= UpdateAllItemsUIInfo;
+        EventManager.instance.onAddShopItemToInventory -= AddShopItemToInventory;
     }
 
     public override void OpenUI()
@@ -68,10 +82,54 @@ public class UIShopMenu : UIBase
 
     private void UpdateAllItemsUIInfo()
     {
-        allItems.ForEach(item =>
+        allShopItems.ForEach(item =>
         {
             item.UpdateUIInfo();
         });
+    }
+
+    private void AddShopItemToInventory(ShopItemData_SO itemData)
+    {
+        switch(itemData.shopItemType)
+        {
+            case ShopItemType.Prop:
+                Item_Prop tempItemProp = CheckItemInPropInventory(itemData as ShopItemData_Prop_SO);
+                //检查背包是否已经存在这个物品，存在直接加一数量，否则添加该物品到背包中
+                if(tempItemProp != null)
+                {
+                    tempItemProp.IncreaseItemPropCount();
+                }
+                else
+                {
+                    Item_Prop itemProp = Instantiate(prefab_InventoryItem_Prop,trans_PropInventoryParent).GetComponent<Item_Prop>();
+                    itemProp.InitItemPropUI(propInfoPanel,itemData);
+                    allPropInventoryItems.Add(itemProp);
+                }
+            break;
+            case ShopItemType.Weapon:
+                //TODO检查背包是否已满（最大放置6个）,同时检查是否可以与背包中的武器进行合成（背包已满情况下）
+                Item_Weapon itemWeapon = Instantiate(prefab_InventoryItem_Weapon,trans_WeaponInventoryParent).GetComponent<Item_Weapon>();
+                itemWeapon.InitItemPropUI(weaponInfoPanel,itemData);
+                allWeaponInventoryItems.Add(itemWeapon);
+            break;
+        }
+    }
+
+    /// <summary>
+    /// 检查道具背包中是否含有该物品，存在则返回该物品，否则返回空
+    /// </summary>
+    /// <param name="itemData">检查的物品</param>
+    /// <returns></returns>
+    private Item_Prop CheckItemInPropInventory(ShopItemData_Prop_SO itemData)
+    {
+        foreach (var item in allPropInventoryItems)
+        {
+            if(itemData.itemName == item.itemData.itemName)
+            {
+                return item;
+            }
+        }
+        return null;
     }
 
     public override void InitUI()
@@ -93,7 +151,7 @@ public class UIShopMenu : UIBase
             for(int i = 0; i < 4; i++)
             {
                 GenerateItem(allItemDatas[EyreUtility.GetRandomNumbersInBetween(0,allItemDatas.Count - 1,1)[0]]);
-                if(allItems.Count >= 4) break;
+                if(allShopItems.Count >= 4) break;
             }
         }
         else
@@ -103,7 +161,7 @@ public class UIShopMenu : UIBase
             ClearShopItems();
             for(int i = 0; i < 4; i++)
             {
-                if(allItems.Count >= 4) break;
+                if(allShopItems.Count >= 4) break;
                 GenerateItem(allItemDatas[EyreUtility.GetRandomNumbersInBetween(0,allItemDatas.Count - 1,1)[0]]);
             }
         }
@@ -114,12 +172,12 @@ public class UIShopMenu : UIBase
     /// </summary>
     private void ClearShopItems()
     {
-        for(int i = 0; i < allItems.Count; i++)
+        for(int i = 0; i < allShopItems.Count; i++)
         {
-            if(!allItems[i].isLocked)
+            if(!allShopItems[i].isLocked)
             {
-                GameObject item = allItems[i].gameObject;
-                allItems.RemoveAt(i);
+                GameObject item = allShopItems[i].gameObject;
+                allShopItems.RemoveAt(i);
                 Destroy(item.gameObject);
                 i--;
             }
@@ -137,14 +195,14 @@ public class UIShopMenu : UIBase
         {
             case ShopItemType.Prop:
                 ShopItem_Prop itemProp = Instantiate(prefab_ShopItem_Prop,trans_ItemsParent).GetComponent<ShopItem_Prop>();
-                allItems.Add(itemProp);
+                allShopItems.Add(itemProp);
                 itemProp.itemData = itemData as ShopItemData_Prop_SO;
                 itemProp.InitItemProperties();
                 itemProp.UpdateUIInfo();
             break;
             case ShopItemType.Weapon:
                 ShopItem_Weapon itemWeapon = Instantiate(prefab_ShopItem_Weapon,trans_ItemsParent).GetComponent<ShopItem_Weapon>();
-                allItems.Add(itemWeapon);
+                allShopItems.Add(itemWeapon);
                 itemWeapon.itemData = itemData as ShopItemData_Weapon_SO;
                 itemWeapon.InitItemProperties();
                 itemWeapon.UpdateUIInfo();

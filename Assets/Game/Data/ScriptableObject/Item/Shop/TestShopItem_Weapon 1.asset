@@ -17,16 +17,16 @@ MonoBehaviour:
   itemType: Weapon
   itemCost: 20
   shopItemType: 1
-  ItemProperties:
+  itemProperties:
   - weaponProperty: 0
-    propertyValue: 10
+    propertyValue: 5
   - weaponProperty: 1
-    propertyValue: 2
+    propertyValue: 5
   - weaponProperty: 2
-    propertyValue: 0.5
+    propertyValue: 5
   - weaponProperty: 3
-    propertyValue: 20
+    propertyValue: 5
   - weaponProperty: 4
-    propertyValue: 400
+    propertyValue: 5
   - weaponProperty: 5
-    propertyValue: 0
+    propertyValue: 5
