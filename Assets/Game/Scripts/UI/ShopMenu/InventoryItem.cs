@@ -9,6 +9,8 @@ public class InventoryItem : MonoBehaviour
     protected const string path_Img_ItemIcon = "Img_ItemIcon";
     //------------
     protected Image img_ItemIcon;
+    [DisplayOnly]
+    public int item_Level = 1;
     public ShopItemData_SO itemData;
 
     protected virtual void Awake() {

@@ -22,18 +22,11 @@ public class ShopItem_Weapon : ShopItem
 
     private void OnBtnPurchaseClick()
     {
-        int coinCount = GameCoreData.PlayerData.coin;
         if(!isAffordable){
             Debug.Log("Not Enough Coin to Purchase it!");
             return;
         }
-        if(coinCount >= itemData.itemCost)
-        {
-            coinCount = Mathf.Clamp(coinCount - itemData.itemCost,0,int.MaxValue);
-            GameCoreData.PlayerData.coin = coinCount;
-        }
-        EventManager.instance.OnUpdateCoinCount();
-        EventManager.instance.OnAddShopItemToInventory(itemData);
+        EventManager.instance.OnAddShopItemToInventory(itemData,this);
     }
 
     private void OnBtnLockClick()

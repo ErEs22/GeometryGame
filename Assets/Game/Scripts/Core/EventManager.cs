@@ -29,7 +29,11 @@ public class EventManager : MonoBehaviour
     public event UnityAction onUpgradeButtonClick = delegate{};
     public event UnityAction<PlayerData_SO> onInitPlayerProperties = delegate{};
     public event UnityAction<int> onShopItemPurchase = delegate{};
-    public event UnityAction<ShopItemData_SO> onAddShopItemToInventory = delegate{};
+    public event UnityAction<ShopItemData_SO,ShopItem> onAddShopItemToInventory = delegate{};
+    public event UnityAction onShowShopMenuMask = delegate{};
+    public event UnityAction onHideShopMenuMask = delegate{};
+    public event UnityAction<Item_Weapon> onCombineWeaponItem = delegate{};
+    public event UnityAction<Item_Weapon> onSellWeaponInventoryItems = delegate{};
 
     private void Awake() {
         if(instance == null)
@@ -143,8 +147,28 @@ public class EventManager : MonoBehaviour
         onShopItemPurchase.Invoke(cost);
     }
 
-    public void OnAddShopItemToInventory(ShopItemData_SO itemData)
+    public void OnAddShopItemToInventory(ShopItemData_SO itemData,ShopItem shopItem)
     {
-        onAddShopItemToInventory.Invoke(itemData);
+        onAddShopItemToInventory.Invoke(itemData,shopItem);
+    }
+
+    public void OnShowShopMenuMask()
+    {
+        onShowShopMenuMask.Invoke();
+    }
+
+    public void OnHideShopMenuMask()
+    {
+        onHideShopMenuMask.Invoke();
+    }
+
+    public void OnCombineWeaponItem(Item_Weapon item_Weapon)
+    {
+        onCombineWeaponItem.Invoke(item_Weapon);
+    }
+
+    public void OnSellWeaponInventoryItems(Item_Weapon item_Weapon)
+    {
+        onSellWeaponInventoryItems.Invoke(item_Weapon);
     }
 }

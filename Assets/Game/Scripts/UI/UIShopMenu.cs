@@ -15,6 +15,7 @@ public class UIShopMenu : UIBase
     string path_WeaponInventoryParent = "WeaponInventory/Items";
     string path_PropInfoPanel = "PropInventory/ItemPropInfoPanel";
     string path_WeaponInfoPanel = "WeaponInventory/ItemWeaponInfoPanel";
+    string path_Img_Mask = "WeaponInventory/Mask";
     //------------End
     private Button btn_StartLevel;
     private Button btn_Refresh;
@@ -23,6 +24,7 @@ public class UIShopMenu : UIBase
     private Transform trans_WeaponInventoryParent;
     private PropInfoPanel propInfoPanel;
     private WeaponInfoPanel weaponInfoPanel;
+    private Image img_Mask;
     private TextMeshProUGUI text_CoinCount;
     [SerializeField]
     private GameObject prefab_ShopItem_Prop;
@@ -36,6 +38,7 @@ public class UIShopMenu : UIBase
     private List<ShopItemData_SO> allItemDatas = new List<ShopItemData_SO>();
     private List<ShopItem> allShopItems = new List<ShopItem>();
     private List<Item_Prop> allPropInventoryItems = new List<Item_Prop>();
+    [SerializeField][DisplayOnly]
     private List<Item_Weapon> allWeaponInventoryItems = new List<Item_Weapon>();
 
     private void Awake()
@@ -48,6 +51,7 @@ public class UIShopMenu : UIBase
         trans_WeaponInventoryParent = transform.Find(path_WeaponInventoryParent);
         propInfoPanel = transform.Find(path_PropInfoPanel).GetComponent<PropInfoPanel>();
         weaponInfoPanel = transform.Find(path_WeaponInfoPanel).GetComponent<WeaponInfoPanel>();
+        img_Mask = transform.Find(path_Img_Mask).GetComponent<Image>();
     }
 
     private void OnEnable()
@@ -57,6 +61,10 @@ public class UIShopMenu : UIBase
         EventManager.instance.onUpdateCoinCount += UpdateCoinCountText;
         EventManager.instance.onUpdateCoinCount += UpdateAllItemsUIInfo;
         EventManager.instance.onAddShopItemToInventory += AddShopItemToInventory;
+        EventManager.instance.onShowShopMenuMask += ShowMask;
+        EventManager.instance.onHideShopMenuMask += HideMask;
+        EventManager.instance.onCombineWeaponItem += CombineWeaponInventoryItems;
+        EventManager.instance.onSellWeaponInventoryItems += SellWeaponInventoryItems;
     }
 
     private void OnDisable()
@@ -66,6 +74,36 @@ public class UIShopMenu : UIBase
         EventManager.instance.onUpdateCoinCount -= UpdateCoinCountText;
         EventManager.instance.onUpdateCoinCount -= UpdateAllItemsUIInfo;
         EventManager.instance.onAddShopItemToInventory -= AddShopItemToInventory;
+        EventManager.instance.onShowShopMenuMask -= ShowMask;
+        EventManager.instance.onHideShopMenuMask -= HideMask;
+        EventManager.instance.onCombineWeaponItem -= CombineWeaponInventoryItems;
+        EventManager.instance.onSellWeaponInventoryItems -= SellWeaponInventoryItems;
+    }
+
+    private void CombineWeaponInventoryItems(Item_Weapon weaponItem)
+    {
+        for(int i = 0; i < allWeaponInventoryItems.Count; i++)
+        {
+            Item_Weapon item = allWeaponInventoryItems[i];
+            //排除自身
+            if(weaponItem == item) continue;
+            if(weaponItem.itemData.itemName == item.itemData.itemName && weaponItem.item_Level == item.item_Level)
+            {
+                allWeaponInventoryItems.Remove(weaponItem);
+                weaponItem.Combine();
+                item.UpgradeItemLevel();
+                return;
+            }
+        }
+        Debug.Log("Fail to combine,not enough weapon in inventory");
+    }
+
+    private void SellWeaponInventoryItems(Item_Weapon weaponItem)
+    {
+        allWeaponInventoryItems.Remove(weaponItem);
+        GameCoreData.PlayerData.coin += (int)(weaponItem.itemData.itemLevel * weaponItem.itemData.itemCost * 0.8);
+        EventManager.instance.OnUpdateCoinCount();
+        Destroy(weaponItem.gameObject);
     }
 
     public override void OpenUI()
@@ -80,6 +118,16 @@ public class UIShopMenu : UIBase
         RefreshAllItems();
     }
 
+    private void ShowMask()
+    {
+        img_Mask.gameObject.SetActive(true);
+    }
+
+    private void HideMask()
+    {
+        img_Mask.gameObject.SetActive(false);
+    }
+
     private void UpdateAllItemsUIInfo()
     {
         allShopItems.ForEach(item =>
@@ -88,8 +136,9 @@ public class UIShopMenu : UIBase
         });
     }
 
-    private void AddShopItemToInventory(ShopItemData_SO itemData)
+    private void AddShopItemToInventory(ShopItemData_SO itemData,ShopItem shopItem)
     {
+        int coinCount = GameCoreData.PlayerData.coin;
         switch(itemData.shopItemType)
         {
             case ShopItemType.Prop:
@@ -101,16 +150,60 @@ public class UIShopMenu : UIBase
                 }
                 else
                 {
+                    if(coinCount >= itemData.itemCost)
+                    {
+                        coinCount = Mathf.Clamp(coinCount - itemData.itemCost,0,int.MaxValue);
+                        GameCoreData.PlayerData.coin = coinCount;
+                    }
+                    EventManager.instance.OnUpdateCoinCount();
                     Item_Prop itemProp = Instantiate(prefab_InventoryItem_Prop,trans_PropInventoryParent).GetComponent<Item_Prop>();
                     itemProp.InitItemPropUI(propInfoPanel,itemData);
                     allPropInventoryItems.Add(itemProp);
+                    shopItem.img_HideMask.gameObject.SetActive(true);
+                    shopItem.isLocked = false;
                 }
             break;
             case ShopItemType.Weapon:
                 //TODO检查背包是否已满（最大放置6个）,同时检查是否可以与背包中的武器进行合成（背包已满情况下）
-                Item_Weapon itemWeapon = Instantiate(prefab_InventoryItem_Weapon,trans_WeaponInventoryParent).GetComponent<Item_Weapon>();
-                itemWeapon.InitItemPropUI(weaponInfoPanel,itemData);
-                allWeaponInventoryItems.Add(itemWeapon);
+                if(allWeaponInventoryItems.Count >= 6)
+                {
+                    for(int i = 0; i < allWeaponInventoryItems.Count; i++)
+                    {
+                        Item_Weapon item = allWeaponInventoryItems[i];
+                        if(itemData.itemName == item.itemData.itemName && itemData.itemLevel == item.item_Level)
+                        {
+                            item.UpgradeItemLevel();
+                            if(coinCount >= itemData.itemCost)
+                            {
+                                coinCount = Mathf.Clamp(coinCount - itemData.itemCost,0,int.MaxValue);
+                                GameCoreData.PlayerData.coin = coinCount;
+                            }
+                            EventManager.instance.OnUpdateCoinCount();
+                            shopItem.img_HideMask.gameObject.SetActive(true);
+                            shopItem.isLocked = false;
+                            break;
+                        }
+                        if(i == 6)
+                        {
+                            Debug.Log("The weapon inventory is full,you need to clear some space to purchase it");
+                            return;
+                        }
+                    }
+                }
+                else
+                {
+                    if(coinCount >= itemData.itemCost)
+                    {
+                        coinCount = Mathf.Clamp(coinCount - itemData.itemCost,0,int.MaxValue);
+                        GameCoreData.PlayerData.coin = coinCount;
+                    }
+                    EventManager.instance.OnUpdateCoinCount();
+                    Item_Weapon itemWeapon = Instantiate(prefab_InventoryItem_Weapon,trans_WeaponInventoryParent).GetComponent<Item_Weapon>();
+                    itemWeapon.InitItemPropUI(weaponInfoPanel,itemData);
+                    allWeaponInventoryItems.Add(itemWeapon);
+                    shopItem.img_HideMask.gameObject.SetActive(true);
+                    shopItem.isLocked = false;
+                }
             break;
         }
     }
