@@ -35,11 +35,17 @@ public class ShopItem_Weapon : ShopItem
         Image img_Lock = btn_Lock.GetComponent<Image>();
         if(isLocked)
         {
-            img_Lock.color = Color.white;
+            ColorBlock b = new ColorBlock();
+            b = btn_Lock.colors;
+            b.normalColor = Color.white;
+            btn_Lock.colors = b;
         }
         else
         {
-            img_Lock.color = Color.grey;
+            ColorBlock b = new ColorBlock();
+            b = btn_Lock.colors;
+            b.normalColor = Color.grey;
+            btn_Lock.colors = b;
         }
     }
 
@@ -52,11 +58,17 @@ public class ShopItem_Weapon : ShopItem
         Image img_Lock = btn_Lock.GetComponent<Image>();
         if(isLocked)
         {
-            img_Lock.color = Color.white;
+            ColorBlock b = new ColorBlock();
+            b = btn_Lock.colors;
+            b.normalColor = Color.white;
+            btn_Lock.colors = b;
         }
         else
         {
-            img_Lock.color= Color.grey;
+            ColorBlock b = new ColorBlock();
+            b = btn_Lock.colors;
+            b.normalColor = Color.grey;
+            btn_Lock.colors = b;
         }
         if(GameCoreData.PlayerData.coin >= itemData.itemCost)
         {
@@ -113,22 +125,22 @@ public class ShopItem_Weapon : ShopItem
         switch(weaponProperty)
         {
             case WeaponProperty.Damage:
-                textComp.text = "Damage:" + propertyValue * (PlayerPropertyHandler.damageMul * 0.01f + 1);
+                textComp.text = "Damage:" + propertyValue * (GameCoreData.PlayerData.damageMul * 0.01f + 1);
             break;
             case WeaponProperty.CriticalMul:
                 textComp.text = "CriticalMul:" + propertyValue;
             break;
             case WeaponProperty.FireInterval:
-                textComp.text = "FireInterval:" + (propertyValue / (PlayerPropertyHandler.attackSpeed * 0.01f + 1)).ToString("F2");
+                textComp.text = "FireInterval:" + (propertyValue / (GameCoreData.PlayerData.attackSpeedMul * 0.01f + 1)).ToString("F2");
             break;
             case WeaponProperty.PushBack:
                 textComp.text = "PushBack:" + propertyValue;
             break;
             case WeaponProperty.AttackRange:
-                textComp.text = "AttackRange:" + (propertyValue + PlayerPropertyHandler.attackRange).ToString();
+                textComp.text = "AttackRange:" + (propertyValue + GameCoreData.PlayerData.attackRange).ToString();
             break;
             case WeaponProperty.StealHP:
-                textComp.text = "StealHP:" + (propertyValue + PlayerPropertyHandler.stealHP).ToString();
+                textComp.text = "StealHP:" + (propertyValue + GameCoreData.PlayerData.stealHP).ToString();
             break;
             case WeaponProperty.DamageThrough:
                 textComp.text = "DamageThrough:" + propertyValue;

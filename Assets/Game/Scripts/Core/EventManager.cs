@@ -27,19 +27,30 @@ public class EventManager : MonoBehaviour
     public event UnityAction<int> onChangeBonusCoinCount = delegate{};
     public event UnityAction onLevelEnd = delegate{};
     public event UnityAction onUpgradeButtonClick = delegate{};
-    public event UnityAction<PlayerData_SO> onInitPlayerProperties = delegate{};
     public event UnityAction<int> onShopItemPurchase = delegate{};
     public event UnityAction<ShopItemData_SO,ShopItem> onAddShopItemToInventory = delegate{};
     public event UnityAction onShowShopMenuMask = delegate{};
     public event UnityAction onHideShopMenuMask = delegate{};
     public event UnityAction<Item_Weapon> onCombineWeaponItem = delegate{};
     public event UnityAction<Item_Weapon> onSellWeaponInventoryItems = delegate{};
+    public event UnityAction<CharacterData_SO> onUpdateSelectCharacterInfo = delegate{};
+    public event UnityAction onStartGame = delegate{};
 
     private void Awake() {
         if(instance == null)
         {
             instance = this;
         }
+    }
+
+    public void OnStartGame()
+    {
+        onStartGame.Invoke();
+    }
+
+    public void OnUpdateSelectCharacterInfo(CharacterData_SO data)
+    {
+        onUpdateSelectCharacterInfo.Invoke(data);
     }
 
     public void OnUICountDown(int start,int end,int interval)
@@ -119,6 +130,33 @@ public class EventManager : MonoBehaviour
 
     public void OnUpdatePlayerProperty(PlayerProperty playerProperty,int changeValue)
     {
+        switch(playerProperty)
+        {
+            case PlayerProperty.MaxHP:
+                GameCoreData.PlayerData.maxHP += changeValue;
+            break;
+            case PlayerProperty.HPRegeneration:
+                GameCoreData.PlayerData.hpRegeneration += changeValue;
+            break;
+            case PlayerProperty.StealHP:
+                GameCoreData.PlayerData.stealHP += changeValue;
+            break;
+            case PlayerProperty.DamageMul:
+                GameCoreData.PlayerData.damageMul += changeValue;
+            break;
+            case PlayerProperty.AttackSpeed:
+                GameCoreData.PlayerData.attackSpeedMul += changeValue;
+            break;
+            case PlayerProperty.CriticalRate:
+                GameCoreData.PlayerData.criticalRate += changeValue;
+            break;
+            case PlayerProperty.AttackRange:
+                GameCoreData.PlayerData.attackRange += changeValue;
+            break;
+            case PlayerProperty.MoveSpeed:
+                GameCoreData.PlayerData.moveSpeed += changeValue;
+            break;
+        }
         onUpdatePlayerProperty.Invoke(playerProperty,changeValue);
     }
 
@@ -135,11 +173,6 @@ public class EventManager : MonoBehaviour
     public void OnUpgradeButtonClick()
     {
         onUpgradeButtonClick.Invoke();
-    }
-
-    public void OnInitPlayerProperties(PlayerData_SO playerData_SO)
-    {
-        onInitPlayerProperties.Invoke(playerData_SO);
     }
 
     public void OnShopItemPurchase(int cost)

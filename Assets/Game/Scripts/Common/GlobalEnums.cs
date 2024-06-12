@@ -29,6 +29,7 @@ public enum UIID
     FinishMenu,
     PlayerStatusBar,
     UpgradeMenu,
+    CharacterSelectMenu,
 }
 
 public enum CompareSign

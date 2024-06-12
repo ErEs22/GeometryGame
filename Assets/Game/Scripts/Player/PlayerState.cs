@@ -6,13 +6,13 @@ using UnityEngine;
 public class PlayerState : MonoBehaviour, ITakeDamage
 {
     private PlayerManager playerManager;
-    public PlayerData_SO playerData;
+    public CharacterData_SO playerData;
     private int HP = 20;
     private int maxHP = 20;
     private int hpRegeneraePerSecond = 0;
     private float stealHPRate = 0.0f;
     private float damageMul = 1.0f;
-    private float attakSpeedMul = 1.0f;
+    private float attackSpeedMul = 1.0f;
     private float criticalRate = 0.0f;
     private int attackRange = 450;
     private int moveSpeed = 10;
@@ -49,13 +49,21 @@ public class PlayerState : MonoBehaviour, ITakeDamage
     {
         HP = playerData.HP;
         maxHP = playerData.HP;
-        hpRegeneraePerSecond = playerData.hpRegeneraePerSecond;
+        hpRegeneraePerSecond = playerData.hpRegeneratePerSecond;
         stealHPRate = playerData.stealHPRate;
         damageMul = playerData.damageMul;
-        attakSpeedMul = playerData.attakSpeedMul;
+        attackSpeedMul = playerData.attackSpeedMul;
         criticalRate = playerData.criticalRate;
         attackRange = playerData.attackRange;
         moveSpeed = playerData.moveSpeed;
+        GameCoreData.PlayerData.maxHP = maxHP;
+        GameCoreData.PlayerData.hpRegeneration = hpRegeneraePerSecond;
+        GameCoreData.PlayerData.stealHP = (int)(stealHPRate * 100);
+        GameCoreData.PlayerData.damageMul = (int)((damageMul - 1) * 100);
+        GameCoreData.PlayerData.attackSpeedMul = (int)((attackSpeedMul - 1) * 100);
+        GameCoreData.PlayerData.criticalRate = (int)(criticalRate * 100);
+        GameCoreData.PlayerData.attackRange = 0;
+        GameCoreData.PlayerData.moveSpeed = (int)((moveSpeed - 1) * 100);
         EventManager.instance.OnInitStatusBar(maxHP);
     }
 
@@ -63,12 +71,15 @@ public class PlayerState : MonoBehaviour, ITakeDamage
     {
         int currentLevelExpRequire = GetCurrentLevelExpRequire();
         exp++;
+        GameCoreData.PlayerData.exp++;
         GameCoreData.PlayerData.coin++;
         if(exp >= currentLevelExpRequire)
         {
             //角色升级
             exp = 0;
+            GameCoreData.PlayerData.exp = 0;
             currentPlayerLevel++;
+            GameCoreData.PlayerData.currentPlayerLevel++;
             EventManager.instance.OnPlayerUpgradeCountIncrease();
         }
         EventManager.instance.OnUpdateExpBar(currentPlayerLevel,exp,currentLevelExpRequire);
@@ -94,7 +105,7 @@ public class PlayerState : MonoBehaviour, ITakeDamage
         hpRegeneraePerSecond = hpRegeneration;
         stealHPRate = stealHP * 0.01f;
         this.damageMul = 1 + (damageMul * 0.01f);
-        attakSpeedMul = 1 + (attackSpeed * 0.01f);
+        attackSpeedMul = 1 + (attackSpeed * 0.01f);
         this.criticalRate = criticalRate * 0.01f;
         this.attackRange = playerData.attackRange + attackRange;
         this.moveSpeed = Mathf.FloorToInt(playerData.moveSpeed * (1 + (moveSpeed * 0.01f)));

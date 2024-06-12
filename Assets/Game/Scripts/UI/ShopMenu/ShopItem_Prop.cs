@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -34,11 +32,19 @@ public class ShopItem_Prop : ShopItem
         Image img_Lock = btn_Lock.GetComponent<Image>();
         if(isLocked)
         {
-            img_Lock.color = Color.white;
+            ColorBlock b = new ColorBlock();
+            b = btn_Lock.colors;
+            b.normalColor = Color.white;
+            btn_Lock.colors = b;
+            // img_Lock.color = Color.white;
         }
         else
         {
-            img_Lock.color = Color.grey;
+            ColorBlock b = new ColorBlock();
+            b = btn_Lock.colors;
+            b.normalColor = Color.grey;
+            btn_Lock.colors = b;
+            // img_Lock.color = Color.grey;
         }
     }
 
@@ -51,11 +57,17 @@ public class ShopItem_Prop : ShopItem
         Image img_Lock = btn_Lock.GetComponent<Image>();
         if(isLocked)
         {
-            img_Lock.color = Color.white;
+            ColorBlock b = new ColorBlock();
+            b = btn_Lock.colors;
+            b.normalColor = Color.white;
+            btn_Lock.colors = b;
         }
         else
         {
-            img_Lock.color= Color.grey;
+            ColorBlock b = new ColorBlock();
+            b = btn_Lock.colors;
+            b.normalColor = Color.grey;
+            btn_Lock.colors = b;
         }
         if(GameCoreData.PlayerData.coin >= itemData.itemCost)
         {

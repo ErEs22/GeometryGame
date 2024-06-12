@@ -23,16 +23,18 @@ public class LevelManager : MonoBehaviour
 
     private void OnEnable() {
         EventManager.instance.onStartLevel += StartLevel;
+        EventManager.instance.onStartGame += StartGame;
         EventManager.instance.onPlayerUpgradeCountIncrease += IncreasePlayerUpgradeCount;
     }
 
     private void OnDisable() {
         EventManager.instance.onStartLevel -= StartLevel;
+        EventManager.instance.onStartGame -= StartGame;
         EventManager.instance.onPlayerUpgradeCountIncrease -= IncreasePlayerUpgradeCount;
     }
 
     private void Start() {
-        StartGame();
+        // StartGame();
     }
 
     private void IncreasePlayerUpgradeCount()
@@ -90,7 +92,6 @@ public class LevelManager : MonoBehaviour
             if(playerUpgradeCount > 0)
             {
                 EventManager.instance.OnOpenUI(UIID.UpgradeMenu);
-                EventManager.instance.OnInitPlayerProperties(playerState.playerData);
             }
             else
             {

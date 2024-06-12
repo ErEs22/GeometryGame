@@ -56,7 +56,6 @@ public class Item_Weapon : InventoryItem,IPointerEnterHandler,IPointerExitHandle
     private void HideItemInfo()
     {
         weaponInfoPanel.transform.position = new Vector3(-9999,-9999);
-        weaponInfoPanel.ClearPropInfo();
     }
 
     public void OnPointerExit(PointerEventData eventData)

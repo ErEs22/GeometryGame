@@ -37,28 +37,28 @@ public class PlayerPropertyHandler : MonoBehaviour
         switch(playerProperty)
         {
             case PlayerProperty.MaxHP:
-                maxHP += changeAmount;
+                maxHP = GameCoreData.PlayerData.maxHP;
             break;
             case PlayerProperty.HPRegeneration:
-                hpRegeneration += changeAmount;
+                hpRegeneration = GameCoreData.PlayerData.hpRegeneration;
             break;
             case PlayerProperty.StealHP:
-                stealHP += changeAmount;
+                stealHP = GameCoreData.PlayerData.stealHP;
             break;
             case PlayerProperty.DamageMul:
-                damageMul += changeAmount;
+                damageMul = GameCoreData.PlayerData.damageMul;
             break;
             case PlayerProperty.AttackSpeed:
-                attackSpeed += changeAmount;
+                attackSpeed = GameCoreData.PlayerData.attackSpeedMul;
             break;
             case PlayerProperty.CriticalRate:
-                criticalRate += changeAmount;
+                criticalRate = GameCoreData.PlayerData.criticalRate;
             break;
             case PlayerProperty.AttackRange:
-                attackRange += changeAmount;
+                attackRange = GameCoreData.PlayerData.attackRange;
             break;
             case PlayerProperty.MoveSpeed:
-                moveSpeed += changeAmount;
+                moveSpeed = GameCoreData.PlayerData.moveSpeed;
             break;
         }
         playerState.UpdatePlayerStatus(maxHP,hpRegeneration,stealHP,damageMul,attackSpeed,criticalRate,attackRange,moveSpeed);

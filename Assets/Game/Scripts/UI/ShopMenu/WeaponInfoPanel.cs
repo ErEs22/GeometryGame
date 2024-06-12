@@ -66,6 +66,7 @@ public class WeaponInfoPanel : MonoBehaviour
 
     public void DisplayPropInfo(ShopItemData_Weapon_SO itemData)
     {
+        ClearPropInfo();
         img_ItemIcon.sprite = itemData.itemIcon;
         text_ItemName.text = itemData.itemName;
         text_ItemType.text = itemData.itemType;

@@ -16,17 +16,18 @@ MonoBehaviour:
   itemName: Monkey
   itemType: Weapon
   itemCost: 20
+  itemLevel: 1
   shopItemType: 1
   itemProperties:
   - weaponProperty: 0
     propertyValue: 5
   - weaponProperty: 1
-    propertyValue: 5
+    propertyValue: 3
   - weaponProperty: 2
-    propertyValue: 5
+    propertyValue: 0.4
   - weaponProperty: 3
-    propertyValue: 5
+    propertyValue: 25
   - weaponProperty: 4
-    propertyValue: 5
+    propertyValue: 450
   - weaponProperty: 5
-    propertyValue: 5
+    propertyValue: 3

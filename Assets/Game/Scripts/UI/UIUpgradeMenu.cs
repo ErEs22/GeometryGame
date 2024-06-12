@@ -61,11 +61,11 @@ public class UIUpgradeMenu : UIBase
 
     private void OnEnable() {
         btn_Refresh.onClick.AddListener(OnRefreshClick);
-        EventManager.instance.onInitPlayerProperties += InitPlayerProperties;
         EventManager.instance.onShowUpgradeRewardCount += UpgradeRewardCount;
         EventManager.instance.onUpgradeButtonClick += OnUpgradeButtonClick;
         EventManager.instance.onUpdatePlayerProperty += UpdatePlayerStatusPropertiesUI;
         GenerateUpgradeItems(4);
+        InitPlayerProperties();
     }
 
     private void OnDisable()
@@ -74,21 +74,20 @@ public class UIUpgradeMenu : UIBase
         EventManager.instance.onShowUpgradeRewardCount -= UpgradeRewardCount;
         EventManager.instance.onUpgradeButtonClick -= OnUpgradeButtonClick;
         EventManager.instance.onUpdatePlayerProperty -= UpdatePlayerStatusPropertiesUI;
-        EventManager.instance.onInitPlayerProperties -= InitPlayerProperties;
         ClearAllChildTips();
     }
 
-    private void InitPlayerProperties(PlayerData_SO playerData)
+    private void InitPlayerProperties()
     {
         //TODO初始化玩家属性，每个角色基本属性不同
-        text_Health_PropertyValue.text = playerData.HP.ToString();
-        text_HPRegeneration_PropertyValue.text = playerData.hpRegeneraePerSecond.ToString();
-        text_StealHP_PropertyValue.text = (playerData.stealHPRate * 100).ToString() + "%";
-        text_DamageMul_PropertyValue.text = ((playerData.damageMul - 1) * 100).ToString() + "%";
-        text_AttackSpeed_PropertyValue.text = ((playerData.attakSpeedMul - 1) * 100).ToString() + "%";
-        text_CriticalRate_PropertyValue.text = playerData.criticalRate.ToString() + "%";
-        text_AttackRange_PropertyValue.text = "0";
-        text_MoveSpeed_PropertyValue.text = playerData.moveSpeed.ToString() + "%";
+        text_Health_PropertyValue.text = GameCoreData.PlayerData.maxHP.ToString();
+        text_HPRegeneration_PropertyValue.text = GameCoreData.PlayerData.hpRegeneration.ToString();
+        text_StealHP_PropertyValue.text = GameCoreData.PlayerData.stealHP.ToString() + "%";
+        text_DamageMul_PropertyValue.text = GameCoreData.PlayerData.damageMul.ToString() + "%";
+        text_AttackSpeed_PropertyValue.text = GameCoreData.PlayerData.attackSpeedMul.ToString() + "%";
+        text_CriticalRate_PropertyValue.text = GameCoreData.PlayerData.criticalRate.ToString() + "%";
+        text_AttackRange_PropertyValue.text = GameCoreData.PlayerData.attackRange.ToString();
+        text_MoveSpeed_PropertyValue.text = GameCoreData.PlayerData.moveSpeed.ToString() + "%";
         //TODO加载玩家存档，当玩家有处在游戏中的的存档
     }
 
@@ -170,35 +169,35 @@ public class UIUpgradeMenu : UIBase
         switch(playerProperty)
         {
             case PlayerProperty.MaxHP:
-                healthPropertyValue += propertyValue;
+                healthPropertyValue = GameCoreData.PlayerData.maxHP;
                 text_Health_PropertyValue.text = healthPropertyValue.ToString();
             break;
             case PlayerProperty.HPRegeneration:
-                hpRegenerationPropertyValue += propertyValue;
+                hpRegenerationPropertyValue = GameCoreData.PlayerData.hpRegeneration;
                 text_HPRegeneration_PropertyValue.text = hpRegenerationPropertyValue.ToString();
             break;
             case PlayerProperty.StealHP:
-                stealHPPropertyValue += propertyValue;
+                stealHPPropertyValue = GameCoreData.PlayerData.stealHP;
                 text_StealHP_PropertyValue.text = stealHPPropertyValue.ToString() + "%";
             break;
             case PlayerProperty.DamageMul:
-                damageMulPropertyValue += propertyValue;
+                damageMulPropertyValue = GameCoreData.PlayerData.damageMul;
                 text_DamageMul_PropertyValue.text = damageMulPropertyValue.ToString() + "%";
             break;
             case PlayerProperty.AttackSpeed:
-                attackSpeedPropertyValue += propertyValue;
+                attackSpeedPropertyValue = GameCoreData.PlayerData.attackSpeedMul;
                 text_AttackSpeed_PropertyValue.text = attackSpeedPropertyValue.ToString() + "%";
             break;
             case PlayerProperty.CriticalRate:
-                criticalRatePropertyValue += propertyValue;
+                criticalRatePropertyValue = GameCoreData.PlayerData.criticalRate;
                 text_CriticalRate_PropertyValue.text = criticalRatePropertyValue.ToString() + "%";
             break;
             case PlayerProperty.AttackRange:
-                attackRangePropertyValue += propertyValue;
+                attackRangePropertyValue = GameCoreData.PlayerData.attackRange;
                 text_AttackRange_PropertyValue.text = attackRangePropertyValue.ToString();
             break;
             case PlayerProperty.MoveSpeed:
-                moveSpeedPropertyValue += propertyValue;
+                moveSpeedPropertyValue = GameCoreData.PlayerData.moveSpeed;
                 text_MoveSpeed_PropertyValue.text = moveSpeedPropertyValue.ToString() + "%";
             break;
         }

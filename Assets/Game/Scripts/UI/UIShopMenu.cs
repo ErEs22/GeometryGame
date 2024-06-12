@@ -16,6 +16,14 @@ public class UIShopMenu : UIBase
     string path_PropInfoPanel = "PropInventory/ItemPropInfoPanel";
     string path_WeaponInfoPanel = "WeaponInventory/ItemWeaponInfoPanel";
     string path_Img_Mask = "WeaponInventory/Mask";
+    private string path_Health_PropertyValue = "PlayerStatusInfo/Properties/Health/Text_PropertyValue";
+    private string path_HPRegeneration_PropertyValue = "PlayerStatusInfo/Properties/HPRegeneration/Text_PropertyValue";
+    private string path_StealHP_PropertyValue = "PlayerStatusInfo/Properties/StealHP/Text_PropertyValue";
+    private string path_DamageMul_PropertyValue = "PlayerStatusInfo/Properties/DamageMul/Text_PropertyValue";
+    private string path_AttackSpeed_PropertyValue = "PlayerStatusInfo/Properties/AttackSpeed/Text_PropertyValue";
+    private string path_CriticalRate_PropertyValue = "PlayerStatusInfo/Properties/CriticalRate/Text_PropertyValue";
+    private string path_AttackRange_PropertyValue = "PlayerStatusInfo/Properties/AttackRange/Text_PropertyValue";
+    private string path_MoveSpeed_PropertyValue = "PlayerStatusInfo/Properties/MoveSpeed/Text_PropertyValue";
     //------------End
     private Button btn_StartLevel;
     private Button btn_Refresh;
@@ -25,6 +33,23 @@ public class UIShopMenu : UIBase
     private PropInfoPanel propInfoPanel;
     private WeaponInfoPanel weaponInfoPanel;
     private Image img_Mask;
+    private TextMeshProUGUI text_UpgradeRewardCount;
+    private TextMeshProUGUI text_Health_PropertyValue;
+    private TextMeshProUGUI text_HPRegeneration_PropertyValue;
+    private TextMeshProUGUI text_StealHP_PropertyValue;
+    private TextMeshProUGUI text_DamageMul_PropertyValue;
+    private TextMeshProUGUI text_AttackSpeed_PropertyValue;
+    private TextMeshProUGUI text_CriticalRate_PropertyValue;
+    private TextMeshProUGUI text_AttackRange_PropertyValue;
+    private TextMeshProUGUI text_MoveSpeed_PropertyValue;
+    private int healthPropertyValue;
+    private int hpRegenerationPropertyValue;
+    private int stealHPPropertyValue;
+    private int damageMulPropertyValue;
+    private int attackSpeedPropertyValue;
+    private int criticalRatePropertyValue;
+    private int attackRangePropertyValue;
+    private int moveSpeedPropertyValue;
     private TextMeshProUGUI text_CoinCount;
     [SerializeField]
     private GameObject prefab_ShopItem_Prop;
@@ -52,6 +77,14 @@ public class UIShopMenu : UIBase
         propInfoPanel = transform.Find(path_PropInfoPanel).GetComponent<PropInfoPanel>();
         weaponInfoPanel = transform.Find(path_WeaponInfoPanel).GetComponent<WeaponInfoPanel>();
         img_Mask = transform.Find(path_Img_Mask).GetComponent<Image>();
+        text_Health_PropertyValue = transform.Find(path_Health_PropertyValue).GetComponent<TextMeshProUGUI>();
+        text_HPRegeneration_PropertyValue = transform.Find(path_HPRegeneration_PropertyValue).GetComponent<TextMeshProUGUI>();
+        text_StealHP_PropertyValue = transform.Find(path_StealHP_PropertyValue).GetComponent<TextMeshProUGUI>();
+        text_DamageMul_PropertyValue = transform.Find(path_DamageMul_PropertyValue).GetComponent<TextMeshProUGUI>();
+        text_AttackSpeed_PropertyValue = transform.Find(path_AttackSpeed_PropertyValue).GetComponent<TextMeshProUGUI>();
+        text_CriticalRate_PropertyValue = transform.Find(path_CriticalRate_PropertyValue).GetComponent<TextMeshProUGUI>();
+        text_AttackRange_PropertyValue = transform.Find(path_AttackRange_PropertyValue).GetComponent<TextMeshProUGUI>();
+        text_MoveSpeed_PropertyValue = transform.Find(path_MoveSpeed_PropertyValue).GetComponent<TextMeshProUGUI>();
     }
 
     private void OnEnable()
@@ -65,6 +98,8 @@ public class UIShopMenu : UIBase
         EventManager.instance.onHideShopMenuMask += HideMask;
         EventManager.instance.onCombineWeaponItem += CombineWeaponInventoryItems;
         EventManager.instance.onSellWeaponInventoryItems += SellWeaponInventoryItems;
+        EventManager.instance.onUpdatePlayerProperty += UpdatePlayerStatusPropertiesUI;
+        InitPlayerProperties();
     }
 
     private void OnDisable()
@@ -78,6 +113,21 @@ public class UIShopMenu : UIBase
         EventManager.instance.onHideShopMenuMask -= HideMask;
         EventManager.instance.onCombineWeaponItem -= CombineWeaponInventoryItems;
         EventManager.instance.onSellWeaponInventoryItems -= SellWeaponInventoryItems;
+        EventManager.instance.onUpdatePlayerProperty -= UpdatePlayerStatusPropertiesUI;
+    }
+
+    private void InitPlayerProperties()
+    {
+        //TODO初始化玩家属性，每个角色基本属性不同
+        text_Health_PropertyValue.text = GameCoreData.PlayerData.maxHP.ToString();
+        text_HPRegeneration_PropertyValue.text = GameCoreData.PlayerData.hpRegeneration.ToString();
+        text_StealHP_PropertyValue.text = GameCoreData.PlayerData.stealHP.ToString() + "%";
+        text_DamageMul_PropertyValue.text = GameCoreData.PlayerData.damageMul.ToString() + "%";
+        text_AttackSpeed_PropertyValue.text = GameCoreData.PlayerData.attackSpeedMul.ToString() + "%";
+        text_CriticalRate_PropertyValue.text = GameCoreData.PlayerData.criticalRate.ToString() + "%";
+        text_AttackRange_PropertyValue.text = GameCoreData.PlayerData.attackRange.ToString();
+        text_MoveSpeed_PropertyValue.text = GameCoreData.PlayerData.moveSpeed.ToString() + "%";
+        //TODO加载玩家存档，当玩家有处在游戏中的的存档
     }
 
     private void CombineWeaponInventoryItems(Item_Weapon weaponItem)
@@ -150,18 +200,23 @@ public class UIShopMenu : UIBase
                 }
                 else
                 {
-                    if(coinCount >= itemData.itemCost)
-                    {
-                        coinCount = Mathf.Clamp(coinCount - itemData.itemCost,0,int.MaxValue);
-                        GameCoreData.PlayerData.coin = coinCount;
-                    }
-                    EventManager.instance.OnUpdateCoinCount();
                     Item_Prop itemProp = Instantiate(prefab_InventoryItem_Prop,trans_PropInventoryParent).GetComponent<Item_Prop>();
                     itemProp.InitItemPropUI(propInfoPanel,itemData);
                     allPropInventoryItems.Add(itemProp);
-                    shopItem.img_HideMask.gameObject.SetActive(true);
-                    shopItem.isLocked = false;
                 }
+                if(coinCount >= itemData.itemCost)
+                {
+                    coinCount = Mathf.Clamp(coinCount - itemData.itemCost,0,int.MaxValue);
+                    GameCoreData.PlayerData.coin = coinCount;
+                }
+                ShopItemData_Prop_SO itemPropData = itemData as ShopItemData_Prop_SO;
+                itemPropData.itemProperties.ForEach( item =>
+                {
+                    EventManager.instance.OnUpdatePlayerProperty(item.playerProperty,item.changeAmount);
+                });
+                EventManager.instance.OnUpdateCoinCount();
+                shopItem.img_HideMask.gameObject.SetActive(true);
+                shopItem.isLocked = false;
             break;
             case ShopItemType.Weapon:
                 //TODO检查背包是否已满（最大放置6个）,同时检查是否可以与背包中的武器进行合成（背包已满情况下）
@@ -312,6 +367,45 @@ public class UIShopMenu : UIBase
         else
         {
             return false;
+        }
+    }
+
+    private void UpdatePlayerStatusPropertiesUI(PlayerProperty playerProperty,int propertyValue)
+    {
+        switch(playerProperty)
+        {
+            case PlayerProperty.MaxHP:
+                healthPropertyValue = GameCoreData.PlayerData.maxHP;
+                text_Health_PropertyValue.text = healthPropertyValue.ToString();
+            break;
+            case PlayerProperty.HPRegeneration:
+                hpRegenerationPropertyValue = GameCoreData.PlayerData.hpRegeneration;
+                text_HPRegeneration_PropertyValue.text = hpRegenerationPropertyValue.ToString();
+            break;
+            case PlayerProperty.StealHP:
+                stealHPPropertyValue = GameCoreData.PlayerData.stealHP;
+                text_StealHP_PropertyValue.text = stealHPPropertyValue.ToString() + "%";
+            break;
+            case PlayerProperty.DamageMul:
+                damageMulPropertyValue = GameCoreData.PlayerData.damageMul;
+                text_DamageMul_PropertyValue.text = damageMulPropertyValue.ToString() + "%";
+            break;
+            case PlayerProperty.AttackSpeed:
+                attackSpeedPropertyValue = GameCoreData.PlayerData.attackSpeedMul;
+                text_AttackSpeed_PropertyValue.text = attackSpeedPropertyValue.ToString() + "%";
+            break;
+            case PlayerProperty.CriticalRate:
+                criticalRatePropertyValue = GameCoreData.PlayerData.criticalRate;
+                text_CriticalRate_PropertyValue.text = criticalRatePropertyValue.ToString() + "%";
+            break;
+            case PlayerProperty.AttackRange:
+                attackRangePropertyValue = GameCoreData.PlayerData.attackRange;
+                text_AttackRange_PropertyValue.text = attackRangePropertyValue.ToString();
+            break;
+            case PlayerProperty.MoveSpeed:
+                moveSpeedPropertyValue = GameCoreData.PlayerData.moveSpeed;
+                text_MoveSpeed_PropertyValue.text = moveSpeedPropertyValue.ToString() + "%";
+            break;
         }
     }
 }

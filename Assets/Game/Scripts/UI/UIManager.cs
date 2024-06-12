@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
+    [SerializeField][DisplayOnly]
     private UIBase[] allUI;
 
     private void Awake() {
@@ -12,6 +13,7 @@ public class UIManager : MonoBehaviour
 
     private void Start() {
         InitUIWindow();
+        OpenUI(UIID.CharacterSelectMenu);
         // OpenUI(UIID.UpgradeMenu);
         // OpenUI(UIID.PlayerStatusBar);
     }

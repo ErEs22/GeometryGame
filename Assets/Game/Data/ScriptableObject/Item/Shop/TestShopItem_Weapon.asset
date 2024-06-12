@@ -16,17 +16,18 @@ MonoBehaviour:
   itemName: Narwhal
   itemType: Weapon
   itemCost: 20
+  itemLevel: 1
   shopItemType: 1
   itemProperties:
   - weaponProperty: 0
     propertyValue: 5
   - weaponProperty: 1
-    propertyValue: 5
+    propertyValue: 2.5
   - weaponProperty: 2
-    propertyValue: 5
+    propertyValue: 0.6
   - weaponProperty: 3
-    propertyValue: 5
+    propertyValue: 30
   - weaponProperty: 4
-    propertyValue: 5
+    propertyValue: 500
   - weaponProperty: 5
     propertyValue: 5

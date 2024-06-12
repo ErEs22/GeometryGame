@@ -10,13 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 40d2e9efa04e9084d88404619e31b090, type: 3}
-  m_Name: PlayerData
+  m_Name: CharacterData 7
   m_EditorClassIdentifier: 
+  CharacterIcon: {fileID: 21300000, guid: 96ccd342477770a4e81891f22fa590a9, type: 3}
+  CharacterName: Duck
   HP: 100000
-  moveSpeed: 10
-  hpRegeneraePerSecond: 0
+  hpRegeneratePerSecond: 0
   stealHPRate: 0
   damageMul: 1
-  attakSpeedMul: 1
+  attackSpeedMul: 1
   criticalRate: 0
   attackRange: 450
+  moveSpeed: 1
