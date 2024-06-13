@@ -16,5 +16,15 @@ public class GameCoreData
         public static int exp = 0;
         public static int bonusCoin = 0;
         public static int currentPlayerLevel = 1;
+
+        public static void CostCoin(int cost)
+        {
+            coin -= cost;
+        }
+
+        public static void GainCoin(int gain)
+        {
+            coin += gain;
+        }
     }
 }

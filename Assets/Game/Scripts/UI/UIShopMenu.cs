@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -42,6 +43,7 @@ public class UIShopMenu : UIBase
     private TextMeshProUGUI text_CriticalRate_PropertyValue;
     private TextMeshProUGUI text_AttackRange_PropertyValue;
     private TextMeshProUGUI text_MoveSpeed_PropertyValue;
+    private TextMeshProUGUI text_Btn_Refresh;
     private int healthPropertyValue;
     private int hpRegenerationPropertyValue;
     private int stealHPPropertyValue;
@@ -85,6 +87,7 @@ public class UIShopMenu : UIBase
         text_CriticalRate_PropertyValue = transform.Find(path_CriticalRate_PropertyValue).GetComponent<TextMeshProUGUI>();
         text_AttackRange_PropertyValue = transform.Find(path_AttackRange_PropertyValue).GetComponent<TextMeshProUGUI>();
         text_MoveSpeed_PropertyValue = transform.Find(path_MoveSpeed_PropertyValue).GetComponent<TextMeshProUGUI>();
+        text_Btn_Refresh = btn_Refresh.GetComponentInChildren<TextMeshProUGUI>();
     }
 
     private void OnEnable()
@@ -118,7 +121,6 @@ public class UIShopMenu : UIBase
 
     private void InitPlayerProperties()
     {
-        //TODO初始化玩家属性，每个角色基本属性不同
         text_Health_PropertyValue.text = GameCoreData.PlayerData.maxHP.ToString();
         text_HPRegeneration_PropertyValue.text = GameCoreData.PlayerData.hpRegeneration.ToString();
         text_StealHP_PropertyValue.text = GameCoreData.PlayerData.stealHP.ToString() + "%";
@@ -127,6 +129,8 @@ public class UIShopMenu : UIBase
         text_CriticalRate_PropertyValue.text = GameCoreData.PlayerData.criticalRate.ToString() + "%";
         text_AttackRange_PropertyValue.text = GameCoreData.PlayerData.attackRange.ToString();
         text_MoveSpeed_PropertyValue.text = GameCoreData.PlayerData.moveSpeed.ToString() + "%";
+        //TODO 刷新金币花费根据公式计算
+        text_Btn_Refresh.text = "Refresh(20)";
         //TODO加载玩家存档，当玩家有处在游戏中的的存档
     }
 
@@ -165,7 +169,30 @@ public class UIShopMenu : UIBase
 
     private void OnBtnRefreshClick()
     {
-        RefreshAllItems();
+        if(GameCoreData.PlayerData.coin >= 20)
+        {
+            RefreshAllItems();
+            RefreshCoinCost();
+        }
+    }
+
+    private void RefreshCoinCost()
+    {
+        GameCoreData.PlayerData.CostCoin(20);
+        EventManager.instance.OnUpdateCoinCount();
+        UpdateBtnRefreshUI();
+    }
+
+    private void UpdateBtnRefreshUI()
+    {
+        if(GameCoreData.PlayerData.coin < 20)
+        {
+            text_Btn_Refresh.color = Color.red;
+        }
+        else
+        {
+            text_Btn_Refresh.color = Color.black;
+        }
     }
 
     private void ShowMask()

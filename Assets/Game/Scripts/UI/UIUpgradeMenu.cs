@@ -30,6 +30,7 @@ public class UIUpgradeMenu : UIBase
     private TextMeshProUGUI text_CriticalRate_PropertyValue;
     private TextMeshProUGUI text_AttackRange_PropertyValue;
     private TextMeshProUGUI text_MoveSpeed_PropertyValue;
+    private TextMeshProUGUI text_Btn_Refresh;
     private GameObject upgradeCountTip;
     public GameObject upgradeTipPrefab;
     public GameObject upgradeItemPrefab;
@@ -57,6 +58,7 @@ public class UIUpgradeMenu : UIBase
         text_CriticalRate_PropertyValue = transform.Find(path_CriticalRate_PropertyValue).GetComponent<TextMeshProUGUI>();
         text_AttackRange_PropertyValue = transform.Find(path_AttackRange_PropertyValue).GetComponent<TextMeshProUGUI>();
         text_MoveSpeed_PropertyValue = transform.Find(path_MoveSpeed_PropertyValue).GetComponent<TextMeshProUGUI>();
+        text_Btn_Refresh = btn_Refresh.GetComponentInChildren<TextMeshProUGUI>();
     }
 
     private void OnEnable() {
@@ -88,6 +90,8 @@ public class UIUpgradeMenu : UIBase
         text_CriticalRate_PropertyValue.text = GameCoreData.PlayerData.criticalRate.ToString() + "%";
         text_AttackRange_PropertyValue.text = GameCoreData.PlayerData.attackRange.ToString();
         text_MoveSpeed_PropertyValue.text = GameCoreData.PlayerData.moveSpeed.ToString() + "%";
+        //TODO 刷新金币花费根据公式计算
+        text_Btn_Refresh.text = "Refresh(20)";
         //TODO加载玩家存档，当玩家有处在游戏中的的存档
     }
 
@@ -114,7 +118,30 @@ public class UIUpgradeMenu : UIBase
 
     private void OnRefreshClick()
     {
-        RefreshAllItems();
+        if(GameCoreData.PlayerData.coin >= 20)
+        {
+            RefreshAllItems();
+            RefreshCoinCost();
+        }
+    }
+
+    private void RefreshCoinCost()
+    {
+        GameCoreData.PlayerData.CostCoin(20);
+        EventManager.instance.OnUpdateCoinCount();
+        UpdateBtnRefreshUI();
+    }
+
+    private void UpdateBtnRefreshUI()
+    {
+        if(GameCoreData.PlayerData.coin < 20)
+        {
+            text_Btn_Refresh.color = Color.red;
+        }
+        else
+        {
+            text_Btn_Refresh.color = Color.black;
+        }
     }
 
     private void UpgradeRewardCount(int count)
