@@ -91,8 +91,9 @@ public class ShopItem_Prop : ShopItem
     /// <summary>
     /// 初始化物品属性栏，生成对应数量的属性文本对象并设置对应数据
     /// </summary>
-    public void InitItemProperties()
+    public void InitItemProperties(int itemLevel)
     {
+        this.itemLevel = itemLevel;
         img_ItemIcon.sprite = itemData.itemIcon;
         text_ItemName.text = itemData.itemName;
         GameObject propertyObject = trans_PropertiesParent.GetChild(0).gameObject;
@@ -103,6 +104,7 @@ public class ShopItem_Prop : ShopItem
             ShopPropPropertyPair data = itemData.itemProperties[i];
             SetPropertyText(textComp,data.playerProperty,data.changeAmount);
         }
+        SetItemLevelFilterColor();
     }
 
     private void ClearItemProperties()

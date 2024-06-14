@@ -29,7 +29,8 @@ public class Item_Weapon : InventoryItem,IPointerEnterHandler,IPointerExitHandle
 
     public void UpgradeItemLevel()
     {
-        item_Level++;
+        itemLevel++;
+        SetItemLevelFilterColor();
     }
 
     private void OnBtnItemClick()
@@ -40,11 +41,13 @@ public class Item_Weapon : InventoryItem,IPointerEnterHandler,IPointerExitHandle
         weaponInfoPanel.activeItem = this;
     }
 
-    public void InitItemPropUI(WeaponInfoPanel weaponInfoPanel,ShopItemData_SO itemData)
+    public void InitItemPropUI(WeaponInfoPanel weaponInfoPanel,ShopItemData_SO itemData,int itemLevel)
     {
+        this.itemLevel = itemLevel;
         this.itemData = itemData;
         this.weaponInfoPanel = weaponInfoPanel;
         img_ItemIcon.sprite = itemData.itemIcon;
+        SetItemLevelFilterColor();
     }
 
     private void ShowItemInfo()

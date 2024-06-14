@@ -91,6 +91,7 @@ public static class GameColor
     public static Color ShopItem_Level02 = Color.blue;
     public static Color ShopItem_Level03 = new Color(160f/255f, 32f/255f, 240f/255f);
     public static Color ShopItem_Level04 = Color.red;
+    public static Color ShopItem_Level05 = new Color(1f,0.5f,0,1);
 }
 
 [Serializable]

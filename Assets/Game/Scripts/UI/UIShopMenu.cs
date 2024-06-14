@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
@@ -52,6 +53,7 @@ public class UIShopMenu : UIBase
     private int criticalRatePropertyValue;
     private int attackRangePropertyValue;
     private int moveSpeedPropertyValue;
+    private int refreshCoinCost = 2;
     private TextMeshProUGUI text_CoinCount;
     [SerializeField]
     private GameObject prefab_ShopItem_Prop;
@@ -102,6 +104,7 @@ public class UIShopMenu : UIBase
         EventManager.instance.onCombineWeaponItem += CombineWeaponInventoryItems;
         EventManager.instance.onSellWeaponInventoryItems += SellWeaponInventoryItems;
         EventManager.instance.onUpdatePlayerProperty += UpdatePlayerStatusPropertiesUI;
+        SetFirstRefreshCoinCost();
         InitPlayerProperties();
     }
 
@@ -129,8 +132,6 @@ public class UIShopMenu : UIBase
         text_CriticalRate_PropertyValue.text = GameCoreData.PlayerData.criticalRate.ToString() + "%";
         text_AttackRange_PropertyValue.text = GameCoreData.PlayerData.attackRange.ToString();
         text_MoveSpeed_PropertyValue.text = GameCoreData.PlayerData.moveSpeed.ToString() + "%";
-        //TODO 刷新金币花费根据公式计算
-        text_Btn_Refresh.text = "Refresh(20)";
         //TODO加载玩家存档，当玩家有处在游戏中的的存档
     }
 
@@ -141,7 +142,7 @@ public class UIShopMenu : UIBase
             Item_Weapon item = allWeaponInventoryItems[i];
             //排除自身
             if(weaponItem == item) continue;
-            if(weaponItem.itemData.itemName == item.itemData.itemName && weaponItem.item_Level == item.item_Level)
+            if(weaponItem.itemData.itemName == item.itemData.itemName && weaponItem.itemLevel == item.itemLevel)
             {
                 allWeaponInventoryItems.Remove(weaponItem);
                 weaponItem.Combine();
@@ -169,7 +170,7 @@ public class UIShopMenu : UIBase
 
     private void OnBtnRefreshClick()
     {
-        if(GameCoreData.PlayerData.coin >= 20)
+        if(GameCoreData.PlayerData.coin >= refreshCoinCost)
         {
             RefreshAllItems();
             RefreshCoinCost();
@@ -178,9 +179,22 @@ public class UIShopMenu : UIBase
 
     private void RefreshCoinCost()
     {
-        GameCoreData.PlayerData.CostCoin(20);
+        GameCoreData.PlayerData.CostCoin(refreshCoinCost);
+        SetRefreshIncreaseCoinCost();
         EventManager.instance.OnUpdateCoinCount();
         UpdateBtnRefreshUI();
+    }
+
+    private void SetFirstRefreshCoinCost()
+    {
+        refreshCoinCost = LevelManager.currentLevel + Mathf.Clamp((int)(0.5 * LevelManager.currentLevel),1,int.MaxValue);
+        text_Btn_Refresh.text = "Refresh(" + refreshCoinCost.ToString() + ")";
+    }
+
+    private void SetRefreshIncreaseCoinCost()
+    {
+        refreshCoinCost += Mathf.Clamp((int)(0.5 * LevelManager.currentLevel),1,int.MaxValue);
+        text_Btn_Refresh.text = "Refresh(" + refreshCoinCost.ToString() + ")";
     }
 
     private void UpdateBtnRefreshUI()
@@ -228,7 +242,7 @@ public class UIShopMenu : UIBase
                 else
                 {
                     Item_Prop itemProp = Instantiate(prefab_InventoryItem_Prop,trans_PropInventoryParent).GetComponent<Item_Prop>();
-                    itemProp.InitItemPropUI(propInfoPanel,itemData);
+                    itemProp.InitItemPropUI(propInfoPanel,itemData,shopItem.itemLevel);
                     allPropInventoryItems.Add(itemProp);
                 }
                 if(coinCount >= itemData.itemCost)
@@ -252,7 +266,7 @@ public class UIShopMenu : UIBase
                     for(int i = 0; i < allWeaponInventoryItems.Count; i++)
                     {
                         Item_Weapon item = allWeaponInventoryItems[i];
-                        if(itemData.itemName == item.itemData.itemName && itemData.itemLevel == item.item_Level)
+                        if(itemData.itemName == item.itemData.itemName && itemData.itemLevel == item.itemLevel)
                         {
                             item.UpgradeItemLevel();
                             if(coinCount >= itemData.itemCost)
@@ -281,7 +295,7 @@ public class UIShopMenu : UIBase
                     }
                     EventManager.instance.OnUpdateCoinCount();
                     Item_Weapon itemWeapon = Instantiate(prefab_InventoryItem_Weapon,trans_WeaponInventoryParent).GetComponent<Item_Weapon>();
-                    itemWeapon.InitItemPropUI(weaponInfoPanel,itemData);
+                    itemWeapon.InitItemPropUI(weaponInfoPanel,itemData,shopItem.itemLevel);
                     allWeaponInventoryItems.Add(itemWeapon);
                     shopItem.img_HideMask.gameObject.SetActive(true);
                     shopItem.isLocked = false;
@@ -372,14 +386,14 @@ public class UIShopMenu : UIBase
                 ShopItem_Prop itemProp = Instantiate(prefab_ShopItem_Prop,trans_ItemsParent).GetComponent<ShopItem_Prop>();
                 allShopItems.Add(itemProp);
                 itemProp.itemData = itemData as ShopItemData_Prop_SO;
-                itemProp.InitItemProperties();
+                itemProp.InitItemProperties(3);
                 itemProp.UpdateUIInfo();
             break;
             case ShopItemType.Weapon:
                 ShopItem_Weapon itemWeapon = Instantiate(prefab_ShopItem_Weapon,trans_ItemsParent).GetComponent<ShopItem_Weapon>();
                 allShopItems.Add(itemWeapon);
                 itemWeapon.itemData = itemData as ShopItemData_Weapon_SO;
-                itemWeapon.InitItemProperties();
+                itemWeapon.InitItemProperties(4);
                 itemWeapon.UpdateUIInfo();
             break;
         }

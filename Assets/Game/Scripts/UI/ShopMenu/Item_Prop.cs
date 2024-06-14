@@ -14,12 +14,14 @@ public class Item_Prop : InventoryItem,IPointerEnterHandler,IPointerExitHandler
         text_ItemCount = transform.Find(path_Text_ItemCount).GetComponent<TextMeshProUGUI>();
     }
 
-    public void InitItemPropUI(PropInfoPanel propInfoPanel,ShopItemData_SO itemData)
+    public void InitItemPropUI(PropInfoPanel propInfoPanel,ShopItemData_SO itemData,int itemLevel)
     {
+        this.itemLevel = itemLevel;
         this.itemData = itemData;
         this.propInfoPanel = propInfoPanel;
         img_ItemIcon.sprite = itemData.itemIcon;
         IncreaseItemPropCount();
+        SetItemLevelFilterColor();
     }
 
     public void IncreaseItemPropCount()

@@ -44,6 +44,7 @@ public class UIUpgradeMenu : UIBase
     private int criticalRatePropertyValue;
     private int attackRangePropertyValue;
     private int moveSpeedPropertyValue;
+    private int refreshCoinCost = 2;
 
     private void Awake() {
         btn_Refresh = transform.Find(path_Btn_Refresh).GetComponentInParent<Button>();
@@ -67,6 +68,9 @@ public class UIUpgradeMenu : UIBase
         EventManager.instance.onUpgradeButtonClick += OnUpgradeButtonClick;
         EventManager.instance.onUpdatePlayerProperty += UpdatePlayerStatusPropertiesUI;
         GenerateUpgradeItems(4);
+        //先计算刷新所需金币，之后再更新UI显示
+        SetFirstRefreshCoinCost();
+        UpdateBtnRefreshUI();
         InitPlayerProperties();
     }
 
@@ -90,8 +94,6 @@ public class UIUpgradeMenu : UIBase
         text_CriticalRate_PropertyValue.text = GameCoreData.PlayerData.criticalRate.ToString() + "%";
         text_AttackRange_PropertyValue.text = GameCoreData.PlayerData.attackRange.ToString();
         text_MoveSpeed_PropertyValue.text = GameCoreData.PlayerData.moveSpeed.ToString() + "%";
-        //TODO 刷新金币花费根据公式计算
-        text_Btn_Refresh.text = "Refresh(20)";
         //TODO加载玩家存档，当玩家有处在游戏中的的存档
     }
 
@@ -128,8 +130,19 @@ public class UIUpgradeMenu : UIBase
     private void RefreshCoinCost()
     {
         GameCoreData.PlayerData.CostCoin(20);
+        SetRefreshIncreaseCoinCost();
         EventManager.instance.OnUpdateCoinCount();
         UpdateBtnRefreshUI();
+    }
+
+    private void SetFirstRefreshCoinCost()
+    {
+        refreshCoinCost = LevelManager.currentLevel + Mathf.Clamp((int)(0.5 * LevelManager.currentLevel),1,int.MaxValue);
+    }
+
+    private void SetRefreshIncreaseCoinCost()
+    {
+        refreshCoinCost += Mathf.Clamp((int)(0.5 * LevelManager.currentLevel),1,int.MaxValue);
     }
 
     private void UpdateBtnRefreshUI()
@@ -142,6 +155,7 @@ public class UIUpgradeMenu : UIBase
         {
             text_Btn_Refresh.color = Color.black;
         }
+        text_Btn_Refresh.text = "Refresh(" + refreshCoinCost.ToString() + ")";
     }
 
     private void UpgradeRewardCount(int count)
