@@ -34,13 +34,31 @@ public class EventManager : MonoBehaviour
     public event UnityAction<Item_Weapon> onCombineWeaponItem = delegate{};
     public event UnityAction<Item_Weapon> onSellWeaponInventoryItems = delegate{};
     public event UnityAction<CharacterData_SO> onUpdateSelectCharacterInfo = delegate{};
+    public event UnityAction<ShopItemData_Weapon_SO> onUpdateSelectWeaponInfo = delegate{};
     public event UnityAction onStartGame = delegate{};
+    public event UnityAction<List<Item_Weapon>> onGenerateWeaonInInventory = delegate{};
+    public event UnityAction<Inventory_Weapon> onAddWeaponToGameInventory = delegate{};
 
     private void Awake() {
         if(instance == null)
         {
             instance = this;
         }
+    }
+
+    public void OnAddWeaponToGameInventory(Inventory_Weapon weapon)
+    {
+        onAddWeaponToGameInventory.Invoke(weapon);
+    }
+
+    public void OnUpdateSelectWeaponInfo(ShopItemData_Weapon_SO data)
+    {
+        onUpdateSelectWeaponInfo.Invoke(data);
+    }
+
+    public void OnGenerateWeaonInInventory(List<Item_Weapon> weapons)
+    {
+        onGenerateWeaonInInventory.Invoke(weapons);
     }
 
     public void OnStartGame()

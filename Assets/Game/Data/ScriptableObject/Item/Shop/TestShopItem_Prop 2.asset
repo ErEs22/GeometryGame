@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77eded1a09bffd641b30c9fdda2e77f9, type: 3}
   m_Name: TestShopItem_Prop 2
   m_EditorClassIdentifier: 
-  itemIcon: {fileID: 21300000, guid: d9a84d36752d71a41b178deb3e1a6103, type: 3}
+  itemIcon: {fileID: 21300000, guid: b408e3b2ff53565419664a110cea998b, type: 3}
   itemName: Snake
   itemType: Prop
   itemCost: 20
+  itemLevel: 1
   shopItemType: 0
   itemProperties:
   - playerProperty: 0

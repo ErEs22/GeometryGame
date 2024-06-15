@@ -33,7 +33,7 @@ public class Item_Weapon : InventoryItem,IPointerEnterHandler,IPointerExitHandle
         SetItemLevelFilterColor();
     }
 
-    private void OnBtnItemClick()
+    protected virtual void OnBtnItemClick()
     {
         isClicked = true;
         EventManager.instance.OnShowShopMenuMask();
@@ -41,12 +41,12 @@ public class Item_Weapon : InventoryItem,IPointerEnterHandler,IPointerExitHandle
         weaponInfoPanel.activeItem = this;
     }
 
-    public void InitItemPropUI(WeaponInfoPanel weaponInfoPanel,ShopItemData_SO itemData,int itemLevel)
+    public virtual void InitItemPropUI(WeaponInfoPanel weaponInfoPanel,ShopItemData_SO itemData,int itemLevel)
     {
         this.itemLevel = itemLevel;
         this.itemData = itemData;
-        this.weaponInfoPanel = weaponInfoPanel;
         img_ItemIcon.sprite = itemData.itemIcon;
+        this.weaponInfoPanel = weaponInfoPanel;
         SetItemLevelFilterColor();
     }
 
@@ -61,13 +61,13 @@ public class Item_Weapon : InventoryItem,IPointerEnterHandler,IPointerExitHandle
         weaponInfoPanel.transform.position = new Vector3(-9999,-9999);
     }
 
-    public void OnPointerExit(PointerEventData eventData)
+    public virtual void OnPointerExit(PointerEventData eventData)
     {
         if(isClicked) return;
         HideItemInfo();
     }
 
-    public void OnPointerEnter(PointerEventData eventData)
+    public virtual void OnPointerEnter(PointerEventData eventData)
     {
         isClicked = false;
         ShowItemInfo();

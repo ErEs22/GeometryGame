@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77eded1a09bffd641b30c9fdda2e77f9, type: 3}
   m_Name: TestShopItem_Prop
   m_EditorClassIdentifier: 
-  itemIcon: {fileID: 21300000, guid: 849b8519d1d01da42a8511098afaae0e, type: 3}
+  itemIcon: {fileID: 21300000, guid: 7f75f34ef4533324fa97ceb24da581a6, type: 3}
   itemName: Walrus
   itemType: Prop
   itemCost: 20
+  itemLevel: 1
   shopItemType: 0
   itemProperties:
   - playerProperty: 0

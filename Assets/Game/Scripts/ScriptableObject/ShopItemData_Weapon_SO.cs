@@ -5,4 +5,5 @@ using UnityEngine;
 public class ShopItemData_Weapon_SO : ShopItemData_SO
 {
     public List<ShopWeaponPropertyPair> itemProperties = new List<ShopWeaponPropertyPair>();
+    public GameObject prefab_Weapon;
 }
