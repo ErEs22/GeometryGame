@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8a98988e7b5a8d34fac1743b1f8c4dbc, type: 3}
-  m_Name: TestShopItem_Weapon 2
+  m_Name: TestShopItem_Weapon 3
   m_EditorClassIdentifier: 
-  itemIcon: {fileID: 21300000, guid: a1a73a48ef1583944afd4fd296f696f0, type: 3}
-  itemName: Moose
+  itemIcon: {fileID: 21300000, guid: 188bee68a52a0264fa91b146e139d28b, type: 3}
+  itemName: Pig
   itemType: Weapon
   itemCost: 20
   itemLevel: 1
@@ -31,4 +31,4 @@ MonoBehaviour:
     propertyValue: 400
   - weaponProperty: 5
     propertyValue: 0
-  prefab_Weapon: {fileID: 6764894451183402456, guid: 75e22cdbde5b19d4d85c864ee3c3008e, type: 3}
+  prefab_Weapon: {fileID: 6764894451183402456, guid: 8973471eab14b0a4d9dfdbb94a6c5cbf, type: 3}

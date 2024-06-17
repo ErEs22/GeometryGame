@@ -31,3 +31,4 @@ MonoBehaviour:
     propertyValue: 500
   - weaponProperty: 5
     propertyValue: 5
+  prefab_Weapon: {fileID: 6764894451183402456, guid: bf60e867bbed6854fa2e790ab15eef47, type: 3}

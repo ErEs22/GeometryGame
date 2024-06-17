@@ -30,6 +30,7 @@ public class UICharacterSelectMenu : UIBase
     public GameObject prefab_Item_Weapon;
     public List<CharacterData_SO> allCharactersData = new List<CharacterData_SO>();
     public List<ShopItemData_Weapon_SO> currentCharacterAvailableWeapons = new List<ShopItemData_Weapon_SO>();
+    [SerializeField][DisplayOnly]
     private List<Item_Weapon> weapons = new List<Item_Weapon>();//初始武器选择
 
     private void Awake() {
@@ -47,6 +48,7 @@ public class UICharacterSelectMenu : UIBase
     private void OnEnable() {
         EventManager.instance.onUpdateSelectCharacterInfo += UpdateSelectCharacterInfo;
         EventManager.instance.onUpdateSelectWeaponInfo += UpdateSelectWeaponInfo;
+        EventManager.instance.onSelectFirstWeapon += SelectWeapon;
         btn_StartGame.onClick.AddListener(OnBtnStartGameClick);
         GenerateAllCharacters();
         GenerateAllWeapons();
@@ -55,12 +57,19 @@ public class UICharacterSelectMenu : UIBase
     private void OnDisable() {
         EventManager.instance.onUpdateSelectCharacterInfo -= UpdateSelectCharacterInfo;
         EventManager.instance.onUpdateSelectWeaponInfo -= UpdateSelectWeaponInfo;
+        EventManager.instance.onSelectFirstWeapon -= SelectWeapon;
         btn_StartGame.onClick.RemoveAllListeners();
     }
 
     public override void InitUI()
     {
         uiID = UIID.CharacterSelectMenu;
+    }
+
+    private void SelectWeapon(Item_Weapon weapon)
+    {
+        weapons.Clear();
+        weapons.Add(weapon);
     }
 
     private void GenerateAllWeapons()
@@ -110,9 +119,9 @@ public class UICharacterSelectMenu : UIBase
     private void OnBtnStartGameClick()
     {
         CloseUI();
-        EventManager.instance.OnStartGame();
-        EventManager.instance.OnGenerateWeaonInInventory(weapons);
         AddWeaponToGameInventory();
+        EventManager.instance.OnGenerateWeaonInInventory();
+        EventManager.instance.OnStartGame();
     }
 
     private void AddWeaponToGameInventory()
@@ -180,6 +189,7 @@ public class UICharacterSelectMenu : UIBase
 
     private void SetPropertyText(TextMeshProUGUI textComp,WeaponProperty weaponProperty,float propertyValue)
     {
+        //TODO CaculatePropertyValueByLevel
         switch(weaponProperty)
         {
             case WeaponProperty.Damage:

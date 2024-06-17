@@ -90,6 +90,7 @@ public class WeaponInfoPanel : MonoBehaviour
 
     private void SetPropertyText(TextMeshProUGUI textComp,WeaponProperty weaponProperty,float propertyValue)
     {
+        //TODO CaculatePropertyValueByLevel
         switch(weaponProperty)
         {
             case WeaponProperty.Damage:

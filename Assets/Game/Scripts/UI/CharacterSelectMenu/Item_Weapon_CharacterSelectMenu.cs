@@ -13,6 +13,7 @@ public class Item_Weapon_CharacterSelectMenu : Item_Weapon
     protected override void OnBtnItemClick()
     {
         isSelected = true;
+        EventManager.instance.OnSelectFirstWeapon(this);
     }
 
     public override void OnPointerEnter(PointerEventData eventData)

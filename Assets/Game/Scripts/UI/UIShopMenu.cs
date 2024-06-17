@@ -106,6 +106,7 @@ public class UIShopMenu : UIBase
         EventManager.instance.onUpdatePlayerProperty += UpdatePlayerStatusPropertiesUI;
         SetFirstRefreshCoinCost();
         InitPlayerProperties();
+        UpdateWeaponInventory();
     }
 
     private void OnDisable()
@@ -120,6 +121,28 @@ public class UIShopMenu : UIBase
         EventManager.instance.onCombineWeaponItem -= CombineWeaponInventoryItems;
         EventManager.instance.onSellWeaponInventoryItems -= SellWeaponInventoryItems;
         EventManager.instance.onUpdatePlayerProperty -= UpdatePlayerStatusPropertiesUI;
+    }
+
+    private void UpdateWeaponInventory()
+    {
+        ClearWeaponInventory();
+        GameInventory.Instance.inventoryWeapons.ForEach( weapon =>
+        {
+            Item_Weapon itemWeapon = Instantiate(prefab_InventoryItem_Weapon,trans_WeaponInventoryParent).GetComponent<Item_Weapon>();
+            itemWeapon.InitItemPropUI(weaponInfoPanel,weapon.itemData,weapon.weaponLevel);
+            allWeaponInventoryItems.Add(itemWeapon);
+        });
+    }
+
+    private void ClearWeaponInventory()
+    {
+        if(allWeaponInventoryItems.Count <= 0) return;
+        for(int i = 0; i < allWeaponInventoryItems.Count; i++)
+        {
+            Item_Weapon weapon = allWeaponInventoryItems[i];
+            allWeaponInventoryItems.RemoveAt(i);
+            Destroy(weapon.gameObject);
+        }
     }
 
     private void InitPlayerProperties()
@@ -145,6 +168,7 @@ public class UIShopMenu : UIBase
             if(weaponItem.itemData.itemName == item.itemData.itemName && weaponItem.itemLevel == item.itemLevel)
             {
                 allWeaponInventoryItems.Remove(weaponItem);
+                GameInventory.Instance.RemoveWeaponFromInventory(weaponItem.itemData.itemName);
                 weaponItem.Combine();
                 item.UpgradeItemLevel();
                 return;
@@ -156,6 +180,7 @@ public class UIShopMenu : UIBase
     private void SellWeaponInventoryItems(Item_Weapon weaponItem)
     {
         allWeaponInventoryItems.Remove(weaponItem);
+        GameInventory.Instance.RemoveWeaponFromInventory(weaponItem.itemData.itemName);
         GameCoreData.PlayerData.coin += (int)(weaponItem.itemData.itemLevel * weaponItem.itemData.itemCost * 0.8);
         EventManager.instance.OnUpdateCoinCount();
         Destroy(weaponItem.gameObject);
@@ -299,6 +324,12 @@ public class UIShopMenu : UIBase
                     allWeaponInventoryItems.Add(itemWeapon);
                     shopItem.img_HideMask.gameObject.SetActive(true);
                     shopItem.isLocked = false;
+                    //游戏武器背包同步添加
+                    Inventory_Weapon inventory_Weapon = new Inventory_Weapon{
+                        itemData = itemData as ShopItemData_Weapon_SO,
+                        weaponLevel = shopItem.itemLevel,
+                    };
+                    GameInventory.Instance.AddWeaponToInventory(inventory_Weapon);
                 }
             break;
         }

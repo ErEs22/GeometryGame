@@ -771,6 +771,7 @@ GameObject:
   - component: {fileID: 690686606}
   - component: {fileID: 690686607}
   - component: {fileID: 690686608}
+  - component: {fileID: 690686609}
   m_Layer: 0
   m_Name: CORE******
   m_TagString: Untagged
@@ -872,6 +873,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4211600394f10694598e7a772b0be347, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &690686609
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 690686603}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7c760a7330c41b448fcfce8a71808a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inventoryWeapons: []
 --- !u!224 &785609283 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8999861594714474748, guid: d670f3cecaba5e54797586da708e55f8, type: 3}
@@ -2339,12 +2353,23 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8205439287493643634, guid: 251a54746e55b1c44ad1ea85a09d0ad4, type: 3}
-      propertyPath: prefab_Item_Weapon
-      value: 
-      objectReference: {fileID: 5020209484442906183, guid: 301d86f503770b84d9a686974001271b, type: 3}
-    m_RemovedComponents:
-    - {fileID: 5723946941905867396, guid: 251a54746e55b1c44ad1ea85a09d0ad4, type: 3}
+    - target: {fileID: 7849942087172874323, guid: 251a54746e55b1c44ad1ea85a09d0ad4, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7849942087172874323, guid: 251a54746e55b1c44ad1ea85a09d0ad4, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7849942087172874323, guid: 251a54746e55b1c44ad1ea85a09d0ad4, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 155
+      objectReference: {fileID: 0}
+    - target: {fileID: 7849942087172874323, guid: 251a54746e55b1c44ad1ea85a09d0ad4, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -17.5
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 251a54746e55b1c44ad1ea85a09d0ad4, type: 3}
 --- !u!1001 &6736576310688411215
 PrefabInstance:

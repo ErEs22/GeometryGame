@@ -124,6 +124,7 @@ public class ShopItem_Weapon : ShopItem
 
     private void SetPropertyText(TextMeshProUGUI textComp,WeaponProperty weaponProperty,float propertyValue)
     {
+        propertyValue = GameInventory.Instance.CaculateWeaponDataByLevel(weaponProperty,propertyValue,itemData.itemLevel,itemLevel);
         switch(weaponProperty)
         {
             case WeaponProperty.Damage:

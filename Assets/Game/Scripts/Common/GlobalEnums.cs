@@ -59,7 +59,8 @@ public enum WeaponProperty
     PushBack,
     AttackRange,
     StealHP,
-    DamageThrough
+    DamageThrough,
+    Cost,
 }
 
 public static class EnemyName

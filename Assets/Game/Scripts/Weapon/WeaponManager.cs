@@ -13,10 +13,12 @@ public class WeaponManager : MonoBehaviour
 
     private void OnEnable() {
         EventManager.instance.onGenerateWeaonInInventory += GenerateWeaponsInInventory;
+        EventManager.instance.onStartLevel += GenerateWeaponsInInventory;
     }
 
     private void OnDisable() {
         EventManager.instance.onGenerateWeaonInInventory -= GenerateWeaponsInInventory;
+        EventManager.instance.onStartLevel -= GenerateWeaponsInInventory;
     }
 
     private void Start() {
@@ -25,14 +27,10 @@ public class WeaponManager : MonoBehaviour
         // Invoke(nameof(DisableAllWeapon),2);
     }
 
-    private void GenerateWeaponsInInventory(List<Item_Weapon> weapons)
+    private void GenerateWeaponsInInventory()
     {
         ClearWeaponSlots();
-        weapons.ForEach( weapon =>
-        {
-            ShopItemData_Weapon_SO itemData = weapon.itemData as ShopItemData_Weapon_SO;
-            GenerateWeaponSlot(1,itemData.prefab_Weapon);
-        });
+        GenerateSlotWeapons();
     }
 
     private void ClearWeaponSlots()
@@ -40,23 +38,24 @@ public class WeaponManager : MonoBehaviour
         if(weapons.Count <= 0) return;
         for(int i = 0; i < weapons.Count; i++)
         {
-            weapons.RemoveAt(i);
-            Destroy(weapons[i].gameObject);
-            i--;
+            Weapon weapon = weapons[0];
+            weapons.RemoveAt(0);
+            Destroy(weapon.gameObject);
         }
     }
 
-    private void GenerateWeaponSlot(int slotCount,GameObject prefab_Weapon){
+    private void GenerateSlotWeapons(){
         //清空武器列表
         weapons.Clear();
-        Vector3[] pos = EyreUtility.GenerateCirclePoints(transform.position,slotCount);
+        Vector3[] pos = EyreUtility.GenerateCirclePoints(transform.position,GameInventory.Instance.inventoryWeapons.Count);
         for(int i = 0; i < pos.Length; i++){
-            GameObject newObject = PoolManager.Release(prefab_Weapon);
-            Weapon newWeapon = newObject.GetComponent<Weapon>();
+            GameObject prefabWeapon = GameInventory.Instance.inventoryWeapons[i].itemData.prefab_Weapon;
+            GameObject newWeaponObject = PoolManager.Release(prefabWeapon);
+            Weapon newWeapon = newWeaponObject.GetComponent<Weapon>();
             newWeapon.enemyManager = playerManager.enemyManager;
             weapons.Add(newWeapon);
-            newObject.transform.parent = transform;
-            newObject.transform.position = pos[i];
+            newWeaponObject.transform.parent = transform;
+            newWeaponObject.transform.position = pos[i];
         }
     }
 
