@@ -90,7 +90,7 @@ public class WeaponInfoPanel : MonoBehaviour
 
     private void SetPropertyText(TextMeshProUGUI textComp,WeaponProperty weaponProperty,float propertyValue)
     {
-        //TODO CaculatePropertyValueByLevel
+        propertyValue = GameInventory.Instance.CaculateWeaponDataByLevel(weaponProperty,propertyValue,activeItem.itemData.itemLevel,activeItem.itemLevel);
         switch(weaponProperty)
         {
             case WeaponProperty.Damage:

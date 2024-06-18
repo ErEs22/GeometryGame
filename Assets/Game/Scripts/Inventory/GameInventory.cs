@@ -5,6 +5,7 @@ public class GameInventory : MonoBehaviour
 {
     public static GameInventory Instance;
     public List<Inventory_Weapon> inventoryWeapons = new List<Inventory_Weapon>();
+    public List<Inventory_Prop> inventoryProps = new List<Inventory_Prop>();
 
     private void Awake() {
         if(GameInventory.Instance == null)
@@ -25,6 +26,35 @@ public class GameInventory : MonoBehaviour
         EventManager.instance.onAddWeaponToGameInventory -= AddWeaponToInventory;
     }
 
+    public void AddPropToInventory(Inventory_Prop prop)
+    {
+        inventoryProps.Add(prop);
+    }
+
+    public void AddPropAmount(string propName)
+    {
+        for(int i = 0; i < inventoryProps.Count; i++)
+        {
+            if(inventoryProps[i].propData.itemName == propName)
+            {
+                inventoryProps[i].propAmount++;
+                return;
+            }
+        }
+    }
+
+    public void RemovePropFromInventory(string propName)
+    {
+        for(int i = 0; i < inventoryProps.Count; i++)
+        {
+            if(inventoryProps[i].propData.itemName == propName)
+            {
+                inventoryProps.RemoveAt(i);
+                return;
+            }
+        }
+    }
+
     public void AddWeaponToInventory(Inventory_Weapon weapon)
     {
         inventoryWeapons.Add(weapon);
@@ -34,9 +64,10 @@ public class GameInventory : MonoBehaviour
     {
         for(int i = 0; i < inventoryWeapons.Count; i++)
         {
-            if(inventoryWeapons[i].itemData.itemName == weaponName)
+            if(inventoryWeapons[i].weaponData.itemName == weaponName)
             {
                 inventoryWeapons.RemoveAt(i);
+                return;
             }
         }
     }

@@ -129,7 +129,7 @@ public class UIShopMenu : UIBase
         GameInventory.Instance.inventoryWeapons.ForEach( weapon =>
         {
             Item_Weapon itemWeapon = Instantiate(prefab_InventoryItem_Weapon,trans_WeaponInventoryParent).GetComponent<Item_Weapon>();
-            itemWeapon.InitItemPropUI(weaponInfoPanel,weapon.itemData,weapon.weaponLevel);
+            itemWeapon.InitItemPropUI(weaponInfoPanel,weapon.weaponData,weapon.weaponLevel);
             allWeaponInventoryItems.Add(itemWeapon);
         });
     }
@@ -263,12 +263,18 @@ public class UIShopMenu : UIBase
                 if(tempItemProp != null)
                 {
                     tempItemProp.IncreaseItemPropCount();
+                    GameInventory.Instance.AddPropAmount(tempItemProp.itemData.itemName);
                 }
                 else
                 {
                     Item_Prop itemProp = Instantiate(prefab_InventoryItem_Prop,trans_PropInventoryParent).GetComponent<Item_Prop>();
                     itemProp.InitItemPropUI(propInfoPanel,itemData,shopItem.itemLevel);
                     allPropInventoryItems.Add(itemProp);
+                    Inventory_Prop newProp = new Inventory_Prop{
+                        propData = itemData as ShopItemData_Prop_SO,
+                        propAmount = 1,
+                    };
+                    GameInventory.Instance.AddPropToInventory(newProp);
                 }
                 if(coinCount >= itemData.itemCost)
                 {
@@ -326,7 +332,7 @@ public class UIShopMenu : UIBase
                     shopItem.isLocked = false;
                     //游戏武器背包同步添加
                     Inventory_Weapon inventory_Weapon = new Inventory_Weapon{
-                        itemData = itemData as ShopItemData_Weapon_SO,
+                        weaponData = itemData as ShopItemData_Weapon_SO,
                         weaponLevel = shopItem.itemLevel,
                     };
                     GameInventory.Instance.AddWeaponToInventory(inventory_Weapon);

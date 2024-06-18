@@ -129,7 +129,7 @@ public class UICharacterSelectMenu : UIBase
         Inventory_Weapon weapon = new Inventory_Weapon
         {
             weaponLevel = weapons[0].itemLevel,
-            itemData = weapons[0].itemData as ShopItemData_Weapon_SO
+            weaponData = weapons[0].itemData as ShopItemData_Weapon_SO
         };
         EventManager.instance.OnAddWeaponToGameInventory(weapon);
     }
@@ -146,12 +146,12 @@ public class UICharacterSelectMenu : UIBase
         img_WeaponInfoIcon.sprite = data.itemIcon;
         text_WeaponInfoName.text = data.itemName;
         GameObject text_Property = trans_WeaponProperties_Parent.GetChild(0).gameObject;
-        SetPropertyText(text_Property.GetComponent<TextMeshProUGUI>(),data.itemProperties[0].weaponProperty,data.itemProperties[0].propertyValue);
+        SetPropertyText(data,text_Property.GetComponent<TextMeshProUGUI>(),data.itemProperties[0].weaponProperty,data.itemProperties[0].propertyValue);
         for(int i = 1; i < data.itemProperties.Count; i++)
         {
             TextMeshProUGUI textComp = Instantiate(text_Property,trans_WeaponProperties_Parent).GetComponent<TextMeshProUGUI>();
             ShopWeaponPropertyPair dataPair = data.itemProperties[i];
-            SetPropertyText(textComp,dataPair.weaponProperty,dataPair.propertyValue);
+            SetPropertyText(data,textComp,dataPair.weaponProperty,dataPair.propertyValue);
         }
         SetItemLevelFilterColor(data.itemLevel);
     }
@@ -187,9 +187,9 @@ public class UICharacterSelectMenu : UIBase
         }
     }
 
-    private void SetPropertyText(TextMeshProUGUI textComp,WeaponProperty weaponProperty,float propertyValue)
+    private void SetPropertyText(ShopItemData_Weapon_SO data,TextMeshProUGUI textComp,WeaponProperty weaponProperty,float propertyValue)
     {
-        //TODO CaculatePropertyValueByLevel
+        propertyValue = GameInventory.Instance.CaculateWeaponDataByLevel(weaponProperty,propertyValue,data.itemLevel,data.itemLevel);
         switch(weaponProperty)
         {
             case WeaponProperty.Damage:

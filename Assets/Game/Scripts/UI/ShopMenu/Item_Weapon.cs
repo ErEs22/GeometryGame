@@ -70,6 +70,7 @@ public class Item_Weapon : InventoryItem,IPointerEnterHandler,IPointerExitHandle
     public virtual void OnPointerEnter(PointerEventData eventData)
     {
         isClicked = false;
+        weaponInfoPanel.activeItem = this;
         ShowItemInfo();
     }
 }

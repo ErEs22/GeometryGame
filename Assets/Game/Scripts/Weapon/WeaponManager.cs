@@ -49,7 +49,7 @@ public class WeaponManager : MonoBehaviour
         weapons.Clear();
         Vector3[] pos = EyreUtility.GenerateCirclePoints(transform.position,GameInventory.Instance.inventoryWeapons.Count);
         for(int i = 0; i < pos.Length; i++){
-            GameObject prefabWeapon = GameInventory.Instance.inventoryWeapons[i].itemData.prefab_Weapon;
+            GameObject prefabWeapon = GameInventory.Instance.inventoryWeapons[i].weaponData.prefab_Weapon;
             GameObject newWeaponObject = PoolManager.Release(prefabWeapon);
             Weapon newWeapon = newWeaponObject.GetComponent<Weapon>();
             newWeapon.enemyManager = playerManager.enemyManager;
