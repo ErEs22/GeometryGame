@@ -33,33 +33,15 @@ public class EventManager : MonoBehaviour
     public event UnityAction onHideShopMenuMask = delegate{};
     public event UnityAction<Item_Weapon> onCombineWeaponItem = delegate{};
     public event UnityAction<Item_Weapon> onSellWeaponInventoryItems = delegate{};
-    public event UnityAction<CharacterData_SO> onUpdateSelectCharacterInfo = delegate{};
-    public event UnityAction<ShopItemData_Weapon_SO> onUpdateSelectWeaponInfo = delegate{};
+    
     public event UnityAction onStartGame = delegate{};
     public event UnityAction onGenerateWeaonInInventory = delegate{};
-    public event UnityAction<Inventory_Weapon> onAddWeaponToGameInventory = delegate{};
-    public event UnityAction<Item_Weapon> onSelectFirstWeapon = delegate{};
 
     private void Awake() {
         if(instance == null)
         {
             instance = this;
         }
-    }
-
-    public void OnSelectFirstWeapon(Item_Weapon weapon)
-    {
-        onSelectFirstWeapon.Invoke(weapon);
-    }
-
-    public void OnAddWeaponToGameInventory(Inventory_Weapon weapon)
-    {
-        onAddWeaponToGameInventory.Invoke(weapon);
-    }
-
-    public void OnUpdateSelectWeaponInfo(ShopItemData_Weapon_SO data)
-    {
-        onUpdateSelectWeaponInfo.Invoke(data);
     }
 
     public void OnGenerateWeaonInInventory()
@@ -70,11 +52,6 @@ public class EventManager : MonoBehaviour
     public void OnStartGame()
     {
         onStartGame.Invoke();
-    }
-
-    public void OnUpdateSelectCharacterInfo(CharacterData_SO data)
-    {
-        onUpdateSelectCharacterInfo.Invoke(data);
     }
 
     public void OnUICountDown(int start,int end,int interval)

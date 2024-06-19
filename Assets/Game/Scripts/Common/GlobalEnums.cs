@@ -114,3 +114,20 @@ public enum ShopItemType
     Prop,
     Weapon
 }
+
+public enum GameResolution
+{
+    R_2560X1440,
+    R_1920X1080,
+    R_1600X900,
+    R_1280X720,
+    R_960X540,
+    R_800X450,
+}
+
+public enum ScreenMode
+{
+    Windowed,
+    Borderless_Window,
+    FullScreen,
+}

@@ -31,7 +31,8 @@ public class UICharacterSelectMenu : UIBase
     public List<CharacterData_SO> allCharactersData = new List<CharacterData_SO>();
     public List<ShopItemData_Weapon_SO> currentCharacterAvailableWeapons = new List<ShopItemData_Weapon_SO>();
     [SerializeField][DisplayOnly]
-    private List<Item_Weapon> weapons = new List<Item_Weapon>();//初始武器选择
+    private Item_Weapon_CharacterSelectMenu selectWeapon;//初始武器选择
+    private Item_Character selectCharacter;//初始角色选择
 
     private void Awake() {
         img_WeaponLevelFilter = transform.Find(path_Img_LevelFilter).GetComponent<Image>();
@@ -46,18 +47,12 @@ public class UICharacterSelectMenu : UIBase
     }
 
     private void OnEnable() {
-        EventManager.instance.onUpdateSelectCharacterInfo += UpdateSelectCharacterInfo;
-        EventManager.instance.onUpdateSelectWeaponInfo += UpdateSelectWeaponInfo;
-        EventManager.instance.onSelectFirstWeapon += SelectWeapon;
         btn_StartGame.onClick.AddListener(OnBtnStartGameClick);
         GenerateAllCharacters();
         GenerateAllWeapons();
     }
 
     private void OnDisable() {
-        EventManager.instance.onUpdateSelectCharacterInfo -= UpdateSelectCharacterInfo;
-        EventManager.instance.onUpdateSelectWeaponInfo -= UpdateSelectWeaponInfo;
-        EventManager.instance.onSelectFirstWeapon -= SelectWeapon;
         btn_StartGame.onClick.RemoveAllListeners();
     }
 
@@ -66,10 +61,22 @@ public class UICharacterSelectMenu : UIBase
         uiID = UIID.CharacterSelectMenu;
     }
 
-    private void SelectWeapon(Item_Weapon weapon)
+    public void SelectWeapon(Item_Weapon_CharacterSelectMenu weapon)
     {
-        weapons.Clear();
-        weapons.Add(weapon);
+        if(selectWeapon != null)
+        {
+            selectWeapon.UnSelectWeapon();
+        }
+        selectWeapon = weapon;
+    }
+
+    public void SelectCharacter(Item_Character character)
+    {
+        if(selectCharacter != null)
+        {
+            selectCharacter.UnSelectCharacter();
+        }
+        selectCharacter = character;
     }
 
     private void GenerateAllWeapons()
@@ -81,7 +88,7 @@ public class UICharacterSelectMenu : UIBase
         for(int i = 0; i < currentCharacterAvailableWeapons.Count; i++)
         {
             Item_Weapon_CharacterSelectMenu itemWeapon = Instantiate(prefab_Item_Weapon,trans_Item_Weapons_Parent).GetComponent<Item_Weapon_CharacterSelectMenu>();
-            itemWeapon.InitItemPropUI(null,currentCharacterAvailableWeapons[i],1);
+            itemWeapon.InitItemPropUI(currentCharacterAvailableWeapons[i],this);
             // itemWeapon.InitItemPropUI();
         }
     }
@@ -103,8 +110,8 @@ public class UICharacterSelectMenu : UIBase
         for(int i = 0; i < allCharactersData.Count; i++)
         {
             Item_Character itemCharacter = Instantiate(prefab_Character,trans_Item_Characters_Parent).GetComponent<Item_Character>();
-            itemCharacter.CharacterData = allCharactersData[i];
-            itemCharacter.InitUIInfo();
+            itemCharacter.characterData = allCharactersData[i];
+            itemCharacter.InitUIInfo(allCharactersData[i],this);
         }
     }
 
@@ -128,20 +135,45 @@ public class UICharacterSelectMenu : UIBase
     {
         Inventory_Weapon weapon = new Inventory_Weapon
         {
-            weaponLevel = weapons[0].itemLevel,
-            weaponData = weapons[0].itemData as ShopItemData_Weapon_SO
+            weaponLevel = selectWeapon.itemLevel,
+            weaponData = selectWeapon.itemData as ShopItemData_Weapon_SO
         };
-        EventManager.instance.OnAddWeaponToGameInventory(weapon);
+        GameInventory.Instance.AddWeaponToInventory(weapon);
     }
 
-    private void UpdateSelectCharacterInfo(CharacterData_SO data)
+    public void UpdateSelectingCharacterInfo(CharacterData_SO data)
     {
         img_CharacterInfoIcon.sprite = data.CharacterIcon;
         text_CharacterInfoName.text = data.CharacterName;
     }
 
-    private void UpdateSelectWeaponInfo(ShopItemData_Weapon_SO data)
+    public void UpdateSelectedCharacterInfo()
     {
+        if(selectCharacter == null) return;
+        img_CharacterInfoIcon.sprite = selectCharacter.characterData.CharacterIcon;
+        text_CharacterInfoName.text = selectCharacter.characterData.CharacterName;
+    }
+
+    public void UpdateSelectingWeaponInfo(ShopItemData_Weapon_SO data)
+    {
+        ClearWeaponProperties();
+        img_WeaponInfoIcon.sprite = data.itemIcon;
+        text_WeaponInfoName.text = data.itemName;
+        GameObject text_Property = trans_WeaponProperties_Parent.GetChild(0).gameObject;
+        SetPropertyText(data,text_Property.GetComponent<TextMeshProUGUI>(),data.itemProperties[0].weaponProperty,data.itemProperties[0].propertyValue);
+        for(int i = 1; i < data.itemProperties.Count; i++)
+        {
+            TextMeshProUGUI textComp = Instantiate(text_Property,trans_WeaponProperties_Parent).GetComponent<TextMeshProUGUI>();
+            ShopWeaponPropertyPair dataPair = data.itemProperties[i];
+            SetPropertyText(data,textComp,dataPair.weaponProperty,dataPair.propertyValue);
+        }
+        SetItemLevelFilterColor(data.itemLevel);
+    }
+
+    public void UpdateSelectedWeaponInfo()
+    {
+        if(selectWeapon == null) return;
+        ShopItemData_Weapon_SO data = selectWeapon.itemData as ShopItemData_Weapon_SO;
         ClearWeaponProperties();
         img_WeaponInfoIcon.sprite = data.itemIcon;
         text_WeaponInfoName.text = data.itemName;

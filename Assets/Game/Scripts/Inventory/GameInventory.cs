@@ -19,11 +19,9 @@ public class GameInventory : MonoBehaviour
     }
 
     private void OnEnable() {
-        EventManager.instance.onAddWeaponToGameInventory += AddWeaponToInventory;
     }
 
     private void OnDisable() {
-        EventManager.instance.onAddWeaponToGameInventory -= AddWeaponToInventory;
     }
 
     public void AddPropToInventory(Inventory_Prop prop)
