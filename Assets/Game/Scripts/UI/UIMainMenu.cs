@@ -42,11 +42,25 @@ public class UIMainMenu : UIBase
     {
         //Resolution
         dropdown_Resolution.options.Clear();
+        dropdown_Resolution.onValueChanged.AddListener(OnDropdownResolutionValueChange);
         foreach (GameResolution resolution in Enum.GetValues(typeof(GameResolution)))
         {
             string resolutionStr = resolution.ToString().Remove(0,2);
             TMP_Dropdown.OptionData optionData = new TMP_Dropdown.OptionData(resolutionStr);
             dropdown_Resolution.options.Add(optionData);
+        }
+    }
+
+    private void OnDropdownResolutionValueChange(int optionIndex)
+    {
+        var resolutionArray = Enum.GetValues(typeof(GameResolution));
+        if(Enum.IsDefined(typeof(GameResolution),optionIndex))
+        {
+            GameCoreData.GameSetting.gameResolution = (GameResolution)Array.IndexOf(resolutionArray,optionIndex);
+        }
+        else
+        {
+            Debug.Log("The index of enum is out of the range");
         }
     }
 
