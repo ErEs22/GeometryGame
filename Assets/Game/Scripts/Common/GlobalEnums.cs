@@ -131,3 +131,11 @@ public enum ScreenMode
     Borderless_Window,
     FullScreen,
 }
+
+public enum FPSOption
+{
+    FPS_30 = 30,
+    FPS_60 = 60,
+    FPS_120 = 120,
+    FPS_UnLimited
+}

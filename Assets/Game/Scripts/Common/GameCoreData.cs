@@ -17,6 +17,12 @@ public class GameCoreData
 
         public static ScreenMode screenMode = ScreenMode.FullScreen;
         public static GameResolution gameResolution = GameResolution.R_1920X1080;
+        public static bool cameraShake = true;
+        public static bool damageNumberDisplay = true;
+        public static FPSOption fpsLimit = FPSOption.FPS_60;
+        public static float mainVolume = 1f;
+        public static float backgroundVolume = 1f;
+        public static float soundEffectVolume = 1f;
     }
     public static class PlayerData
     {

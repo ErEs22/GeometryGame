@@ -31,6 +31,28 @@ public class SwitchButton : MonoBehaviour
         btn_Switch.onClick.RemoveAllListeners();
     }
 
+    public void SetButtonStatus(bool isOn)
+    {
+        if(this.isOn == isOn)
+        {
+            return;
+        }
+        else
+        {
+            this.isOn = isOn;
+            if(isOn)
+            {
+                btn_Switch.transform.DOMove(trans_RightPoint.position,switchTransitionTime);
+                img_Background.DOColor(Color.blue,switchTransitionTime);
+            }
+            else
+            {
+                btn_Switch.transform.DOMove(trans_LeftPoint.position,switchTransitionTime);
+                img_Background.DOColor(Color.white,switchTransitionTime);
+            }
+        }
+    }
+
     private void OnBtnSwitchClick()
     {
         if(isOn)
