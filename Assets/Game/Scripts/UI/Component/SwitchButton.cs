@@ -1,13 +1,15 @@
 using DG.Tweening;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class SwitchButton : MonoBehaviour
+public class SwitchButton : Button
 {
-    private const string path_Img_Background = "Img_Background";
+    private const string path_Img_Background = "Img_SwitchBackground";
     private const string path_Img_Btn = "Btn_Switch";
-    private const string path_LeftPoint = "Img_Background/LeftPoint";
-    private const string path_RightPoint = "Img_Background/RightPoint";
+    private const string path_LeftPoint = "Img_SwitchBackground/LeftPoint";
+    private const string path_RightPoint = "Img_SwitchBackground/RightPoint";
     private Image img_Background;
     private Button btn_Switch;
     private Transform trans_LeftPoint;
@@ -16,19 +18,28 @@ public class SwitchButton : MonoBehaviour
     public bool isOn = false;
     public float switchTransitionTime = 0.2f;
 
-    private void Awake() {
+    protected override void Awake() {
+        base.Awake();
         img_Background = transform.Find(path_Img_Background).GetComponent<Image>();
         btn_Switch = transform.Find(path_Img_Btn).GetComponent<Button>();
         trans_LeftPoint = transform.Find(path_LeftPoint);
         trans_RightPoint = transform.Find(path_RightPoint);
     }
 
-    private void OnEnable() {
+    protected override void OnEnable() {
+        base.OnEnable();
         btn_Switch.onClick.AddListener(OnBtnSwitchClick);
     }
 
-    private void OnDisable() {
+    protected override void OnDisable() {
+        base.OnDisable();
         btn_Switch.onClick.RemoveAllListeners();
+    }
+
+    public override void OnSubmit(BaseEventData eventData)
+    {
+        base.OnSubmit(eventData);
+        OnBtnSwitchClick();
     }
 
     public void SetButtonStatus(bool isOn)
@@ -53,7 +64,7 @@ public class SwitchButton : MonoBehaviour
         }
     }
 
-    private void OnBtnSwitchClick()
+    public void OnBtnSwitchClick()
     {
         if(isOn)
         {

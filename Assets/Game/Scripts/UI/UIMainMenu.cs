@@ -12,9 +12,9 @@ public class UIMainMenu : UIBase
     private const string path_Btn_Exit = "Buttons/Btn_Exit";
     private const string path_SettingPanel = "SettingPanel/";
     private const string path_SettingPanel_HorSelector_ScreenMode = path_SettingPanel + "Settings/ScreenMode/HorizontalSelector";
-    private const string path_SettingPanel_Dropdown_Resolution = path_SettingPanel + "Settings/Resolution/Dropdown";
-    private const string path_SettingPanel_SwitchButton_CameraShake = path_SettingPanel + "Settings/CameraShake/Btn_Switch";
-    private const string path_SettingPanel_SwitchButton_DamageNumberDisplay = path_SettingPanel + "Settings/DamageNumberDisplay/Btn_Switch";
+    private const string path_SettingPanel_Dropdown_Resolution = path_SettingPanel + "Settings/Resolution";
+    private const string path_SettingPanel_SwitchButton_CameraShake = path_SettingPanel + "Settings/CameraShake";
+    private const string path_SettingPanel_SwitchButton_DamageNumberDisplay = path_SettingPanel + "Settings/DamageNumberDisplay";
     private const string path_SettingPanel_HorSelector_FPSLimit = path_SettingPanel + "Settings/FPSLimit/HorizontalSelector";
     private const string path_SettingPanel_Slider_MainVolume = path_SettingPanel + "Settings/MainVolume/Slider";
     private const string path_SettingPanel_Slider_BackgroundVolume = path_SettingPanel + "Settings/BackgroundVolume/Slider";
@@ -49,7 +49,6 @@ public class UIMainMenu : UIBase
     }
 
     private void Start() {
-        InitSettingPanel();
     }
 
     private void OnEnable() {
@@ -62,6 +61,7 @@ public class UIMainMenu : UIBase
         btn_Start.onClick.RemoveAllListeners();
         btn_Setting.onClick.RemoveAllListeners();
         btn_Setting.onClick.RemoveAllListeners();
+        SaveGameSetting();
     }
 
     private void SaveGameSetting()
@@ -83,13 +83,18 @@ public class UIMainMenu : UIBase
     {
         //TODO 加载设置
         horSelector_ScreenMode.InitComponent(GameCoreData.GameSetting.screenMode.ToString());
-        // dropdown_Resolution.SetValueWithoutNotify()
+        dropdown_Resolution.transform.Find("Label").GetComponent<TextMeshProUGUI>().text = GameCoreData.GameSetting.gameResolution.ToString().Remove(0,2);
+        btnSwitch_CameraShake.SetButtonStatus(GameCoreData.GameSetting.cameraShake);
+        btnSwitch_DamageNumberDisplay.SetButtonStatus(GameCoreData.GameSetting.damageNumberDisplay);
+        horSelector_FPSLimit.InitComponent(GameCoreData.GameSetting.fpsLimit.ToString().Remove(0,4));
+        slider_MainVolume.SetValueWithoutNotify(GameCoreData.GameSetting.mainVolume);
+        slider_BackgroundVolume.SetValueWithoutNotify(GameCoreData.GameSetting.backgroundVolume);
+        slider_SoundEffectVolume.SetValueWithoutNotify(GameCoreData.GameSetting.soundEffectVolume);
     }
 
     private void InitSettingPanel()
     {
-        //ScreenMode
-        //Resolution
+        //分辨率下拉框添加分辨率选项
         dropdown_Resolution.options.Clear();
         dropdown_Resolution.onValueChanged.AddListener(OnDropdownResolutionValueChange);
         foreach (GameResolution resolution in Enum.GetValues(typeof(GameResolution)))
@@ -98,17 +103,6 @@ public class UIMainMenu : UIBase
             TMP_Dropdown.OptionData optionData = new TMP_Dropdown.OptionData(resolutionStr);
             dropdown_Resolution.options.Add(optionData);
         }
-        //CameraShake
-        btnSwitch_CameraShake.SetButtonStatus(GameCoreData.GameSetting.cameraShake);
-        //DamageNumberDisplay
-        btnSwitch_DamageNumberDisplay.SetButtonStatus(GameCoreData.GameSetting.damageNumberDisplay);
-        //Audio
-          //Main
-        slider_MainVolume.value = 1f;
-          //Background
-        slider_BackgroundVolume.value = 1f;
-          //SoundEffect
-        slider_SoundEffectVolume.value = 1f;
     }
 
     private void OnDropdownResolutionValueChange(int optionIndex)
@@ -138,6 +132,8 @@ public class UIMainMenu : UIBase
     private void OnBtnSettingClick()
     {
         settingPanel.SetActive(true);
+        InitSettingPanel();
+        LoadGameSetting();
     }
 
     private void OnBtnExitClick()
