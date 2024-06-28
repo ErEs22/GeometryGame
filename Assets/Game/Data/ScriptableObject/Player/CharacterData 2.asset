@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CharacterIcon: {fileID: 21300000, guid: b304ea26c0669874daffd0221287564c, type: 3}
   CharacterName: Chick
-  HP: 100000
+  HP: 80
   hpRegeneratePerSecond: 0
   stealHPRate: 0
   damageMul: 1
   attackSpeedMul: 1
   criticalRate: 0
-  attackRange: 450
-  moveSpeed: 1
+  attackRange: 400
+  moveSpeed: 9

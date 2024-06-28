@@ -54,7 +54,7 @@ public class UIPlayerStatusBar : UIBase
 
     public override void InitUI()
     {
-        uiID = UIID.PlayerStatusBar;
+        uiID = eUIID.PlayerStatusBar;
     }
 
     private void InitStatusBar(int maxHP)
@@ -81,7 +81,7 @@ public class UIPlayerStatusBar : UIBase
 
     private void UpdateCoinCount()
     {
-        text_CoinCount.text = GameCoreData.PlayerData.coin.ToString();
+        text_CoinCount.text = GameCoreData.PlayerProperties.coin.ToString();
     }
 
     private void UpdateBonusCoinCount(int bonusCoinCount)

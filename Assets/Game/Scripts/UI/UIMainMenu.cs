@@ -16,9 +16,9 @@ public class UIMainMenu : UIBase
     private const string path_SettingPanel_SwitchButton_CameraShake = path_SettingPanel + "Settings/CameraShake";
     private const string path_SettingPanel_SwitchButton_DamageNumberDisplay = path_SettingPanel + "Settings/DamageNumberDisplay";
     private const string path_SettingPanel_HorSelector_FPSLimit = path_SettingPanel + "Settings/FPSLimit/HorizontalSelector";
-    private const string path_SettingPanel_Slider_MainVolume = path_SettingPanel + "Settings/MainVolume/Slider";
-    private const string path_SettingPanel_Slider_BackgroundVolume = path_SettingPanel + "Settings/BackgroundVolume/Slider";
-    private const string path_SettingPanel_Slider_SoundEffectVolume = path_SettingPanel + "Settings/SoundEffectVolume/Slider";
+    private const string path_SettingPanel_Slider_MainVolume = path_SettingPanel + "Settings/MainVolume";
+    private const string path_SettingPanel_Slider_BackgroundVolume = path_SettingPanel + "Settings/BackgroundVolume";
+    private const string path_SettingPanel_Slider_SoundEffectVolume = path_SettingPanel + "Settings/SoundEffectVolume";
     private Button btn_Start;
     private Button btn_Setting;
     private Button btn_Exit;
@@ -66,24 +66,26 @@ public class UIMainMenu : UIBase
 
     private void SaveGameSetting()
     {
-        Enum.TryParse<ScreenMode>(horSelector_ScreenMode.selectOptions[horSelector_ScreenMode.selectIndex].optionName,out ScreenMode screenMode);
+        Enum.TryParse<eScreenMode>(horSelector_ScreenMode.selectOptions[horSelector_ScreenMode.selectIndex].optionName,out eScreenMode screenMode);
         GameCoreData.GameSetting.screenMode = screenMode;
-        Enum.TryParse<GameResolution>(dropdown_Resolution.options[dropdown_Resolution.value].text,out GameResolution gameResolution);
+        Enum.TryParse<eGameResolution>(dropdown_Resolution.options[dropdown_Resolution.value].text.Insert(0,"R_"),out eGameResolution gameResolution);
         GameCoreData.GameSetting.gameResolution = gameResolution;//TODO 修改字符串以符合枚举项
         GameCoreData.GameSetting.cameraShake = btnSwitch_CameraShake.isOn;
         GameCoreData.GameSetting.damageNumberDisplay = btnSwitch_DamageNumberDisplay.isOn;
-        Enum.TryParse<FPSOption>(horSelector_FPSLimit.selectOptions[horSelector_FPSLimit.selectIndex].optionName.Insert(0,"FPS_"),out FPSOption fpsOption);
+        Enum.TryParse<eFPSOption>(horSelector_FPSLimit.selectOptions[horSelector_FPSLimit.selectIndex].optionName.Insert(0,"FPS_"),out eFPSOption fpsOption);
         GameCoreData.GameSetting.fpsLimit = fpsOption;
         GameCoreData.GameSetting.mainVolume = slider_MainVolume.value;
         GameCoreData.GameSetting.backgroundVolume = slider_BackgroundVolume.value;
         GameCoreData.GameSetting.soundEffectVolume = slider_SoundEffectVolume.value;
+        GameCoreData.SaveData_GameSetting settingData = new GameCoreData.SaveData_GameSetting();
+        SaveSystem.Save("GeometrySave.save",settingData);
     }
 
     private void LoadGameSetting()
     {
-        //TODO 加载设置
+        SaveSystem.Load<GameCoreData.SaveData_GameSetting>("GeometrySave.save").LoadData();
         horSelector_ScreenMode.InitComponent(GameCoreData.GameSetting.screenMode.ToString());
-        dropdown_Resolution.transform.Find("Label").GetComponent<TextMeshProUGUI>().text = GameCoreData.GameSetting.gameResolution.ToString().Remove(0,2);
+        dropdown_Resolution.value = (int)GameCoreData.GameSetting.gameResolution;
         btnSwitch_CameraShake.SetButtonStatus(GameCoreData.GameSetting.cameraShake);
         btnSwitch_DamageNumberDisplay.SetButtonStatus(GameCoreData.GameSetting.damageNumberDisplay);
         horSelector_FPSLimit.InitComponent(GameCoreData.GameSetting.fpsLimit.ToString().Remove(0,4));
@@ -97,7 +99,7 @@ public class UIMainMenu : UIBase
         //分辨率下拉框添加分辨率选项
         dropdown_Resolution.options.Clear();
         dropdown_Resolution.onValueChanged.AddListener(OnDropdownResolutionValueChange);
-        foreach (GameResolution resolution in Enum.GetValues(typeof(GameResolution)))
+        foreach (eGameResolution resolution in Enum.GetValues(typeof(eGameResolution)))
         {
             string resolutionStr = resolution.ToString().Remove(0,2);
             TMP_Dropdown.OptionData optionData = new TMP_Dropdown.OptionData(resolutionStr);
@@ -107,10 +109,10 @@ public class UIMainMenu : UIBase
 
     private void OnDropdownResolutionValueChange(int optionIndex)
     {
-        var resolutionArray = Enum.GetValues(typeof(GameResolution));
-        if(Enum.IsDefined(typeof(GameResolution),optionIndex))
+        var resolutionArray = Enum.GetValues(typeof(eGameResolution));
+        if(Enum.IsDefined(typeof(eGameResolution),optionIndex))
         {
-            GameCoreData.GameSetting.gameResolution = (GameResolution)Array.IndexOf(resolutionArray,optionIndex);
+            GameCoreData.GameSetting.gameResolution = (eGameResolution)Array.IndexOf(resolutionArray,optionIndex);
         }
         else
         {
@@ -120,12 +122,12 @@ public class UIMainMenu : UIBase
 
     public override void InitUI()
     {
-        uiID = UIID.MainMenu;
+        uiID = eUIID.MainMenu;
     }
 
     private void OnBtnStartClick()
     {
-        EventManager.instance.OnOpenUI(UIID.CharacterSelectMenu);
+        EventManager.instance.OnOpenUI(eUIID.CharacterSelectMenu);
         CloseUI();
     }
 

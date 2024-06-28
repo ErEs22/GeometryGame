@@ -147,14 +147,14 @@ public class UIShopMenu : UIBase
 
     private void InitPlayerProperties()
     {
-        text_Health_PropertyValue.text = GameCoreData.PlayerData.maxHP.ToString();
-        text_HPRegeneration_PropertyValue.text = GameCoreData.PlayerData.hpRegeneration.ToString();
-        text_StealHP_PropertyValue.text = GameCoreData.PlayerData.stealHP.ToString() + "%";
-        text_DamageMul_PropertyValue.text = GameCoreData.PlayerData.damageMul.ToString() + "%";
-        text_AttackSpeed_PropertyValue.text = GameCoreData.PlayerData.attackSpeedMul.ToString() + "%";
-        text_CriticalRate_PropertyValue.text = GameCoreData.PlayerData.criticalRate.ToString() + "%";
-        text_AttackRange_PropertyValue.text = GameCoreData.PlayerData.attackRange.ToString();
-        text_MoveSpeed_PropertyValue.text = GameCoreData.PlayerData.moveSpeed.ToString() + "%";
+        text_Health_PropertyValue.text = GameCoreData.PlayerProperties.maxHP.ToString();
+        text_HPRegeneration_PropertyValue.text = GameCoreData.PlayerProperties.hpRegeneration.ToString();
+        text_StealHP_PropertyValue.text = GameCoreData.PlayerProperties.stealHP.ToString() + "%";
+        text_DamageMul_PropertyValue.text = GameCoreData.PlayerProperties.damageMul.ToString() + "%";
+        text_AttackSpeed_PropertyValue.text = GameCoreData.PlayerProperties.attackSpeedMul.ToString() + "%";
+        text_CriticalRate_PropertyValue.text = GameCoreData.PlayerProperties.criticalRate.ToString() + "%";
+        text_AttackRange_PropertyValue.text = GameCoreData.PlayerProperties.attackRange.ToString();
+        text_MoveSpeed_PropertyValue.text = GameCoreData.PlayerProperties.moveSpeed.ToString() + "%";
         //TODO加载玩家存档，当玩家有处在游戏中的的存档
     }
 
@@ -181,7 +181,7 @@ public class UIShopMenu : UIBase
     {
         allWeaponInventoryItems.Remove(weaponItem);
         GameInventory.Instance.RemoveWeaponFromInventory(weaponItem.itemData.itemName);
-        GameCoreData.PlayerData.coin += (int)(weaponItem.itemData.itemLevel * weaponItem.itemData.itemCost * 0.8);
+        GameCoreData.PlayerProperties.coin += (int)(weaponItem.itemData.itemLevel * weaponItem.itemData.itemCost * 0.8);
         EventManager.instance.OnUpdateCoinCount();
         Destroy(weaponItem.gameObject);
     }
@@ -195,7 +195,7 @@ public class UIShopMenu : UIBase
 
     private void OnBtnRefreshClick()
     {
-        if(GameCoreData.PlayerData.coin >= refreshCoinCost)
+        if(GameCoreData.PlayerProperties.coin >= refreshCoinCost)
         {
             RefreshAllItems();
             RefreshCoinCost();
@@ -204,7 +204,7 @@ public class UIShopMenu : UIBase
 
     private void RefreshCoinCost()
     {
-        GameCoreData.PlayerData.CostCoin(refreshCoinCost);
+        GameCoreData.PlayerProperties.CostCoin(refreshCoinCost);
         SetRefreshIncreaseCoinCost();
         EventManager.instance.OnUpdateCoinCount();
         UpdateBtnRefreshUI();
@@ -224,7 +224,7 @@ public class UIShopMenu : UIBase
 
     private void UpdateBtnRefreshUI()
     {
-        if(GameCoreData.PlayerData.coin < 20)
+        if(GameCoreData.PlayerProperties.coin < 20)
         {
             text_Btn_Refresh.color = Color.red;
         }
@@ -254,10 +254,10 @@ public class UIShopMenu : UIBase
 
     private void AddShopItemToInventory(ShopItemData_SO itemData,ShopItem shopItem)
     {
-        int coinCount = GameCoreData.PlayerData.coin;
+        int coinCount = GameCoreData.PlayerProperties.coin;
         switch(itemData.shopItemType)
         {
-            case ShopItemType.Prop:
+            case eShopItemType.Prop:
                 Item_Prop tempItemProp = CheckItemInPropInventory(itemData as ShopItemData_Prop_SO);
                 //检查背包是否已经存在这个物品，存在直接加一数量，否则添加该物品到背包中
                 if(tempItemProp != null)
@@ -279,7 +279,7 @@ public class UIShopMenu : UIBase
                 if(coinCount >= itemData.itemCost)
                 {
                     coinCount = Mathf.Clamp(coinCount - itemData.itemCost,0,int.MaxValue);
-                    GameCoreData.PlayerData.coin = coinCount;
+                    GameCoreData.PlayerProperties.coin = coinCount;
                 }
                 ShopItemData_Prop_SO itemPropData = itemData as ShopItemData_Prop_SO;
                 itemPropData.itemProperties.ForEach( item =>
@@ -290,7 +290,7 @@ public class UIShopMenu : UIBase
                 shopItem.img_HideMask.gameObject.SetActive(true);
                 shopItem.isLocked = false;
             break;
-            case ShopItemType.Weapon:
+            case eShopItemType.Weapon:
                 //TODO检查背包是否已满（最大放置6个）,同时检查是否可以与背包中的武器进行合成（背包已满情况下）
                 if(allWeaponInventoryItems.Count >= 6)
                 {
@@ -303,7 +303,7 @@ public class UIShopMenu : UIBase
                             if(coinCount >= itemData.itemCost)
                             {
                                 coinCount = Mathf.Clamp(coinCount - itemData.itemCost,0,int.MaxValue);
-                                GameCoreData.PlayerData.coin = coinCount;
+                                GameCoreData.PlayerProperties.coin = coinCount;
                             }
                             EventManager.instance.OnUpdateCoinCount();
                             shopItem.img_HideMask.gameObject.SetActive(true);
@@ -322,7 +322,7 @@ public class UIShopMenu : UIBase
                     if(coinCount >= itemData.itemCost)
                     {
                         coinCount = Mathf.Clamp(coinCount - itemData.itemCost,0,int.MaxValue);
-                        GameCoreData.PlayerData.coin = coinCount;
+                        GameCoreData.PlayerProperties.coin = coinCount;
                     }
                     EventManager.instance.OnUpdateCoinCount();
                     Item_Weapon itemWeapon = Instantiate(prefab_InventoryItem_Weapon,trans_WeaponInventoryParent).GetComponent<Item_Weapon>();
@@ -360,7 +360,7 @@ public class UIShopMenu : UIBase
 
     public override void InitUI()
     {
-        uiID = UIID.ShopMenu;
+        uiID = eUIID.ShopMenu;
     }
 
     private void OnStartLevelClick()
@@ -412,21 +412,21 @@ public class UIShopMenu : UIBase
 
     private void UpdateCoinCountText()
     {
-        text_CoinCount.text = GameCoreData.PlayerData.coin.ToString();
+        text_CoinCount.text = GameCoreData.PlayerProperties.coin.ToString();
     }
 
     private void GenerateItem(ShopItemData_SO itemData)
     {
         switch(itemData.shopItemType)
         {
-            case ShopItemType.Prop:
+            case eShopItemType.Prop:
                 ShopItem_Prop itemProp = Instantiate(prefab_ShopItem_Prop,trans_ItemsParent).GetComponent<ShopItem_Prop>();
                 allShopItems.Add(itemProp);
                 itemProp.itemData = itemData as ShopItemData_Prop_SO;
                 itemProp.InitItemProperties(3);
                 itemProp.UpdateUIInfo();
             break;
-            case ShopItemType.Weapon:
+            case eShopItemType.Weapon:
                 ShopItem_Weapon itemWeapon = Instantiate(prefab_ShopItem_Weapon,trans_ItemsParent).GetComponent<ShopItem_Weapon>();
                 allShopItems.Add(itemWeapon);
                 itemWeapon.itemData = itemData as ShopItemData_Weapon_SO;
@@ -438,7 +438,7 @@ public class UIShopMenu : UIBase
 
     private bool CheckHasEnoughCoin(int coinCost)
     {
-        if(GameCoreData.PlayerData.coin >= coinCost)
+        if(GameCoreData.PlayerProperties.coin >= coinCost)
         {
             return true;
         }
@@ -448,40 +448,40 @@ public class UIShopMenu : UIBase
         }
     }
 
-    private void UpdatePlayerStatusPropertiesUI(PlayerProperty playerProperty,int propertyValue)
+    private void UpdatePlayerStatusPropertiesUI(ePlayerProperty playerProperty,int propertyValue)
     {
         switch(playerProperty)
         {
-            case PlayerProperty.MaxHP:
-                healthPropertyValue = GameCoreData.PlayerData.maxHP;
+            case ePlayerProperty.MaxHP:
+                healthPropertyValue = GameCoreData.PlayerProperties.maxHP;
                 text_Health_PropertyValue.text = healthPropertyValue.ToString();
             break;
-            case PlayerProperty.HPRegeneration:
-                hpRegenerationPropertyValue = GameCoreData.PlayerData.hpRegeneration;
+            case ePlayerProperty.HPRegeneration:
+                hpRegenerationPropertyValue = GameCoreData.PlayerProperties.hpRegeneration;
                 text_HPRegeneration_PropertyValue.text = hpRegenerationPropertyValue.ToString();
             break;
-            case PlayerProperty.StealHP:
-                stealHPPropertyValue = GameCoreData.PlayerData.stealHP;
+            case ePlayerProperty.StealHP:
+                stealHPPropertyValue = GameCoreData.PlayerProperties.stealHP;
                 text_StealHP_PropertyValue.text = stealHPPropertyValue.ToString() + "%";
             break;
-            case PlayerProperty.DamageMul:
-                damageMulPropertyValue = GameCoreData.PlayerData.damageMul;
+            case ePlayerProperty.DamageMul:
+                damageMulPropertyValue = GameCoreData.PlayerProperties.damageMul;
                 text_DamageMul_PropertyValue.text = damageMulPropertyValue.ToString() + "%";
             break;
-            case PlayerProperty.AttackSpeed:
-                attackSpeedPropertyValue = GameCoreData.PlayerData.attackSpeedMul;
+            case ePlayerProperty.AttackSpeed:
+                attackSpeedPropertyValue = GameCoreData.PlayerProperties.attackSpeedMul;
                 text_AttackSpeed_PropertyValue.text = attackSpeedPropertyValue.ToString() + "%";
             break;
-            case PlayerProperty.CriticalRate:
-                criticalRatePropertyValue = GameCoreData.PlayerData.criticalRate;
+            case ePlayerProperty.CriticalRate:
+                criticalRatePropertyValue = GameCoreData.PlayerProperties.criticalRate;
                 text_CriticalRate_PropertyValue.text = criticalRatePropertyValue.ToString() + "%";
             break;
-            case PlayerProperty.AttackRange:
-                attackRangePropertyValue = GameCoreData.PlayerData.attackRange;
+            case ePlayerProperty.AttackRange:
+                attackRangePropertyValue = GameCoreData.PlayerProperties.attackRange;
                 text_AttackRange_PropertyValue.text = attackRangePropertyValue.ToString();
             break;
-            case PlayerProperty.MoveSpeed:
-                moveSpeedPropertyValue = GameCoreData.PlayerData.moveSpeed;
+            case ePlayerProperty.MoveSpeed:
+                moveSpeedPropertyValue = GameCoreData.PlayerProperties.moveSpeed;
                 text_MoveSpeed_PropertyValue.text = moveSpeedPropertyValue.ToString() + "%";
             break;
         }

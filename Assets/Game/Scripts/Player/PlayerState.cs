@@ -15,7 +15,7 @@ public class PlayerState : MonoBehaviour, ITakeDamage
     private float attackSpeedMul = 1.0f;
     private float criticalRate = 0.0f;
     private int attackRange = 450;
-    private int moveSpeed = 10;
+    private float moveSpeed = 10;
     private int exp = 0;
     private int bonusCoin = 0;
     private int currentPlayerLevel = 1;
@@ -56,14 +56,14 @@ public class PlayerState : MonoBehaviour, ITakeDamage
         criticalRate = playerData.criticalRate;
         attackRange = playerData.attackRange;
         moveSpeed = playerData.moveSpeed;
-        GameCoreData.PlayerData.maxHP = maxHP;
-        GameCoreData.PlayerData.hpRegeneration = hpRegeneraePerSecond;
-        GameCoreData.PlayerData.stealHP = (int)(stealHPRate * 100);
-        GameCoreData.PlayerData.damageMul = (int)((damageMul - 1) * 100);
-        GameCoreData.PlayerData.attackSpeedMul = (int)((attackSpeedMul - 1) * 100);
-        GameCoreData.PlayerData.criticalRate = (int)(criticalRate * 100);
-        GameCoreData.PlayerData.attackRange = 0;
-        GameCoreData.PlayerData.moveSpeed = (int)((moveSpeed - 1) * 100);
+        GameCoreData.PlayerProperties.maxHP = maxHP;
+        GameCoreData.PlayerProperties.hpRegeneration = hpRegeneraePerSecond;
+        GameCoreData.PlayerProperties.stealHP = (int)(stealHPRate * 100);
+        GameCoreData.PlayerProperties.damageMul = (int)((damageMul - 1) * 100);
+        GameCoreData.PlayerProperties.attackSpeedMul = (int)((attackSpeedMul - 1) * 100);
+        GameCoreData.PlayerProperties.criticalRate = (int)(criticalRate * 100);
+        GameCoreData.PlayerProperties.attackRange = 0;
+        GameCoreData.PlayerProperties.moveSpeed = (int)((moveSpeed - 1) * 100);
         EventManager.instance.OnInitStatusBar(maxHP);
     }
 
@@ -71,15 +71,15 @@ public class PlayerState : MonoBehaviour, ITakeDamage
     {
         int currentLevelExpRequire = GetCurrentLevelExpRequire();
         exp++;
-        GameCoreData.PlayerData.exp++;
-        GameCoreData.PlayerData.coin++;
+        GameCoreData.PlayerProperties.exp++;
+        GameCoreData.PlayerProperties.coin++;
         if(exp >= currentLevelExpRequire)
         {
             //角色升级
             exp = 0;
-            GameCoreData.PlayerData.exp = 0;
+            GameCoreData.PlayerProperties.exp = 0;
             currentPlayerLevel++;
-            GameCoreData.PlayerData.currentPlayerLevel++;
+            GameCoreData.PlayerProperties.currentPlayerLevel++;
             EventManager.instance.OnPlayerUpgradeCountIncrease();
         }
         EventManager.instance.OnUpdateExpBar(currentPlayerLevel,exp,currentLevelExpRequire);
@@ -121,7 +121,7 @@ public class PlayerState : MonoBehaviour, ITakeDamage
         //TODO击中效果
         if(HP == 0)
         {
-            EventManager.instance.OnOpenUI(UIID.FinishMenu);
+            EventManager.instance.OnOpenUI(eUIID.FinishMenu);
         }
     }
 }

@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CharacterIcon: {fileID: 21300000, guid: 96ccd342477770a4e81891f22fa590a9, type: 3}
   CharacterName: Duck
-  HP: 100000
-  hpRegeneratePerSecond: 0
+  HP: 40
+  hpRegeneratePerSecond: 5
   stealHPRate: 0
   damageMul: 1
   attackSpeedMul: 1
   criticalRate: 0
-  attackRange: 450
-  moveSpeed: 1
+  attackRange: 400
+  moveSpeed: 11.5

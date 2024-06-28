@@ -1,19 +1,19 @@
 using System;
 using UnityEngine;
 
-public enum StatusType
+public enum eStatusType
 {
     HP,
     MoveSpeed
 }
 
-public enum LevelStatus
+public enum eLevelStatus
 {
     Running,
     Ended
 }
 
-public enum GameStatus
+public enum eGameStatus
 {
     Running,
     Pause,
@@ -22,7 +22,7 @@ public enum GameStatus
     MainMenu
 }
 
-public enum UIID
+public enum eUIID
 {
     ShopMenu,
     PauseMenu,
@@ -33,13 +33,13 @@ public enum UIID
     MainMenu,
 }
 
-public enum CompareSign
+public enum eCompareSign
 {
     Equals,
     Greater,
     Less
 }
-public enum PlayerProperty
+public enum ePlayerProperty
 {
     MaxHP,
     HPRegeneration,
@@ -51,7 +51,7 @@ public enum PlayerProperty
     MoveSpeed,
 }
 
-public enum WeaponProperty
+public enum eWeaponProperty
 {
     Damage,
     CriticalMul,
@@ -98,26 +98,26 @@ public static class GameColor
 [Serializable]
 public class ShopPropPropertyPair
 {
-    public PlayerProperty playerProperty;
+    public ePlayerProperty playerProperty;
     public int changeAmount;
 }
 
 [Serializable]
 public class ShopWeaponPropertyPair
 {
-    public WeaponProperty weaponProperty;
+    public eWeaponProperty weaponProperty;
     public float propertyValue;
 }
 
-public enum ShopItemType
+public enum eShopItemType
 {
     Prop,
     Weapon
 }
 
-public enum GameResolution
+public enum eGameResolution
 {
-    R_2560X1440,
+    R_2560X1440 = 0,
     R_1920X1080,
     R_1600X900,
     R_1280X720,
@@ -125,14 +125,14 @@ public enum GameResolution
     R_800X450,
 }
 
-public enum ScreenMode
+public enum eScreenMode
 {
-    Windowed,
-    Borderless_Window,
+    Windowed = 0,
+    BorderlessWindow,
     FullScreen,
 }
 
-public enum FPSOption
+public enum eFPSOption
 {
     FPS_30 = 30,
     FPS_60 = 60,

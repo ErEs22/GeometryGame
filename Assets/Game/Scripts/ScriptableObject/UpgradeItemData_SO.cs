@@ -7,5 +7,5 @@ public class UpgradeItemData_SO : ScriptableObject
     public Sprite icon;
     public string itemName;
     public int valueAmount;
-    public PlayerProperty effectProperty;
+    public ePlayerProperty effectProperty;
 }

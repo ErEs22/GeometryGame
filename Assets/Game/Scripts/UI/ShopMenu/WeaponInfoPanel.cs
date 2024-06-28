@@ -88,30 +88,30 @@ public class WeaponInfoPanel : MonoBehaviour
         }
     }
 
-    private void SetPropertyText(TextMeshProUGUI textComp,WeaponProperty weaponProperty,float propertyValue)
+    private void SetPropertyText(TextMeshProUGUI textComp,eWeaponProperty weaponProperty,float propertyValue)
     {
         propertyValue = GameInventory.Instance.CaculateWeaponDataByLevel(weaponProperty,propertyValue,activeItem.itemData.itemLevel,activeItem.itemLevel);
         switch(weaponProperty)
         {
-            case WeaponProperty.Damage:
+            case eWeaponProperty.Damage:
                 textComp.text = "Damage:" + propertyValue * (PlayerPropertyHandler.damageMul * 0.01f + 1);
             break;
-            case WeaponProperty.CriticalMul:
+            case eWeaponProperty.CriticalMul:
                 textComp.text = "CriticalMul:" + propertyValue;
             break;
-            case WeaponProperty.FireInterval:
+            case eWeaponProperty.FireInterval:
                 textComp.text = "FireInterval:" + (propertyValue / (PlayerPropertyHandler.attackSpeed * 0.01f + 1)).ToString("F2");
             break;
-            case WeaponProperty.PushBack:
+            case eWeaponProperty.PushBack:
                 textComp.text = "PushBack:" + propertyValue;
             break;
-            case WeaponProperty.AttackRange:
+            case eWeaponProperty.AttackRange:
                 textComp.text = "AttackRange:" + (propertyValue + PlayerPropertyHandler.attackRange).ToString();
             break;
-            case WeaponProperty.StealHP:
+            case eWeaponProperty.StealHP:
                 textComp.text = "StealHP:" + (propertyValue + PlayerPropertyHandler.stealHP).ToString();
             break;
-            case WeaponProperty.DamageThrough:
+            case eWeaponProperty.DamageThrough:
                 textComp.text = "DamageThrough:" + propertyValue;
             break;
         }

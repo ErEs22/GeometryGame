@@ -69,7 +69,7 @@ public class ShopItem_Prop : ShopItem
             b.normalColor = Color.grey;
             btn_Lock.colors = b;
         }
-        if(GameCoreData.PlayerData.coin >= itemData.itemCost)
+        if(GameCoreData.PlayerProperties.coin >= itemData.itemCost)
         {
             isAffordable = true;
         }
@@ -115,32 +115,32 @@ public class ShopItem_Prop : ShopItem
         }
     }
     
-    private void SetPropertyText(TextMeshProUGUI textComp,PlayerProperty playerProperty,float propertyValue)
+    private void SetPropertyText(TextMeshProUGUI textComp,ePlayerProperty playerProperty,float propertyValue)
     {
         switch(playerProperty)
         {
-            case PlayerProperty.MaxHP:
+            case ePlayerProperty.MaxHP:
                 textComp.text = "MaxHP:" + propertyValue;
             break;
-            case PlayerProperty.HPRegeneration:
+            case ePlayerProperty.HPRegeneration:
                 textComp.text = "HPRegeneration:" + propertyValue;
             break;
-            case PlayerProperty.StealHP:
+            case ePlayerProperty.StealHP:
                 textComp.text = "StealHP:" + propertyValue + "%";
             break;
-            case PlayerProperty.DamageMul:
+            case ePlayerProperty.DamageMul:
                 textComp.text = "DamageMul:" + propertyValue + "%";
             break;
-            case PlayerProperty.AttackSpeed:
+            case ePlayerProperty.AttackSpeed:
                 textComp.text = "AttackSpeed:" + propertyValue + "%";
             break;
-            case PlayerProperty.CriticalRate:
+            case ePlayerProperty.CriticalRate:
                 textComp.text = "CriticalRate:" + propertyValue + "%";
             break;
-            case PlayerProperty.AttackRange:
+            case ePlayerProperty.AttackRange:
                 textComp.text = "AttackRange:" + propertyValue;
             break;
-            case PlayerProperty.MoveSpeed:
+            case ePlayerProperty.MoveSpeed:
                 textComp.text = "MoveSpeed:" + propertyValue + "%";
             break;
         }

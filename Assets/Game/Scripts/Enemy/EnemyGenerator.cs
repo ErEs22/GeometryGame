@@ -173,7 +173,7 @@ public class EnemyGenerator : MonoBehaviour
     public void GenerateEnemy(GameObject enemy,Vector2 pos)
     {
         //关卡结束后停止生成敌人
-        if(LevelManager.levelStatus == LevelStatus.Ended) return;
+        if(LevelManager.levelStatus == eLevelStatus.Ended) return;
 
         Enemy newEnemy = PoolManager.Release(enemy, pos).GetComponent<Enemy>();
         enemyManager.enemies.Add(newEnemy);

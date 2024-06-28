@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CharacterIcon: {fileID: 21300000, guid: eb9854e09adb11040875c85c48c9073c, type: 3}
   CharacterName: Buffalo
-  HP: 100000
+  HP: 45
   hpRegeneratePerSecond: 0
   stealHPRate: 0
   damageMul: 1
   attackSpeedMul: 1
   criticalRate: 0
-  attackRange: 450
-  moveSpeed: 1
+  attackRange: 400
+  moveSpeed: 10.5

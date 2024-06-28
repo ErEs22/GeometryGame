@@ -12,5 +12,5 @@ public class CharacterData_SO : ScriptableObject
     public float attackSpeedMul = 1.0f;
     public float criticalRate = 0.0f;
     public int attackRange = 450;
-    public int moveSpeed = 10;
+    public float moveSpeed = 10;
 }

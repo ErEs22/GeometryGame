@@ -9,8 +9,8 @@ public class EventManager : MonoBehaviour
     public static EventManager instance;
     public event UnityAction<Enemy> enemyDie;
     public event UnityAction<int,int,int> onUICountDown = delegate{};
-    public event UnityAction<UIID> onOpenUI = delegate{};
-    public event UnityAction<UIID> onCloseUI = delegate{};
+    public event UnityAction<eUIID> onOpenUI = delegate{};
+    public event UnityAction<eUIID> onCloseUI = delegate{};
     public event UnityAction onStartLevel = delegate{};
     public event UnityAction<int,int> onUpdateHealthBar = delegate{};
     public event UnityAction<int,int,int> onUpdateExpBar = delegate{};
@@ -23,7 +23,7 @@ public class EventManager : MonoBehaviour
     public event UnityAction onCollectExpBall = delegate{};
     public event UnityAction<int> onShowUpgradeRewardCount = delegate{};
     public event UnityAction onPlayerUpgradeCountIncrease = delegate{};
-    public event UnityAction<PlayerProperty,int> onUpdatePlayerProperty = delegate{};
+    public event UnityAction<ePlayerProperty,int> onUpdatePlayerProperty = delegate{};
     public event UnityAction<int> onChangeBonusCoinCount = delegate{};
     public event UnityAction onLevelEnd = delegate{};
     public event UnityAction onUpgradeButtonClick = delegate{};
@@ -33,15 +33,26 @@ public class EventManager : MonoBehaviour
     public event UnityAction onHideShopMenuMask = delegate{};
     public event UnityAction<Item_Weapon> onCombineWeaponItem = delegate{};
     public event UnityAction<Item_Weapon> onSellWeaponInventoryItems = delegate{};
-    
     public event UnityAction onStartGame = delegate{};
     public event UnityAction onGenerateWeaonInInventory = delegate{};
+    public event UnityAction onDisableLocomotionInput = delegate{};
+    public event UnityAction onEnableLocomotionInput = delegate {};
 
     private void Awake() {
         if(instance == null)
         {
             instance = this;
         }
+    }
+
+    public void OnEnableLocomotionInput()
+    {
+        onEnableLocomotionInput.Invoke();
+    }
+
+    public void OnDisableLocomotionInput()
+    {
+        onDisableLocomotionInput.Invoke();
     }
 
     public void OnGenerateWeaonInInventory()
@@ -59,12 +70,12 @@ public class EventManager : MonoBehaviour
         onUICountDown.Invoke(start,end,interval);
     }
 
-    public void OnOpenUI(UIID id)
+    public void OnOpenUI(eUIID id)
     {
         onOpenUI.Invoke(id);
     }
 
-    public void OnCloseUI(UIID id)
+    public void OnCloseUI(eUIID id)
     {
         onCloseUI.Invoke(id);
     }
@@ -129,33 +140,33 @@ public class EventManager : MonoBehaviour
         onPlayerUpgradeCountIncrease.Invoke();
     }
 
-    public void OnUpdatePlayerProperty(PlayerProperty playerProperty,int changeValue)
+    public void OnUpdatePlayerProperty(ePlayerProperty playerProperty,int changeValue)
     {
         switch(playerProperty)
         {
-            case PlayerProperty.MaxHP:
-                GameCoreData.PlayerData.maxHP += changeValue;
+            case ePlayerProperty.MaxHP:
+                GameCoreData.PlayerProperties.maxHP += changeValue;
             break;
-            case PlayerProperty.HPRegeneration:
-                GameCoreData.PlayerData.hpRegeneration += changeValue;
+            case ePlayerProperty.HPRegeneration:
+                GameCoreData.PlayerProperties.hpRegeneration += changeValue;
             break;
-            case PlayerProperty.StealHP:
-                GameCoreData.PlayerData.stealHP += changeValue;
+            case ePlayerProperty.StealHP:
+                GameCoreData.PlayerProperties.stealHP += changeValue;
             break;
-            case PlayerProperty.DamageMul:
-                GameCoreData.PlayerData.damageMul += changeValue;
+            case ePlayerProperty.DamageMul:
+                GameCoreData.PlayerProperties.damageMul += changeValue;
             break;
-            case PlayerProperty.AttackSpeed:
-                GameCoreData.PlayerData.attackSpeedMul += changeValue;
+            case ePlayerProperty.AttackSpeed:
+                GameCoreData.PlayerProperties.attackSpeedMul += changeValue;
             break;
-            case PlayerProperty.CriticalRate:
-                GameCoreData.PlayerData.criticalRate += changeValue;
+            case ePlayerProperty.CriticalRate:
+                GameCoreData.PlayerProperties.criticalRate += changeValue;
             break;
-            case PlayerProperty.AttackRange:
-                GameCoreData.PlayerData.attackRange += changeValue;
+            case ePlayerProperty.AttackRange:
+                GameCoreData.PlayerProperties.attackRange += changeValue;
             break;
-            case PlayerProperty.MoveSpeed:
-                GameCoreData.PlayerData.moveSpeed += changeValue;
+            case ePlayerProperty.MoveSpeed:
+                GameCoreData.PlayerProperties.moveSpeed += changeValue;
             break;
         }
         onUpdatePlayerProperty.Invoke(playerProperty,changeValue);

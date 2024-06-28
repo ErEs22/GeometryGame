@@ -9,7 +9,7 @@ public class LevelManager : MonoBehaviour
 
     public static int currentLevel = 5;
     private int playerUpgradeCount = 0;
-    public static LevelStatus levelStatus = LevelStatus.Running;
+    public static eLevelStatus levelStatus = eLevelStatus.Running;
     EnemyGenerator enemyGenerator;
     EnemyManager enemyManager;
     PlayerState playerState;
@@ -50,12 +50,13 @@ public class LevelManager : MonoBehaviour
     private void StartGame()
     {
         Debug.Log("当前关卡：" + currentLevel);
-        EventManager.instance.OnOpenUI(UIID.PlayerStatusBar);
+        EventManager.instance.OnOpenUI(eUIID.PlayerStatusBar);
         EventManager.instance.OnInitPlayerStatus();
         ClearPlayerUpgradeCount();
         StartLevelCountDown();
         enemyManager.SetCurrentEnemyList();
         StartSpawnEnemy();
+        EventManager.instance.OnEnableLocomotionInput();
     }
 
     /// <summary>
@@ -65,11 +66,12 @@ public class LevelManager : MonoBehaviour
     {
         currentLevel++;
         Debug.Log("当前关卡：" + currentLevel);
-        EventManager.instance.OnOpenUI(UIID.PlayerStatusBar);
+        EventManager.instance.OnOpenUI(eUIID.PlayerStatusBar);
         ClearPlayerUpgradeCount();
         StartLevelCountDown();
         enemyManager.SetCurrentEnemyList();
         StartSpawnEnemy();
+        EventManager.instance.OnEnableLocomotionInput();
     }
 
     private async void StartLevelCountDown()
@@ -83,40 +85,41 @@ public class LevelManager : MonoBehaviour
 
     private void UpdateGameAndLevelStatusWhenLevelEnd()
     {
-        levelStatus = LevelStatus.Ended;
+        EventManager.instance.OnDisableLocomotionInput();
+        levelStatus = eLevelStatus.Ended;
         enemyManager.ClearAllEnemy();
         if(currentLevel < 20)
         {
-            GlobalVar.gameStatus = GameStatus.SkillUI;
+            GlobalVar.gameStatus = eGameStatus.SkillUI;
             //TODO 当前关卡结束，弹出技能页面，清除屏幕敌人
             if(playerUpgradeCount > 0)
             {
-                EventManager.instance.OnOpenUI(UIID.UpgradeMenu);
+                EventManager.instance.OnOpenUI(eUIID.UpgradeMenu);
             }
             else
             {
-                EventManager.instance.OnOpenUI(UIID.ShopMenu);
+                EventManager.instance.OnOpenUI(eUIID.ShopMenu);
             }
             EventManager.instance.OnShowUpgradeRewardCount(playerUpgradeCount);
         }
         else if(currentLevel == 20)
         {
-            GlobalVar.gameStatus = GameStatus.Ended;
+            GlobalVar.gameStatus = eGameStatus.Ended;
             //TODO 游戏结束，弹出结算页面
-            EventManager.instance.OnOpenUI(UIID.FinishMenu);
+            EventManager.instance.OnOpenUI(eUIID.FinishMenu);
             Debug.Log("游戏结束，当前关卡：" + currentLevel + "关");
         }
         EventManager.instance.OnLevelEnd();
     }
     private void UpdateGameAndLevelStatusWhenLevelStart()
     {
-        levelStatus = LevelStatus.Running;
-        GlobalVar.gameStatus = GameStatus.Running;
+        levelStatus = eLevelStatus.Running;
+        GlobalVar.gameStatus = eGameStatus.Running;
     }
 
     private async void StartSpawnEnemy()
     {
-        if(levelStatus == LevelStatus.Ended) return;
+        if(levelStatus == eLevelStatus.Ended) return;
         int enemySpawnCount = GetLevelSpawnEnemysInWaves();
 
         //TODO三个特殊关卡

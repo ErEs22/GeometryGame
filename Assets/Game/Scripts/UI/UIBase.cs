@@ -3,7 +3,7 @@ using UnityEngine;
 public class UIBase :MonoBehaviour
 {
     [DisplayOnly]
-    public UIID uiID;
+    public eUIID uiID;
 
     private void Awake() {
         // InitUI();

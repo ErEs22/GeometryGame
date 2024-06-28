@@ -49,28 +49,28 @@ public class UpgradeItem : MonoBehaviour
         string sign = itemData.valueAmount > 0 ? "+" : "-";
         switch(itemData.effectProperty)
         {
-            case PlayerProperty.MaxHP:
+            case ePlayerProperty.MaxHP:
                 text_ItemDescription.text = sign + itemData.valueAmount + "HP";
             break;
-            case PlayerProperty.HPRegeneration:
+            case ePlayerProperty.HPRegeneration:
                 text_ItemDescription.text = sign + itemData.valueAmount + "HPRegeneration";
             break;
-            case PlayerProperty.StealHP:
+            case ePlayerProperty.StealHP:
                 text_ItemDescription.text = sign + itemData.valueAmount + "%StealHP";
             break;
-            case PlayerProperty.DamageMul:
+            case ePlayerProperty.DamageMul:
                 text_ItemDescription.text = sign + itemData.valueAmount + "%Damage";
             break;
-            case PlayerProperty.AttackSpeed:
+            case ePlayerProperty.AttackSpeed:
                 text_ItemDescription.text = sign + itemData.valueAmount + "%AttackSpeed";
             break;
-            case PlayerProperty.CriticalRate:
+            case ePlayerProperty.CriticalRate:
                 text_ItemDescription.text = sign + itemData.valueAmount + "%CriticalRate";
             break;
-            case PlayerProperty.AttackRange:
+            case ePlayerProperty.AttackRange:
                 text_ItemDescription.text = sign + itemData.valueAmount + "AttackRange";
             break;
-            case PlayerProperty.MoveSpeed:
+            case ePlayerProperty.MoveSpeed:
                 text_ItemDescription.text = sign + itemData.valueAmount + "%MoveSpeed";
             break;
         }

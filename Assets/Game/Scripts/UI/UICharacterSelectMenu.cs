@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor.U2D.Animation;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -58,7 +59,7 @@ public class UICharacterSelectMenu : UIBase
 
     public override void InitUI()
     {
-        uiID = UIID.CharacterSelectMenu;
+        uiID = eUIID.CharacterSelectMenu;
     }
 
     public void SelectWeapon(Item_Weapon_CharacterSelectMenu weapon)
@@ -160,12 +161,12 @@ public class UICharacterSelectMenu : UIBase
         img_WeaponInfoIcon.sprite = data.itemIcon;
         text_WeaponInfoName.text = data.itemName;
         GameObject text_Property = trans_WeaponProperties_Parent.GetChild(0).gameObject;
-        SetPropertyText(data,text_Property.GetComponent<TextMeshProUGUI>(),data.itemProperties[0].weaponProperty,data.itemProperties[0].propertyValue);
+        SetWeaponPropertyText(data,text_Property.GetComponent<TextMeshProUGUI>(),data.itemProperties[0].weaponProperty,data.itemProperties[0].propertyValue);
         for(int i = 1; i < data.itemProperties.Count; i++)
         {
             TextMeshProUGUI textComp = Instantiate(text_Property,trans_WeaponProperties_Parent).GetComponent<TextMeshProUGUI>();
             ShopWeaponPropertyPair dataPair = data.itemProperties[i];
-            SetPropertyText(data,textComp,dataPair.weaponProperty,dataPair.propertyValue);
+            SetWeaponPropertyText(data,textComp,dataPair.weaponProperty,dataPair.propertyValue);
         }
         SetItemLevelFilterColor(data.itemLevel);
     }
@@ -178,12 +179,12 @@ public class UICharacterSelectMenu : UIBase
         img_WeaponInfoIcon.sprite = data.itemIcon;
         text_WeaponInfoName.text = data.itemName;
         GameObject text_Property = trans_WeaponProperties_Parent.GetChild(0).gameObject;
-        SetPropertyText(data,text_Property.GetComponent<TextMeshProUGUI>(),data.itemProperties[0].weaponProperty,data.itemProperties[0].propertyValue);
+        SetWeaponPropertyText(data,text_Property.GetComponent<TextMeshProUGUI>(),data.itemProperties[0].weaponProperty,data.itemProperties[0].propertyValue);
         for(int i = 1; i < data.itemProperties.Count; i++)
         {
             TextMeshProUGUI textComp = Instantiate(text_Property,trans_WeaponProperties_Parent).GetComponent<TextMeshProUGUI>();
             ShopWeaponPropertyPair dataPair = data.itemProperties[i];
-            SetPropertyText(data,textComp,dataPair.weaponProperty,dataPair.propertyValue);
+            SetWeaponPropertyText(data,textComp,dataPair.weaponProperty,dataPair.propertyValue);
         }
         SetItemLevelFilterColor(data.itemLevel);
     }
@@ -219,31 +220,63 @@ public class UICharacterSelectMenu : UIBase
         }
     }
 
-    private void SetPropertyText(ShopItemData_Weapon_SO data,TextMeshProUGUI textComp,WeaponProperty weaponProperty,float propertyValue)
+    private void SetWeaponPropertyText(ShopItemData_Weapon_SO data,TextMeshProUGUI textComp,eWeaponProperty weaponProperty,float propertyValue)
     {
         propertyValue = GameInventory.Instance.CaculateWeaponDataByLevel(weaponProperty,propertyValue,data.itemLevel,data.itemLevel);
         switch(weaponProperty)
         {
-            case WeaponProperty.Damage:
-                textComp.text = "Damage:" + propertyValue * (GameCoreData.PlayerData.damageMul * 0.01f + 1);
+            case eWeaponProperty.Damage:
+                textComp.text = "Damage:" + propertyValue * (GameCoreData.PlayerProperties.damageMul * 0.01f + 1);
             break;
-            case WeaponProperty.CriticalMul:
+            case eWeaponProperty.CriticalMul:
                 textComp.text = "CriticalMul:" + propertyValue;
             break;
-            case WeaponProperty.FireInterval:
-                textComp.text = "FireInterval:" + (propertyValue / (GameCoreData.PlayerData.attackSpeedMul * 0.01f + 1)).ToString("F2");
+            case eWeaponProperty.FireInterval:
+                textComp.text = "FireInterval:" + (propertyValue / (GameCoreData.PlayerProperties.attackSpeedMul * 0.01f + 1)).ToString("F2");
             break;
-            case WeaponProperty.PushBack:
+            case eWeaponProperty.PushBack:
                 textComp.text = "PushBack:" + propertyValue;
             break;
-            case WeaponProperty.AttackRange:
-                textComp.text = "AttackRange:" + (propertyValue + GameCoreData.PlayerData.attackRange).ToString();
+            case eWeaponProperty.AttackRange:
+                textComp.text = "AttackRange:" + (propertyValue + GameCoreData.PlayerProperties.attackRange).ToString();
             break;
-            case WeaponProperty.StealHP:
-                textComp.text = "StealHP:" + (propertyValue + GameCoreData.PlayerData.stealHP).ToString();
+            case eWeaponProperty.StealHP:
+                textComp.text = "StealHP:" + (propertyValue + GameCoreData.PlayerProperties.stealHP).ToString();
             break;
-            case WeaponProperty.DamageThrough:
+            case eWeaponProperty.DamageThrough:
                 textComp.text = "DamageThrough:" + propertyValue;
+            break;
+        }
+    }
+
+    private void SetCharacterPropertyText(TextMeshProUGUI textComp,ePlayerProperty characterProperty,float propertyValue)
+    {
+        switch(characterProperty)
+        {
+            //TODO 根据属性的增益和减益设置不同显示效果（文字颜色）
+            case ePlayerProperty.MaxHP:
+                textComp.text = "MaxHP:" + propertyValue;
+            break;
+            case ePlayerProperty.HPRegeneration:
+                textComp.text = "HPRegeneration:" + propertyValue;
+            break;
+            case ePlayerProperty.StealHP:
+                textComp.text = "StealHP:" + propertyValue + "%";
+            break;
+            case ePlayerProperty.DamageMul:
+                textComp.text = "DamageMul:" + propertyValue + "%";
+            break;
+            case ePlayerProperty.AttackSpeed:
+                textComp.text = "AttackSpeed:" + propertyValue + "%";
+            break;
+            case ePlayerProperty.CriticalRate:
+                textComp.text = "CriticalRate:" + propertyValue + "%";
+            break;
+            case ePlayerProperty.AttackRange:
+                textComp.text = "AttackRange:" + propertyValue;
+            break;
+            case ePlayerProperty.MoveSpeed:
+                textComp.text = "MoveSpeed:" + propertyValue + "%";
             break;
         }
     }

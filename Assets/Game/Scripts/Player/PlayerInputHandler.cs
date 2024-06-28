@@ -9,6 +9,23 @@ public class PlayerInputHandler : MonoBehaviour, PlayerControlInput.ILocomotionA
 
     private void OnEnable() {
         InitializePlayerInput();
+        EventManager.instance.onEnableLocomotionInput += EnableLocomotionInput;
+        EventManager.instance.onDisableLocomotionInput += DisableLocomotionInput;
+    }
+
+    private void OnDisable() {
+        EventManager.instance.onEnableLocomotionInput -= EnableLocomotionInput;
+        EventManager.instance.onDisableLocomotionInput -= DisableLocomotionInput;
+    }
+
+    public void DisableLocomotionInput()
+    {
+        playerControlInput.Locomotion.Disable();
+    }
+
+    public void EnableLocomotionInput()
+    {
+        playerControlInput.Locomotion.Enable();
     }
 
     void InitializePlayerInput(){

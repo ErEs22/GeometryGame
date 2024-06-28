@@ -129,30 +129,30 @@ public static class EyreUtility{
         return xDis * xDis + yDis * yDis + zDis * zDis;
     }
 
-    public static bool DistanceCompare2D(Vector2 point1,Vector2 point2,float targetDistance,CompareSign compareSign)
+    public static bool DistanceCompare2D(Vector2 point1,Vector2 point2,float targetDistance,eCompareSign compareSign)
     {
         switch (compareSign)
         {
-            case CompareSign.Equals:
+            case eCompareSign.Equals:
                 return Distance2DSquare(point1,point2) == targetDistance;
-            case CompareSign.Greater:
+            case eCompareSign.Greater:
                 return Distance2DSquare(point1,point2) > targetDistance;
-            case CompareSign.Less:
+            case eCompareSign.Less:
                 return Distance2DSquare(point1,point2) < targetDistance;
             default:
                 return true;
         }
     }
 
-    public static bool DistanceCompare2D(float regiondisSquare,float targetDis,CompareSign compareSign)
+    public static bool DistanceCompare2D(float regiondisSquare,float targetDis,eCompareSign compareSign)
     {
         switch(compareSign)
         {
-            case CompareSign.Equals:
+            case eCompareSign.Equals:
                 return regiondisSquare == targetDis * targetDis;
-            case CompareSign.Greater:
+            case eCompareSign.Greater:
                 return regiondisSquare > targetDis * targetDis;
-            case CompareSign.Less:
+            case eCompareSign.Less:
                 return regiondisSquare < targetDis * targetDis;
             default:
                 return true;

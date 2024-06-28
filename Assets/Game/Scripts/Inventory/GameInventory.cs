@@ -70,25 +70,25 @@ public class GameInventory : MonoBehaviour
         }
     }
 
-    public float CaculateWeaponDataByLevel(WeaponProperty weaponProperty,float propertyBaseValue,int weaponBaseLevel,int weaponTargetLevel)
+    public float CaculateWeaponDataByLevel(eWeaponProperty weaponProperty,float propertyBaseValue,int weaponBaseLevel,int weaponTargetLevel)
     {
         switch(weaponProperty)
         {
-            case WeaponProperty.Damage:
+            case eWeaponProperty.Damage:
                 return propertyBaseValue / weaponBaseLevel * weaponTargetLevel;
-            case WeaponProperty.StealHP:
+            case eWeaponProperty.StealHP:
                 return propertyBaseValue;
-            case WeaponProperty.CriticalMul:
+            case eWeaponProperty.CriticalMul:
                 return propertyBaseValue;
-            case WeaponProperty.FireInterval:
+            case eWeaponProperty.FireInterval:
                 return propertyBaseValue / (1 + (weaponTargetLevel - weaponBaseLevel) * 0.1f);
-            case WeaponProperty.PushBack:
+            case eWeaponProperty.PushBack:
                 return propertyBaseValue;
-            case WeaponProperty.AttackRange:
+            case eWeaponProperty.AttackRange:
                 return propertyBaseValue;
-            case WeaponProperty.DamageThrough:
+            case eWeaponProperty.DamageThrough:
                 return propertyBaseValue;
-            case WeaponProperty.Cost:
+            case eWeaponProperty.Cost:
                 return propertyBaseValue * Mathf.Pow(2,weaponTargetLevel - weaponBaseLevel);
             default:
                 return 0;

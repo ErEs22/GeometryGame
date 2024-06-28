@@ -70,7 +70,7 @@ public class ShopItem_Weapon : ShopItem
             b.normalColor = Color.grey;
             btn_Lock.colors = b;
         }
-        if(GameCoreData.PlayerData.coin >= itemData.itemCost)
+        if(GameCoreData.PlayerProperties.coin >= itemData.itemCost)
         {
             isAffordable = true;
         }
@@ -122,30 +122,30 @@ public class ShopItem_Weapon : ShopItem
         }
     }
 
-    private void SetPropertyText(TextMeshProUGUI textComp,WeaponProperty weaponProperty,float propertyValue)
+    private void SetPropertyText(TextMeshProUGUI textComp,eWeaponProperty weaponProperty,float propertyValue)
     {
         propertyValue = GameInventory.Instance.CaculateWeaponDataByLevel(weaponProperty,propertyValue,itemData.itemLevel,itemLevel);
         switch(weaponProperty)
         {
-            case WeaponProperty.Damage:
-                textComp.text = "Damage:" + propertyValue * (GameCoreData.PlayerData.damageMul * 0.01f + 1);
+            case eWeaponProperty.Damage:
+                textComp.text = "Damage:" + propertyValue * (GameCoreData.PlayerProperties.damageMul * 0.01f + 1);
             break;
-            case WeaponProperty.CriticalMul:
+            case eWeaponProperty.CriticalMul:
                 textComp.text = "CriticalMul:" + propertyValue;
             break;
-            case WeaponProperty.FireInterval:
-                textComp.text = "FireInterval:" + (propertyValue / (GameCoreData.PlayerData.attackSpeedMul * 0.01f + 1)).ToString("F2");
+            case eWeaponProperty.FireInterval:
+                textComp.text = "FireInterval:" + (propertyValue / (GameCoreData.PlayerProperties.attackSpeedMul * 0.01f + 1)).ToString("F2");
             break;
-            case WeaponProperty.PushBack:
+            case eWeaponProperty.PushBack:
                 textComp.text = "PushBack:" + propertyValue;
             break;
-            case WeaponProperty.AttackRange:
-                textComp.text = "AttackRange:" + (propertyValue + GameCoreData.PlayerData.attackRange).ToString();
+            case eWeaponProperty.AttackRange:
+                textComp.text = "AttackRange:" + (propertyValue + GameCoreData.PlayerProperties.attackRange).ToString();
             break;
-            case WeaponProperty.StealHP:
-                textComp.text = "StealHP:" + (propertyValue + GameCoreData.PlayerData.stealHP).ToString();
+            case eWeaponProperty.StealHP:
+                textComp.text = "StealHP:" + (propertyValue + GameCoreData.PlayerProperties.stealHP).ToString();
             break;
-            case WeaponProperty.DamageThrough:
+            case eWeaponProperty.DamageThrough:
                 textComp.text = "DamageThrough:" + propertyValue;
             break;
         }

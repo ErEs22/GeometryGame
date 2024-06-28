@@ -22,7 +22,7 @@ public class UIFinishMenu : UIBase
 
     public override void InitUI()
     {
-        uiID = UIID.FinishMenu;
+        uiID = eUIID.FinishMenu;
     }
 
     private void OnMainMenuClick()

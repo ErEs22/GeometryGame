@@ -27,7 +27,7 @@ public class ChargerEnemy : Enemy
     {
         if(isCharging) return;
         //检查与玩家的距离，到了冲刺距离则停止移动，开始冲刺
-        if (EyreUtility.DistanceCompare2D(distanceToPlayerSq,enableChargeDis,CompareSign.Less))
+        if (EyreUtility.DistanceCompare2D(distanceToPlayerSq,enableChargeDis,eCompareSign.Less))
         {
             Skill();
         }

@@ -13,7 +13,7 @@ public class UIManager : MonoBehaviour
 
     private void Start() {
         InitUIWindow();
-        OpenUI(UIID.MainMenu);
+        OpenUI(eUIID.MainMenu);
         // OpenUI(UIID.UpgradeMenu);
         // OpenUI(UIID.PlayerStatusBar);
     }
@@ -37,7 +37,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    private void OpenUI(UIID id)
+    private void OpenUI(eUIID id)
     {
         foreach (UIBase ui in allUI)
         {
@@ -48,7 +48,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    private void CloseUI(UIID id)
+    private void CloseUI(eUIID id)
     {
         foreach(UIBase ui in allUI)
         {

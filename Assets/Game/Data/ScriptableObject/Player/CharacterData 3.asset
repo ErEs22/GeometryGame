@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CharacterIcon: {fileID: 21300000, guid: 3ae64750a300115419fd70eed71085f0, type: 3}
   CharacterName: Chicken
-  HP: 100000
+  HP: 30
   hpRegeneratePerSecond: 0
-  stealHPRate: 0
+  stealHPRate: 0.2
   damageMul: 1
   attackSpeedMul: 1
   criticalRate: 0
-  attackRange: 450
-  moveSpeed: 1
+  attackRange: 400
+  moveSpeed: 10

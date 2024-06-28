@@ -32,33 +32,33 @@ public class PlayerPropertyHandler : MonoBehaviour
         EventManager.instance.onUpdatePlayerProperty -= UpdatePlayerProperties;
     }
 
-    public void UpdatePlayerProperties(PlayerProperty playerProperty,int changeAmount)
+    public void UpdatePlayerProperties(ePlayerProperty playerProperty,int changeAmount)
     {
         switch(playerProperty)
         {
-            case PlayerProperty.MaxHP:
-                maxHP = GameCoreData.PlayerData.maxHP;
+            case ePlayerProperty.MaxHP:
+                maxHP = GameCoreData.PlayerProperties.maxHP;
             break;
-            case PlayerProperty.HPRegeneration:
-                hpRegeneration = GameCoreData.PlayerData.hpRegeneration;
+            case ePlayerProperty.HPRegeneration:
+                hpRegeneration = GameCoreData.PlayerProperties.hpRegeneration;
             break;
-            case PlayerProperty.StealHP:
-                stealHP = GameCoreData.PlayerData.stealHP;
+            case ePlayerProperty.StealHP:
+                stealHP = GameCoreData.PlayerProperties.stealHP;
             break;
-            case PlayerProperty.DamageMul:
-                damageMul = GameCoreData.PlayerData.damageMul;
+            case ePlayerProperty.DamageMul:
+                damageMul = GameCoreData.PlayerProperties.damageMul;
             break;
-            case PlayerProperty.AttackSpeed:
-                attackSpeed = GameCoreData.PlayerData.attackSpeedMul;
+            case ePlayerProperty.AttackSpeed:
+                attackSpeed = GameCoreData.PlayerProperties.attackSpeedMul;
             break;
-            case PlayerProperty.CriticalRate:
-                criticalRate = GameCoreData.PlayerData.criticalRate;
+            case ePlayerProperty.CriticalRate:
+                criticalRate = GameCoreData.PlayerProperties.criticalRate;
             break;
-            case PlayerProperty.AttackRange:
-                attackRange = GameCoreData.PlayerData.attackRange;
+            case ePlayerProperty.AttackRange:
+                attackRange = GameCoreData.PlayerProperties.attackRange;
             break;
-            case PlayerProperty.MoveSpeed:
-                moveSpeed = GameCoreData.PlayerData.moveSpeed;
+            case ePlayerProperty.MoveSpeed:
+                moveSpeed = GameCoreData.PlayerProperties.moveSpeed;
             break;
         }
         playerState.UpdatePlayerStatus(maxHP,hpRegeneration,stealHP,damageMul,attackSpeed,criticalRate,attackRange,moveSpeed);

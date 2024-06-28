@@ -98,13 +98,13 @@ public class Enemy : MonoBehaviour, ITakeDamage, IHeal
         name = enemyData.name;
     }
 
-    public async void ApplyStatusChangeInTime(StatusType statusType, int percentChange, float effectTime)
+    public async void ApplyStatusChangeInTime(eStatusType statusType, int percentChange, float effectTime)
     {
         switch (statusType)
         {
-            case StatusType.HP:
+            case eStatusType.HP:
                 break;
-            case StatusType.MoveSpeed:
+            case eStatusType.MoveSpeed:
                 speedEffectPercent += percentChange;
                 break;
             default: break;
@@ -112,9 +112,9 @@ public class Enemy : MonoBehaviour, ITakeDamage, IHeal
         await UniTask.Delay((int)(effectTime * 1000));
         switch(statusType)
         {
-            case StatusType.HP:
+            case eStatusType.HP:
                 break;
-            case StatusType.MoveSpeed:
+            case eStatusType.MoveSpeed:
                 speedEffectPercent -= percentChange;
                 break;
             default:break;
@@ -137,7 +137,7 @@ public class Enemy : MonoBehaviour, ITakeDamage, IHeal
         //     moveDir = Vector3.right;
         // }
         // return;
-        if (EyreUtility.DistanceCompare2D(distanceToPlayerSq,0.1f,CompareSign.Less))
+        if (EyreUtility.DistanceCompare2D(distanceToPlayerSq,0.1f,eCompareSign.Less))
         {
             moveDir = Vector3.zero;
         }
@@ -224,11 +224,11 @@ public class Enemy : MonoBehaviour, ITakeDamage, IHeal
         foreach (Enemy enemy in enemyManager.enemies)
         {
             if (enemy == this) continue;
-            if (EyreUtility.DistanceCompare2D(EyreUtility.Distance2DSquare(transform.position,enemy.transform.position),enemyManager.collisionRiskDistanceThreshold,CompareSign.Less))
+            if (EyreUtility.DistanceCompare2D(EyreUtility.Distance2DSquare(transform.position,enemy.transform.position),enemyManager.collisionRiskDistanceThreshold,eCompareSign.Less))
             {
                 collisionRiskEnemys.Add(enemy.transform);
             }
-            else if (EyreUtility.DistanceCompare2D(EyreUtility.Distance2DSquare(transform.position,enemy.transform.position),enemyManager.nearbyDistanceThreshold,CompareSign.Less))
+            else if (EyreUtility.DistanceCompare2D(EyreUtility.Distance2DSquare(transform.position,enemy.transform.position),enemyManager.nearbyDistanceThreshold,eCompareSign.Less))
             {
                 nearbyEnemys.Add(enemy.transform);
             }
