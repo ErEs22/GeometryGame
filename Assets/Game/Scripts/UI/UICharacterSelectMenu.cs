@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEditor.U2D.Animation;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,6 +10,7 @@ public class UICharacterSelectMenu : UIBase
     private const string path_CharacterInfoPanel = "CharacterInfoPanel";
     private const string path_CharacterInfoIcon = path_CharacterInfoPanel + "/CharacterInfo/Img_CharacterIcon";
     private const string path_CharacterInfoName = path_CharacterInfoPanel + "/CharacterInfo/Text_CharacterName";
+    private const string path_Trans_CharacterProperties_Parent = path_CharacterInfoPanel + "/CharacterInfo/Abilities";
     private const string path_WeaponInfoPanel = "WeaponInfoPanel";
     private const string path_WeaponInfoIcon = path_WeaponInfoPanel + "/WeaponInfo/Img_ItemIcon";
     private const string path_WeaponInfoName = path_WeaponInfoPanel + "/WeaponInfo/Text_ItemName";
@@ -31,11 +33,13 @@ public class UICharacterSelectMenu : UIBase
     public GameObject prefab_Item_Weapon;
     public List<CharacterData_SO> allCharactersData = new List<CharacterData_SO>();
     public List<ShopItemData_Weapon_SO> currentCharacterAvailableWeapons = new List<ShopItemData_Weapon_SO>();
-    [SerializeField][DisplayOnly]
+    [SerializeField]
+    [DisplayOnly]
     private Item_Weapon_CharacterSelectMenu selectWeapon;//初始武器选择
     private Item_Character selectCharacter;//初始角色选择
 
-    private void Awake() {
+    private void Awake()
+    {
         img_WeaponLevelFilter = transform.Find(path_Img_LevelFilter).GetComponent<Image>();
         img_CharacterInfoIcon = transform.Find(path_CharacterInfoIcon).GetComponent<Image>();
         text_CharacterInfoName = transform.Find(path_CharacterInfoName).GetComponent<TextMeshProUGUI>();
@@ -45,15 +49,18 @@ public class UICharacterSelectMenu : UIBase
         trans_Item_Characters_Parent = transform.Find(path_CharactersParent);
         trans_Item_Weapons_Parent = transform.Find(path_Item_Weapons_Parent);
         trans_WeaponProperties_Parent = transform.Find(path_Trans_WeaponProperties_Parent);
+        trans_CharacterProperties_Parent = transform.Find(path_Trans_CharacterProperties_Parent);
     }
 
-    private void OnEnable() {
+    private void OnEnable()
+    {
         btn_StartGame.onClick.AddListener(OnBtnStartGameClick);
         GenerateAllCharacters();
         GenerateAllWeapons();
     }
 
-    private void OnDisable() {
+    private void OnDisable()
+    {
         btn_StartGame.onClick.RemoveAllListeners();
     }
 
@@ -64,7 +71,7 @@ public class UICharacterSelectMenu : UIBase
 
     public void SelectWeapon(Item_Weapon_CharacterSelectMenu weapon)
     {
-        if(selectWeapon != null)
+        if (selectWeapon != null)
         {
             selectWeapon.UnSelectWeapon();
         }
@@ -73,7 +80,7 @@ public class UICharacterSelectMenu : UIBase
 
     public void SelectCharacter(Item_Character character)
     {
-        if(selectCharacter != null)
+        if (selectCharacter != null && character != selectCharacter)
         {
             selectCharacter.UnSelectCharacter();
         }
@@ -82,21 +89,21 @@ public class UICharacterSelectMenu : UIBase
 
     private void GenerateAllWeapons()
     {
-        if(trans_Item_Weapons_Parent.childCount > 0)
+        if (trans_Item_Weapons_Parent.childCount > 0)
         {
             ClearAllWeapons();
         }
-        for(int i = 0; i < currentCharacterAvailableWeapons.Count; i++)
+        for (int i = 0; i < currentCharacterAvailableWeapons.Count; i++)
         {
-            Item_Weapon_CharacterSelectMenu itemWeapon = Instantiate(prefab_Item_Weapon,trans_Item_Weapons_Parent).GetComponent<Item_Weapon_CharacterSelectMenu>();
-            itemWeapon.InitItemPropUI(currentCharacterAvailableWeapons[i],this);
+            Item_Weapon_CharacterSelectMenu itemWeapon = Instantiate(prefab_Item_Weapon, trans_Item_Weapons_Parent).GetComponent<Item_Weapon_CharacterSelectMenu>();
+            itemWeapon.InitItemPropUI(currentCharacterAvailableWeapons[i], this);
             // itemWeapon.InitItemPropUI();
         }
     }
 
     private void ClearAllWeapons()
     {
-        for(int i = 0; i < trans_Item_Weapons_Parent.childCount; i++)
+        for (int i = 0; i < trans_Item_Weapons_Parent.childCount; i++)
         {
             Destroy(trans_Item_Weapons_Parent.GetChild(i).gameObject);
         }
@@ -104,21 +111,21 @@ public class UICharacterSelectMenu : UIBase
 
     private void GenerateAllCharacters()
     {
-        if(trans_Item_Characters_Parent.childCount > 0)
+        if (trans_Item_Characters_Parent.childCount > 0)
         {
             ClearAllCharacters();
         }
-        for(int i = 0; i < allCharactersData.Count; i++)
+        for (int i = 0; i < allCharactersData.Count; i++)
         {
-            Item_Character itemCharacter = Instantiate(prefab_Character,trans_Item_Characters_Parent).GetComponent<Item_Character>();
+            Item_Character itemCharacter = Instantiate(prefab_Character, trans_Item_Characters_Parent).GetComponent<Item_Character>();
             itemCharacter.characterData = allCharactersData[i];
-            itemCharacter.InitUIInfo(allCharactersData[i],this);
+            itemCharacter.InitUIInfo(allCharactersData[i], this);
         }
     }
 
     private void ClearAllCharacters()
     {
-        for(int i = 0; i < trans_Item_Characters_Parent.childCount; i++)
+        for (int i = 0; i < trans_Item_Characters_Parent.childCount; i++)
         {
             Destroy(trans_Item_Characters_Parent.GetChild(i).gameObject);
         }
@@ -144,15 +151,54 @@ public class UICharacterSelectMenu : UIBase
 
     public void UpdateSelectingCharacterInfo(CharacterData_SO data)
     {
+        ClearCharacterProperties();
         img_CharacterInfoIcon.sprite = data.CharacterIcon;
         text_CharacterInfoName.text = data.CharacterName;
+        GameObject text_Property = trans_CharacterProperties_Parent.GetChild(0).gameObject;
+        GameObject[] textList = new GameObject[7];
+        for(int i = 0; i < 7; i++)
+        {
+            textList[i] = Instantiate(text_Property,trans_CharacterProperties_Parent);
+        }
+        SetCharacterPropertyText(text_Property.GetComponent<TextMeshProUGUI>(), ePlayerProperty.MaxHP,data.HP);
+        SetCharacterPropertyText(textList[0].GetComponent<TextMeshProUGUI>(), ePlayerProperty.HPRegeneration,data.hpRegeneratePerSecond);
+        SetCharacterPropertyText(textList[1].GetComponent<TextMeshProUGUI>(), ePlayerProperty.StealHP,data.stealHPRate);
+        SetCharacterPropertyText(textList[2].GetComponent<TextMeshProUGUI>(), ePlayerProperty.DamageMul,data.damageMul);
+        SetCharacterPropertyText(textList[3].GetComponent<TextMeshProUGUI>(), ePlayerProperty.AttackSpeed,data.attackSpeedMul);
+        SetCharacterPropertyText(textList[4].GetComponent<TextMeshProUGUI>(), ePlayerProperty.CriticalRate,data.criticalRate);
+        SetCharacterPropertyText(textList[5].GetComponent<TextMeshProUGUI>(), ePlayerProperty.AttackRange,data.attackRange);
+        SetCharacterPropertyText(textList[6].GetComponent<TextMeshProUGUI>(), ePlayerProperty.MoveSpeed,data.moveSpeed);
     }
 
     public void UpdateSelectedCharacterInfo()
     {
-        if(selectCharacter == null) return;
-        img_CharacterInfoIcon.sprite = selectCharacter.characterData.CharacterIcon;
-        text_CharacterInfoName.text = selectCharacter.characterData.CharacterName;
+        if (selectCharacter == null) return;
+        ClearCharacterProperties();
+        CharacterData_SO data = selectCharacter.characterData;
+        img_CharacterInfoIcon.sprite = data.CharacterIcon;
+        text_CharacterInfoName.text = data.CharacterName;
+        GameObject text_Property = trans_CharacterProperties_Parent.GetChild(0).gameObject;
+        GameObject[] textList = new GameObject[7];
+        for(int i = 0; i < 7; i++)
+        {
+            textList[i] = Instantiate(text_Property,trans_CharacterProperties_Parent);
+        }
+        SetCharacterPropertyText(text_Property.GetComponent<TextMeshProUGUI>(), ePlayerProperty.MaxHP,data.HP);
+        SetCharacterPropertyText(textList[0].GetComponent<TextMeshProUGUI>(), ePlayerProperty.HPRegeneration,data.hpRegeneratePerSecond);
+        SetCharacterPropertyText(textList[1].GetComponent<TextMeshProUGUI>(), ePlayerProperty.StealHP,data.stealHPRate);
+        SetCharacterPropertyText(textList[2].GetComponent<TextMeshProUGUI>(), ePlayerProperty.DamageMul,data.damageMul);
+        SetCharacterPropertyText(textList[3].GetComponent<TextMeshProUGUI>(), ePlayerProperty.AttackSpeed,data.attackSpeedMul);
+        SetCharacterPropertyText(textList[4].GetComponent<TextMeshProUGUI>(), ePlayerProperty.CriticalRate,data.criticalRate);
+        SetCharacterPropertyText(textList[5].GetComponent<TextMeshProUGUI>(), ePlayerProperty.AttackRange,data.attackRange);
+        SetCharacterPropertyText(textList[6].GetComponent<TextMeshProUGUI>(), ePlayerProperty.MoveSpeed,data.moveSpeed);
+    }
+
+    private void ClearCharacterProperties()
+    {
+        for (int i = 1; i < trans_CharacterProperties_Parent.childCount; i++)
+        {
+            Destroy(trans_CharacterProperties_Parent.GetChild(i).gameObject);
+        }
     }
 
     public void UpdateSelectingWeaponInfo(ShopItemData_Weapon_SO data)
@@ -161,37 +207,37 @@ public class UICharacterSelectMenu : UIBase
         img_WeaponInfoIcon.sprite = data.itemIcon;
         text_WeaponInfoName.text = data.itemName;
         GameObject text_Property = trans_WeaponProperties_Parent.GetChild(0).gameObject;
-        SetWeaponPropertyText(data,text_Property.GetComponent<TextMeshProUGUI>(),data.itemProperties[0].weaponProperty,data.itemProperties[0].propertyValue);
-        for(int i = 1; i < data.itemProperties.Count; i++)
+        SetWeaponPropertyText(data, text_Property.GetComponent<TextMeshProUGUI>(), data.itemProperties[0].weaponProperty, data.itemProperties[0].propertyValue);
+        for (int i = 1; i < data.itemProperties.Count; i++)
         {
-            TextMeshProUGUI textComp = Instantiate(text_Property,trans_WeaponProperties_Parent).GetComponent<TextMeshProUGUI>();
+            TextMeshProUGUI textComp = Instantiate(text_Property, trans_WeaponProperties_Parent).GetComponent<TextMeshProUGUI>();
             ShopWeaponPropertyPair dataPair = data.itemProperties[i];
-            SetWeaponPropertyText(data,textComp,dataPair.weaponProperty,dataPair.propertyValue);
+            SetWeaponPropertyText(data, textComp, dataPair.weaponProperty, dataPair.propertyValue);
         }
         SetItemLevelFilterColor(data.itemLevel);
     }
 
     public void UpdateSelectedWeaponInfo()
     {
-        if(selectWeapon == null) return;
+        if (selectWeapon == null) return;
         ShopItemData_Weapon_SO data = selectWeapon.itemData as ShopItemData_Weapon_SO;
         ClearWeaponProperties();
         img_WeaponInfoIcon.sprite = data.itemIcon;
         text_WeaponInfoName.text = data.itemName;
         GameObject text_Property = trans_WeaponProperties_Parent.GetChild(0).gameObject;
-        SetWeaponPropertyText(data,text_Property.GetComponent<TextMeshProUGUI>(),data.itemProperties[0].weaponProperty,data.itemProperties[0].propertyValue);
-        for(int i = 1; i < data.itemProperties.Count; i++)
+        SetWeaponPropertyText(data, text_Property.GetComponent<TextMeshProUGUI>(), data.itemProperties[0].weaponProperty, data.itemProperties[0].propertyValue);
+        for (int i = 1; i < data.itemProperties.Count; i++)
         {
-            TextMeshProUGUI textComp = Instantiate(text_Property,trans_WeaponProperties_Parent).GetComponent<TextMeshProUGUI>();
+            TextMeshProUGUI textComp = Instantiate(text_Property, trans_WeaponProperties_Parent).GetComponent<TextMeshProUGUI>();
             ShopWeaponPropertyPair dataPair = data.itemProperties[i];
-            SetWeaponPropertyText(data,textComp,dataPair.weaponProperty,dataPair.propertyValue);
+            SetWeaponPropertyText(data, textComp, dataPair.weaponProperty, dataPair.propertyValue);
         }
         SetItemLevelFilterColor(data.itemLevel);
     }
 
     private void ClearWeaponProperties()
     {
-        for(int i = 1; i < trans_WeaponProperties_Parent.childCount; i++)
+        for (int i = 1; i < trans_WeaponProperties_Parent.childCount; i++)
         {
             Destroy(trans_WeaponProperties_Parent.GetChild(i).gameObject);
         }
@@ -199,85 +245,158 @@ public class UICharacterSelectMenu : UIBase
 
     protected void SetItemLevelFilterColor(int itemLevel)
     {
-        switch(itemLevel)
+        switch (itemLevel)
         {
             case 1:
                 img_WeaponLevelFilter.color = GameColor.ShopItem_Level01;
-            break;
+                break;
             case 2:
                 img_WeaponLevelFilter.color = GameColor.ShopItem_Level02;
-            break;
+                break;
             case 3:
                 img_WeaponLevelFilter.color = GameColor.ShopItem_Level03;
-            break;
+                break;
             case 4:
                 img_WeaponLevelFilter.color = GameColor.ShopItem_Level04;
-            break;
+                break;
             case 5:
                 img_WeaponLevelFilter.color = GameColor.ShopItem_Level05;
-            break;
-            default:break;
+                break;
+            default: break;
         }
     }
 
-    private void SetWeaponPropertyText(ShopItemData_Weapon_SO data,TextMeshProUGUI textComp,eWeaponProperty weaponProperty,float propertyValue)
+    private void SetWeaponPropertyText(ShopItemData_Weapon_SO data, TextMeshProUGUI textComp, eWeaponProperty weaponProperty, float propertyValue)
     {
-        propertyValue = GameInventory.Instance.CaculateWeaponDataByLevel(weaponProperty,propertyValue,data.itemLevel,data.itemLevel);
-        switch(weaponProperty)
+        propertyValue = GameInventory.Instance.CaculateWeaponDataByLevel(weaponProperty, propertyValue, data.itemLevel, data.itemLevel);
+        switch (weaponProperty)
         {
             case eWeaponProperty.Damage:
                 textComp.text = "Damage:" + propertyValue * (GameCoreData.PlayerProperties.damageMul * 0.01f + 1);
-            break;
+                break;
             case eWeaponProperty.CriticalMul:
                 textComp.text = "CriticalMul:" + propertyValue;
-            break;
+                break;
             case eWeaponProperty.FireInterval:
                 textComp.text = "FireInterval:" + (propertyValue / (GameCoreData.PlayerProperties.attackSpeedMul * 0.01f + 1)).ToString("F2");
-            break;
+                break;
             case eWeaponProperty.PushBack:
                 textComp.text = "PushBack:" + propertyValue;
-            break;
+                break;
             case eWeaponProperty.AttackRange:
                 textComp.text = "AttackRange:" + (propertyValue + GameCoreData.PlayerProperties.attackRange).ToString();
-            break;
+                break;
             case eWeaponProperty.StealHP:
                 textComp.text = "StealHP:" + (propertyValue + GameCoreData.PlayerProperties.stealHP).ToString();
-            break;
+                break;
             case eWeaponProperty.DamageThrough:
                 textComp.text = "DamageThrough:" + propertyValue;
-            break;
+                break;
         }
     }
 
-    private void SetCharacterPropertyText(TextMeshProUGUI textComp,ePlayerProperty characterProperty,float propertyValue)
+    private void SetCharacterPropertyText(TextMeshProUGUI textComp, ePlayerProperty characterProperty, float propertyValue)
     {
-        switch(characterProperty)
+        string sign = "";
+        switch (characterProperty)
         {
             //TODO 根据属性的增益和减益设置不同显示效果（文字颜色）
             case ePlayerProperty.MaxHP:
-                textComp.text = "MaxHP:" + propertyValue;
-            break;
+                if (propertyValue != 40)
+                {
+                    sign = propertyValue > 40 ? "+" : "-";
+                    textComp.text = sign + Mathf.Abs(propertyValue - 40) + "MaxHP:";
+                }
+                else
+                {
+                    Destroy(textComp.gameObject);
+                }
+                break;
             case ePlayerProperty.HPRegeneration:
-                textComp.text = "HPRegeneration:" + propertyValue;
-            break;
+                if (propertyValue != 0)
+                {
+                    sign = propertyValue > 0 ? "+" : "-";
+                    textComp.text = sign + Mathf.Abs(propertyValue) + "HPRegeneration:";
+                }
+                else
+                {
+                    Destroy(textComp.gameObject);
+                }
+                break;
             case ePlayerProperty.StealHP:
-                textComp.text = "StealHP:" + propertyValue + "%";
-            break;
+                if (propertyValue != 0)
+                {
+                    sign = propertyValue > 0 ? "+" : "-";
+                    textComp.text = sign + Mathf.Abs(propertyValue) + "%StealHP:";
+                }
+                else
+                {
+                    Destroy(textComp.gameObject);
+                }
+                break;
             case ePlayerProperty.DamageMul:
-                textComp.text = "DamageMul:" + propertyValue + "%";
-            break;
+                if(propertyValue != 1)
+                {
+                    sign = propertyValue > 1 ? "+" : "-";
+                    textComp.text = sign + Mathf.Abs(propertyValue - 1) * 100 + "%DamageMul:";
+                }
+                else
+                {
+                    Destroy(textComp.gameObject);
+                }
+                break;
             case ePlayerProperty.AttackSpeed:
-                textComp.text = "AttackSpeed:" + propertyValue + "%";
-            break;
+                if (propertyValue != 1)
+                {
+                    sign = propertyValue > 1 ? "+": "-";
+                    textComp.text = sign + Mathf.Abs(propertyValue - 1) * 100 + "%AttackSpeed:";
+                }
+                else
+                {
+                    Destroy(textComp.gameObject);
+                }
+                break;
             case ePlayerProperty.CriticalRate:
-                textComp.text = "CriticalRate:" + propertyValue + "%";
-            break;
+                if (propertyValue != 0)
+                {
+                    sign = propertyValue > 0 ? "+" : "-";
+                    textComp.text = sign + Mathf.Abs(propertyValue) + "%CriticalRate:";
+                }
+                else
+                {
+                    Destroy(textComp.gameObject);
+                }
+                break;
             case ePlayerProperty.AttackRange:
-                textComp.text = "AttackRange:" + propertyValue;
-            break;
+                if (propertyValue != 400)
+                {
+                    sign = propertyValue > 400 ? "+" : "-";
+                    textComp.text = sign + Mathf.Abs(propertyValue - 400) + "AttackRange:";
+                }
+                else
+                {
+                    Destroy(textComp.gameObject);
+                }
+                break;
             case ePlayerProperty.MoveSpeed:
-                textComp.text = "MoveSpeed:" + propertyValue + "%";
-            break;
+                if (propertyValue != 10)
+                {
+                    sign = propertyValue > 10 ? "+" : "-";
+                    textComp.text = sign + Mathf.Abs(propertyValue - 10) * 10 + "%MoveSpeed:";
+                }
+                else
+                {
+                    Destroy(textComp.gameObject);
+                }
+                break;
+        }
+        if(sign == "+")
+        {
+            textComp.color = Color.green;
+        }
+        else
+        {
+            textComp.color = Color.red;
         }
     }
 }
