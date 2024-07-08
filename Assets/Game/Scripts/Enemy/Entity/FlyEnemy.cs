@@ -33,9 +33,9 @@ public class FlyEnemy : Enemy
         newProjectile.SetDelayDeativate();
     }
 
-    public override void TakeDamage(int damage)
+    public override bool TakeDamage(int damage)
     {
-        base.TakeDamage(damage);
         Skill();
+        return base.TakeDamage(damage);
     }
 }

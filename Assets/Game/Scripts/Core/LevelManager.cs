@@ -10,6 +10,7 @@ public class LevelManager : MonoBehaviour
     public static int currentLevel = 5;
     private int playerUpgradeCount = 0;
     public static eLevelStatus levelStatus = eLevelStatus.Running;
+    public GameObject damageDisplayPrefab;
     EnemyGenerator enemyGenerator;
     EnemyManager enemyManager;
     PlayerState playerState;
@@ -25,12 +26,14 @@ public class LevelManager : MonoBehaviour
         EventManager.instance.onStartLevel += StartLevel;
         EventManager.instance.onStartGame += StartGame;
         EventManager.instance.onPlayerUpgradeCountIncrease += IncreasePlayerUpgradeCount;
+        EventManager.instance.onDamageDisplay += ShowDamageValue;
     }
 
     private void OnDisable() {
         EventManager.instance.onStartLevel -= StartLevel;
         EventManager.instance.onStartGame -= StartGame;
         EventManager.instance.onPlayerUpgradeCountIncrease -= IncreasePlayerUpgradeCount;
+        EventManager.instance.onDamageDisplay -= ShowDamageValue;
     }
 
     private void Start() {
@@ -87,7 +90,6 @@ public class LevelManager : MonoBehaviour
     {
         EventManager.instance.OnDisableLocomotionInput();
         levelStatus = eLevelStatus.Ended;
-        enemyManager.ClearAllEnemy();
         if(currentLevel < 20)
         {
             GlobalVar.gameStatus = eGameStatus.SkillUI;
@@ -119,7 +121,7 @@ public class LevelManager : MonoBehaviour
 
     private async void StartSpawnEnemy()
     {
-        if(levelStatus == eLevelStatus.Ended) return;
+        if(levelStatus == eLevelStatus.Ended || GlobalVar.gameStatus == eGameStatus.Ended) return;
         int enemySpawnCount = GetLevelSpawnEnemysInWaves();
 
         //TODO三个特殊关卡
@@ -178,5 +180,10 @@ public class LevelManager : MonoBehaviour
         int levelTime = 20 + Mathf.Clamp((currentLevel - 1) * 5, 0, 40);
         Debug.Log("当前关卡时间为：" + levelTime + "秒");
         return levelTime;
+    }
+
+    private void ShowDamageValue(int damage,GameObject damageObject,bool isCritical){
+        DamageDisplay displayComp = PoolManager.Release(damageDisplayPrefab,damageObject.transform.position + new Vector3(1,1,0)).GetComponent<DamageDisplay>();
+        displayComp.InitDisplayData(damage,isCritical);
     }
 }

@@ -136,7 +136,7 @@ public class ShopItem_Weapon : ShopItem
             case eWeaponProperty.FireInterval:
                 textComp.text = "FireInterval:" + (propertyValue / (GameCoreData.PlayerProperties.attackSpeedMul * 0.01f + 1)).ToString("F2");
             break;
-            case eWeaponProperty.PushBack:
+            case eWeaponProperty.KnockBack:
                 textComp.text = "PushBack:" + propertyValue;
             break;
             case eWeaponProperty.AttackRange:

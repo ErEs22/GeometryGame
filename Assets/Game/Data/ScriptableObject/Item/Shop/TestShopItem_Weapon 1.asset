@@ -18,6 +18,9 @@ MonoBehaviour:
   itemCost: 20
   itemLevel: 1
   shopItemType: 1
+  projectileSpeed: 30
+  prefab_Weapon: {fileID: 6764894451183402456, guid: 46b20ee62c7550647b94e91b2e2aac0a, type: 3}
+  prefab_Projectile: {fileID: 3994106403445518885, guid: c5f15d73f3e39b2479f712dbbf505e09, type: 3}
   itemProperties:
   - weaponProperty: 0
     propertyValue: 5
@@ -31,4 +34,3 @@ MonoBehaviour:
     propertyValue: 450
   - weaponProperty: 5
     propertyValue: 3
-  prefab_Weapon: {fileID: 6764894451183402456, guid: 46b20ee62c7550647b94e91b2e2aac0a, type: 3}

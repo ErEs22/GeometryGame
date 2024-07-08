@@ -17,6 +17,14 @@ public class EnemyManager : MonoBehaviour
     public List<EnemyData_SO> allEnemysData = new List<EnemyData_SO>();//游戏内所有敌人数据
     public List<GameObject> allEnemys = new List<GameObject>();//游戏内所有敌人
 
+    private void OnEnable() {
+        EventManager.instance.onLevelEnd += ClearAllEnemy;
+    }
+
+    private void OnDisable() {
+        EventManager.instance.onLevelEnd -= ClearAllEnemy;
+    }
+
     public GameObject GetClosetEnemyByPlayer(){
         float distanceBtwEnemyAndPlayer = float.MaxValue;
         float tempDistance = 0;
@@ -69,11 +77,14 @@ public class EnemyManager : MonoBehaviour
         return null;
     }
 
+    /// <summary>
+    /// 清除场景内敌人，无任何掉落
+    /// </summary>
     public void ClearAllEnemy()
     {
         foreach (var enemy in enemies)
         {
-            enemy.Die();
+            enemy.DieWithoutAnyDropBonus();
         }
     }
 }

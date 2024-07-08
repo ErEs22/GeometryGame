@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8a98988e7b5a8d34fac1743b1f8c4dbc, type: 3}
-  m_Name: TestShopItem_Weapon 2
+  m_Name: Weapon_GlostScepter_Data
   m_EditorClassIdentifier: 
-  itemIcon: {fileID: 21300000, guid: a1a73a48ef1583944afd4fd296f696f0, type: 3}
-  itemName: Moose
+  itemIcon: {fileID: 21300000, guid: 188bee68a52a0264fa91b146e139d28b, type: 3}
+  itemName: Pig
   itemType: Weapon
   itemCost: 20
   itemLevel: 1
   shopItemType: 1
-  projectileSpeed: 30
-  prefab_Weapon: {fileID: 6764894451183402456, guid: 75e22cdbde5b19d4d85c864ee3c3008e, type: 3}
-  prefab_Projectile: {fileID: 3994106403445518885, guid: ca69b3bff52ee6046b459b1b73461a6b, type: 3}
+  projectileSpeed: 40
+  prefab_Weapon: {fileID: 6764894451183402456, guid: 7b52531c307f4a847af1185764caf430, type: 3}
+  prefab_Projectile: {fileID: 3994106403445518885, guid: afb00c81b24e1fc4ebb297d47223ed1e, type: 3}
   itemProperties:
   - weaponProperty: 0
     propertyValue: 5

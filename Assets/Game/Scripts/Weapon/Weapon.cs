@@ -5,8 +5,25 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
-    public WeaponData_SO weaponData;
+    protected GameObject projectilePrefab;
+    [Header("Weapon Data---")]
+    [SerializeField][DisplayOnly]
+    protected int weaponLevel = 1;
+    [SerializeField][DisplayOnly]
+    protected int damage;
+    [SerializeField][DisplayOnly]
+    protected float fireInterval;
+    [SerializeField][DisplayOnly]
+    protected int fireRange;
+    [SerializeField][DisplayOnly]
+    protected float criticalMul;
+    [SerializeField][DisplayOnly]
+    protected int projectileSpeed;
+    [SerializeField][DisplayOnly]
+    protected int knockBack;
+    [HideInInspector]
     public EnemyManager enemyManager;
+    [Header("---")]
     public LayerMask targetLayer;
     [DisplayOnly] public Transform muzzlePoint;
     public bool IsWeaponActive
@@ -39,7 +56,7 @@ public class Weapon : MonoBehaviour
         {
             //武器发射
             fireCountDown += Time.deltaTime;
-            if (fireCountDown > weaponData.fireInterval)
+            if (fireCountDown > fireInterval)
             {
                 fireCountDown = 0;
                 Fire();
@@ -47,17 +64,29 @@ public class Weapon : MonoBehaviour
         }
     }
 
+    public virtual void InitData(ShopItemData_Weapon_SO data,int weaponLevel)
+    {
+        this.weaponLevel = weaponLevel;
+        projectilePrefab = data.prefab_Projectile;
+        projectileSpeed = data.projectileSpeed;
+        data.itemProperties.ForEach( propertyData =>{
+            SetDatabyType(propertyData,data.itemLevel,this.weaponLevel);
+        });
+    }
+
     protected virtual void Fire()
     {
-        ReleaseSingleProjectile(weaponData.projectile, muzzlePoint.position, transform.rotation);
+        ReleaseSingleProjectile(projectilePrefab, muzzlePoint.position, transform.rotation);
     }
 
     protected virtual void ReleaseSingleProjectile(GameObject projectile, Vector3 muzzlePos, Quaternion rotation)
     {
         Projectile newProjectile = PoolManager.Release(projectile, muzzlePos, rotation).GetComponent<Projectile>();
-        newProjectile.lifeTime = weaponData.range / weaponData.projectileSpeed;
-        newProjectile.flySpeed = weaponData.projectileSpeed;
-        newProjectile.damage = weaponData.baseDamage;
+        newProjectile.flySpeed = projectileSpeed;
+        newProjectile.lifeTime = (float)fireRange / (40 * newProjectile.flySpeed);
+        newProjectile.damage = damage;
+        newProjectile.pierceEnemyCount = weaponLevel >= 4 ? 3 : 2;
+        newProjectile.knockBack = knockBack;
         newProjectile.SetDelayDeativate();
     }
 
@@ -87,13 +116,37 @@ public class Weapon : MonoBehaviour
 
     private bool FindEnemyInRange()
     {
-        Collider2D collider = Physics2D.OverlapCircle(transform.position, weaponData.range,targetLayer);
+        Collider2D collider = Physics2D.OverlapCircle(transform.position, fireRange / 40,targetLayer);
         return collider == null ? false : true;
     }
 
     private void OnDrawGizmos()
     {
         Handles.color = Color.green;
-        Handles.DrawWireDisc(transform.position, Vector3.forward, weaponData.range);
+        Handles.DrawWireDisc(transform.position, Vector3.forward, fireRange / 40);
+    }
+
+    protected virtual void SetDatabyType(ShopWeaponPropertyPair propertyPair,int weaponBaseLevel,int weaponCurrentLevel)
+    {
+        float propertyValue = GameInventory.Instance.CaculateWeaponDataByLevel(propertyPair.weaponProperty,propertyPair.propertyValue,weaponBaseLevel,weaponCurrentLevel);
+        switch(propertyPair.weaponProperty)
+        {
+            case eWeaponProperty.Damage:
+                damage = (int)propertyValue;
+                break;
+            case eWeaponProperty.CriticalMul:
+                criticalMul = propertyValue;
+                break;
+            case eWeaponProperty.FireInterval:
+                fireInterval = propertyValue;
+                break;
+            case eWeaponProperty.AttackRange:
+                fireRange = (int)propertyValue;
+                break;
+            case eWeaponProperty.KnockBack:
+                knockBack = (int)propertyValue;
+                break;
+            default:break;
+        }
     }
 }

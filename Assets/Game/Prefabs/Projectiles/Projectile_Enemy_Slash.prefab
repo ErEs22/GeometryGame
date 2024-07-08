@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 2093875944032654267}
   - component: {fileID: 2093875944032654268}
   - component: {fileID: 974005241800309057}
-  m_Layer: 0
+  - component: {fileID: 528154843271192314}
+  m_Layer: 8
   m_Name: Projectile_Enemy_Slash
-  m_TagString: Untagged
+  m_TagString: EnemyProjectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -97,7 +98,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1e977e8a6937ce40b85db5f54f42e08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colliderLayers:
-    serializedVersion: 2
-    m_Bits: 8
-  damageAmount: 0
+  flySpeed: 20
+  lifeTime: 1.5
+  damage: 0
+  pierceEnemyCount: 0
+  knockBack: 0
+--- !u!60 &528154843271192314
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2093875944032654269}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.28866667}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0, y: 0.5773587}
+      - {x: -0.5, y: -0.28866667}
+      - {x: 0.5, y: -0.28866667}

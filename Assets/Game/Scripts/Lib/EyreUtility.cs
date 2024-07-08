@@ -5,6 +5,20 @@ using Random = UnityEngine.Random;
 
 public static class EyreUtility{
 
+    public static int Round(float value)
+    {
+        float intNum = Mathf.Floor(value);
+        float fracNum = value - intNum;
+        if(fracNum >= 0.5f)
+        {
+            return (int)intNum + 1;
+        }
+        else
+        {
+            return (int)intNum;
+        }
+    }
+
     /// <summary>
     /// 生成圆环点
     /// </summary>

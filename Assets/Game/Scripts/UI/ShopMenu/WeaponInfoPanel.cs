@@ -102,7 +102,7 @@ public class WeaponInfoPanel : MonoBehaviour
             case eWeaponProperty.FireInterval:
                 textComp.text = "FireInterval:" + (propertyValue / (PlayerPropertyHandler.attackSpeed * 0.01f + 1)).ToString("F2");
             break;
-            case eWeaponProperty.PushBack:
+            case eWeaponProperty.KnockBack:
                 textComp.text = "PushBack:" + propertyValue;
             break;
             case eWeaponProperty.AttackRange:

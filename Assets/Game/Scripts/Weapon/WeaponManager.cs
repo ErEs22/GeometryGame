@@ -52,6 +52,7 @@ public class WeaponManager : MonoBehaviour
             GameObject prefabWeapon = GameInventory.Instance.inventoryWeapons[i].weaponData.prefab_Weapon;
             GameObject newWeaponObject = PoolManager.Release(prefabWeapon);
             Weapon newWeapon = newWeaponObject.GetComponent<Weapon>();
+            newWeapon.InitData(GameInventory.Instance.inventoryWeapons[i].weaponData,GameInventory.Instance.inventoryWeapons[i].weaponLevel);
             newWeapon.enemyManager = playerManager.enemyManager;
             weapons.Add(newWeapon);
             newWeaponObject.transform.parent = transform;

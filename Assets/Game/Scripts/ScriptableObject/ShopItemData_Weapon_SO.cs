@@ -4,6 +4,8 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "ScriptableObject/Item/ShopWeapon",fileName = "New ShopItem_Weapon")]
 public class ShopItemData_Weapon_SO : ShopItemData_SO
 {
-    public List<ShopWeaponPropertyPair> itemProperties = new List<ShopWeaponPropertyPair>();
+    public int projectileSpeed;
     public GameObject prefab_Weapon;
+    public GameObject prefab_Projectile;
+    public List<ShopWeaponPropertyPair> itemProperties = new List<ShopWeaponPropertyPair>();
 }

@@ -16,4 +16,4 @@ MonoBehaviour:
   baseDamage: 10
   fireInterval: 0.5
   range: 10
-  projectileSpeed: 30
+  projectileSpeed: 40

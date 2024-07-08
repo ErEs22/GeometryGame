@@ -34,4 +34,10 @@ public class SpitterEnemy : Enemy
         CancelInvoke(nameof(ReleaseSingleProjectile));
         base.Die();
     }
+
+    public override void DieWithoutAnyDropBonus()
+    {
+        CancelInvoke(nameof(ReleaseSingleProjectile));
+        base.DieWithoutAnyDropBonus();
+    }
 }

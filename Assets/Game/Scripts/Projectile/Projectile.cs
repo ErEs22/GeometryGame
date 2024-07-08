@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Projectile : MonoBehaviour
@@ -7,9 +9,11 @@ public class Projectile : MonoBehaviour
     [HideInInspector]
     public int flySpeed = 20;
     [HideInInspector]
-    public float lifeTime = 1f;
+    public float lifeTime = 1.5f;
     [HideInInspector]
     public int damage = 0;
+    public int pierceEnemyCount = 0;
+    public int knockBack = 0;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -18,10 +22,19 @@ public class Projectile : MonoBehaviour
 
     protected virtual void Hit(Collider2D otherCollider)
     {
-        otherCollider.TryGetComponent<ITakeDamage>(out ITakeDamage damageObject);
-        if(damageObject != null)
+        otherCollider.TryGetComponent(out ITakeDamage damageObject);
+        if (damageObject != null)
         {
             damageObject.TakeDamage(damage);
+            KnockBackHitObject(otherCollider.gameObject);
+            if (pierceEnemyCount == 0)
+            {
+                Deativate();
+            }
+            else
+            {
+                Mathf.Clamp(--pierceEnemyCount, 0, int.MaxValue);
+            }
         }
         else
         {
@@ -29,13 +42,26 @@ public class Projectile : MonoBehaviour
         }
     }
 
+    protected virtual void KnockBackHitObject(GameObject hitObject)
+    {
+        hitObject.TryGetComponent(out Enemy enemy);
+        if (enemy == null) return;
+        enemy.canMove = false;
+        Vector2 knockBackTagetPos = hitObject.transform.position + (transform.right.normalized * knockBack * 0.1f);
+        hitObject.transform.DOMove(knockBackTagetPos, 0.1f).OnComplete(() =>
+        {
+            enemy.canMove = true;
+        });
+    }
+
     public void SetDelayDeativate()
     {
         Invoke(nameof(Deativate), lifeTime);
     }
 
-    private void Deativate()
+    protected void Deativate()
     {
+        if (gameObject.activeSelf == false) return;
         gameObject.SetActive(false);
     }
 

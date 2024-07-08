@@ -112,16 +112,20 @@ public class PlayerState : MonoBehaviour, ITakeDamage
         EventManager.instance.OnUpdateHealthBar(HP,this.maxHP);
     }
 
-    public void TakeDamage(int damage)
+    public bool TakeDamage(int damage)
     {
-        if(HP < 0) return;
+        if(HP < 0) return false;
         HP = Mathf.Clamp(HP - damage,0,int.MaxValue);
         EventManager.instance.OnUpdateHealthBar(HP,maxHP);
         EventManager.instance.OnHealthBarFlash(Color.red,Color.white);
         //TODO击中效果
         if(HP == 0)
         {
+            EventManager.instance.OnLevelEnd();
+            GlobalVar.gameStatus = eGameStatus.Ended;
             EventManager.instance.OnOpenUI(eUIID.FinishMenu);
+            return true;
         }
+        return false;
     }
 }

@@ -82,7 +82,7 @@ public class GameInventory : MonoBehaviour
                 return propertyBaseValue;
             case eWeaponProperty.FireInterval:
                 return propertyBaseValue / (1 + (weaponTargetLevel - weaponBaseLevel) * 0.1f);
-            case eWeaponProperty.PushBack:
+            case eWeaponProperty.KnockBack:
                 return propertyBaseValue;
             case eWeaponProperty.AttackRange:
                 return propertyBaseValue;

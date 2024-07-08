@@ -11,6 +11,7 @@ using UnityEngine.InputSystem;
 /// </summary>
 public class Enemy : MonoBehaviour, ITakeDamage, IHeal
 {
+    public bool canMove = true;
     public GameObject dropItem;
     public new string name;
     [SerializeField]
@@ -60,6 +61,7 @@ public class Enemy : MonoBehaviour, ITakeDamage, IHeal
 
     private void Update()
     {
+        if(canMove == false) return;
         // UpdateEnemyList();
         CaculateDistanceToPlayer();
         UpdateMoveDirection();
@@ -179,12 +181,13 @@ public class Enemy : MonoBehaviour, ITakeDamage, IHeal
         // transform.Translate(transform.right * moveDir.magnitude * Time.deltaTime, Space.World);
     }
 
-    public virtual void TakeDamage(int damage)
+    public virtual bool TakeDamage(int damage)
     {
         //血量已经小于零则不做计算
-        if (HP <= 0) return;
+        if (HP <= 0) return false;
         // Debug.Log(this + " is taking damage,decrease " + damage + "HP");
         HP = Mathf.Clamp(HP - damage, 0, maxHP);
+        EventManager.instance.OnDamageDisplay(damage,gameObject,false);
         //击中效果
         transform.DOScale(2f, 0.05f).OnComplete(() =>
         {
@@ -193,7 +196,9 @@ public class Enemy : MonoBehaviour, ITakeDamage, IHeal
         if (HP <= 0)
         {
             Die();
+            return true;
         }
+        return false;
     }
 
     public virtual void Die()
@@ -202,6 +207,17 @@ public class Enemy : MonoBehaviour, ITakeDamage, IHeal
         HP = 0;
         //释放掉落经验球
         PoolManager.Release(dropItem,transform.position).GetComponent<ExpBall>().Init();
+        transform.DOScale(2f, 0.05f).OnComplete(() =>
+        {
+            gameObject.SetActive(false);
+            enemyManager.enemies.Remove(this);
+        });
+    }
+
+    public virtual void DieWithoutAnyDropBonus()
+    {
+        //死亡后血量应为零
+        HP = 0;
         transform.DOScale(2f, 0.05f).OnComplete(() =>
         {
             gameObject.SetActive(false);

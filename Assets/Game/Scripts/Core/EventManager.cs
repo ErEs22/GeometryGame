@@ -7,7 +7,6 @@ using UnityEngine.Events;
 public class EventManager : MonoBehaviour
 {
     public static EventManager instance;
-    public event UnityAction<Enemy> enemyDie;
     public event UnityAction<int,int,int> onUICountDown = delegate{};
     public event UnityAction<eUIID> onOpenUI = delegate{};
     public event UnityAction<eUIID> onCloseUI = delegate{};
@@ -37,12 +36,18 @@ public class EventManager : MonoBehaviour
     public event UnityAction onGenerateWeaonInInventory = delegate{};
     public event UnityAction onDisableLocomotionInput = delegate{};
     public event UnityAction onEnableLocomotionInput = delegate {};
+    public event UnityAction<int,GameObject,bool> onDamageDisplay = delegate{};
 
     private void Awake() {
         if(instance == null)
         {
             instance = this;
         }
+    }
+
+    public void OnDamageDisplay(int damage,GameObject damageObject,bool isCritical)
+    {
+        onDamageDisplay.Invoke(damage, damageObject, isCritical);
     }
 
     public void OnEnableLocomotionInput()

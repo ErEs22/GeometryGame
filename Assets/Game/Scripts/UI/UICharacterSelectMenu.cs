@@ -97,6 +97,7 @@ public class UICharacterSelectMenu : UIBase
         {
             Item_Weapon_CharacterSelectMenu itemWeapon = Instantiate(prefab_Item_Weapon, trans_Item_Weapons_Parent).GetComponent<Item_Weapon_CharacterSelectMenu>();
             itemWeapon.InitItemPropUI(currentCharacterAvailableWeapons[i], this);
+            itemWeapon.itemLevel = currentCharacterAvailableWeapons[i].itemLevel;
             // itemWeapon.InitItemPropUI();
         }
     }
@@ -280,7 +281,7 @@ public class UICharacterSelectMenu : UIBase
             case eWeaponProperty.FireInterval:
                 textComp.text = "FireInterval:" + (propertyValue / (GameCoreData.PlayerProperties.attackSpeedMul * 0.01f + 1)).ToString("F2");
                 break;
-            case eWeaponProperty.PushBack:
+            case eWeaponProperty.KnockBack:
                 textComp.text = "PushBack:" + propertyValue;
                 break;
             case eWeaponProperty.AttackRange:

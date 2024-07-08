@@ -56,7 +56,7 @@ public enum eWeaponProperty
     Damage,
     CriticalMul,
     FireInterval,
-    PushBack,
+    KnockBack,
     AttackRange,
     StealHP,
     DamageThrough,

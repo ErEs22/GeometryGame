@@ -93,10 +93,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6506474156604497366}
-  - component: {fileID: 555634143047246691}
   - component: {fileID: 2007685438147667495}
+  - component: {fileID: 8660899693374631011}
   m_Layer: 7
-  m_Name: Projectile_Scatter
+  m_Name: Projectile_Shotgun
   m_TagString: PlayerProjectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -118,21 +118,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &555634143047246691
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3994106403445518885}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 89eb524db957b2d48a927e34dcfa5433, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  flySpeed: 20
-  lifeTime: 1
-  damage: 0
 --- !u!70 &2007685438147667495
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -149,3 +134,18 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 0.8, y: 0.4}
   m_Direction: 1
+--- !u!114 &8660899693374631011
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3994106403445518885}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e479f2b70b110ec4db38cdce35a0eeed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flySpeed: 20
+  lifeTime: 1.5
+  damage: 0
