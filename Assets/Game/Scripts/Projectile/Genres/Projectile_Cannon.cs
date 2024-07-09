@@ -9,6 +9,5 @@ public class Projectile_Cannon : Projectile
     protected override void Hit(Collider2D hitObject)
     {
         base.Hit(hitObject);
-        //TODO 指定范围内敌人受到伤害
     }
 }

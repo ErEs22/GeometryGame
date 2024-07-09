@@ -69,7 +69,7 @@ public class UIMainMenu : UIBase
         Enum.TryParse<eScreenMode>(horSelector_ScreenMode.selectOptions[horSelector_ScreenMode.selectIndex].optionName,out eScreenMode screenMode);
         GameCoreData.GameSetting.screenMode = screenMode;
         Enum.TryParse<eGameResolution>(dropdown_Resolution.options[dropdown_Resolution.value].text.Insert(0,"R_"),out eGameResolution gameResolution);
-        GameCoreData.GameSetting.gameResolution = gameResolution;//TODO 修改字符串以符合枚举项
+        GameCoreData.GameSetting.gameResolution = gameResolution;
         GameCoreData.GameSetting.cameraShake = btnSwitch_CameraShake.isOn;
         GameCoreData.GameSetting.damageNumberDisplay = btnSwitch_DamageNumberDisplay.isOn;
         Enum.TryParse<eFPSOption>(horSelector_FPSLimit.selectOptions[horSelector_FPSLimit.selectIndex].optionName.Insert(0,"FPS_"),out eFPSOption fpsOption);

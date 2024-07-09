@@ -31,16 +31,11 @@ public class Weapon_GlostScepter : Weapon
         }
     }
 
-    protected override void ReleaseSingleProjectile(GameObject projectile, Vector3 muzzlePos, Quaternion rotation)
+    protected override Projectile ReleaseSingleProjectile(GameObject projectile, Vector3 muzzlePos, Quaternion rotation)
     {
-        Projectile_GlostScepter newProjectile = PoolManager.Release(projectile, muzzlePos, rotation).GetComponent<Projectile_GlostScepter>();
-        newProjectile.flySpeed = projectileSpeed;
-        newProjectile.lifeTime = (float)fireRange / (40 * newProjectile.flySpeed);
-        newProjectile.damage = damage;
-        newProjectile.pierceEnemyCount = weaponLevel >= 4 ? 3 : 2;
-        newProjectile.knockBack = knockBack;
+        Projectile_GlostScepter newProjectile = base.ReleaseSingleProjectile(projectile, muzzlePos, rotation) as Projectile_GlostScepter;
         newProjectile.weaponShootBy = this;
-        newProjectile.SetDelayDeativate();
+        return newProjectile;
     }
 
     public void CheckWeaponSkillAvailiable()

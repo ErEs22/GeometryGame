@@ -21,8 +21,6 @@ public class SlashEnemy : Enemy
     {
         while(HP > 0)
         {
-            //TODO Skill still using when level is ended.
-            Debug.Log("SlashEnemy 使用特殊技能");
             Invoke(nameof(ReleaseDamageObject),1);
             await UniTask.Delay(3000);
         }

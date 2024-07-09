@@ -301,7 +301,6 @@ public class UICharacterSelectMenu : UIBase
         string sign = "";
         switch (characterProperty)
         {
-            //TODO 根据属性的增益和减益设置不同显示效果（文字颜色）
             case ePlayerProperty.MaxHP:
                 if (propertyValue != 40)
                 {

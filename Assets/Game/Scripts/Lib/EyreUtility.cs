@@ -3,7 +3,13 @@ using Unity.VisualScripting;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public static class EyreUtility{
+public static class EyreUtility
+{
+
+    public static bool GetChanceResult(float chance)
+    {
+        return Random.Range(0f,1f) > chance ? true : false;
+    }
 
     public static int Round(float value)
     {

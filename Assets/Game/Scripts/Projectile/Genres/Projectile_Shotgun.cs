@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class Projectile_Shotgun : Projectile
 {
-    private void Awake() {
-        pierceEnemyCount = 2;
-    }
 
     protected override void Hit(Collider2D otherCollider)
     {

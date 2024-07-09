@@ -85,7 +85,6 @@ public class UIUpgradeMenu : UIBase
 
     private void InitPlayerProperties()
     {
-        //TODO初始化玩家属性，每个角色基本属性不同
         text_Health_PropertyValue.text = GameCoreData.PlayerProperties.maxHP.ToString();
         text_HPRegeneration_PropertyValue.text = GameCoreData.PlayerProperties.hpRegeneration.ToString();
         text_StealHP_PropertyValue.text = GameCoreData.PlayerProperties.stealHP.ToString() + "%";

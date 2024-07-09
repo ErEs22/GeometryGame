@@ -79,11 +79,13 @@ public class GameCoreData
         public static void CostCoin(int cost)
         {
             coin -= cost;
+            EventManager.instance.OnUpdateCoinCount();
         }
 
         public static void GainCoin(int gain)
         {
             coin += gain;
+            EventManager.instance.OnUpdateCoinCount();
         }
     }
 }

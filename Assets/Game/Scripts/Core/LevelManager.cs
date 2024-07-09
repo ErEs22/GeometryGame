@@ -93,7 +93,6 @@ public class LevelManager : MonoBehaviour
         if(currentLevel < 20)
         {
             GlobalVar.gameStatus = eGameStatus.SkillUI;
-            //TODO 当前关卡结束，弹出技能页面，清除屏幕敌人
             if(playerUpgradeCount > 0)
             {
                 EventManager.instance.OnOpenUI(eUIID.UpgradeMenu);
@@ -107,7 +106,6 @@ public class LevelManager : MonoBehaviour
         else if(currentLevel == 20)
         {
             GlobalVar.gameStatus = eGameStatus.Ended;
-            //TODO 游戏结束，弹出结算页面
             EventManager.instance.OnOpenUI(eUIID.FinishMenu);
             Debug.Log("游戏结束，当前关卡：" + currentLevel + "关");
         }
@@ -124,7 +122,6 @@ public class LevelManager : MonoBehaviour
         if(levelStatus == eLevelStatus.Ended || GlobalVar.gameStatus == eGameStatus.Ended) return;
         int enemySpawnCount = GetLevelSpawnEnemysInWaves();
 
-        //TODO三个特殊关卡
         switch(currentLevel)
         {
             case 5:

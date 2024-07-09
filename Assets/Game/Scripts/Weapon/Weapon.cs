@@ -2,6 +2,7 @@ using System;
 using System.Transactions;
 using UnityEditor;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Weapon : MonoBehaviour
 {
@@ -18,6 +19,8 @@ public class Weapon : MonoBehaviour
     [SerializeField][DisplayOnly]
     protected float criticalMul;
     [SerializeField][DisplayOnly]
+    protected float criticalRate;
+    [SerializeField][DisplayOnly]
     protected int projectileSpeed;
     [SerializeField][DisplayOnly]
     protected int knockBack;
@@ -25,6 +28,7 @@ public class Weapon : MonoBehaviour
     public EnemyManager enemyManager;
     [Header("---")]
     public LayerMask targetLayer;
+    protected float currentFireInterval;
     [DisplayOnly] public Transform muzzlePoint;
     public bool IsWeaponActive
     {
@@ -39,13 +43,18 @@ public class Weapon : MonoBehaviour
     }
     private bool isWeaponActive = true;
     private float fireCountDown = 0;
+    private bool isCriticalHit = false;
+
+    private void Awake() {
+        targetLayer = 1 << 6;
+    }
 
     private void OnEnable()
     {
         muzzlePoint = transform.Find("MuzzlePoint");
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         //场景没有敌人或没有敌人在范围内武器不会有任何行为
         if (enemyManager.enemies.Count <= 0 || !FindEnemyInRange()) return;
@@ -56,7 +65,7 @@ public class Weapon : MonoBehaviour
         {
             //武器发射
             fireCountDown += Time.deltaTime;
-            if (fireCountDown > fireInterval)
+            if (fireCountDown > currentFireInterval)
             {
                 fireCountDown = 0;
                 Fire();
@@ -79,15 +88,27 @@ public class Weapon : MonoBehaviour
         ReleaseSingleProjectile(projectilePrefab, muzzlePoint.position, transform.rotation);
     }
 
-    protected virtual void ReleaseSingleProjectile(GameObject projectile, Vector3 muzzlePos, Quaternion rotation)
+    protected virtual Projectile ReleaseSingleProjectile(GameObject projectile, Vector3 muzzlePos, Quaternion rotation)
     {
         Projectile newProjectile = PoolManager.Release(projectile, muzzlePos, rotation).GetComponent<Projectile>();
         newProjectile.flySpeed = projectileSpeed;
         newProjectile.lifeTime = (float)fireRange / (40 * newProjectile.flySpeed);
-        newProjectile.damage = damage;
-        newProjectile.pierceEnemyCount = weaponLevel >= 4 ? 3 : 2;
+        newProjectile.damage = CheckIsCriticalHit() ? (int)(damage * criticalMul) : damage ;
         newProjectile.knockBack = knockBack;
         newProjectile.SetDelayDeativate();
+        return newProjectile;
+    }
+
+    protected bool CheckIsCriticalHit()
+    {
+        float totalCirticalRate = criticalRate + GameCoreData.PlayerProperties.criticalRate;
+        if(EyreUtility.GetChanceResult(totalCirticalRate)){
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     private GameObject GetClosetEnemy()
@@ -137,8 +158,12 @@ public class Weapon : MonoBehaviour
             case eWeaponProperty.CriticalMul:
                 criticalMul = propertyValue;
                 break;
+            case eWeaponProperty.CriticalRate:
+                criticalRate = propertyValue;
+                break;
             case eWeaponProperty.FireInterval:
                 fireInterval = propertyValue;
+                currentFireInterval = fireInterval;
                 break;
             case eWeaponProperty.AttackRange:
                 fireRange = (int)propertyValue;

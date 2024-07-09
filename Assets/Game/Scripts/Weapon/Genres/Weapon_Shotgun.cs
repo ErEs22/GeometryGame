@@ -12,6 +12,13 @@ public class Weapon_Shotgun : Weapon
     float verticalProjectilInterval = 0.04f;//单位：秒
     float anglePerProjectile = 5;
 
+    protected override Projectile ReleaseSingleProjectile(GameObject projectile, Vector3 muzzlePos, Quaternion rotation)
+    {
+        Projectile newProjectile = base.ReleaseSingleProjectile(projectile, muzzlePos,rotation);
+        newProjectile.pierceEnemyCount = weaponLevel >= 4 ? 3 : 2;
+        return newProjectile;
+    }
+
     protected override void Fire()
     {
         float angle = Mathf.Atan2(transform.right.y,transform.right.x) * Mathf.Rad2Deg;

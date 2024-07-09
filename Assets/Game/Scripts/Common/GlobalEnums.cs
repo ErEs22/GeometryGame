@@ -61,6 +61,7 @@ public enum eWeaponProperty
     StealHP,
     DamageThrough,
     Cost,
+    CriticalRate,
 }
 
 public static class EnemyName

@@ -291,7 +291,6 @@ public class UIShopMenu : UIBase
                 shopItem.isLocked = false;
             break;
             case eShopItemType.Weapon:
-                //TODO检查背包是否已满（最大放置6个）,同时检查是否可以与背包中的武器进行合成（背包已满情况下）
                 if(allWeaponInventoryItems.Count >= 6)
                 {
                     for(int i = 0; i < allWeaponInventoryItems.Count; i++)
