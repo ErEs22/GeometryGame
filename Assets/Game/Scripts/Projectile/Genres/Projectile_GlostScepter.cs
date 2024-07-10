@@ -9,12 +9,18 @@ public class Projectile_GlostScepter : Projectile
         otherCollider.TryGetComponent(out ITakeDamage damageObject);
         if (damageObject != null)
         {
-            bool isDead = damageObject.TakeDamage(damage);
+            bool isDead = damageObject.TakeDamage(damage,isCriticalHit);
             if(isDead)
             {
                 weaponShootBy.CheckWeaponSkillAvailiable();
             }
-            KnockBackHitObject(otherCollider.gameObject);
+            if(otherCollider.tag == "Enemy")
+            {
+                //血量吸取
+                LifeSteal(damage);
+                //击退
+                KnockBackHitObject(otherCollider.gameObject);
+            }
             if (pierceEnemyCount == 0)
             {
                 Deativate();

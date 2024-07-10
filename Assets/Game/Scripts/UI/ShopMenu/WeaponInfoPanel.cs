@@ -108,8 +108,8 @@ public class WeaponInfoPanel : MonoBehaviour
             case eWeaponProperty.AttackRange:
                 textComp.text = "AttackRange:" + (propertyValue + PlayerPropertyHandler.attackRange).ToString();
             break;
-            case eWeaponProperty.StealHP:
-                textComp.text = "StealHP:" + (propertyValue + PlayerPropertyHandler.stealHP).ToString();
+            case eWeaponProperty.LifeSteal:
+                textComp.text = "LifeSteal:" + (propertyValue + PlayerPropertyHandler.lifeSteal).ToString();
             break;
             case eWeaponProperty.DamageThrough:
                 textComp.text = "DamageThrough:" + propertyValue;

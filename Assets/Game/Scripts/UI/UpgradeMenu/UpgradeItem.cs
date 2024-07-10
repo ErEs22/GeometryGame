@@ -55,8 +55,8 @@ public class UpgradeItem : MonoBehaviour
             case ePlayerProperty.HPRegeneration:
                 text_ItemDescription.text = sign + itemData.valueAmount + "HPRegeneration";
             break;
-            case ePlayerProperty.StealHP:
-                text_ItemDescription.text = sign + itemData.valueAmount + "%StealHP";
+            case ePlayerProperty.lifeSteal:
+                text_ItemDescription.text = sign + itemData.valueAmount + "%LifeSteal";
             break;
             case ePlayerProperty.DamageMul:
                 text_ItemDescription.text = sign + itemData.valueAmount + "%Damage";

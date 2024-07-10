@@ -7,5 +7,5 @@ using UnityEngine;
 /// </summary>
 public interface ITakeDamage
 {
-    public bool TakeDamage(int damage);
+    public bool TakeDamage(int damage,bool isCritical = false);
 }

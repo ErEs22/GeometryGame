@@ -181,13 +181,13 @@ public class Enemy : MonoBehaviour, ITakeDamage, IHeal
         // transform.Translate(transform.right * moveDir.magnitude * Time.deltaTime, Space.World);
     }
 
-    public virtual bool TakeDamage(int damage)
+    public virtual bool TakeDamage(int damage,bool isCritical = false)
     {
         //血量已经小于零则不做计算
         if (HP <= 0) return false;
         // Debug.Log(this + " is taking damage,decrease " + damage + "HP");
         HP = Mathf.Clamp(HP - damage, 0, maxHP);
-        EventManager.instance.OnDamageDisplay(damage,gameObject,false);
+        EventManager.instance.OnDamageDisplay(damage,gameObject,isCritical);
         //击中效果
         transform.DOScale(2f, 0.05f).OnComplete(() =>
         {

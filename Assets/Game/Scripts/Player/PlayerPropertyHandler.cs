@@ -7,7 +7,7 @@ public class PlayerPropertyHandler : MonoBehaviour
     private PlayerState playerState;
     public static int maxHP = 100;
     public static int hpRegeneration = 1;
-    public static int stealHP = 5;
+    public static int lifeSteal = 5;
     public static int damageMul = 0;
     public static int attackSpeed = 0;
     public static int criticalRate = 0;
@@ -42,8 +42,8 @@ public class PlayerPropertyHandler : MonoBehaviour
             case ePlayerProperty.HPRegeneration:
                 hpRegeneration = GameCoreData.PlayerProperties.hpRegeneration;
             break;
-            case ePlayerProperty.StealHP:
-                stealHP = GameCoreData.PlayerProperties.stealHP;
+            case ePlayerProperty.lifeSteal:
+                lifeSteal = GameCoreData.PlayerProperties.lifeSteal;
             break;
             case ePlayerProperty.DamageMul:
                 damageMul = GameCoreData.PlayerProperties.damageMul;
@@ -61,7 +61,7 @@ public class PlayerPropertyHandler : MonoBehaviour
                 moveSpeed = GameCoreData.PlayerProperties.moveSpeed;
             break;
         }
-        playerState.UpdatePlayerStatus(maxHP,hpRegeneration,stealHP,damageMul,attackSpeed,criticalRate,attackRange,moveSpeed);
+        playerState.UpdatePlayerStatus(maxHP,hpRegeneration,lifeSteal,damageMul,attackSpeed,criticalRate,attackRange,moveSpeed);
     }
 
 }

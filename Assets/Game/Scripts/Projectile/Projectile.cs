@@ -14,6 +14,8 @@ public class Projectile : MonoBehaviour
     public int damage = 0;
     public int pierceEnemyCount = 0;
     public int knockBack = 0;
+    public bool isCriticalHit = false;
+    public int lifeStealPercentByWeapon = 0;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -25,8 +27,14 @@ public class Projectile : MonoBehaviour
         otherCollider.TryGetComponent(out ITakeDamage damageObject);
         if (damageObject != null)
         {
-            damageObject.TakeDamage(damage);
-            KnockBackHitObject(otherCollider.gameObject);
+            damageObject.TakeDamage(damage,isCriticalHit);
+            if(otherCollider.tag == "Enemy")
+            {
+                //血量吸取
+                LifeSteal(damage);
+                //击退
+                KnockBackHitObject(otherCollider.gameObject);
+            }
             if (pierceEnemyCount == 0)
             {
                 Deativate();
@@ -40,6 +48,13 @@ public class Projectile : MonoBehaviour
         {
             Debug.Log("碰到的物体没有继承ITakeDamage接口，若需要处理，请继承该接口");
         }
+    }
+
+    protected void LifeSteal(int damage)
+    {
+        float lifeStealPercent = (lifeStealPercentByWeapon + GameCoreData.PlayerProperties.lifeSteal) * 0.01f;
+        int stealedHP = (int)(damage * lifeStealPercent);
+        EventManager.instance.OnUpdatePlayerProperty(ePlayerProperty.MaxHP, stealedHP);
     }
 
     protected virtual void KnockBackHitObject(GameObject hitObject)

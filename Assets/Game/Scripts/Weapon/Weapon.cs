@@ -24,6 +24,8 @@ public class Weapon : MonoBehaviour
     protected int projectileSpeed;
     [SerializeField][DisplayOnly]
     protected int knockBack;
+    [SerializeField][DisplayOnly]
+    protected int lifeSteal;
     [HideInInspector]
     public EnemyManager enemyManager;
     [Header("---")]
@@ -43,7 +45,7 @@ public class Weapon : MonoBehaviour
     }
     private bool isWeaponActive = true;
     private float fireCountDown = 0;
-    private bool isCriticalHit = false;
+    protected bool isCriticalHit = false;
 
     private void Awake() {
         targetLayer = 1 << 6;
@@ -85,30 +87,28 @@ public class Weapon : MonoBehaviour
 
     protected virtual void Fire()
     {
+        CheckIsCriticalHit();
         ReleaseSingleProjectile(projectilePrefab, muzzlePoint.position, transform.rotation);
     }
 
     protected virtual Projectile ReleaseSingleProjectile(GameObject projectile, Vector3 muzzlePos, Quaternion rotation)
     {
         Projectile newProjectile = PoolManager.Release(projectile, muzzlePos, rotation).GetComponent<Projectile>();
+        newProjectile.isCriticalHit = isCriticalHit;
         newProjectile.flySpeed = projectileSpeed;
         newProjectile.lifeTime = (float)fireRange / (40 * newProjectile.flySpeed);
-        newProjectile.damage = CheckIsCriticalHit() ? (int)(damage * criticalMul) : damage ;
+        newProjectile.damage = isCriticalHit ? (int)(damage * criticalMul) : damage ;
         newProjectile.knockBack = knockBack;
+        newProjectile.lifeStealPercentByWeapon = lifeSteal;
         newProjectile.SetDelayDeativate();
         return newProjectile;
     }
 
     protected bool CheckIsCriticalHit()
     {
-        float totalCirticalRate = criticalRate + GameCoreData.PlayerProperties.criticalRate;
-        if(EyreUtility.GetChanceResult(totalCirticalRate)){
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        float totalCirticalRate = (criticalRate + GameCoreData.PlayerProperties.criticalRate) * 0.01f;
+        isCriticalHit = EyreUtility.GetChanceResult(totalCirticalRate);
+        return isCriticalHit;
     }
 
     private GameObject GetClosetEnemy()
@@ -170,6 +170,9 @@ public class Weapon : MonoBehaviour
                 break;
             case eWeaponProperty.KnockBack:
                 knockBack = (int)propertyValue;
+                break;
+            case eWeaponProperty.LifeSteal:
+                lifeSteal = (int)propertyValue;
                 break;
             default:break;
         }

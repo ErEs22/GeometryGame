@@ -4,7 +4,13 @@ using UnityEngine;
 public class Weapon_Melee : Weapon
 {
 
+    /// <summary>
+    /// 是否在执行攻击动作中，执行攻击动作时武器不可旋转
+    /// </summary>
     protected bool isAttacking = false;
+    /// <summary>
+    /// 是否可造成伤害，攻击动作的指定时刻可以造成伤害
+    /// </summary>
     protected bool isDamagable = false;
 
     protected override void Update()
@@ -13,8 +19,14 @@ public class Weapon_Melee : Weapon
         base.Update();
     }
 
+    /// <summary>
+    /// 武器开火或攻击，重写需重新添加暴击检测
+    /// </summary>
     protected override void Fire()
     {
+        //暴击检测
+        CheckIsCriticalHit();
+        Debug.Log(isCriticalHit);
         isAttacking = true;
         isDamagable = true;
         Vector3 originPos = transform.localPosition;
@@ -24,6 +36,8 @@ public class Weapon_Melee : Weapon
             isDamagable = false;
             transform.DOLocalMove(originPos, 0.1f).OnComplete(() =>
             {
+                //攻击动作结束后取消暴击状态
+                isCriticalHit = false;
                 isAttacking = false;
             });
         });
@@ -40,12 +54,20 @@ public class Weapon_Melee : Weapon
         other.TryGetComponent(out ITakeDamage takeDamageComp);
         if (takeDamageComp != null)
         {
-            int finalDamage = CheckIsCriticalHit() ? (int)(damage * criticalMul) : damage;
-            takeDamageComp.TakeDamage(finalDamage);
+            int finalDamage = isCriticalHit ? (int)(damage * criticalMul) : damage;
+            LifeSteal(finalDamage);
+            takeDamageComp.TakeDamage(finalDamage, isCriticalHit);
             KnockBackHitObject(other.gameObject);
         }
     }
-    
+
+    protected void LifeSteal(int damage)
+    {
+        float lifeStealPercent = (lifeSteal + GameCoreData.PlayerProperties.lifeSteal) * 0.01f;
+        int stealedHP = (int)(damage * lifeStealPercent);
+        EventManager.instance.OnUpdatePlayerProperty(ePlayerProperty.MaxHP, stealedHP);
+    }
+
     protected virtual void KnockBackHitObject(GameObject hitObject)
     {
         hitObject.TryGetComponent(out Enemy enemy);

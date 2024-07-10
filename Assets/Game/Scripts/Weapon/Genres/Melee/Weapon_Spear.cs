@@ -6,6 +6,7 @@ public class Weapon_Spear : Weapon_Melee
 
     protected override void Fire()
     {
+        CheckIsCriticalHit();
         isAttacking = true;
         isDamagable = true;
         Vector3 originPos = transform.localPosition;
@@ -15,6 +16,7 @@ public class Weapon_Spear : Weapon_Melee
             isDamagable = false;
             transform.DOLocalMove(originPos, 0.1f).OnComplete(() =>
             {
+                isCriticalHit = false;
                 isAttacking = false;
             });
         });

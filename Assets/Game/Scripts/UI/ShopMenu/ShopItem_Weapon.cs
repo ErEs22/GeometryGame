@@ -142,8 +142,8 @@ public class ShopItem_Weapon : ShopItem
             case eWeaponProperty.AttackRange:
                 textComp.text = "AttackRange:" + (propertyValue + GameCoreData.PlayerProperties.attackRange).ToString();
             break;
-            case eWeaponProperty.StealHP:
-                textComp.text = "StealHP:" + (propertyValue + GameCoreData.PlayerProperties.stealHP).ToString();
+            case eWeaponProperty.LifeSteal:
+                textComp.text = "LifeSteal:" + (propertyValue + GameCoreData.PlayerProperties.lifeSteal).ToString();
             break;
             case eWeaponProperty.DamageThrough:
                 textComp.text = "DamageThrough:" + propertyValue;

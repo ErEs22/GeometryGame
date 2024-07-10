@@ -10,11 +10,10 @@ public class Weapon_ThiefDagger : Weapon_Melee
         other.TryGetComponent(out ITakeDamage takeDamageComp);
         if (takeDamageComp != null)
         {
-            //TODO 是否暴击在每次攻击前决定，确定本次攻击是暴击时，与每个敌人造成的伤害都为暴击伤害
-            int finalDamage = CheckIsCriticalHit() ? (int)(damage * criticalMul) : damage;
-            takeDamageComp.TakeDamage(finalDamage);
             KnockBackHitObject(other.gameObject);
-            bool isDead = takeDamageComp.TakeDamage(damage);
+            int finalDamage = isCriticalHit ? (int)(damage * criticalMul) : damage;
+            LifeSteal(finalDamage);
+            bool isDead = takeDamageComp.TakeDamage(finalDamage,isCriticalHit);
             if(isDead)
             {
                 CheckWeaponSkillAvailiable();
@@ -24,7 +23,7 @@ public class Weapon_ThiefDagger : Weapon_Melee
 
     private void CheckWeaponSkillAvailiable()
     {
-        //TODO根据武器技能判断是否触发
+        if(!isCriticalHit) return;
         switch(weaponLevel)
         {
             case 1:

@@ -163,7 +163,7 @@ public class UICharacterSelectMenu : UIBase
         }
         SetCharacterPropertyText(text_Property.GetComponent<TextMeshProUGUI>(), ePlayerProperty.MaxHP,data.HP);
         SetCharacterPropertyText(textList[0].GetComponent<TextMeshProUGUI>(), ePlayerProperty.HPRegeneration,data.hpRegeneratePerSecond);
-        SetCharacterPropertyText(textList[1].GetComponent<TextMeshProUGUI>(), ePlayerProperty.StealHP,data.stealHPRate);
+        SetCharacterPropertyText(textList[1].GetComponent<TextMeshProUGUI>(), ePlayerProperty.lifeSteal,data.lifeStealRate);
         SetCharacterPropertyText(textList[2].GetComponent<TextMeshProUGUI>(), ePlayerProperty.DamageMul,data.damageMul);
         SetCharacterPropertyText(textList[3].GetComponent<TextMeshProUGUI>(), ePlayerProperty.AttackSpeed,data.attackSpeedMul);
         SetCharacterPropertyText(textList[4].GetComponent<TextMeshProUGUI>(), ePlayerProperty.CriticalRate,data.criticalRate);
@@ -186,7 +186,7 @@ public class UICharacterSelectMenu : UIBase
         }
         SetCharacterPropertyText(text_Property.GetComponent<TextMeshProUGUI>(), ePlayerProperty.MaxHP,data.HP);
         SetCharacterPropertyText(textList[0].GetComponent<TextMeshProUGUI>(), ePlayerProperty.HPRegeneration,data.hpRegeneratePerSecond);
-        SetCharacterPropertyText(textList[1].GetComponent<TextMeshProUGUI>(), ePlayerProperty.StealHP,data.stealHPRate);
+        SetCharacterPropertyText(textList[1].GetComponent<TextMeshProUGUI>(), ePlayerProperty.lifeSteal,data.lifeStealRate);
         SetCharacterPropertyText(textList[2].GetComponent<TextMeshProUGUI>(), ePlayerProperty.DamageMul,data.damageMul);
         SetCharacterPropertyText(textList[3].GetComponent<TextMeshProUGUI>(), ePlayerProperty.AttackSpeed,data.attackSpeedMul);
         SetCharacterPropertyText(textList[4].GetComponent<TextMeshProUGUI>(), ePlayerProperty.CriticalRate,data.criticalRate);
@@ -287,8 +287,8 @@ public class UICharacterSelectMenu : UIBase
             case eWeaponProperty.AttackRange:
                 textComp.text = "AttackRange:" + (propertyValue + GameCoreData.PlayerProperties.attackRange).ToString();
                 break;
-            case eWeaponProperty.StealHP:
-                textComp.text = "StealHP:" + (propertyValue + GameCoreData.PlayerProperties.stealHP).ToString();
+            case eWeaponProperty.LifeSteal:
+                textComp.text = "LifeSteal:" + (propertyValue + GameCoreData.PlayerProperties.lifeSteal).ToString();
                 break;
             case eWeaponProperty.DamageThrough:
                 textComp.text = "DamageThrough:" + propertyValue;
@@ -323,11 +323,11 @@ public class UICharacterSelectMenu : UIBase
                     Destroy(textComp.gameObject);
                 }
                 break;
-            case ePlayerProperty.StealHP:
+            case ePlayerProperty.lifeSteal:
                 if (propertyValue != 0)
                 {
                     sign = propertyValue > 0 ? "+" : "-";
-                    textComp.text = sign + Mathf.Abs(propertyValue) + "%StealHP:";
+                    textComp.text = sign + Mathf.Abs(propertyValue) + "%LifeSteal:";
                 }
                 else
                 {

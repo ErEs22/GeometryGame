@@ -55,8 +55,8 @@ public class PropInfoPanel : MonoBehaviour
             case ePlayerProperty.HPRegeneration:
                 textComp.text = "HPRegeneration:" + propertyValue;
             break;
-            case ePlayerProperty.StealHP:
-                textComp.text = "StealHP:" + propertyValue + "%";
+            case ePlayerProperty.lifeSteal:
+                textComp.text = "LifeSteal:" + propertyValue + "%";
             break;
             case ePlayerProperty.DamageMul:
                 textComp.text = "DamageMul:" + propertyValue + "%";

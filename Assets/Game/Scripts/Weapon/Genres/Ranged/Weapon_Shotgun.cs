@@ -21,6 +21,7 @@ public class Weapon_Shotgun : Weapon
 
     protected override void Fire()
     {
+        CheckIsCriticalHit();
         float angle = Mathf.Atan2(transform.right.y,transform.right.x) * Mathf.Rad2Deg;
         angle -= anglePerProjectile;
         float timer = 0;

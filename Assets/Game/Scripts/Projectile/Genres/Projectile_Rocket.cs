@@ -9,8 +9,14 @@ public class Projectile_Rocket : Projectile
         otherCollider.TryGetComponent(out ITakeDamage damageObject);
         if (damageObject != null)
         {
-            damageObject.TakeDamage(damage);
-            KnockBackHitObject(otherCollider.gameObject);
+            damageObject.TakeDamage(damage,isCriticalHit);
+            if(otherCollider.tag == "Enemy")
+            {
+                //血量吸取
+                LifeSteal(damage);
+                //击退
+                KnockBackHitObject(otherCollider.gameObject);
+            }
             //碰到敌人后爆炸
             if (pierceEnemyCount == 0)
             {

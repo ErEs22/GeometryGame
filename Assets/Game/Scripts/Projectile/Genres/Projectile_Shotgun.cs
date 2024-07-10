@@ -10,8 +10,14 @@ public class Projectile_Shotgun : Projectile
         otherCollider.TryGetComponent<ITakeDamage>(out ITakeDamage damageObject);
         if(damageObject != null)
         {
-            damageObject.TakeDamage(damage);
-            KnockBackHitObject(otherCollider.gameObject);
+            damageObject.TakeDamage(damage,isCriticalHit);
+            if(otherCollider.tag == "Enemy")
+            {
+                //血量吸取
+                LifeSteal(damage);
+                //击退
+                KnockBackHitObject(otherCollider.gameObject);
+            }
             if(pierceEnemyCount == 0)
             {
                 Deativate();

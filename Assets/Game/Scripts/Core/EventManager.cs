@@ -149,14 +149,14 @@ public class EventManager : MonoBehaviour
     {
         switch(playerProperty)
         {
-            case ePlayerProperty.MaxHP:
+            case ePlayerProperty.MaxHP://TODO血量修改超过最大\小值时需被限制在范围内
                 GameCoreData.PlayerProperties.maxHP += changeValue;
             break;
             case ePlayerProperty.HPRegeneration:
                 GameCoreData.PlayerProperties.hpRegeneration += changeValue;
             break;
-            case ePlayerProperty.StealHP:
-                GameCoreData.PlayerProperties.stealHP += changeValue;
+            case ePlayerProperty.lifeSteal:
+                GameCoreData.PlayerProperties.lifeSteal += changeValue;
             break;
             case ePlayerProperty.DamageMul:
                 GameCoreData.PlayerProperties.damageMul += changeValue;

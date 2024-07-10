@@ -66,7 +66,7 @@ public class GameCoreData
         public static int coin = 0;
         public static int maxHP = 20;
         public static int hpRegeneration = 0;
-        public static int stealHP = 0;
+        public static int lifeSteal = 0;
         public static int damageMul = 0;
         public static int attackSpeedMul = 0;
         public static int criticalRate = 0;

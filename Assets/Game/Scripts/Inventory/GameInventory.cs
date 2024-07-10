@@ -76,9 +76,11 @@ public class GameInventory : MonoBehaviour
         {
             case eWeaponProperty.Damage:
                 return propertyBaseValue / weaponBaseLevel * weaponTargetLevel;
-            case eWeaponProperty.StealHP:
+            case eWeaponProperty.LifeSteal:
                 return propertyBaseValue;
             case eWeaponProperty.CriticalMul:
+                return propertyBaseValue;
+            case eWeaponProperty.CriticalRate:
                 return propertyBaseValue;
             case eWeaponProperty.FireInterval:
                 return propertyBaseValue / (1 + (weaponTargetLevel - weaponBaseLevel) * 0.1f);

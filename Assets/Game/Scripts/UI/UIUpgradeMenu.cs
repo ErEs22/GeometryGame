@@ -87,7 +87,7 @@ public class UIUpgradeMenu : UIBase
     {
         text_Health_PropertyValue.text = GameCoreData.PlayerProperties.maxHP.ToString();
         text_HPRegeneration_PropertyValue.text = GameCoreData.PlayerProperties.hpRegeneration.ToString();
-        text_StealHP_PropertyValue.text = GameCoreData.PlayerProperties.stealHP.ToString() + "%";
+        text_StealHP_PropertyValue.text = GameCoreData.PlayerProperties.lifeSteal.ToString() + "%";
         text_DamageMul_PropertyValue.text = GameCoreData.PlayerProperties.damageMul.ToString() + "%";
         text_AttackSpeed_PropertyValue.text = GameCoreData.PlayerProperties.attackSpeedMul.ToString() + "%";
         text_CriticalRate_PropertyValue.text = GameCoreData.PlayerProperties.criticalRate.ToString() + "%";
@@ -216,8 +216,8 @@ public class UIUpgradeMenu : UIBase
                 hpRegenerationPropertyValue = GameCoreData.PlayerProperties.hpRegeneration;
                 text_HPRegeneration_PropertyValue.text = hpRegenerationPropertyValue.ToString();
             break;
-            case ePlayerProperty.StealHP:
-                stealHPPropertyValue = GameCoreData.PlayerProperties.stealHP;
+            case ePlayerProperty.lifeSteal:
+                stealHPPropertyValue = GameCoreData.PlayerProperties.lifeSteal;
                 text_StealHP_PropertyValue.text = stealHPPropertyValue.ToString() + "%";
             break;
             case ePlayerProperty.DamageMul:

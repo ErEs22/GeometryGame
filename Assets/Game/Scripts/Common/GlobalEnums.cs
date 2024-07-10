@@ -43,7 +43,7 @@ public enum ePlayerProperty
 {
     MaxHP,
     HPRegeneration,
-    StealHP,
+    lifeSteal,
     DamageMul,
     AttackSpeed,
     CriticalRate,
@@ -58,7 +58,7 @@ public enum eWeaponProperty
     FireInterval,
     KnockBack,
     AttackRange,
-    StealHP,
+    LifeSteal,
     DamageThrough,
     Cost,
     CriticalRate,

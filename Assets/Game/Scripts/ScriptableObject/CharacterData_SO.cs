@@ -7,7 +7,7 @@ public class CharacterData_SO : ScriptableObject
     public string CharacterName;
     public int HP = 20;
     public int hpRegeneratePerSecond = 0;
-    public float stealHPRate = 0.0f;
+    public float lifeStealRate = 0.0f;
     public float damageMul = 1.0f;
     public float attackSpeedMul = 1.0f;
     public float criticalRate = 0.0f;

@@ -10,7 +10,7 @@ public class PlayerState : MonoBehaviour, ITakeDamage
     private int HP = 20;
     private int maxHP = 20;
     private int hpRegeneraePerSecond = 0;
-    private float stealHPRate = 0.0f;
+    private float lifeStealRate = 0.0f;
     private float damageMul = 1.0f;
     private float attackSpeedMul = 1.0f;
     private float criticalRate = 0.0f;
@@ -50,7 +50,7 @@ public class PlayerState : MonoBehaviour, ITakeDamage
         HP = playerData.HP;
         maxHP = playerData.HP;
         hpRegeneraePerSecond = playerData.hpRegeneratePerSecond;
-        stealHPRate = playerData.stealHPRate;
+        lifeStealRate = playerData.lifeStealRate;
         damageMul = playerData.damageMul;
         attackSpeedMul = playerData.attackSpeedMul;
         criticalRate = playerData.criticalRate;
@@ -58,7 +58,7 @@ public class PlayerState : MonoBehaviour, ITakeDamage
         moveSpeed = playerData.moveSpeed;
         GameCoreData.PlayerProperties.maxHP = maxHP;
         GameCoreData.PlayerProperties.hpRegeneration = hpRegeneraePerSecond;
-        GameCoreData.PlayerProperties.stealHP = (int)(stealHPRate * 100);
+        GameCoreData.PlayerProperties.lifeSteal = (int)(lifeStealRate * 100);
         GameCoreData.PlayerProperties.damageMul = (int)((damageMul - 1) * 100);
         GameCoreData.PlayerProperties.attackSpeedMul = (int)((attackSpeedMul - 1) * 100);
         GameCoreData.PlayerProperties.criticalRate = (int)(criticalRate * 100);
@@ -97,13 +97,13 @@ public class PlayerState : MonoBehaviour, ITakeDamage
         return 20 + LevelManager.currentLevel * 5;
     }
 
-    public void UpdatePlayerStatus(int maxHP,int hpRegeneration,int stealHP,int damageMul,int attackSpeed,int criticalRate,int attackRange,int moveSpeed)
+    public void UpdatePlayerStatus(int maxHP,int hpRegeneration,int lifeSteal,int damageMul,int attackSpeed,int criticalRate,int attackRange,int moveSpeed)
     {
         //TODO 游戏中血量未满时最大生命值改变需重新计算当前血量值
         HP = maxHP;
         this.maxHP = maxHP;
         hpRegeneraePerSecond = hpRegeneration;
-        stealHPRate = stealHP * 0.01f;
+        lifeStealRate = lifeSteal * 0.01f;
         this.damageMul = 1 + (damageMul * 0.01f);
         attackSpeedMul = 1 + (attackSpeed * 0.01f);
         this.criticalRate = criticalRate * 0.01f;
@@ -112,7 +112,7 @@ public class PlayerState : MonoBehaviour, ITakeDamage
         EventManager.instance.OnUpdateHealthBar(HP,this.maxHP);
     }
 
-    public bool TakeDamage(int damage)
+    public bool TakeDamage(int damage,bool isCritical = false)
     {
         if(HP < 0) return false;
         HP = Mathf.Clamp(HP - damage,0,int.MaxValue);
