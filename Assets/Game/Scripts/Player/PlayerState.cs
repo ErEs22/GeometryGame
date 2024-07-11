@@ -27,12 +27,14 @@ public class PlayerState : MonoBehaviour, ITakeDamage
         EventManager.instance.onInitPlayerStatus += InitData;
         EventManager.instance.onCollectExpBall += CollectExpBall;
         EventManager.instance.onChangeBonusCoinCount += ChangeBonusCoinCount;
+        EventManager.instance.onUpdatePlayerCurrentHP += UpdatePlayerCurrentHP;
     }
 
     private void OnDisable() {
         EventManager.instance.onInitPlayerStatus -= InitData;
         EventManager.instance.onCollectExpBall -= CollectExpBall;
         EventManager.instance.onChangeBonusCoinCount -= ChangeBonusCoinCount;
+        EventManager.instance.onUpdatePlayerCurrentHP -= UpdatePlayerCurrentHP;
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
@@ -58,12 +60,12 @@ public class PlayerState : MonoBehaviour, ITakeDamage
         moveSpeed = playerData.moveSpeed;
         GameCoreData.PlayerProperties.maxHP = maxHP;
         GameCoreData.PlayerProperties.hpRegeneration = hpRegeneraePerSecond;
-        GameCoreData.PlayerProperties.lifeSteal = (int)(lifeStealRate * 100);
-        GameCoreData.PlayerProperties.damageMul = (int)((damageMul - 1) * 100);
-        GameCoreData.PlayerProperties.attackSpeedMul = (int)((attackSpeedMul - 1) * 100);
-        GameCoreData.PlayerProperties.criticalRate = (int)(criticalRate * 100);
+        GameCoreData.PlayerProperties.lifeSteal = EyreUtility.Round(lifeStealRate * 100);
+        GameCoreData.PlayerProperties.damageMul = EyreUtility.Round((damageMul - 1) * 100);
+        GameCoreData.PlayerProperties.attackSpeedMul = EyreUtility.Round((attackSpeedMul - 1) * 100);
+        GameCoreData.PlayerProperties.criticalRate = EyreUtility.Round(criticalRate * 100);
         GameCoreData.PlayerProperties.attackRange = 0;
-        GameCoreData.PlayerProperties.moveSpeed = (int)((moveSpeed - 1) * 100);
+        GameCoreData.PlayerProperties.moveSpeed = EyreUtility.Round((moveSpeed - 1) * 100);
         EventManager.instance.OnInitStatusBar(maxHP);
     }
 
@@ -97,10 +99,34 @@ public class PlayerState : MonoBehaviour, ITakeDamage
         return 20 + LevelManager.currentLevel * 5;
     }
 
+    public void UpdatePlayerCurrentHP(int hpChange)
+    {
+        HP = Mathf.Clamp(HP + hpChange,0,maxHP);
+        EventManager.instance.OnUpdateHealthBar(HP,maxHP);
+    }
+
+    /// <summary>
+    /// 更新玩家基础属性数据
+    /// </summary>
+    /// <param name="maxHP"></param>
+    /// <param name="hpRegeneration"></param>
+    /// <param name="lifeSteal"></param>
+    /// <param name="damageMul"></param>
+    /// <param name="attackSpeed"></param>
+    /// <param name="criticalRate"></param>
+    /// <param name="attackRange"></param>
+    /// <param name="moveSpeed"></param>
     public void UpdatePlayerStatus(int maxHP,int hpRegeneration,int lifeSteal,int damageMul,int attackSpeed,int criticalRate,int attackRange,int moveSpeed)
     {
-        //TODO 游戏中血量未满时最大生命值改变需重新计算当前血量值
-        HP = maxHP;
+        int hpChanged = maxHP - this.maxHP;
+        if(hpChanged > 0)
+        {
+            HP += hpChanged;
+        }
+        else
+        {
+            HP = Mathf.Clamp(HP,0,maxHP);
+        }
         this.maxHP = maxHP;
         hpRegeneraePerSecond = hpRegeneration;
         lifeStealRate = lifeSteal * 0.01f;
@@ -122,8 +148,10 @@ public class PlayerState : MonoBehaviour, ITakeDamage
         if(HP == 0)
         {
             EventManager.instance.OnLevelEnd();
+            LevelManager.levelStatus = eLevelStatus.Ended;
             GlobalVar.gameStatus = eGameStatus.Ended;
             EventManager.instance.OnOpenUI(eUIID.FinishMenu);
+            EventManager.instance.OnGameover();
             return true;
         }
         return false;

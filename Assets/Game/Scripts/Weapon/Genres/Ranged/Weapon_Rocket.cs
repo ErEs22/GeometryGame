@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class Weapon_Rocket : Weapon
 {
-    public override void InitData(ShopItemData_Weapon_SO data, int weaponLevel)
+    public override void InitData(Inventory_Weapon data)
     {
-        base.InitData(data, weaponLevel);
+        base.InitData(data);
         fireRange = 450 + (50 * weaponLevel) - 50;
         switch (weaponLevel)
         {

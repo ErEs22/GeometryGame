@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class Weapon_Minigun : Weapon
 {
-    public override void InitData(ShopItemData_Weapon_SO data, int weaponLevel)
+    public override void InitData(Inventory_Weapon data)
     {
-        base.InitData(data, weaponLevel);
+        base.InitData(data);
         switch(weaponLevel)
         {
             case 3:

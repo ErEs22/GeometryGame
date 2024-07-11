@@ -111,7 +111,7 @@ public class Enemy : MonoBehaviour, ITakeDamage, IHeal
                 break;
             default: break;
         }
-        await UniTask.Delay((int)(effectTime * 1000));
+        await UniTask.Delay(EyreUtility.Round(effectTime * 1000));
         switch(statusType)
         {
             case eStatusType.HP:

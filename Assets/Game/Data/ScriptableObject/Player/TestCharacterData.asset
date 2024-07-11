@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CharacterIcon: {fileID: 21300000, guid: 48e41fce5b9907349a255993bf5d01be, type: 3}
   CharacterName: Gorilla
-  HP: 10000
+  HP: 100
   hpRegeneratePerSecond: 0
-  stealHPRate: 0
+  lifeStealRate: 0
   damageMul: 1
   attackSpeedMul: 1
   criticalRate: 0

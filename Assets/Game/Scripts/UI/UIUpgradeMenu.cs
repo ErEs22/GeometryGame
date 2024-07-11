@@ -136,12 +136,12 @@ public class UIUpgradeMenu : UIBase
 
     private void SetFirstRefreshCoinCost()
     {
-        refreshCoinCost = LevelManager.currentLevel + Mathf.Clamp((int)(0.5 * LevelManager.currentLevel),1,int.MaxValue);
+        refreshCoinCost = LevelManager.currentLevel + Mathf.Clamp(EyreUtility.Round(0.5f * LevelManager.currentLevel),1,int.MaxValue);
     }
 
     private void SetRefreshIncreaseCoinCost()
     {
-        refreshCoinCost += Mathf.Clamp((int)(0.5 * LevelManager.currentLevel),1,int.MaxValue);
+        refreshCoinCost += Mathf.Clamp(EyreUtility.Round(0.5f * LevelManager.currentLevel),1,int.MaxValue);
     }
 
     private void UpdateBtnRefreshUI()

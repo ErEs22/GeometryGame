@@ -15,9 +15,8 @@ public class Weapon_Axe : Weapon_Melee
         other.TryGetComponent(out ITakeDamage takeDamageComp);
         if(takeDamageComp != null)
         {
-            int finalDamage = CheckIsCriticalHit() ? (int)(damage * criticalMul) : damage;
+            int finalDamage = CheckIsCriticalHit() ? EyreUtility.Round(damage * criticalMul) : damage;
             LifeSteal(finalDamage);
-            takeDamageComp.TakeDamage(finalDamage);
             bool isDead = takeDamageComp.TakeDamage(damage);
             if(isDead)
             {

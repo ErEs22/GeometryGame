@@ -19,9 +19,27 @@ public class GameInventory : MonoBehaviour
     }
 
     private void OnEnable() {
+        EventManager.instance.onGameover += ClearInventoryItems;
     }
 
     private void OnDisable() {
+        EventManager.instance.onGameover -= ClearInventoryItems;
+    }
+
+    public void ClearPropInventory()
+    {
+        inventoryProps.Clear();
+    }
+
+    public void ClearWeaponInventory()
+    {
+        inventoryWeapons.Clear();
+    }
+
+    public void ClearInventoryItems()
+    {
+        ClearPropInventory();
+        ClearWeaponInventory();
     }
 
     public void AddPropToInventory(Inventory_Prop prop)

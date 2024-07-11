@@ -6,9 +6,9 @@ public class Weapon_Revolver : Weapon
     [SerializeField][DisplayOnly]
     int projectileLeftInAmmo = 6;
 
-    public override void InitData(ShopItemData_Weapon_SO data, int weaponLevel)
+    public override void InitData(Inventory_Weapon data)
     {
-        base.InitData(data, weaponLevel);
+        base.InitData(data);
         switch(weaponLevel)
         {
             case 1:

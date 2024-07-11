@@ -1,7 +1,12 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
+using System.Threading;
 using Cysharp.Threading.Tasks;
+using DG.Tweening;
+using DG.Tweening.Core;
+using DG.Tweening.Plugins.Options;
 using UnityEngine;
 
 public class LevelManager : MonoBehaviour
@@ -14,6 +19,8 @@ public class LevelManager : MonoBehaviour
     EnemyGenerator enemyGenerator;
     EnemyManager enemyManager;
     PlayerState playerState;
+    CancellationTokenSource waitForEndTokenSource;
+    TweenerCore<float,float,FloatOptions> waitForEndTweenTimer;
 
     private void Awake()
     {
@@ -27,6 +34,7 @@ public class LevelManager : MonoBehaviour
         EventManager.instance.onStartGame += StartGame;
         EventManager.instance.onPlayerUpgradeCountIncrease += IncreasePlayerUpgradeCount;
         EventManager.instance.onDamageDisplay += ShowDamageValue;
+        EventManager.instance.onGameover += Gameover;
     }
 
     private void OnDisable() {
@@ -34,6 +42,7 @@ public class LevelManager : MonoBehaviour
         EventManager.instance.onStartGame -= StartGame;
         EventManager.instance.onPlayerUpgradeCountIncrease -= IncreasePlayerUpgradeCount;
         EventManager.instance.onDamageDisplay -= ShowDamageValue;
+        EventManager.instance.onGameover -= Gameover;
     }
 
     private void Start() {
@@ -52,6 +61,7 @@ public class LevelManager : MonoBehaviour
 
     private void StartGame()
     {
+        currentLevel = 5;
         Debug.Log("当前关卡：" + currentLevel);
         EventManager.instance.OnOpenUI(eUIID.PlayerStatusBar);
         EventManager.instance.OnInitPlayerStatus();
@@ -77,13 +87,30 @@ public class LevelManager : MonoBehaviour
         EventManager.instance.OnEnableLocomotionInput();
     }
 
-    private async void StartLevelCountDown()
+    private void StartLevelCountDown()
     {
         UpdateGameAndLevelStatusWhenLevelStart();
         EventManager.instance.OnUICountDown(GetLevelTime(),0,1);
-        await UniTask.Delay(1000 * GetLevelTime());
-        Debug.Log("当前关卡倒计时结束，关卡结束！");
-        UpdateGameAndLevelStatusWhenLevelEnd();
+        waitForEndTokenSource = new CancellationTokenSource();
+        waitForEndTweenTimer = EyreUtility.SetDelay(1 * GetLevelTime(),()=>
+        {
+            // try
+            // {
+            //     await UniTask.Delay(1000 * GetLevelTime(),cancellationToken:waitForEndTokenSource.Token);
+            // }
+            // catch(Exception ex)
+            // {
+            //     Debug.Log(ex);
+            // }
+            Debug.Log("当前关卡倒计时结束，关卡结束！");
+            if(GlobalVar.gameStatus == eGameStatus.Ended) return;
+            UpdateGameAndLevelStatusWhenLevelEnd();
+        });
+    }
+
+    private void Gameover()
+    {
+        waitForEndTweenTimer.Kill();
     }
 
     private void UpdateGameAndLevelStatusWhenLevelEnd()
@@ -107,6 +134,7 @@ public class LevelManager : MonoBehaviour
         {
             GlobalVar.gameStatus = eGameStatus.Ended;
             EventManager.instance.OnOpenUI(eUIID.FinishMenu);
+            EventManager.instance.OnGameover();
             Debug.Log("游戏结束，当前关卡：" + currentLevel + "关");
         }
         EventManager.instance.OnLevelEnd();
@@ -169,7 +197,7 @@ public class LevelManager : MonoBehaviour
 
     private int GetLevelSpawnEnemysInterval()
     {
-        return (int)(1000 * (2 - (0.02f * currentLevel)));
+        return EyreUtility.Round(1000 * (2 - (0.02f * currentLevel)));
     }
 
     private int GetLevelTime()

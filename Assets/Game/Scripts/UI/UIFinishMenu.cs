@@ -27,7 +27,9 @@ public class UIFinishMenu : UIBase
 
     private void OnMainMenuClick()
     {
-        //TODO 主菜单点击逻辑处理
+        CloseUI();
+        EventManager.instance.OnOpenUI(eUIID.MainMenu);
+        GlobalVar.gameStatus = eGameStatus.MainMenu;
     }
 
 }

@@ -10,7 +10,6 @@ public class GlobalVar : MonoBehaviour
     public static float mapWidth = 50;
     public static float mapHeight = 50;
     public static eGameStatus gameStatus = eGameStatus.MainMenu;
-    public CharacterData_SO currentPlayerData;
 
     private void Awake() {
         if(Instance == null)

@@ -1,4 +1,8 @@
 using System;
+using System.Runtime.CompilerServices;
+using DG.Tweening;
+using DG.Tweening.Core;
+using DG.Tweening.Plugins.Options;
 using Unity.VisualScripting;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -6,16 +10,22 @@ using Random = UnityEngine.Random;
 public static class EyreUtility
 {
 
+    public static TweenerCore<float,float,FloatOptions> SetDelay(float delayTime, TweenCallback f)
+    {
+        float timer = 0;
+        return DOTween.To(() => timer, x => timer = x, 1, delayTime).OnStepComplete(f);
+    }
+
     public static bool GetChanceResult(float chance)
     {
-        return Random.Range(0f,1f) < chance ? true : false;
+        return Random.Range(0f, 1f) < chance ? true : false;
     }
 
     public static int Round(float value)
     {
         float intNum = Mathf.Floor(value);
         float fracNum = value - intNum;
-        if(fracNum >= 0.5f)
+        if (fracNum >= 0.5f)
         {
             return (int)intNum + 1;
         }
@@ -30,11 +40,13 @@ public static class EyreUtility
     /// </summary>
     /// <param name="pointCount">圆环点数量</param>
     /// <returns></returns>
-    public static Vector3[] GenerateCirclePoints(Vector3 center,int pointCount){
+    public static Vector3[] GenerateCirclePoints(Vector3 center, int pointCount)
+    {
         float splitAngle = Mathf.PI * 2 / pointCount;
         Vector3[] points = new Vector3[pointCount];
-        for(int i = 0; i < pointCount; i++){
-            points[i] = new Vector3(Mathf.Cos(splitAngle * (i + 1)),Mathf.Sin(splitAngle * (i + 1)),0) + center;
+        for (int i = 0; i < pointCount; i++)
+        {
+            points[i] = new Vector3(Mathf.Cos(splitAngle * (i + 1)), Mathf.Sin(splitAngle * (i + 1)), 0) + center;
         }
         return points;
     }
@@ -47,14 +59,14 @@ public static class EyreUtility
     /// <returns>随机点</returns>
     public static Vector2 GenerateRandomPosInRectExcludeCircle(Vector2 circleCenter, float circleRadius)
     {
-        Vector2 randomPos = new Vector2(Random.Range(-GlobalVar.mapWidth, GlobalVar.mapHeight), Random.Range(-GlobalVar.mapWidth,GlobalVar.mapHeight));
+        Vector2 randomPos = new Vector2(Random.Range(-GlobalVar.mapWidth, GlobalVar.mapHeight), Random.Range(-GlobalVar.mapWidth, GlobalVar.mapHeight));
         while (Vector2.Distance(randomPos, circleCenter) < circleRadius)
         {
-            randomPos = new Vector2(Random.Range(-GlobalVar.mapWidth,GlobalVar.mapHeight), Random.Range(-GlobalVar.mapWidth,GlobalVar.mapHeight));
+            randomPos = new Vector2(Random.Range(-GlobalVar.mapWidth, GlobalVar.mapHeight), Random.Range(-GlobalVar.mapWidth, GlobalVar.mapHeight));
         }
         return randomPos;
     }
-    
+
     /// <summary>
     /// 在矩形范围内生成随机点，排除指定圆内的点(50x50)
     /// </summary>
@@ -63,7 +75,7 @@ public static class EyreUtility
     /// <returns>随机点</returns>
     public static Vector2 GenerateRandomPosInRect()
     {
-        Vector2 randomPos = new Vector2(Random.Range(-GlobalVar.mapWidth,GlobalVar.mapHeight), Random.Range(-GlobalVar.mapWidth,GlobalVar.mapHeight));
+        Vector2 randomPos = new Vector2(Random.Range(-GlobalVar.mapWidth, GlobalVar.mapHeight), Random.Range(-GlobalVar.mapWidth, GlobalVar.mapHeight));
         return randomPos;
     }
 
@@ -80,27 +92,27 @@ public static class EyreUtility
     {
         Vector2 randomPos = new Vector2(Random.Range(-rectWidth / 2, rectWidth / 2), Random.Range(-rectHeight / 2, rectHeight / 2));
         randomPos = randomPos + relatePos;
-        while(Vector2.Distance(randomPos,circleCenter) < circleRadius)
+        while (Vector2.Distance(randomPos, circleCenter) < circleRadius)
         {
             randomPos = new Vector2(Random.Range(-rectWidth / 2, rectWidth / 2), Random.Range(-rectHeight / 2, rectHeight / 2));
             randomPos = randomPos + relatePos;
         }
-        randomPos.x = Mathf.Clamp(randomPos.x,-GlobalVar.mapWidth,GlobalVar.mapHeight);
-        randomPos.y = Mathf.Clamp(randomPos.y,-GlobalVar.mapWidth,GlobalVar.mapHeight);
+        randomPos.x = Mathf.Clamp(randomPos.x, -GlobalVar.mapWidth, GlobalVar.mapHeight);
+        randomPos.y = Mathf.Clamp(randomPos.y, -GlobalVar.mapWidth, GlobalVar.mapHeight);
         return randomPos;
     }
 
-    public static float Divide(float number,float divideBy)
+    public static float Divide(float number, float divideBy)
     {
         return number / divideBy;
     }
 
-    public static float Divide(int number,float divideBy)
+    public static float Divide(int number, float divideBy)
     {
         return (float)number / divideBy;
     }
 
-    public static float Divide(int number,int divideBy)
+    public static float Divide(int number, int divideBy)
     {
         return (float)number / (float)divideBy;
     }
@@ -119,21 +131,21 @@ public static class EyreUtility
         return Mathf.Sqrt(xDis * xDis + yDis * yDis);
     }
 
-    public static float Distance2DSquare(Vector2 point1,Vector2 point2)
+    public static float Distance2DSquare(Vector2 point1, Vector2 point2)
     {
         float xDis = point1.x - point2.x;
         float yDis = point1.y - point2.y;
         return xDis * xDis + yDis * yDis;
     }
 
-    public static float Distance2DSquare(Vector3 point1,Vector3 point2)
+    public static float Distance2DSquare(Vector3 point1, Vector3 point2)
     {
         float xDis = point1.x - point2.x;
         float yDis = point1.y - point2.y;
         return xDis * xDis + yDis * yDis;
     }
 
-    public static float Distance3D(Vector3 point1,Vector3 point2)
+    public static float Distance3D(Vector3 point1, Vector3 point2)
     {
         float xDis = point1.x - point2.x;
         float yDis = point1.y - point2.y;
@@ -141,7 +153,7 @@ public static class EyreUtility
         return Mathf.Sqrt(xDis * xDis + yDis * yDis + zDis * zDis);
     }
 
-    public static float Distance3DSquare(Vector3 point1,Vector3 point2)
+    public static float Distance3DSquare(Vector3 point1, Vector3 point2)
     {
         float xDis = point1.x - point2.x;
         float yDis = point1.y - point2.y;
@@ -149,24 +161,24 @@ public static class EyreUtility
         return xDis * xDis + yDis * yDis + zDis * zDis;
     }
 
-    public static bool DistanceCompare2D(Vector2 point1,Vector2 point2,float targetDistance,eCompareSign compareSign)
+    public static bool DistanceCompare2D(Vector2 point1, Vector2 point2, float targetDistance, eCompareSign compareSign)
     {
         switch (compareSign)
         {
             case eCompareSign.Equals:
-                return Distance2DSquare(point1,point2) == targetDistance;
+                return Distance2DSquare(point1, point2) == targetDistance;
             case eCompareSign.Greater:
-                return Distance2DSquare(point1,point2) > targetDistance;
+                return Distance2DSquare(point1, point2) > targetDistance;
             case eCompareSign.Less:
-                return Distance2DSquare(point1,point2) < targetDistance;
+                return Distance2DSquare(point1, point2) < targetDistance;
             default:
                 return true;
         }
     }
 
-    public static bool DistanceCompare2D(float regiondisSquare,float targetDis,eCompareSign compareSign)
+    public static bool DistanceCompare2D(float regiondisSquare, float targetDis, eCompareSign compareSign)
     {
-        switch(compareSign)
+        switch (compareSign)
         {
             case eCompareSign.Equals:
                 return regiondisSquare == targetDis * targetDis;
@@ -179,11 +191,11 @@ public static class EyreUtility
         }
     }
 
-    public static int[] GetRandomNumbersInBetween(int min,int max,int numCount)
+    public static int[] GetRandomNumbersInBetween(int min, int max, int numCount)
     {
         int[] result = new int[numCount];
         int[] sampleArr = new int[max - min + 1];
-        for(int i = 0; i <= max - min; i++)
+        for (int i = 0; i <= max - min; i++)
         {
             sampleArr[i] = min + i;
         }
@@ -191,14 +203,14 @@ public static class EyreUtility
         for (int i = last; i >= 0; --i)
         {
             // 从当0~当前索引位之间，选择一个数
-            int selection = Random.Range(0,i + 1);
+            int selection = Random.Range(0, i + 1);
 
             // 索引位对应的数据交换
             int temp = sampleArr[i];
             sampleArr[i] = sampleArr[selection];
             sampleArr[selection] = temp;
         }
-        for(int i = 0; i < numCount; i++)
+        for (int i = 0; i < numCount; i++)
         {
             result[i] = sampleArr[i];
         }

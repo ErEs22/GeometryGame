@@ -37,12 +37,24 @@ public class EventManager : MonoBehaviour
     public event UnityAction onDisableLocomotionInput = delegate{};
     public event UnityAction onEnableLocomotionInput = delegate {};
     public event UnityAction<int,GameObject,bool> onDamageDisplay = delegate{};
+    public event UnityAction<int> onUpdatePlayerCurrentHP = delegate{};
+    public event UnityAction onGameover = delegate{};
 
     private void Awake() {
         if(instance == null)
         {
             instance = this;
         }
+    }
+
+    public void OnGameover()
+    {
+        onGameover.Invoke();
+    }
+
+    public void OnUpdatePlayerCurrentHP(int hpChange)
+    {
+        onUpdatePlayerCurrentHP.Invoke(hpChange);
     }
 
     public void OnDamageDisplay(int damage,GameObject damageObject,bool isCritical)
@@ -147,9 +159,10 @@ public class EventManager : MonoBehaviour
 
     public void OnUpdatePlayerProperty(ePlayerProperty playerProperty,int changeValue)
     {
+        //先更改玩家数据源，再应用修改到各个模块中
         switch(playerProperty)
         {
-            case ePlayerProperty.MaxHP://TODO血量修改超过最大\小值时需被限制在范围内
+            case ePlayerProperty.MaxHP:
                 GameCoreData.PlayerProperties.maxHP += changeValue;
             break;
             case ePlayerProperty.HPRegeneration:

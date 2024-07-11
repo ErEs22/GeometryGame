@@ -15,7 +15,7 @@ public class Projectile : MonoBehaviour
     public int pierceEnemyCount = 0;
     public int knockBack = 0;
     public bool isCriticalHit = false;
-    public int lifeStealPercentByWeapon = 0;
+    public float lifeStealPercentByWeapon = 0;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -52,9 +52,8 @@ public class Projectile : MonoBehaviour
 
     protected void LifeSteal(int damage)
     {
-        float lifeStealPercent = (lifeStealPercentByWeapon + GameCoreData.PlayerProperties.lifeSteal) * 0.01f;
-        int stealedHP = (int)(damage * lifeStealPercent);
-        EventManager.instance.OnUpdatePlayerProperty(ePlayerProperty.MaxHP, stealedHP);
+        int stealedHP = EyreUtility.Round(damage * lifeStealPercentByWeapon);
+        EventManager.instance.OnUpdatePlayerCurrentHP(stealedHP);
     }
 
     protected virtual void KnockBackHitObject(GameObject hitObject)

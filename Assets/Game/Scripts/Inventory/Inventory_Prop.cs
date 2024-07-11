@@ -6,4 +6,5 @@ public class Inventory_Prop
 {
     public ShopItemData_Prop_SO propData;
     public int propAmount = 1;
+    public int propLevel = 1;
 }

@@ -11,7 +11,7 @@ public class Weapon_ThiefDagger : Weapon_Melee
         if (takeDamageComp != null)
         {
             KnockBackHitObject(other.gameObject);
-            int finalDamage = isCriticalHit ? (int)(damage * criticalMul) : damage;
+            int finalDamage = isCriticalHit ? EyreUtility.Round(damage * criticalMul) : damage;
             LifeSteal(finalDamage);
             bool isDead = takeDamageComp.TakeDamage(finalDamage,isCriticalHit);
             if(isDead)

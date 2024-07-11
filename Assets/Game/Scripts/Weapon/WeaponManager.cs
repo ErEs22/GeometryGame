@@ -45,14 +45,25 @@ public class WeaponManager : MonoBehaviour
     }
 
     private void GenerateSlotWeapons(){
-        //清空武器列表
-        weapons.Clear();
+        //TODO武器列表修改时，不将所有武器清除再重新生成，而是将不存在的武器清除，生成新加入的武器
+        List<Inventory_Weapon> oldWeapons = new List<Inventory_Weapon>();
+        List<Inventory_Weapon> newWeapons = new List<Inventory_Weapon>();
         Vector3[] pos = EyreUtility.GenerateCirclePoints(transform.position,GameInventory.Instance.inventoryWeapons.Count);
         for(int i = 0; i < pos.Length; i++){
+            Weapon currenWeapon = weapons.Find(x => x.inventory_Weapon == GameInventory.Instance.inventoryWeapons[i]);
+            Debug.Log(currenWeapon);
+            if(currenWeapon != null)
+            {
+                oldWeapons.Add(GameInventory.Instance.inventoryWeapons[i]);
+            }
+            else
+            {
+                newWeapons.Add(GameInventory.Instance.inventoryWeapons[i]);
+            }
             GameObject prefabWeapon = GameInventory.Instance.inventoryWeapons[i].weaponData.prefab_Weapon;
             GameObject newWeaponObject = PoolManager.Release(prefabWeapon);
             Weapon newWeapon = newWeaponObject.GetComponent<Weapon>();
-            newWeapon.InitData(GameInventory.Instance.inventoryWeapons[i].weaponData,GameInventory.Instance.inventoryWeapons[i].weaponLevel);
+            newWeapon.InitData(GameInventory.Instance.inventoryWeapons[i]);
             newWeapon.enemyManager = playerManager.enemyManager;
             weapons.Add(newWeapon);
             newWeaponObject.transform.parent = transform;

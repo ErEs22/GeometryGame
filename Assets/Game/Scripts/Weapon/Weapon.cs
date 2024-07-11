@@ -8,24 +8,36 @@ public class Weapon : MonoBehaviour
 {
     protected GameObject projectilePrefab;
     [Header("Weapon Data---")]
-    [SerializeField][DisplayOnly]
+    [SerializeField]
+    [DisplayOnly]
+    public Inventory_Weapon inventory_Weapon;
+    [SerializeField]
+    [DisplayOnly]
     protected int weaponLevel = 1;
-    [SerializeField][DisplayOnly]
+    [SerializeField]
+    [DisplayOnly]
     protected int damage;
-    [SerializeField][DisplayOnly]
+    [SerializeField]
+    [DisplayOnly]
     protected float fireInterval;
-    [SerializeField][DisplayOnly]
+    [SerializeField]
+    [DisplayOnly]
     protected int fireRange;
-    [SerializeField][DisplayOnly]
+    [SerializeField]
+    [DisplayOnly]
     protected float criticalMul;
-    [SerializeField][DisplayOnly]
+    [SerializeField]
+    [DisplayOnly]
     protected float criticalRate;
-    [SerializeField][DisplayOnly]
+    [SerializeField]
+    [DisplayOnly]
     protected int projectileSpeed;
-    [SerializeField][DisplayOnly]
+    [SerializeField]
+    [DisplayOnly]
     protected int knockBack;
-    [SerializeField][DisplayOnly]
-    protected int lifeSteal;
+    [SerializeField]
+    [DisplayOnly]
+    protected float lifeSteal;
     [HideInInspector]
     public EnemyManager enemyManager;
     [Header("---")]
@@ -47,13 +59,19 @@ public class Weapon : MonoBehaviour
     private float fireCountDown = 0;
     protected bool isCriticalHit = false;
 
-    private void Awake() {
+    private void Awake()
+    {
         targetLayer = 1 << 6;
     }
 
     private void OnEnable()
     {
         muzzlePoint = transform.Find("MuzzlePoint");
+        EventManager.instance.onUpdatePlayerProperty += UpdateData;
+    }
+
+    private void OnDisable() {
+        EventManager.instance.onUpdatePlayerProperty -= UpdateData;
     }
 
     protected virtual void Update()
@@ -75,13 +93,24 @@ public class Weapon : MonoBehaviour
         }
     }
 
-    public virtual void InitData(ShopItemData_Weapon_SO data,int weaponLevel)
+    public virtual void InitData(Inventory_Weapon data)
     {
-        this.weaponLevel = weaponLevel;
-        projectilePrefab = data.prefab_Projectile;
-        projectileSpeed = data.projectileSpeed;
-        data.itemProperties.ForEach( propertyData =>{
-            SetDatabyType(propertyData,data.itemLevel,this.weaponLevel);
+        inventory_Weapon = data;
+        weaponLevel = data.weaponLevel;
+        projectilePrefab = data.weaponData.prefab_Projectile;
+        projectileSpeed = data.weaponData.projectileSpeed;
+        data.weaponData.itemProperties.ForEach(propertyData =>
+        {
+            SetDatabyType(propertyData, data.weaponData.itemLevel, weaponLevel);
+        });
+    }
+
+    private void UpdateData(ePlayerProperty playerProperty,int changeAmount)
+    {
+        //方法参数无作用，为配合事件绑定才加上的
+        inventory_Weapon.weaponData.itemProperties.ForEach(propertyData =>
+        {
+            SetDatabyType(propertyData,inventory_Weapon.weaponData.itemLevel,weaponLevel);
         });
     }
 
@@ -97,7 +126,7 @@ public class Weapon : MonoBehaviour
         newProjectile.isCriticalHit = isCriticalHit;
         newProjectile.flySpeed = projectileSpeed;
         newProjectile.lifeTime = (float)fireRange / (40 * newProjectile.flySpeed);
-        newProjectile.damage = isCriticalHit ? (int)(damage * criticalMul) : damage ;
+        newProjectile.damage = isCriticalHit ? EyreUtility.Round(damage * criticalMul) : damage;
         newProjectile.knockBack = knockBack;
         newProjectile.lifeStealPercentByWeapon = lifeSteal;
         newProjectile.SetDelayDeativate();
@@ -137,7 +166,7 @@ public class Weapon : MonoBehaviour
 
     private bool FindEnemyInRange()
     {
-        Collider2D collider = Physics2D.OverlapCircle(transform.position, fireRange / 40,targetLayer);
+        Collider2D collider = Physics2D.OverlapCircle(transform.position, fireRange / 40, targetLayer);
         return collider == null ? false : true;
     }
 
@@ -147,34 +176,34 @@ public class Weapon : MonoBehaviour
         Handles.DrawWireDisc(transform.position, Vector3.forward, fireRange / 40);
     }
 
-    protected virtual void SetDatabyType(ShopWeaponPropertyPair propertyPair,int weaponBaseLevel,int weaponCurrentLevel)
+    protected virtual void SetDatabyType(ShopWeaponPropertyPair propertyPair, int weaponBaseLevel, int weaponCurrentLevel)
     {
-        float propertyValue = GameInventory.Instance.CaculateWeaponDataByLevel(propertyPair.weaponProperty,propertyPair.propertyValue,weaponBaseLevel,weaponCurrentLevel);
-        switch(propertyPair.weaponProperty)
+        float propertyValue = GameInventory.Instance.CaculateWeaponDataByLevel(propertyPair.weaponProperty, propertyPair.propertyValue, weaponBaseLevel, weaponCurrentLevel);
+        switch (propertyPair.weaponProperty)
         {
             case eWeaponProperty.Damage:
-                damage = (int)propertyValue;
+                damage = EyreUtility.Round(propertyValue * (1 + (GameCoreData.PlayerProperties.damageMul * 0.01f)));
                 break;
             case eWeaponProperty.CriticalMul:
                 criticalMul = propertyValue;
                 break;
             case eWeaponProperty.CriticalRate:
-                criticalRate = propertyValue;
+                criticalRate = propertyValue + (GameCoreData.PlayerProperties.criticalRate * 0.01f);
                 break;
             case eWeaponProperty.FireInterval:
-                fireInterval = propertyValue;
+                fireInterval = propertyValue / (1 + GameCoreData.PlayerProperties.attackSpeedMul * 0.01f);
                 currentFireInterval = fireInterval;
                 break;
             case eWeaponProperty.AttackRange:
-                fireRange = (int)propertyValue;
+                fireRange = EyreUtility.Round(propertyValue + GameCoreData.PlayerProperties.attackRange);
                 break;
             case eWeaponProperty.KnockBack:
-                knockBack = (int)propertyValue;
+                knockBack = EyreUtility.Round(propertyValue);
                 break;
             case eWeaponProperty.LifeSteal:
-                lifeSteal = (int)propertyValue;
+                lifeSteal = propertyValue + (GameCoreData.PlayerProperties.lifeSteal * 0.01f);
                 break;
-            default:break;
+            default: break;
         }
     }
 }

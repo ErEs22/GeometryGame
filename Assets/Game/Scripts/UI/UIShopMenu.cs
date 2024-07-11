@@ -65,6 +65,9 @@ public class UIShopMenu : UIBase
     private GameObject prefab_InventoryItem_Weapon;
     [SerializeField]
     private List<ShopItemData_SO> allItemDatas = new List<ShopItemData_SO>();
+    /// <summary>
+    /// 商店在售物品列表
+    /// </summary>
     private List<ShopItem> allShopItems = new List<ShopItem>();
     private List<Item_Prop> allPropInventoryItems = new List<Item_Prop>();
     [SerializeField][DisplayOnly]
@@ -104,9 +107,11 @@ public class UIShopMenu : UIBase
         EventManager.instance.onCombineWeaponItem += CombineWeaponInventoryItems;
         EventManager.instance.onSellWeaponInventoryItems += SellWeaponInventoryItems;
         EventManager.instance.onUpdatePlayerProperty += UpdatePlayerStatusPropertiesUI;
+        EventManager.instance.onGameover += ClearInventoryItems;
         SetFirstRefreshCoinCost();
         InitPlayerProperties();
         UpdateWeaponInventory();
+        UpdatePropInventory();
     }
 
     private void OnDisable()
@@ -121,6 +126,7 @@ public class UIShopMenu : UIBase
         EventManager.instance.onCombineWeaponItem -= CombineWeaponInventoryItems;
         EventManager.instance.onSellWeaponInventoryItems -= SellWeaponInventoryItems;
         EventManager.instance.onUpdatePlayerProperty -= UpdatePlayerStatusPropertiesUI;
+        EventManager.instance.onGameover -= ClearInventoryItems;
     }
 
     private void UpdateWeaponInventory()
@@ -143,6 +149,34 @@ public class UIShopMenu : UIBase
             allWeaponInventoryItems.RemoveAt(i);
             Destroy(weapon.gameObject);
         }
+    }
+
+    private void UpdatePropInventory()
+    {
+        ClearPropInventory();
+        GameInventory.Instance.inventoryProps.ForEach( prop =>
+        {
+            Item_Prop itemProp = Instantiate(prefab_InventoryItem_Prop,trans_PropInventoryParent).GetComponent<Item_Prop>();
+            itemProp.InitItemPropUI(propInfoPanel,prop.propData,prop.propLevel);
+            allPropInventoryItems.Add(itemProp);
+        });
+    }
+
+    private void ClearPropInventory()
+    {
+        if(allPropInventoryItems.Count <= 0) return;
+        for(int i = 0; i < allPropInventoryItems.Count; i++)
+        {
+            Item_Prop prop = allPropInventoryItems[i];
+            allPropInventoryItems.RemoveAt(i);
+            Destroy(prop.gameObject);
+        }
+    }
+
+    private void ClearInventoryItems()
+    {
+        ClearPropInventory();
+        ClearWeaponInventory();
     }
 
     private void InitPlayerProperties()
@@ -181,7 +215,7 @@ public class UIShopMenu : UIBase
     {
         allWeaponInventoryItems.Remove(weaponItem);
         GameInventory.Instance.RemoveWeaponFromInventory(weaponItem.itemData.itemName);
-        GameCoreData.PlayerProperties.coin += (int)(weaponItem.itemData.itemLevel * weaponItem.itemData.itemCost * 0.8);
+        GameCoreData.PlayerProperties.coin += EyreUtility.Round(weaponItem.itemData.itemLevel * weaponItem.itemData.itemCost * 0.8f);
         EventManager.instance.OnUpdateCoinCount();
         Destroy(weaponItem.gameObject);
     }
@@ -212,13 +246,13 @@ public class UIShopMenu : UIBase
 
     private void SetFirstRefreshCoinCost()
     {
-        refreshCoinCost = LevelManager.currentLevel + Mathf.Clamp((int)(0.5 * LevelManager.currentLevel),1,int.MaxValue);
+        refreshCoinCost = LevelManager.currentLevel + Mathf.Clamp(EyreUtility.Round(0.5f * LevelManager.currentLevel),1,int.MaxValue);
         text_Btn_Refresh.text = "Refresh(" + refreshCoinCost.ToString() + ")";
     }
 
     private void SetRefreshIncreaseCoinCost()
     {
-        refreshCoinCost += Mathf.Clamp((int)(0.5 * LevelManager.currentLevel),1,int.MaxValue);
+        refreshCoinCost += Mathf.Clamp(EyreUtility.Round(0.5f * LevelManager.currentLevel),1,int.MaxValue);
         text_Btn_Refresh.text = "Refresh(" + refreshCoinCost.ToString() + ")";
     }
 

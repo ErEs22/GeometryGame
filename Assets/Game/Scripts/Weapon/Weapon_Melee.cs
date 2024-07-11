@@ -26,7 +26,6 @@ public class Weapon_Melee : Weapon
     {
         //暴击检测
         CheckIsCriticalHit();
-        Debug.Log(isCriticalHit);
         isAttacking = true;
         isDamagable = true;
         Vector3 originPos = transform.localPosition;
@@ -54,7 +53,7 @@ public class Weapon_Melee : Weapon
         other.TryGetComponent(out ITakeDamage takeDamageComp);
         if (takeDamageComp != null)
         {
-            int finalDamage = isCriticalHit ? (int)(damage * criticalMul) : damage;
+            int finalDamage = isCriticalHit ? EyreUtility.Round(damage * criticalMul) : damage;
             LifeSteal(finalDamage);
             takeDamageComp.TakeDamage(finalDamage, isCriticalHit);
             KnockBackHitObject(other.gameObject);
@@ -63,9 +62,8 @@ public class Weapon_Melee : Weapon
 
     protected void LifeSteal(int damage)
     {
-        float lifeStealPercent = (lifeSteal + GameCoreData.PlayerProperties.lifeSteal) * 0.01f;
-        int stealedHP = (int)(damage * lifeStealPercent);
-        EventManager.instance.OnUpdatePlayerProperty(ePlayerProperty.MaxHP, stealedHP);
+        int stealedHP = EyreUtility.Round(damage * lifeSteal);
+        EventManager.instance.OnUpdatePlayerCurrentHP(stealedHP);
     }
 
     protected virtual void KnockBackHitObject(GameObject hitObject)
