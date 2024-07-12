@@ -6,7 +6,7 @@ public class Projectile_Slash : Projectile
 {
 
     private void OnEnable() {
-        lifeTime = 0.5f;
+        lifeTime = 1f;
     }
     protected override void Fly()
     {

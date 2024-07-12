@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Weapon_Rocket_Data
   m_EditorClassIdentifier: 
   itemIcon: {fileID: 21300000, guid: 188bee68a52a0264fa91b146e139d28b, type: 3}
-  itemName: Pig
+  itemName: Rocket
   itemType: Weapon
   itemCost: 20
   itemLevel: 1
@@ -31,6 +31,6 @@ MonoBehaviour:
   - weaponProperty: 3
     propertyValue: 5
   - weaponProperty: 4
-    propertyValue: 400
+    propertyValue: 600
   - weaponProperty: 5
     propertyValue: 0

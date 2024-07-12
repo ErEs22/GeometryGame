@@ -5,7 +5,7 @@ public class Weapon_Rocket : Weapon
     public override void InitData(Inventory_Weapon data)
     {
         base.InitData(data);
-        fireRange = 450 + (50 * weaponLevel) - 50;
+        fireRange = 600 + (50 * weaponLevel) - 50;
         switch (weaponLevel)
         {
             case 2:

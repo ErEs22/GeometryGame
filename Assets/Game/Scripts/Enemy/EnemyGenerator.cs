@@ -178,5 +178,6 @@ public class EnemyGenerator : MonoBehaviour
         Enemy newEnemy = PoolManager.Release(enemy, pos).GetComponent<Enemy>();
         enemyManager.enemies.Add(newEnemy);
         newEnemy.Init(enemyManager);
+        newEnemy.enemyGenerator = this;
     }
 }

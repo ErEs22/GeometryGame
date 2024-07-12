@@ -76,16 +76,9 @@ public class GameInventory : MonoBehaviour
         inventoryWeapons.Add(weapon);
     }
 
-    public void RemoveWeaponFromInventory(string weaponName)
+    public void RemoveWeaponFromInventory(Inventory_Weapon inventory_Weapon)
     {
-        for(int i = 0; i < inventoryWeapons.Count; i++)
-        {
-            if(inventoryWeapons[i].weaponData.itemName == weaponName)
-            {
-                inventoryWeapons.RemoveAt(i);
-                return;
-            }
-        }
+        inventoryWeapons.Remove(inventory_Weapon);
     }
 
     public float CaculateWeaponDataByLevel(eWeaponProperty weaponProperty,float propertyBaseValue,int weaponBaseLevel,int weaponTargetLevel)

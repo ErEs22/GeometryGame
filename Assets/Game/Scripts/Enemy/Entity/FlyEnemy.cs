@@ -13,7 +13,7 @@ public class FlyEnemy : Enemy
     }
     protected override void Skill()
     {
-        int releaseProjectileCount = 10 + EyreUtility.Round(10 * (HP / maxHP));
+        int releaseProjectileCount = 4 + EyreUtility.Round(4 * (HP / maxHP));
         for (int i = 0; i < releaseProjectileCount; i++)
         {
             ReleaseSingleProjectile();
@@ -35,7 +35,8 @@ public class FlyEnemy : Enemy
 
     public override bool TakeDamage(int damage,bool isCritical = false)
     {
+        bool isDead = base.TakeDamage(damage);
         Skill();
-        return base.TakeDamage(damage);
+        return isDead;
     }
 }

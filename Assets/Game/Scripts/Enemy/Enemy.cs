@@ -38,6 +38,7 @@ public class Enemy : MonoBehaviour, ITakeDamage, IHeal
     /// </summary>
     public int speedEffectPercent = 0;
     protected EnemyManager enemyManager;
+    public EnemyGenerator enemyGenerator;
     protected float distanceToPlayerSq;
     protected Vector3 moveDir = Vector3.right;
     /// <summary>

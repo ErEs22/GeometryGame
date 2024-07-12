@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public class EggEnemy : Enemy
@@ -12,11 +13,14 @@ public class EggEnemy : Enemy
 
     protected override void Skill()
     {
-        //TODO 生成指定敌人
+        EnemyData_WithSplit_SO data = enemyData as EnemyData_WithSplit_SO;
+        enemyGenerator.GenerateEnemy(data.splitEnemyPrefab,transform.position);
+        DieWithoutAnyDropBonus();
     }
 
     protected override void HandleMovement()
     {
+        //因为这个敌人是不移动的，所以继承后不写任何逻辑
     }
 
 }

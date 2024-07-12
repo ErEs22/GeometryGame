@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8a98988e7b5a8d34fac1743b1f8c4dbc, type: 3}
-  m_Name: Weapon_FIst_Data
+  m_Name: Weapon_Fist_Data
   m_EditorClassIdentifier: 
   itemIcon: {fileID: 21300000, guid: 188bee68a52a0264fa91b146e139d28b, type: 3}
-  itemName: Pig
+  itemName: Fist
   itemType: Weapon
   itemCost: 20
   itemLevel: 1

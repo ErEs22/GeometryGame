@@ -19,6 +19,12 @@ public class ExpBall : MonoBehaviour
         circleCollider.enabled = true;
     }
 
+    private void ClearBall()
+    {
+        circleCollider.enabled = false;
+        gameObject.SetActive(false);
+    }
+
     public void Collect(Transform collideTrans)
     {
         EventManager.instance.onLevelEnd -= CollectBonusCoin;
@@ -33,5 +39,6 @@ public class ExpBall : MonoBehaviour
     {
         EventManager.instance.OnChangeBonusCoinCount(1);
         EventManager.instance.onLevelEnd -= CollectBonusCoin;
+        ClearBall();
     }
 }

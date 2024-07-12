@@ -145,8 +145,10 @@ public class PlayerState : MonoBehaviour, ITakeDamage
         EventManager.instance.OnUpdateHealthBar(HP,maxHP);
         EventManager.instance.OnHealthBarFlash(Color.red,Color.white);
         //TODO击中效果
+        //死亡
         if(HP == 0)
         {
+            EventManager.instance.OnClearAllExpBall();
             EventManager.instance.OnLevelEnd();
             LevelManager.levelStatus = eLevelStatus.Ended;
             GlobalVar.gameStatus = eGameStatus.Ended;

@@ -137,6 +137,7 @@ public class LevelManager : MonoBehaviour
             EventManager.instance.OnGameover();
             Debug.Log("游戏结束，当前关卡：" + currentLevel + "关");
         }
+        EventManager.instance.OnClearAllExpBall();
         EventManager.instance.OnLevelEnd();
     }
     private void UpdateGameAndLevelStatusWhenLevelStart()

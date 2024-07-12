@@ -137,6 +137,7 @@ public class UIShopMenu : UIBase
             Item_Weapon itemWeapon = Instantiate(prefab_InventoryItem_Weapon,trans_WeaponInventoryParent).GetComponent<Item_Weapon>();
             itemWeapon.InitItemPropUI(weaponInfoPanel,weapon.weaponData,weapon.weaponLevel);
             allWeaponInventoryItems.Add(itemWeapon);
+            itemWeapon.inventory_Weapon = weapon;
         });
     }
 
@@ -148,6 +149,7 @@ public class UIShopMenu : UIBase
             Item_Weapon weapon = allWeaponInventoryItems[i];
             allWeaponInventoryItems.RemoveAt(i);
             Destroy(weapon.gameObject);
+            i--;
         }
     }
 
@@ -170,6 +172,7 @@ public class UIShopMenu : UIBase
             Item_Prop prop = allPropInventoryItems[i];
             allPropInventoryItems.RemoveAt(i);
             Destroy(prop.gameObject);
+            i--;
         }
     }
 
@@ -202,7 +205,7 @@ public class UIShopMenu : UIBase
             if(weaponItem.itemData.itemName == item.itemData.itemName && weaponItem.itemLevel == item.itemLevel)
             {
                 allWeaponInventoryItems.Remove(weaponItem);
-                GameInventory.Instance.RemoveWeaponFromInventory(weaponItem.itemData.itemName);
+                GameInventory.Instance.RemoveWeaponFromInventory(weaponItem.inventory_Weapon);
                 weaponItem.Combine();
                 item.UpgradeItemLevel();
                 return;
@@ -214,7 +217,7 @@ public class UIShopMenu : UIBase
     private void SellWeaponInventoryItems(Item_Weapon weaponItem)
     {
         allWeaponInventoryItems.Remove(weaponItem);
-        GameInventory.Instance.RemoveWeaponFromInventory(weaponItem.itemData.itemName);
+        GameInventory.Instance.RemoveWeaponFromInventory(weaponItem.inventory_Weapon);
         GameCoreData.PlayerProperties.coin += EyreUtility.Round(weaponItem.itemData.itemLevel * weaponItem.itemData.itemCost * 0.8f);
         EventManager.instance.OnUpdateCoinCount();
         Destroy(weaponItem.gameObject);
@@ -368,6 +371,7 @@ public class UIShopMenu : UIBase
                         weaponData = itemData as ShopItemData_Weapon_SO,
                         weaponLevel = shopItem.itemLevel,
                     };
+                    itemWeapon.inventory_Weapon = inventory_Weapon;
                     GameInventory.Instance.AddWeaponToInventory(inventory_Weapon);
                 }
             break;

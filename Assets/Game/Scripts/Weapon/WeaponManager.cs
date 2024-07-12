@@ -29,7 +29,6 @@ public class WeaponManager : MonoBehaviour
 
     private void GenerateWeaponsInInventory()
     {
-        ClearWeaponSlots();
         GenerateSlotWeapons();
     }
 
@@ -49,25 +48,35 @@ public class WeaponManager : MonoBehaviour
         List<Inventory_Weapon> oldWeapons = new List<Inventory_Weapon>();
         List<Inventory_Weapon> newWeapons = new List<Inventory_Weapon>();
         Vector3[] pos = EyreUtility.GenerateCirclePoints(transform.position,GameInventory.Instance.inventoryWeapons.Count);
-        for(int i = 0; i < pos.Length; i++){
-            Weapon currenWeapon = weapons.Find(x => x.inventory_Weapon == GameInventory.Instance.inventoryWeapons[i]);
-            Debug.Log(currenWeapon);
-            if(currenWeapon != null)
+        //移除武器列表里不在背包中的武器
+        for(int i = 0; i < weapons.Count; i++){
+            Inventory_Weapon currenWeapon = GameInventory.Instance.inventoryWeapons.Find(x => x == weapons[i].inventory_Weapon);
+            if(currenWeapon == null)
             {
-                oldWeapons.Add(GameInventory.Instance.inventoryWeapons[i]);
+                Weapon removedWeapon = weapons[i];
+                weapons.RemoveAt(i);
+                Destroy(removedWeapon.gameObject);
+                i--;
             }
-            else
+        }
+        //添加背包中的新武器到武器列表中
+        for(int i = 0; i < GameInventory.Instance.inventoryWeapons.Count; i++)
+        {
+            if(!weapons.Find(x => x.inventory_Weapon == GameInventory.Instance.inventoryWeapons[i]))
             {
-                newWeapons.Add(GameInventory.Instance.inventoryWeapons[i]);
+                GameObject prefabWeapon = GameInventory.Instance.inventoryWeapons[i].weaponData.prefab_Weapon;
+                GameObject newWeaponObject = PoolManager.Release(prefabWeapon);
+                Weapon newWeapon = newWeaponObject.GetComponent<Weapon>();
+                newWeapon.InitData(GameInventory.Instance.inventoryWeapons[i]);
+                newWeapon.enemyManager = playerManager.enemyManager;
+                weapons.Add(newWeapon);
+                newWeaponObject.transform.parent = transform;
             }
-            GameObject prefabWeapon = GameInventory.Instance.inventoryWeapons[i].weaponData.prefab_Weapon;
-            GameObject newWeaponObject = PoolManager.Release(prefabWeapon);
-            Weapon newWeapon = newWeaponObject.GetComponent<Weapon>();
-            newWeapon.InitData(GameInventory.Instance.inventoryWeapons[i]);
-            newWeapon.enemyManager = playerManager.enemyManager;
-            weapons.Add(newWeapon);
-            newWeaponObject.transform.parent = transform;
-            newWeaponObject.transform.position = pos[i];
+        }
+        //为所有武器重新设定位置
+        for(int i = 0; i < weapons.Count; i++)
+        {
+            weapons[i].transform.position = pos[i];
         }
     }
 

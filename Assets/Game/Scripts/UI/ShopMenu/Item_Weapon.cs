@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class Item_Weapon : InventoryItem,IPointerEnterHandler,IPointerExitHandler
 {
     public WeaponInfoPanel weaponInfoPanel;
+    public Inventory_Weapon inventory_Weapon;
     private Button btn_Item;
     private bool isClicked = false;
 
