@@ -31,7 +31,7 @@ public class SlashEnemy : Enemy
     {
         GameObject damageObject = PoolManager.Release(newEnemyData.projectile);
         damageObject.GetComponent<Projectile_Slash>().damage = newEnemyData.damage;
-        damageObject.GetComponent<Projectile_Slash>().SetDelayDeativate();
+        // damageObject.GetComponent<Projectile_Slash>().SetDelayDeativate();
         int randomDeg = Random.Range(0,360);
         damageObject.transform.rotation = Quaternion.AngleAxis(randomDeg,Vector3.forward);
         damageObject.transform.position = playerTrans.position;
@@ -39,6 +39,7 @@ public class SlashEnemy : Enemy
 
     protected override void UpdateMoveDirection()
     {
+        //TODO优化移动方案，防止在边界条件下抽搐
         if(Vector3.Distance(playerTrans.position,transform.position) < newEnemyData.runawayDistance)
         {
             //Run away

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public class LootEnemy : Enemy
@@ -19,13 +20,21 @@ public class LootEnemy : Enemy
     {
         if(targetPos == Vector3.zero || Vector3.Distance(targetPos,transform.position) < 0.2f)
         {
-            targetPos = EyreUtility.GenerateRandomPosInRect();
+            targetPos = EyreUtility.GenerateRandomPosInRectExcludeCircle(transform.position,5.0f);
         }
     }
 
     public override void Die()
     {
         //TODO 掉落箱子和材料
-        base.Die();
+        //死亡后血量应为零
+        HP = 0;
+        //释放掉落经验球
+        for(int i = 0; i < 8; i++)
+        {
+            PoolManager.Release(dropItem,EyreUtility.GetRandomPosAroundCertainPos(transform.position,1.0f)).GetComponent<ExpBall>().Init();
+        }
+        gameObject.SetActive(false);
+        enemyManager.enemies.Remove(this);
     }
 }

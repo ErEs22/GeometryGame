@@ -44,9 +44,6 @@ public class WeaponManager : MonoBehaviour
     }
 
     private void GenerateSlotWeapons(){
-        //TODO武器列表修改时，不将所有武器清除再重新生成，而是将不存在的武器清除，生成新加入的武器
-        List<Inventory_Weapon> oldWeapons = new List<Inventory_Weapon>();
-        List<Inventory_Weapon> newWeapons = new List<Inventory_Weapon>();
         Vector3[] pos = EyreUtility.GenerateCirclePoints(transform.position,GameInventory.Instance.inventoryWeapons.Count);
         //移除武器列表里不在背包中的武器
         for(int i = 0; i < weapons.Count; i++){

@@ -34,7 +34,7 @@ public class EnemyGenerator : MonoBehaviour
     {
         // enemyManager = GetComponent<EnemyManager>();
         // playerPos = GlobalVar.playerObj.position;
-        // GenerateEnemysInRandomPos(15);
+        // GenerateEnemysInRandomPos(1);
     }
 
     /// <summary>

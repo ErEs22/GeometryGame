@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class EnemyManager : MonoBehaviour
 {
@@ -82,9 +84,9 @@ public class EnemyManager : MonoBehaviour
     /// </summary>
     public void ClearAllEnemy()
     {
-        foreach (var enemy in enemies)
+        for(int i = 0; i < enemies.Count; i++)
         {
-            enemy.DieWithoutAnyDropBonus();
+            enemies[i].DieWithoutAnyDropBonus();
         }
     }
 }

@@ -10,6 +10,14 @@ using Random = UnityEngine.Random;
 public static class EyreUtility
 {
 
+    public static Vector3 GetRandomPosAroundCertainPos(Vector3 originPos,float randomRadius)
+    {
+        Vector3 randomUnitSphere = Random.insideUnitSphere;
+        randomUnitSphere.z = 0;
+        Vector3 randomPos = originPos + randomUnitSphere * randomRadius;
+        return randomPos;
+    }
+
     public static TweenerCore<float,float,FloatOptions> SetDelay(float delayTime, TweenCallback f)
     {
         float timer = 0;

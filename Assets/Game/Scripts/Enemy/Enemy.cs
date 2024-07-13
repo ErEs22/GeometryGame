@@ -41,6 +41,8 @@ public class Enemy : MonoBehaviour, ITakeDamage, IHeal
     public EnemyGenerator enemyGenerator;
     protected float distanceToPlayerSq;
     protected Vector3 moveDir = Vector3.right;
+    protected Vector3 originScale;
+    protected Tween takeDamageEffectTween;
     /// <summary>
     /// 附近一定距离范围内所有敌人
     /// </summary>
@@ -51,6 +53,10 @@ public class Enemy : MonoBehaviour, ITakeDamage, IHeal
     /// </summary>
     [SerializeField]
     protected List<Transform> collisionRiskEnemys = new List<Transform>();
+
+    protected virtual void Awake() {
+        originScale = transform.localScale;
+    }
 
     /// <summary>
     /// NOTE!! Dont add Behaviour in here,this will be call first when poolmanager instantiate this object
@@ -184,22 +190,30 @@ public class Enemy : MonoBehaviour, ITakeDamage, IHeal
 
     public virtual bool TakeDamage(int damage,bool isCritical = false)
     {
+        bool enemyIsDead = false;
         //血量已经小于零则不做计算
         if (HP <= 0) return false;
         // Debug.Log(this + " is taking damage,decrease " + damage + "HP");
         HP = Mathf.Clamp(HP - damage, 0, maxHP);
         EventManager.instance.OnDamageDisplay(damage,gameObject,isCritical);
         //击中效果
-        transform.DOScale(2f, 0.05f).OnComplete(() =>
+        takeDamageEffectTween.Kill();
+        transform.localScale = originScale;
+        takeDamageEffectTween = transform.DOScale(1f, 0.1f).SetRelative().SetEase(Ease.InSine).OnComplete(() =>
         {
-            transform.DOScale(1f, 0.05f);
+            takeDamageEffectTween = transform.DOScale(-1f,0.01f).SetRelative().OnComplete(()=>{
+                if(HP <= 0)
+                {
+                    enemyIsDead = true;
+                    Die();
+                }
+                else
+                {
+                    enemyIsDead = false;
+                }
+            });
         });
-        if (HP <= 0)
-        {
-            Die();
-            return true;
-        }
-        return false;
+        return enemyIsDead;
     }
 
     public virtual void Die()
@@ -207,23 +221,17 @@ public class Enemy : MonoBehaviour, ITakeDamage, IHeal
         //死亡后血量应为零
         HP = 0;
         //释放掉落经验球
-        PoolManager.Release(dropItem,transform.position).GetComponent<ExpBall>().Init();
-        transform.DOScale(2f, 0.05f).OnComplete(() =>
-        {
-            gameObject.SetActive(false);
-            enemyManager.enemies.Remove(this);
-        });
+        PoolManager.Release(dropItem,EyreUtility.GetRandomPosAroundCertainPos(transform.position,1.0f)).GetComponent<ExpBall>().Init();
+        enemyManager.enemies.Remove(this);
+        gameObject.SetActive(false);
     }
 
     public virtual void DieWithoutAnyDropBonus()
     {
         //死亡后血量应为零
         HP = 0;
-        transform.DOScale(2f, 0.05f).OnComplete(() =>
-        {
-            gameObject.SetActive(false);
-            enemyManager.enemies.Remove(this);
-        });
+        enemyManager.enemies.Remove(this);
+        gameObject.SetActive(false);
     }
 
     public void Heal(float healHP)
@@ -298,11 +306,11 @@ public class Enemy : MonoBehaviour, ITakeDamage, IHeal
     }
     #endregion
 
-    private void OnDrawGizmosSelected()
-    {
-        Handles.color = Color.green;
-        Handles.DrawWireDisc(transform.position, Vector3.forward, enemyManager.nearbyDistanceThreshold);
-        Handles.color = Color.red;
-        Handles.DrawWireDisc(transform.position, Vector3.forward, enemyManager.collisionRiskDistanceThreshold);
-    }
+    // private void OnDrawGizmosSelected()
+    // {
+    //     Handles.color = Color.green;
+    //     Handles.DrawWireDisc(transform.position, Vector3.forward, enemyManager.nearbyDistanceThreshold);
+    //     Handles.color = Color.red;
+    //     Handles.DrawWireDisc(transform.position, Vector3.forward, enemyManager.collisionRiskDistanceThreshold);
+    // }
 }

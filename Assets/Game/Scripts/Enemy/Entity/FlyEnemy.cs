@@ -13,7 +13,7 @@ public class FlyEnemy : Enemy
     }
     protected override void Skill()
     {
-        int releaseProjectileCount = 4 + EyreUtility.Round(4 * (HP / maxHP));
+        int releaseProjectileCount = 3 + EyreUtility.Round(3 * (HP / maxHP));
         for (int i = 0; i < releaseProjectileCount; i++)
         {
             ReleaseSingleProjectile();

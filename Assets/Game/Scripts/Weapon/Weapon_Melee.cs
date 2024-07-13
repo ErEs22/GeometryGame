@@ -68,6 +68,7 @@ public class Weapon_Melee : Weapon
 
     protected virtual void KnockBackHitObject(GameObject hitObject)
     {
+        if(knockBack == 0) return;
         hitObject.TryGetComponent(out Enemy enemy);
         if (enemy == null) return;
         enemy.canMove = false;

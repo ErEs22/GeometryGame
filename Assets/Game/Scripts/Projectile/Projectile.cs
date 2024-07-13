@@ -12,14 +12,33 @@ public class Projectile : MonoBehaviour
     public float lifeTime = 1.5f;
     [HideInInspector]
     public int damage = 0;
+    [HideInInspector]
     public int pierceEnemyCount = 0;
+    [HideInInspector]
     public int knockBack = 0;
+    [HideInInspector]
     public bool isCriticalHit = false;
+    [HideInInspector]
     public float lifeStealPercentByWeapon = 0;
+    protected Collider2D selfCollider;
+
+    protected virtual void Awake() {
+        selfCollider = GetComponent<Collider2D>();
+    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         Hit(other);
+    }
+
+    protected void DisableProjectileCollider()
+    {
+        selfCollider.enabled = false;
+    }
+
+    protected void EnableProjectileCollider()
+    {
+        selfCollider.enabled = true;
     }
 
     protected virtual void Hit(Collider2D otherCollider)
@@ -58,6 +77,7 @@ public class Projectile : MonoBehaviour
 
     protected virtual void KnockBackHitObject(GameObject hitObject)
     {
+        if(knockBack == 0) return;
         hitObject.TryGetComponent(out Enemy enemy);
         if (enemy == null) return;
         enemy.canMove = false;

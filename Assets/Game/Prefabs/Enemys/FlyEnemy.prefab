@@ -102,7 +102,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.23702145, y: 0}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -113,7 +113,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.4740429, y: 1}
+  m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
 --- !u!50 &1383854026698244026
 Rigidbody2D:
@@ -148,12 +148,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 336e1072aa3799b42bf11831cd599d28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canMove: 1
   dropItem: {fileID: 7987173864283598468, guid: e7d7ce21a90d0c24dbecba49146448a4, type: 3}
   name: 
   enemyData: {fileID: 11400000, guid: a8b465a857d08354ca084abcc4d199ca, type: 2}
   HP: 0
   showlevel: 1
   speedEffectPercent: 0
+  enemyGenerator: {fileID: 0}
   nearbyEnemys: []
   collisionRiskEnemys: []
 --- !u!1 &6512309491971383873
@@ -180,14 +182,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6512309491971383873}
-  m_LocalRotation: {x: -0, y: -0, z: -0.9914447, w: 0.1305279}
-  m_LocalPosition: {x: 0.2, y: -0.313, z: 0}
-  m_LocalScale: {x: 0.42203677, y: 0.5649, z: 0.5649}
+  m_LocalRotation: {x: -0, y: -0, z: -0.9166528, w: -0.3996844}
+  m_LocalPosition: {x: -0.459, y: -0.422, z: 0}
+  m_LocalScale: {x: 0.62727326, y: 0.8396108, z: 0.8396108}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5836960803617581087}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -165}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -227.117}
 --- !u!212 &4270018771567838919
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -264,14 +266,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7656879946661324002}
-  m_LocalRotation: {x: -0, y: -0, z: -0.9914452, w: -0.13052402}
-  m_LocalPosition: {x: -0.155, y: -0.339, z: 0}
-  m_LocalScale: {x: 0.42203677, y: 0.5649, z: 0.5649}
+  m_LocalRotation: {x: -0, y: -0, z: -0.39908984, w: -0.9169119}
+  m_LocalPosition: {x: -0.455, y: 0.422, z: 0}
+  m_LocalScale: {x: 0.6807782, y: 0.91122776, z: 0.91122776}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5836960803617581087}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -195}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -312.957}
 --- !u!212 &9125663950433356865
 SpriteRenderer:
   m_ObjectHideFlags: 0

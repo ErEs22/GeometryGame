@@ -137,7 +137,6 @@ public class LevelManager : MonoBehaviour
             EventManager.instance.OnGameover();
             Debug.Log("游戏结束，当前关卡：" + currentLevel + "关");
         }
-        EventManager.instance.OnClearAllExpBall();
         EventManager.instance.OnLevelEnd();
     }
     private void UpdateGameAndLevelStatusWhenLevelStart()
@@ -150,43 +149,45 @@ public class LevelManager : MonoBehaviour
     {
         if(levelStatus == eLevelStatus.Ended || GlobalVar.gameStatus == eGameStatus.Ended) return;
         int enemySpawnCount = GetLevelSpawnEnemysInWaves();
-
-        switch(currentLevel)
+        if(enemyManager.enemies.Count <= 100)
         {
-            case 5:
-                enemyGenerator.GenerateEnemysAroundPoint(enemyManager.GetEnemyInCurrentEnemyListByName(EnemyName.NormalEnemy),enemySpawnCount);
-                await UniTask.Delay(500);
-                for(int i = 0; i < Mathf.FloorToInt(enemySpawnCount / 2); i++)
-                {
-                    enemyGenerator.GenerateEnemysInRandomPos(enemyManager.GetEnemyInCurrentEnemyListRandomly(),1);
-                }
-                await UniTask.Delay(GetLevelSpawnEnemysInterval() - 500);
-            break;
-            case 10:
-                enemyGenerator.GenerateEnemysAroundPoint(enemyManager.GetEnemyInCurrentEnemyListByName(EnemyName.FlyEnemy),enemySpawnCount);
-                await UniTask.Delay(500);
-                for(int i = 0; i < Mathf.FloorToInt(enemySpawnCount / 2); i++)
-                {
-                    enemyGenerator.GenerateEnemysInRandomPos(enemyManager.GetEnemyInCurrentEnemyListRandomly(),1);
-                }
-                await UniTask.Delay(GetLevelSpawnEnemysInterval() - 500);
-            break;
-            case 15:
-                enemyGenerator.GenerateEnemysAroundPoint(enemyManager.GetEnemyInCurrentEnemyListByName(EnemyName.HunterEnemy),enemySpawnCount);
-                await UniTask.Delay(500);
-                for(int i = 0; i < Mathf.FloorToInt(enemySpawnCount / 2); i++)
-                {
-                    enemyGenerator.GenerateEnemysInRandomPos(enemyManager.GetEnemyInCurrentEnemyListRandomly(),1);
-                }
-                await UniTask.Delay(GetLevelSpawnEnemysInterval() - 500);
-            break;
-            default:
-                for (int i = 0; i < enemySpawnCount; i++)
-                {
-                    enemyGenerator.GenerateEnemysInRandomPos(enemyManager.GetEnemyInCurrentEnemyListRandomly(), 1);
-                }
-                await UniTask.Delay(GetLevelSpawnEnemysInterval());
-            break;
+            switch(currentLevel)
+            {
+                case 5:
+                    enemyGenerator.GenerateEnemysAroundPoint(enemyManager.GetEnemyInCurrentEnemyListByName(EnemyName.HunterEnemy),enemySpawnCount);
+                    await UniTask.Delay(500);
+                    for(int i = 0; i < Mathf.FloorToInt(enemySpawnCount / 2); i++)
+                    {
+                        enemyGenerator.GenerateEnemysInRandomPos(enemyManager.GetEnemyInCurrentEnemyListRandomly(),1);
+                    }
+                    await UniTask.Delay(GetLevelSpawnEnemysInterval() - 500);
+                break;
+                case 10:
+                    enemyGenerator.GenerateEnemysAroundPoint(enemyManager.GetEnemyInCurrentEnemyListByName(EnemyName.FlyEnemy),enemySpawnCount);
+                    await UniTask.Delay(500);
+                    for(int i = 0; i < Mathf.FloorToInt(enemySpawnCount / 2); i++)
+                    {
+                        enemyGenerator.GenerateEnemysInRandomPos(enemyManager.GetEnemyInCurrentEnemyListRandomly(),1);
+                    }
+                    await UniTask.Delay(GetLevelSpawnEnemysInterval() - 500);
+                break;
+                case 15:
+                    enemyGenerator.GenerateEnemysAroundPoint(enemyManager.GetEnemyInCurrentEnemyListByName(EnemyName.HunterEnemy),enemySpawnCount);
+                    await UniTask.Delay(500);
+                    for(int i = 0; i < Mathf.FloorToInt(enemySpawnCount / 2); i++)
+                    {
+                        enemyGenerator.GenerateEnemysInRandomPos(enemyManager.GetEnemyInCurrentEnemyListRandomly(),1);
+                    }
+                    await UniTask.Delay(GetLevelSpawnEnemysInterval() - 500);
+                break;
+                default:
+                    for (int i = 0; i < enemySpawnCount; i++)
+                    {
+                        enemyGenerator.GenerateEnemysInRandomPos(enemyManager.GetEnemyInCurrentEnemyListRandomly(), 1);
+                    }
+                    await UniTask.Delay(GetLevelSpawnEnemysInterval());
+                break;
+            }
         }
         StartSpawnEnemy();
     }

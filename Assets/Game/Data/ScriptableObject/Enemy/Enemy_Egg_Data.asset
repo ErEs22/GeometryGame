@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 039972f181cdc6b4791f30cef380c8a9, type: 3}
   m_Name: Enemy_Egg_Data
   m_EditorClassIdentifier: 
-  name: 
+  name: EggEnemy
   HP: 10
   moveSpeed: 5
   damage: 1
