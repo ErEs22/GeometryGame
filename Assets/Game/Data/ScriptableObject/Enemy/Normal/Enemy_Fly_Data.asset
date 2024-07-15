@@ -9,16 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b343650be299f1249a971ff37fbec987, type: 3}
-  m_Name: Enemy_Heal_Data
+  m_Script: {fileID: 11500000, guid: fe36575410b2f424ea53c1cddef6da62, type: 3}
+  m_Name: Enemy_Fly_Data
   m_EditorClassIdentifier: 
-  name: HealEnemy
+  name: FlyEnemy
   HP: 100
-  moveSpeed: 20
+  moveSpeed: 5
   damage: 1
   showlevel: 1
-  healHP: 100000
-  healRange: 5
-  healObjectMask:
-    serializedVersion: 2
-    m_Bits: 64
+  enemyPrefab: {fileID: 5836960803617581082, guid: 586f18ed8d24b51409e4dcd9f38446ee, type: 3}
+  projectile: {fileID: 3994106403445518885, guid: eb7329fd41853844eb05cbed865bd920, type: 3}

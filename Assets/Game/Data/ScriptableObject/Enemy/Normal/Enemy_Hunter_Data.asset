@@ -10,10 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b1750ed2366e7e4d99a5e3042fb4802, type: 3}
-  m_Name: Enemy_NoMovement_Data
+  m_Name: Enemy_Hunter_Data
   m_EditorClassIdentifier: 
-  name: NoMovementEnemy
+  name: HunterEnemy
   HP: 100
-  moveSpeed: 0
-  damage: 0
+  moveSpeed: 10
+  damage: 1
   showlevel: 1
+  enemyPrefab: {fileID: 5836960803617581082, guid: 6303eb4e544c88b499362ce985f4d02f, type: 3}

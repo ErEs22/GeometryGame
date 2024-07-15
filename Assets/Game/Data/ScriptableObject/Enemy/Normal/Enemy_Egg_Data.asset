@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 039972f181cdc6b4791f30cef380c8a9, type: 3}
+  m_Name: Enemy_Egg_Data
+  m_EditorClassIdentifier: 
+  name: EggEnemy
+  HP: 10
+  moveSpeed: 5
+  damage: 1
+  showlevel: 1
+  enemyPrefab: {fileID: 5836960803617581082, guid: 56973d5a10649e449946c96c16c420c0, type: 3}
+  splitEnemyPrefab: {fileID: 5836960803617581082, guid: 660bd8d7ad26b8d46a51eaf8c61f7094, type: 3}

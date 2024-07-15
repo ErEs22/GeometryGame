@@ -17,7 +17,7 @@ public class EnemyManager : MonoBehaviour
     public List<Enemy> enemies = new List<Enemy>();//游戏内正在活动的敌人
     public List<GameObject> currentLevelEnemys = new List<GameObject>();//当前关卡可生成的敌人种类
     public List<EnemyData_SO> allEnemysData = new List<EnemyData_SO>();//游戏内所有敌人数据
-    public List<GameObject> allEnemys = new List<GameObject>();//游戏内所有敌人
+    // public List<GameObject> allEnemys = new List<GameObject>();//游戏内所有敌人
 
     private void OnEnable() {
         EventManager.instance.onLevelEnd += ClearAllEnemy;
@@ -55,7 +55,8 @@ public class EnemyManager : MonoBehaviour
         {
             if(enemy.showlevel <= LevelManager.currentLevel)
             {
-                currentLevelEnemys.Add(allEnemys.Find((x => x.name == enemy.name)));
+                // currentLevelEnemys.Add(allEnemys.Find((x => x.name == enemy.name)));
+                currentLevelEnemys.Add(enemy.enemyPrefab);
             }
         }
     }

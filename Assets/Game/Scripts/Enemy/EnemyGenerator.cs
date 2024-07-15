@@ -27,7 +27,7 @@ public class EnemyGenerator : MonoBehaviour
         enemyManager = GetComponent<EnemyManager>();
         playerPos = GlobalVar.playerTrans.position;
         // GenerateEnemysAroundPoint(Vector3.zero,30);
-        // GenerateEnemysInRandomPos(specificEnemy,1);
+        GenerateEnemysInRandomPos(specificEnemy,1);
     }
 
     private void Start()

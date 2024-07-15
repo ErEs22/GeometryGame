@@ -23,7 +23,7 @@ MonoBehaviour:
   prefab_Projectile: {fileID: 3994106403445518885, guid: 8f0b9e5f1015f0d4491c9c09f0718874, type: 3}
   itemProperties:
   - weaponProperty: 0
-    propertyValue: 50
+    propertyValue: 5
   - weaponProperty: 1
     propertyValue: 2
   - weaponProperty: 2

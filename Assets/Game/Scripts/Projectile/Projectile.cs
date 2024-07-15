@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Projectile : MonoBehaviour
@@ -77,15 +76,18 @@ public class Projectile : MonoBehaviour
 
     protected virtual void KnockBackHitObject(GameObject hitObject)
     {
-        if(knockBack == 0) return;
-        hitObject.TryGetComponent(out Enemy enemy);
-        if (enemy == null) return;
-        enemy.canMove = false;
-        Vector2 knockBackTagetPos = hitObject.transform.position + (transform.right.normalized * knockBack * 0.1f);
-        hitObject.transform.DOMove(knockBackTagetPos, 0.1f).OnComplete(() =>
+        if(hitObject.GetComponent<Enemy>().enemyType == eEnemyType.Normal)
         {
-            enemy.canMove = true;
-        });
+            if(knockBack == 0) return;
+            hitObject.TryGetComponent(out Enemy enemy);
+            if (enemy == null) return;
+            enemy.canMove = false;
+            Vector2 knockBackTagetPos = hitObject.transform.position + (transform.right.normalized * knockBack * 0.1f);
+            hitObject.transform.DOMove(knockBackTagetPos, 0.1f).OnComplete(() =>
+            {
+                enemy.canMove = true;
+            });
+        }
     }
 
     public void SetDelayDeativate()

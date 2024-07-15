@@ -36,7 +36,7 @@ public class Projectile_Slash : Projectile
 
     private void SlashAttack()
     {
-        SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+        SpriteRenderer spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         spriteRenderer.color = Color.white;
         DisableProjectileCollider();
         spriteRenderer.DOColor(Color.red, 1.0f).OnComplete(() =>

@@ -17,7 +17,7 @@ public class SpitterEnemy : Enemy
         Skill();
     }
 
-    protected virtual void ReleaseSingleProjectile()
+    protected void ReleaseSingleProjectile()
     {
         Vector3 dir = Vector3.Normalize(GlobalVar.playerTrans.position - transform.position);
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;

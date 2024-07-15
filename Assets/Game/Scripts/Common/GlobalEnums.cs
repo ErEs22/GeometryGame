@@ -140,3 +140,10 @@ public enum eFPSOption
     FPS_120 = 120,
     FPS_UnLimited
 }
+
+public enum eEnemyType
+{
+    Normal,
+    Elite,
+    Boss,
+}

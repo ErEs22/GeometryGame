@@ -9,11 +9,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b1750ed2366e7e4d99a5e3042fb4802, type: 3}
-  m_Name: Enemy_Loot_Data
+  m_Script: {fileID: 11500000, guid: b343650be299f1249a971ff37fbec987, type: 3}
+  m_Name: Enemy_Heal_Data
   m_EditorClassIdentifier: 
-  name: LootEnemy
+  name: HealEnemy
   HP: 100
   moveSpeed: 20
-  damage: 0
+  damage: 1
   showlevel: 1
+  enemyPrefab: {fileID: 5836960803617581082, guid: 780e7ec2a7e125a4089829eaad82a410, type: 3}
+  healHP: 100000
+  healRange: 5
+  healObjectMask:
+    serializedVersion: 2
+    m_Bits: 64

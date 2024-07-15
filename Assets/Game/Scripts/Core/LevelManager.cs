@@ -45,10 +45,6 @@ public class LevelManager : MonoBehaviour
         EventManager.instance.onGameover -= Gameover;
     }
 
-    private void Start() {
-        // StartGame();
-    }
-
     private void IncreasePlayerUpgradeCount()
     {
         playerUpgradeCount++;
@@ -63,8 +59,9 @@ public class LevelManager : MonoBehaviour
     {
         currentLevel = 5;
         Debug.Log("当前关卡：" + currentLevel);
-        EventManager.instance.OnOpenUI(eUIID.PlayerStatusBar);
         EventManager.instance.OnInitPlayerStatus();
+        EventManager.instance.OnOpenUI(eUIID.PlayerStatusBar);
+        return;
         ClearPlayerUpgradeCount();
         StartLevelCountDown();
         enemyManager.SetCurrentEnemyList();
@@ -79,7 +76,6 @@ public class LevelManager : MonoBehaviour
     {
         currentLevel++;
         Debug.Log("当前关卡：" + currentLevel);
-        EventManager.instance.OnOpenUI(eUIID.PlayerStatusBar);
         ClearPlayerUpgradeCount();
         StartLevelCountDown();
         enemyManager.SetCurrentEnemyList();
@@ -188,6 +184,10 @@ public class LevelManager : MonoBehaviour
                     await UniTask.Delay(GetLevelSpawnEnemysInterval());
                 break;
             }
+        }
+        else
+        {
+            await UniTask.Delay(GetLevelSpawnEnemysInterval());
         }
         StartSpawnEnemy();
     }

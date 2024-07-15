@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEditor;
+using UnityEditor.EditorTools;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 /// <summary>
@@ -11,17 +13,24 @@ using UnityEngine.InputSystem;
 /// </summary>
 public class Enemy : MonoBehaviour, ITakeDamage, IHeal
 {
+    [HideInInspector]
     public bool canMove = true;
     public GameObject dropItem;
-    public new string name;
+    [Header("Enemy Info---")]
     [SerializeField]
     protected EnemyData_SO enemyData;
+    public new string name;
+    [SerializeField][DisplayOnly]
     protected float maxHP = 0;
-    [DisplayOnly]
-    [SerializeField]
+    [SerializeField][DisplayOnly]
     protected float HP = 0;
     private float moveSpeed = 5f;
+    [DisplayOnly]
     public int showlevel = 1;
+    [DisplayOnly]
+    public eEnemyType enemyType;
+    [DisplayOnly]
+    public bool isTowardsPlayer = true;
     protected float MoveSpeed
     {
         get
@@ -36,8 +45,10 @@ public class Enemy : MonoBehaviour, ITakeDamage, IHeal
     /// <summary>
     /// 速度影响百分比值（整数值 10%=>10）
     /// </summary>
+    [DisplayOnly]
     public int speedEffectPercent = 0;
     protected EnemyManager enemyManager;
+    [HideInInspector]
     public EnemyGenerator enemyGenerator;
     protected float distanceToPlayerSq;
     protected Vector3 moveDir = Vector3.right;
@@ -46,6 +57,7 @@ public class Enemy : MonoBehaviour, ITakeDamage, IHeal
     /// <summary>
     /// 附近一定距离范围内所有敌人
     /// </summary>
+    [Header("Avoid System---")]
     [SerializeField]
     protected List<Transform> nearbyEnemys = new List<Transform>();
     /// <summary>
@@ -105,6 +117,8 @@ public class Enemy : MonoBehaviour, ITakeDamage, IHeal
         MoveSpeed = enemyData.moveSpeed;
         showlevel = enemyData.showlevel;
         name = enemyData.name;
+        enemyType = enemyData.eEnemyType;
+        isTowardsPlayer = enemyData.isTowardsPlayer;
     }
 
     public async void ApplyStatusChangeInTime(eStatusType statusType, int percentChange, float effectTime)
@@ -159,11 +173,19 @@ public class Enemy : MonoBehaviour, ITakeDamage, IHeal
 
     protected virtual void HandleMovement()
     {
+        //TODO 朝向玩家移动的敌人需要转向，而不朝向玩家移动的敌人不需要转向
         //Default Move Caculation
         moveDir *= MoveSpeed;
-        float angle1 = Mathf.Atan2(moveDir.y,moveDir.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.AngleAxis(angle1,transform.forward);
-        transform.Translate(transform.right * moveDir.magnitude * Time.deltaTime,Space.World);
+        if(isTowardsPlayer)
+        {
+            float angle1 = Mathf.Atan2(moveDir.y,moveDir.x) * Mathf.Rad2Deg;
+            transform.rotation = Quaternion.AngleAxis(angle1,transform.forward);
+            transform.Translate(transform.right * moveDir.magnitude * Time.deltaTime,Space.World);
+        }
+        else
+        {
+            transform.Translate(moveDir * Time.deltaTime,Space.World);
+        }
         return;
 
         //Crowed Base Move Behaviour

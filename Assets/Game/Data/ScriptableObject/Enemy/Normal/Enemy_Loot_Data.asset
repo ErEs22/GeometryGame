@@ -9,13 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76911ec2d15aefb429170517c46f6d08, type: 3}
-  m_Name: Enemy_Slash_Data
+  m_Script: {fileID: 11500000, guid: 6b1750ed2366e7e4d99a5e3042fb4802, type: 3}
+  m_Name: Enemy_Loot_Data
   m_EditorClassIdentifier: 
-  name: SlashEnemy
+  name: LootEnemy
   HP: 100
-  moveSpeed: 10
-  damage: 1
+  moveSpeed: 20
+  damage: 0
   showlevel: 1
-  projectile: {fileID: 2093875944032654269, guid: cbfc3c0c4a6bacf49a04822aa6c47d31, type: 3}
-  runawayDistance: 10
+  enemyPrefab: {fileID: 5836960803617581082, guid: bcaf813d014399b4b93ba02336e8276e, type: 3}
