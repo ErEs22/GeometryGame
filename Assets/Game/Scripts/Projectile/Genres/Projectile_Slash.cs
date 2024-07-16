@@ -39,11 +39,11 @@ public class Projectile_Slash : Projectile
         SpriteRenderer spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         spriteRenderer.color = Color.white;
         DisableProjectileCollider();
-        spriteRenderer.DOColor(Color.red, 1.0f).OnComplete(() =>
+        spriteRenderer.DOColor(Color.red, 0.5f).OnComplete(() =>
         {
             spriteRenderer.color = Color.blue;
             EnableProjectileCollider();
-            EyreUtility.SetDelay(0.2f, () =>
+            EyreUtility.SetDelay(0.1f, () =>
             {
                 DisableProjectileCollider();
                 gameObject.SetActive(false);

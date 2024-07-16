@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe36575410b2f424ea53c1cddef6da62, type: 3}
-  m_Name: EliteEnemy_Butcher_Data
+  m_Name: EliteEnemy_Colossus_Data
   m_EditorClassIdentifier: 
-  name: RhinoEliteEnemy
+  name: Colossus
   HP: 1000
   moveSpeed: 5
   damage: 5
   showlevel: 1
   isTowardsPlayer: 0
   eEnemyType: 1
-  enemyPrefab: {fileID: 5836960803617581082, guid: 9e9ab1873b4c38443b3114742ebc1af2, type: 3}
-  projectile: {fileID: 2093875944032654269, guid: 8e45cad32ed9c6a448ca5c74ca764661, type: 3}
+  enemyPrefab: {fileID: 5836960803617581082, guid: c088c8be760e84943bf96d0230830fae, type: 3}
+  projectile: {fileID: 2093875944032654269, guid: 2da7f435ddb533d43a2228b66aca35f9, type: 3}

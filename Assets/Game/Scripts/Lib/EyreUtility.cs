@@ -17,6 +17,18 @@ public static class EyreUtility
         return randomPos;
     }
 
+    public static Vector3[] GetCirclePosAroundPoint(Vector3 centerPos,float circleRadius,int returnPosCount)
+    {
+        Vector3[] returnPos = new Vector3[returnPosCount];
+        float angleBetweenPosInRadian = Mathf.Deg2Rad * (360 / returnPosCount);
+        for(int i = 0; i < returnPosCount; i++)
+        {
+            Vector3 circlePos = new Vector3(Mathf.Sin(angleBetweenPosInRadian * (i + 1)),Mathf.Cos(angleBetweenPosInRadian * (i + 1))) * circleRadius;
+            returnPos[i] = circlePos + centerPos;
+        }
+        return returnPos;
+    }
+
     public static TweenerCore<float,float,FloatOptions> SetDelay(float delayTime, TweenCallback f)
     {
         float timer = 0;

@@ -1,5 +1,4 @@
 using Cysharp.Threading.Tasks;
-using Unity.Mathematics;
 using UnityEngine;
 
 public class ButcherEliteEnemy : Enemy
@@ -21,17 +20,17 @@ public class ButcherEliteEnemy : Enemy
             if(currentHPPercent > 0.7f)
             {
                 StageOneAttack();
-                await UniTask.Delay(3000);
+                await UniTask.Delay(2000);
             }
             else if(currentHPPercent > 0.4f && currentHPPercent <= 0.7f)
             {
                 StageTwoAttack();
-                await UniTask.Delay(3000);
+                await UniTask.Delay(1500);
             }
             else
             {
                 StageThreeAttack();
-                await UniTask.Delay(3000);
+                await UniTask.Delay(1250);
             }
         }
     }
@@ -40,9 +39,16 @@ public class ButcherEliteEnemy : Enemy
     {
         Vector3 towardsPlayerDir = Vector3.Normalize(GlobalVar.playerTrans.position - transform.position);
         Vector3 firstDir = Quaternion.AngleAxis(45.0f,Vector3.forward) * towardsPlayerDir;
-        firstDir *= 2;
         for(int i = 0; i < 4; i++)
         {
+            if(i == 1 || i == 2)
+            {
+                firstDir = firstDir.normalized * 3.5f;
+            }
+            else
+            {
+                firstDir = firstDir.normalized * 3;
+            }
             Vector3 targetPos = Quaternion.AngleAxis(i * 90.0f,Vector3.forward) * firstDir + GlobalVar.playerTrans.position;
             ReleaseSingleProjectile(Vector3.Normalize(GlobalVar.playerTrans.position - transform.position),targetPos);
         }
@@ -50,12 +56,24 @@ public class ButcherEliteEnemy : Enemy
 
     private void StageTwoAttack()
     {
-
+        for(int i = 0; i < 8; i++)
+        {
+            Vector3 targetPos = EyreUtility.GetRandomPosAroundCertainPos(GlobalVar.playerTrans.position,5.0f);
+            float randomAngleInRadian = Mathf.Deg2Rad * Random.Range(0,359);
+            Vector3 randomDir = new Vector3(Mathf.Sin(randomAngleInRadian),Mathf.Cos(randomAngleInRadian),0);
+            ReleaseSingleProjectile(randomDir,targetPos);
+        }
     }
 
     private void StageThreeAttack()
     {
-
+        for(int i = 0; i < 3; i++)
+        {
+            Vector3 targetPos = EyreUtility.GetRandomPosAroundCertainPos(GlobalVar.playerTrans.position,7.0f);
+            float randomAngleInRadian = Mathf.Deg2Rad * Random.Range(0,359);
+            Vector3 randomDir = new Vector3(Mathf.Sin(randomAngleInRadian),Mathf.Cos(randomAngleInRadian),0);
+            ReleaseSingleProjectile(randomDir,targetPos,0.66f);
+        }
     }
 
     /// <summary>
@@ -63,12 +81,11 @@ public class ButcherEliteEnemy : Enemy
     /// </summary>
     /// <param name="dir">发射物初始方向</param>
     /// <param name="startPos">发射物初始位置</param>
-    protected void ReleaseSingleProjectile(Vector3 dir,Vector3 startPos)
+    protected void ReleaseSingleProjectile(Vector3 dir,Vector3 startPos,float damagePercent = 1.0f)
     {
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
         Projectile newProjectile = PoolManager.Release(newEnemyData.projectile, startPos, rotation).GetComponent<Projectile>();
-        newProjectile.damage = enemyData.damage;
-        newProjectile.SetDelayDeativate();
+        newProjectile.damage = EyreUtility.Round(enemyData.damage * damagePercent);
     }
 }

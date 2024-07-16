@@ -266,9 +266,9 @@ GameObject:
   - component: {fileID: 5836960803617581080}
   - component: {fileID: 4783807901143683694}
   - component: {fileID: 1383854026698244026}
-  - component: {fileID: -3653439087608780341}
+  - component: {fileID: 2961245596898319565}
   m_Layer: 6
-  m_Name: ButcherEliteEnemy
+  m_Name: ColossusEliteEnemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -389,7 +389,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &-3653439087608780341
+--- !u!114 &2961245596898319565
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -398,18 +398,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 5836960803617581082}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4ca00e3fa94be7a40b0c4605b8d08c31, type: 3}
+  m_Script: {fileID: 11500000, guid: 0aae31032b77ec545ae50618ab9e5460, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   canMove: 1
-  dropItem: {fileID: 7987173864283598468, guid: e7d7ce21a90d0c24dbecba49146448a4, type: 3}
-  enemyData: {fileID: 11400000, guid: 9a9741dad0b122546ab04d9a50d36f81, type: 2}
+  dropItem: {fileID: 221035228867231049, guid: 5f3b93c62f8f4bf4eb4bea695f6a7eee, type: 3}
+  enemyData: {fileID: 11400000, guid: bec58af24734e0d45932a965d910c92b, type: 2}
   name: 
   maxHP: 0
   HP: 0
   showlevel: 1
-  enemyType: 1
-  isTowardsPlayer: 0
+  enemyType: 0
+  isTowardsPlayer: 1
   speedEffectPercent: 0
   enemyGenerator: {fileID: 0}
   nearbyEnemys: []

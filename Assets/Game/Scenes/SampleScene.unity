@@ -276,6 +276,8 @@ MonoBehaviour:
     size: 100
   - prefab: {fileID: 2093875944032654269, guid: 8e45cad32ed9c6a448ca5c74ca764661, type: 3}
     size: 100
+  - prefab: {fileID: 2093875944032654269, guid: 2da7f435ddb533d43a2228b66aca35f9, type: 3}
+    size: 100
   playerWeaponPools:
   - prefab: {fileID: 6764894451183402456, guid: 8973471eab14b0a4d9dfdbb94a6c5cbf, type: 3}
     size: 6
@@ -325,6 +327,8 @@ MonoBehaviour:
   - prefab: {fileID: 5836960803617581082, guid: 9e9ab1873b4c38443b3114742ebc1af2, type: 3}
     size: 100
   - prefab: {fileID: 5836960803617581082, guid: cd26dd5b903a04b4f85f81aadb6999ef, type: 3}
+    size: 100
+  - prefab: {fileID: 5836960803617581082, guid: c088c8be760e84943bf96d0230830fae, type: 3}
     size: 100
   dropItemPools:
   - prefab: {fileID: 7987173864283598468, guid: e7d7ce21a90d0c24dbecba49146448a4, type: 3}
@@ -729,6 +733,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: fd0140eaf51db6145bce74ec30244657, type: 2}
   - {fileID: 11400000, guid: d6f6bc7dc4738d1448efafd8e495661c, type: 2}
   - {fileID: 11400000, guid: 9a9741dad0b122546ab04d9a50d36f81, type: 2}
+  - {fileID: 11400000, guid: bec58af24734e0d45932a965d910c92b, type: 2}
 --- !u!4 &690686605
 Transform:
   m_ObjectHideFlags: 0
@@ -757,7 +762,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemy: {fileID: 5836960803617581082, guid: ec74911f699c15f48afee37d41f0f31d, type: 3}
-  specificEnemy: {fileID: 5836960803617581082, guid: cd26dd5b903a04b4f85f81aadb6999ef, type: 3}
+  specificEnemy: {fileID: 5836960803617581082, guid: c088c8be760e84943bf96d0230830fae, type: 3}
 --- !u!114 &690686607
 MonoBehaviour:
   m_ObjectHideFlags: 0
