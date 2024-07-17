@@ -402,7 +402,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canMove: 1
-  dropItem: {fileID: 221035228867231049, guid: 5f3b93c62f8f4bf4eb4bea695f6a7eee, type: 3}
+  dropItem: {fileID: 7987173864283598468, guid: e7d7ce21a90d0c24dbecba49146448a4, type: 3}
   enemyData: {fileID: 11400000, guid: bec58af24734e0d45932a965d910c92b, type: 2}
   name: 
   maxHP: 0

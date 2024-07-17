@@ -173,7 +173,6 @@ public class Enemy : MonoBehaviour, ITakeDamage, IHeal
 
     protected virtual void HandleMovement()
     {
-        //TODO 朝向玩家移动的敌人需要转向，而不朝向玩家移动的敌人不需要转向
         //Default Move Caculation
         moveDir *= MoveSpeed;
         if(isTowardsPlayer)

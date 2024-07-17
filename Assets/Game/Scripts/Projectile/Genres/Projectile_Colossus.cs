@@ -7,10 +7,11 @@ public class Projectile_Colossus : Projectile
     protected override void Awake()
     {
         base.Awake();
-        DisableProjectileCollider();
     }
 
-    private void OnEnable() {
+    private void OnEnable()
+    {
+        DisableProjectileCollider();
         Attack();
     }
 
@@ -18,18 +19,36 @@ public class Projectile_Colossus : Projectile
     {
     }
 
+    protected override void Hit(Collider2D otherCollider)
+    {
+        otherCollider.TryGetComponent(out ITakeDamage damageObject);
+        if (damageObject != null)
+        {
+            damageObject.TakeDamage(damage, isCriticalHit);
+            DisableProjectileCollider();
+        }
+        else
+        {
+            Debug.Log("碰到的物体没有继承ITakeDamage接口，若需要处理，请继承该接口");
+        }
+    }
+
     public void Attack()
     {
-        transform.DOMove(targetMovePos,0.8f).OnComplete(()=>
+        transform.DOMove(targetMovePos, 1.2f).SetEase(Ease.Linear);
+        var seq = DOTween.Sequence();
+        seq.Append(EyreUtility.SetDelay(0.7f, () =>
         {
             EnableProjectileCollider();
-            transform.DOScale(1.5f,0.2f).SetRelative().OnComplete(()=>
-            {
-                DisableProjectileCollider();
-                transform.DOScale(-1.5f,0.05f).SetRelative().OnComplete(()=>{
-                    gameObject.SetActive(false);
-                });
-            });
-        });
+        }));
+        seq.Append(transform.DOScale(2.5f, 0.5f).OnStepComplete(() =>
+        {
+            DisableProjectileCollider();
+        }));
+        seq.Append(transform.DOScale(1f, 0.05f).OnStepComplete(() =>
+        {
+            gameObject.SetActive(false);
+        }));
+        seq.Play();
     }
 }

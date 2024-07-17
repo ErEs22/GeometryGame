@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2093875944032654267}
-  - component: {fileID: 528154843271192314}
   - component: {fileID: -2607488216750194770}
+  - component: {fileID: 4456599930604277644}
   m_Layer: 8
   m_Name: Projectile_EliteEnemy_Colossus
   m_TagString: EnemyProjectile
@@ -34,34 +34,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!60 &528154843271192314
-PolygonCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2093875944032654269}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.28866667}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: 2.7995875, y: -0.0042746067}
-      - {x: -1.4050438, y: 0.48786047}
-      - {x: -1.406338, y: -0.49948037}
 --- !u!114 &-2607488216750194770
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -82,6 +54,22 @@ MonoBehaviour:
   isCriticalHit: 0
   lifeStealPercentByWeapon: 0
   targetMovePos: {x: 0, y: 0, z: 0}
+--- !u!58 &4456599930604277644
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2093875944032654269}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.5
 --- !u!1 &5354674793510749405
 GameObject:
   m_ObjectHideFlags: 0

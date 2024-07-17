@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class ColossusEliteEnemy : Enemy
 {
+    Vector3 targetPos = Vector3.zero;
+
     private EnemyData_WithProjectile_SO newEnemyData;
 
     public override void Init(EnemyManager enemyManager)
@@ -20,12 +22,12 @@ public class ColossusEliteEnemy : Enemy
             if(currentHPPercent > 0.6f)
             {
                 StageOneAttack();
-                await UniTask.Delay(1500);
+                await UniTask.Delay(2200);
             }
             else
             {
                 StageTwoAttack();
-                await UniTask.Delay(1000);
+                await UniTask.Delay(1700);
             }
         }
     }
@@ -35,7 +37,7 @@ public class ColossusEliteEnemy : Enemy
         for(int i = 0; i < 50; i++)
         {
             Vector3 randomPos = EyreUtility.GetRandomPosAroundCertainPos(GlobalVar.playerTrans.position,25.0f);
-            ReleaseSingleProjectile(Vector3.right, randomPos,EyreUtility.GetRandomPosAroundCertainPos(randomPos,3.0f));
+            ReleaseSingleProjectile(Vector3.right, randomPos,EyreUtility.GetRandomPosAroundCertainPos(randomPos,5.0f));
         }
     }
 
@@ -45,7 +47,7 @@ public class ColossusEliteEnemy : Enemy
         Vector3[] circlePos = EyreUtility.GetCirclePosAroundPoint(GlobalVar.playerTrans.position,5.0f,10);
         for(int i = 0; i < 10; i++)
         {
-            Vector3 projectileTargetPos = circlePos[i] + (towardsPlayerDir * 3);
+            Vector3 projectileTargetPos = circlePos[i] + (towardsPlayerDir * 5);
             ReleaseSingleProjectile(Vector3.right,circlePos[i],projectileTargetPos);
         }
     }
@@ -63,5 +65,36 @@ public class ColossusEliteEnemy : Enemy
         newProjectile.damage = EyreUtility.Round(enemyData.damage * damagePercent);
         newProjectile.targetMovePos = targetPos;
         newProjectile.Attack();
+    }
+
+    protected override void UpdateMoveDirection()
+    {
+        float currentHPPercent = HP / maxHP;
+        if(currentHPPercent > 0.6f)
+        {
+            if (EyreUtility.DistanceCompare2D(distanceToPlayerSq,0.1f,eCompareSign.Less))
+            {
+                moveDir = Vector3.zero;
+            }
+            else
+            {
+                moveDir = GlobalVar.playerTrans.position - transform.position;
+                moveDir.Normalize();
+            }
+        }
+        else
+        {
+            TrySetNewTargetPos();
+            moveDir = targetPos - transform.position;
+            moveDir.Normalize();
+        }
+    }
+
+    private void TrySetNewTargetPos()
+    {
+        if(targetPos == Vector3.zero || Vector3.Distance(targetPos,transform.position) < 0.2f)
+        {
+            targetPos = EyreUtility.GenerateRandomPosInRectExcludeCircle(transform.position,5.0f);
+        }
     }
 }
