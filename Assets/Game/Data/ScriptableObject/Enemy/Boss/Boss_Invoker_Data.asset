@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe36575410b2f424ea53c1cddef6da62, type: 3}
+  m_Name: Boss_Invoker_Data
+  m_EditorClassIdentifier: 
+  name: Invoker
+  HP: 1000
+  moveSpeed: 5
+  damage: 1
+  showlevel: 1
+  isTowardsPlayer: 0
+  eEnemyType: 2
+  enemyPrefab: {fileID: 5836960803617581082, guid: ef8d35c6b83c3ea48a01cb6f9ad64cf7, type: 3}
+  projectile: {fileID: 3994106403445518885, guid: 703ee4e0e1a816249a791c5786d9c8b9, type: 3}

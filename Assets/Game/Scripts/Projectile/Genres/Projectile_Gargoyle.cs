@@ -1,9 +1,8 @@
 using DG.Tweening;
 using UnityEngine;
 
-public class Projectile_Colossus : Projectile
+public class Projectile_Gargoyle : Projectile
 {
-    public Vector3 targetMovePos;
 
     private void OnEnable()
     {
@@ -32,7 +31,7 @@ public class Projectile_Colossus : Projectile
 
     public void Attack()
     {
-        transform.DOMove(targetMovePos, 1.2f).SetEase(Ease.Linear);
+        if(flySpeed != 0) return;
         var seq = DOTween.Sequence();
         seq.Append(EyreUtility.SetDelay(0.7f, () =>
         {

@@ -20,7 +20,7 @@ public static class EyreUtility
     public static Vector3[] GetCirclePosAroundPoint(Vector3 centerPos,float circleRadius,int returnPosCount)
     {
         Vector3[] returnPos = new Vector3[returnPosCount];
-        float angleBetweenPosInRadian = Mathf.Deg2Rad * (360 / returnPosCount);
+        float angleBetweenPosInRadian = Mathf.Deg2Rad * (360f / returnPosCount);
         for(int i = 0; i < returnPosCount; i++)
         {
             Vector3 circlePos = new Vector3(Mathf.Sin(angleBetweenPosInRadian * (i + 1)),Mathf.Cos(angleBetweenPosInRadian * (i + 1))) * circleRadius;

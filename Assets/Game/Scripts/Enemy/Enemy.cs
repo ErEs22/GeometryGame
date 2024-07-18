@@ -78,7 +78,7 @@ public class Enemy : MonoBehaviour, ITakeDamage, IHeal
     {
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         if(canMove == false) return;
         // UpdateEnemyList();

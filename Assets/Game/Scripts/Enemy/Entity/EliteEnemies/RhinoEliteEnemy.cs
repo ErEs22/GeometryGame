@@ -89,7 +89,7 @@ public class RhinoEliteEnemy : Enemy
     {
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-        Projectile newProjectile = PoolManager.Release(newEnemyData.projectile, transform.position, rotation).GetComponent<Projectile>();
+        Projectile_Spitter newProjectile = PoolManager.Release(newEnemyData.projectile, transform.position, rotation).GetComponent<Projectile_Spitter>();
         newProjectile.lifeTime = 10;
         newProjectile.flySpeed = 20;
         newProjectile.damage = enemyData.damage;

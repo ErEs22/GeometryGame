@@ -13,7 +13,6 @@ public class Projectile_Slash : Projectile
     }
 
     private void OnEnable() {
-        SlashAttack();
     }
 
     protected override void Fly()
@@ -34,7 +33,7 @@ public class Projectile_Slash : Projectile
         }
     }
 
-    private void SlashAttack()
+    public void Attack()
     {
         SpriteRenderer spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         spriteRenderer.color = Color.white;

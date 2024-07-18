@@ -1,4 +1,5 @@
 using Cysharp.Threading.Tasks;
+using Cysharp.Threading.Tasks.Triggers;
 using UnityEngine;
 
 public class ButcherEliteEnemy : Enemy
@@ -85,7 +86,8 @@ public class ButcherEliteEnemy : Enemy
     {
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-        Projectile newProjectile = PoolManager.Release(newEnemyData.projectile, startPos, rotation).GetComponent<Projectile>();
+        Projectile_Slash newProjectile = PoolManager.Release(newEnemyData.projectile, startPos, rotation).GetComponent<Projectile_Slash>();
         newProjectile.damage = EyreUtility.Round(enemyData.damage * damagePercent);
+        newProjectile.Attack();
     }
 }

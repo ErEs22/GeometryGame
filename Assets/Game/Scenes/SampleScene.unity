@@ -278,6 +278,12 @@ MonoBehaviour:
     size: 100
   - prefab: {fileID: 2093875944032654269, guid: 2da7f435ddb533d43a2228b66aca35f9, type: 3}
     size: 100
+  - prefab: {fileID: 2093875944032654269, guid: 9b8aa440f2d01a74a85b3100cdbe1c7c, type: 3}
+    size: 100
+  - prefab: {fileID: 3994106403445518885, guid: 703ee4e0e1a816249a791c5786d9c8b9, type: 3}
+    size: 100
+  - prefab: {fileID: 3994106403445518885, guid: 4470064e02fa64b449dd233092c62e82, type: 3}
+    size: 100
   playerWeaponPools:
   - prefab: {fileID: 6764894451183402456, guid: 8973471eab14b0a4d9dfdbb94a6c5cbf, type: 3}
     size: 6
@@ -329,6 +335,12 @@ MonoBehaviour:
   - prefab: {fileID: 5836960803617581082, guid: cd26dd5b903a04b4f85f81aadb6999ef, type: 3}
     size: 100
   - prefab: {fileID: 5836960803617581082, guid: c088c8be760e84943bf96d0230830fae, type: 3}
+    size: 100
+  - prefab: {fileID: 5836960803617581082, guid: ae793086b4122ca45a968c72f8f1d042, type: 3}
+    size: 100
+  - prefab: {fileID: 5836960803617581082, guid: ef8d35c6b83c3ea48a01cb6f9ad64cf7, type: 3}
+    size: 100
+  - prefab: {fileID: 5836960803617581082, guid: 5b5c272bc29dd584695219c663263ba3, type: 3}
     size: 100
   dropItemPools:
   - prefab: {fileID: 7987173864283598468, guid: e7d7ce21a90d0c24dbecba49146448a4, type: 3}
@@ -734,6 +746,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d6f6bc7dc4738d1448efafd8e495661c, type: 2}
   - {fileID: 11400000, guid: 9a9741dad0b122546ab04d9a50d36f81, type: 2}
   - {fileID: 11400000, guid: bec58af24734e0d45932a965d910c92b, type: 2}
+  - {fileID: 11400000, guid: 0f8768363d84a0247b3886cbc4771aa6, type: 2}
+  - {fileID: 11400000, guid: 5421f2103c6e1ef46a2f9f72c5ec5f4e, type: 2}
+  - {fileID: 11400000, guid: f86f3be628ab5084982c04941c669f6b, type: 2}
 --- !u!4 &690686605
 Transform:
   m_ObjectHideFlags: 0
@@ -762,7 +777,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemy: {fileID: 5836960803617581082, guid: ec74911f699c15f48afee37d41f0f31d, type: 3}
-  specificEnemy: {fileID: 5836960803617581082, guid: c088c8be760e84943bf96d0230830fae, type: 3}
+  specificEnemy: {fileID: 5836960803617581082, guid: 5b5c272bc29dd584695219c663263ba3, type: 3}
 --- !u!114 &690686607
 MonoBehaviour:
   m_ObjectHideFlags: 0

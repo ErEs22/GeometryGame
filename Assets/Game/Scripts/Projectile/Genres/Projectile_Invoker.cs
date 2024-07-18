@@ -1,9 +1,8 @@
 using DG.Tweening;
 using UnityEngine;
 
-public class Projectile_Colossus : Projectile
+public class Projectile_Invoker : Projectile
 {
-    public Vector3 targetMovePos;
 
     private void OnEnable()
     {
@@ -12,8 +11,6 @@ public class Projectile_Colossus : Projectile
 
     protected override void Fly()
     {
-        if(flySpeed == 0) return;
-        base.Fly();
     }
 
     protected override void Hit(Collider2D otherCollider)
@@ -32,7 +29,6 @@ public class Projectile_Colossus : Projectile
 
     public void Attack()
     {
-        transform.DOMove(targetMovePos, 1.2f).SetEase(Ease.Linear);
         var seq = DOTween.Sequence();
         seq.Append(EyreUtility.SetDelay(0.7f, () =>
         {
