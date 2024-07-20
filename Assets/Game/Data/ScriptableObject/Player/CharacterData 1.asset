@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40d2e9efa04e9084d88404619e31b090, type: 3}
   m_Name: CharacterData 1
   m_EditorClassIdentifier: 
-  CharacterIcon: {fileID: 21300000, guid: eb9854e09adb11040875c85c48c9073c, type: 3}
-  CharacterName: Buffalo
+  CharacterIcon: {fileID: 21300000, guid: 5ebc5e79a37462e46b0c8e47c9ab38be, type: 3}
+  CharacterName: Ship01
   HP: 45
   hpRegeneratePerSecond: 0
-  stealHPRate: 0
+  lifeStealRate: 0
   damageMul: 1
   attackSpeedMul: 1
   criticalRate: 0

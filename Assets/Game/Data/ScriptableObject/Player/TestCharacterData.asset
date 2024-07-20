@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40d2e9efa04e9084d88404619e31b090, type: 3}
   m_Name: TestCharacterData
   m_EditorClassIdentifier: 
-  CharacterIcon: {fileID: 21300000, guid: 48e41fce5b9907349a255993bf5d01be, type: 3}
-  CharacterName: Gorilla
+  CharacterIcon: {fileID: 21300000, guid: bd95f727468712a468712b2d751549af, type: 3}
+  CharacterName: Ship13
   HP: 10000
   hpRegeneratePerSecond: 0
   lifeStealRate: 0

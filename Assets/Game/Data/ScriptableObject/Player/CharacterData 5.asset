@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40d2e9efa04e9084d88404619e31b090, type: 3}
   m_Name: CharacterData 5
   m_EditorClassIdentifier: 
-  CharacterIcon: {fileID: 21300000, guid: 3cdf6b192e7fd194abb931535ee16ef5, type: 3}
-  CharacterName: Crocodile
+  CharacterIcon: {fileID: 21300000, guid: 3cae170b5e52efc479d19291b72bc6b4, type: 3}
+  CharacterName: Ship05
   HP: 25
   hpRegeneratePerSecond: 0
-  stealHPRate: 0
+  lifeStealRate: 0
   damageMul: 1
   attackSpeedMul: 1.5
   criticalRate: 0
