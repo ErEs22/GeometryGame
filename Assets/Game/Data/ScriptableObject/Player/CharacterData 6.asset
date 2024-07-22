@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40d2e9efa04e9084d88404619e31b090, type: 3}
   m_Name: CharacterData 6
   m_EditorClassIdentifier: 
-  CharacterIcon: {fileID: 21300000, guid: 2d6ef47ebd6da1b4fbcda21e0aaf2a07, type: 3}
-  CharacterName: Ship09
+  characterIcon: {fileID: 21300000, guid: 2d6ef47ebd6da1b4fbcda21e0aaf2a07, type: 3}
+  characterPrefab: {fileID: 1304531895744914, guid: 2ada30028504d474aa0cae96f5c153cf, type: 3}
+  characterName: Ship_09
   HP: 40
   hpRegeneratePerSecond: 0
   lifeStealRate: 0

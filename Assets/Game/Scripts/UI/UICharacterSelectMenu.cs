@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using TMPro;
-using UnityEditor.U2D.Animation;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -135,6 +134,7 @@ public class UICharacterSelectMenu : UIBase
     {
         CloseUI();
         AddWeaponToGameInventory();
+        EventManager.instance.OnSetCharacterData(selectCharacter.characterData);
         EventManager.instance.OnGenerateWeaonInInventory();
         EventManager.instance.OnStartGame();
     }
@@ -152,8 +152,8 @@ public class UICharacterSelectMenu : UIBase
     public void UpdateSelectingCharacterInfo(CharacterData_SO data)
     {
         ClearCharacterProperties();
-        img_CharacterInfoIcon.sprite = data.CharacterIcon;
-        text_CharacterInfoName.text = data.CharacterName;
+        img_CharacterInfoIcon.sprite = data.characterIcon;
+        text_CharacterInfoName.text = data.characterName;
         GameObject text_Property = trans_CharacterProperties_Parent.GetChild(0).gameObject;
         GameObject[] textList = new GameObject[7];
         for(int i = 0; i < 7; i++)
@@ -175,8 +175,8 @@ public class UICharacterSelectMenu : UIBase
         if (selectCharacter == null) return;
         ClearCharacterProperties();
         CharacterData_SO data = selectCharacter.characterData;
-        img_CharacterInfoIcon.sprite = data.CharacterIcon;
-        text_CharacterInfoName.text = data.CharacterName;
+        img_CharacterInfoIcon.sprite = data.characterIcon;
+        text_CharacterInfoName.text = data.characterName;
         GameObject text_Property = trans_CharacterProperties_Parent.GetChild(0).gameObject;
         GameObject[] textList = new GameObject[7];
         for(int i = 0; i < 7; i++)

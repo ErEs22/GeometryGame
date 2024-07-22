@@ -61,7 +61,7 @@ public class LevelManager : MonoBehaviour
         Debug.Log("当前关卡：" + currentLevel);
         EventManager.instance.OnInitPlayerStatus();
         EventManager.instance.OnOpenUI(eUIID.PlayerStatusBar);
-        return;
+        // return;
         ClearPlayerUpgradeCount();
         StartLevelCountDown();
         enemyManager.SetCurrentEnemyList();
@@ -143,6 +143,7 @@ public class LevelManager : MonoBehaviour
 
     private async void StartSpawnEnemy()
     {
+        //TODO 精英和Boss关才能生成对应的精英怪和Boss
         if(levelStatus == eLevelStatus.Ended || GlobalVar.gameStatus == eGameStatus.Ended) return;
         int enemySpawnCount = GetLevelSpawnEnemysInWaves();
         if(enemyManager.enemies.Count <= 100)

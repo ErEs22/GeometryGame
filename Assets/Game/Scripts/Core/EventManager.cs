@@ -39,12 +39,18 @@ public class EventManager : MonoBehaviour
     public event UnityAction<int> onUpdatePlayerCurrentHP = delegate{};
     public event UnityAction onGameover = delegate{};
     public event UnityAction onClearAllExpBall = delegate{};
+    public event UnityAction<CharacterData_SO> onSetCharacterData = delegate{};
 
     private void Awake() {
         if(instance == null)
         {
             instance = this;
         }
+    }
+
+    public void OnSetCharacterData(CharacterData_SO characterData)
+    {
+        onSetCharacterData.Invoke(characterData);
     }
 
     public void OnClearAllExpBall()

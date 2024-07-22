@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class PlayerState : MonoBehaviour, ITakeDamage
 {
-    private PlayerManager playerManager;
+    private const string path_PlayerModel = "Model";
+    private Transform playerModelParentTrans;
     public CharacterData_SO playerData;
     private int HP = 20;
     private int maxHP = 20;
@@ -20,9 +21,11 @@ public class PlayerState : MonoBehaviour, ITakeDamage
     private int currentPlayerLevel = 1;
 
     private void Awake() {
+        playerModelParentTrans = transform.Find(path_PlayerModel);
     }
 
     private void OnEnable() {
+        EventManager.instance.onSetCharacterData += SetCharacterData;
         EventManager.instance.onInitPlayerStatus += InitData;
         EventManager.instance.onCollectExpBall += CollectExpBall;
         EventManager.instance.onChangeBonusCoinCount += ChangeBonusCoinCount;
@@ -30,6 +33,7 @@ public class PlayerState : MonoBehaviour, ITakeDamage
     }
 
     private void OnDisable() {
+        EventManager.instance.onSetCharacterData -= SetCharacterData;
         EventManager.instance.onInitPlayerStatus -= InitData;
         EventManager.instance.onCollectExpBall -= CollectExpBall;
         EventManager.instance.onChangeBonusCoinCount -= ChangeBonusCoinCount;
@@ -44,6 +48,11 @@ public class PlayerState : MonoBehaviour, ITakeDamage
                 CollectExpBall();
             break;
         }
+    }
+
+    private void SetCharacterData(CharacterData_SO data)
+    {
+        playerData = data;
     }
 
     private void InitData()
@@ -65,6 +74,7 @@ public class PlayerState : MonoBehaviour, ITakeDamage
         GameCoreData.PlayerProperties.criticalRate = EyreUtility.Round(criticalRate * 100);
         GameCoreData.PlayerProperties.attackRange = 0;
         GameCoreData.PlayerProperties.moveSpeed = EyreUtility.Round((moveSpeed - 1) * 100);
+        Instantiate(playerData.characterPrefab,playerModelParentTrans);
         EventManager.instance.OnInitStatusBar(maxHP);
     }
 

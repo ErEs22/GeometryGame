@@ -32,7 +32,7 @@ public class Item_Character : MonoBehaviour,IPointerEnterHandler,IPointerExitHan
     {
         characterData = characterData_SO;
         this.uICharacterSelectMenu = uICharacterSelectMenu;
-        img_CharacterIcon.sprite = characterData.CharacterIcon;
+        img_CharacterIcon.sprite = characterData.characterIcon;
     }
 
     private void OnBtnSelfClick()
