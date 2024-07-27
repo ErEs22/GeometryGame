@@ -273,7 +273,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.254717, g: 0.254717, b: 0.254717, a: 1}
+  m_Color: {r: 0.254717, g: 0.254717, b: 0.254717, a: 0.60784316}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -836,7 +836,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5f4480bfb75d9ef42b7983c0d33efc54, type: 2}
   - {fileID: 11400000, guid: 06ddeb282f975ee46944132fa3c8f67a, type: 2}
   - {fileID: 11400000, guid: 659402dd78ec9cd4bb5ebda6e7eb9d05, type: 2}
-  weapons: []
+  selectWeapon: {fileID: 0}
 --- !u!1 &5553047254473640596
 GameObject:
   m_ObjectHideFlags: 0

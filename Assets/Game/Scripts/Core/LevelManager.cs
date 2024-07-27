@@ -111,6 +111,7 @@ public class LevelManager : MonoBehaviour
 
     private void UpdateGameAndLevelStatusWhenLevelEnd()
     {
+        //TODO 游戏结束后场景中还有未清除的物体,控制指定敌人在指定关卡生成
         EventManager.instance.OnDisableLocomotionInput();
         levelStatus = eLevelStatus.Ended;
         if(currentLevel < 20)
@@ -144,7 +145,10 @@ public class LevelManager : MonoBehaviour
     private async void StartSpawnEnemy()
     {
         //TODO 精英和Boss关才能生成对应的精英怪和Boss
-        if(levelStatus == eLevelStatus.Ended || GlobalVar.gameStatus == eGameStatus.Ended) return;
+        if(levelStatus == eLevelStatus.Ended || GlobalVar.gameStatus == eGameStatus.Ended){
+            enemyManager.ClearAllEnemy();
+            return;
+        }
         int enemySpawnCount = GetLevelSpawnEnemysInWaves();
         if(enemyManager.enemies.Count <= 100)
         {

@@ -11,6 +11,12 @@ public class EggEnemy : Enemy
         Invoke(nameof(Skill),5);
     }
 
+    public override void Die()
+    {
+        CancelInvoke(nameof(Skill));
+        base.Die();
+    }
+
     protected override void Skill()
     {
         EnemyData_WithSplit_SO data = enemyData as EnemyData_WithSplit_SO;

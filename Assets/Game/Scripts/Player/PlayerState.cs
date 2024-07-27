@@ -6,6 +6,7 @@ public class PlayerState : MonoBehaviour, ITakeDamage
 {
     private const string path_PlayerModel = "Model";
     private Transform playerModelParentTrans;
+    private Collider2D playerCollider;
     public CharacterData_SO playerData;
     private int HP = 20;
     private int maxHP = 20;
@@ -22,6 +23,7 @@ public class PlayerState : MonoBehaviour, ITakeDamage
 
     private void Awake() {
         playerModelParentTrans = transform.Find(path_PlayerModel);
+        playerCollider = GetComponent<Collider2D>();
     }
 
     private void OnEnable() {
@@ -76,6 +78,7 @@ public class PlayerState : MonoBehaviour, ITakeDamage
         GameCoreData.PlayerProperties.moveSpeed = EyreUtility.Round((moveSpeed - 1) * 100);
         Instantiate(playerData.characterPrefab,playerModelParentTrans);
         EventManager.instance.OnInitStatusBar(maxHP);
+        playerCollider.enabled = true;
     }
 
     private void CollectExpBall()
@@ -153,14 +156,14 @@ public class PlayerState : MonoBehaviour, ITakeDamage
         HP = Mathf.Clamp(HP - damage,0,int.MaxValue);
         EventManager.instance.OnUpdateHealthBar(HP,maxHP);
         EventManager.instance.OnHealthBarFlash(Color.red,Color.white);
-        //TODO击中效果
         //死亡
         if(HP == 0)
         {
-            EventManager.instance.OnClearAllExpBall();
-            EventManager.instance.OnLevelEnd();
             LevelManager.levelStatus = eLevelStatus.Ended;
             GlobalVar.gameStatus = eGameStatus.Ended;
+            playerCollider.enabled = false;
+            EventManager.instance.OnClearAllExpBall();
+            EventManager.instance.OnLevelEnd();
             EventManager.instance.OnOpenUI(eUIID.FinishMenu);
             EventManager.instance.OnGameover();
             return true;

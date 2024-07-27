@@ -85,9 +85,14 @@ public class EnemyManager : MonoBehaviour
     /// </summary>
     public void ClearAllEnemy()
     {
+        //TODO列表在删除时数量在动态变化，导致遍历出问题
+        int f = 0;
+        Debug.Log("ClearEnemyCount:" + enemies.Count);
         for(int i = 0; i < enemies.Count; i++)
         {
+            f++;
             enemies[i].DieWithoutAnyDropBonus();
         }
+        Debug.Log("ClearallEnemy:" + f);
     }
 }

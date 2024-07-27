@@ -285,17 +285,17 @@ MonoBehaviour:
   - prefab: {fileID: 3994106403445518885, guid: 4470064e02fa64b449dd233092c62e82, type: 3}
     size: 100
   playerWeaponPools:
-  - prefab: {fileID: 6764894451183402456, guid: 8973471eab14b0a4d9dfdbb94a6c5cbf, type: 3}
+  - prefab: {fileID: 1886464142042172, guid: ae0994af3914d9b4d9da4a0685d06265, type: 3}
     size: 6
-  - prefab: {fileID: 6764894451183402456, guid: 7b52531c307f4a847af1185764caf430, type: 3}
+  - prefab: {fileID: 1110718186611134, guid: 8ecb14fbc1d45154ea38c5351febb02e, type: 3}
     size: 6
-  - prefab: {fileID: 6764894451183402456, guid: e92e6d4d2554c9045970dcc85f7d4bd9, type: 3}
+  - prefab: {fileID: 1668988907935880, guid: a4a5a2e3ef62bc949b975ea395dc7b84, type: 3}
     size: 6
-  - prefab: {fileID: 6764894451183402456, guid: 5e375d9cb83081d44b85e126bed1b938, type: 3}
+  - prefab: {fileID: 1563429932685834, guid: 7bf0e51e7a2c40e4ea14924f4296ff03, type: 3}
     size: 6
-  - prefab: {fileID: 6764894451183402456, guid: 21a90fbe2f856654da4d3e9b85752923, type: 3}
+  - prefab: {fileID: 1080393431634716, guid: 20eeddbea29aaaf4f9b1b92c43cffa02, type: 3}
     size: 6
-  - prefab: {fileID: 6764894451183402456, guid: 12f89afad295bf7498d1e432b1583b91, type: 3}
+  - prefab: {fileID: 1588794813270412, guid: 456a35eff3519cf4e997f43ea81824f0, type: 3}
     size: 6
   - prefab: {fileID: 6764894451183402456, guid: a97f25969f499dc418496bb0876294de, type: 3}
     size: 6

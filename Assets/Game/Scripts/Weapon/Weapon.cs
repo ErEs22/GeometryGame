@@ -1,11 +1,14 @@
 using System;
-using System.Transactions;
 using UnityEditor;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class Weapon : MonoBehaviour
 {
+    private const string path_Transfrom_Weapon = "Model/Weapon_Fixed";
+    private const string path_Transfrom_MuzzlePoint = "Model/Weapon_Fixed/MuzzlePoint";
+    protected Transform transform_Weapon;
+    protected Transform muzzlePoint;
     protected GameObject projectilePrefab;
     [Header("Weapon Data---")]
     [SerializeField]
@@ -43,7 +46,6 @@ public class Weapon : MonoBehaviour
     [Header("---")]
     public LayerMask targetLayer;
     protected float currentFireInterval;
-    [DisplayOnly] public Transform muzzlePoint;
     public bool IsWeaponActive
     {
         get
@@ -62,11 +64,12 @@ public class Weapon : MonoBehaviour
     private void Awake()
     {
         targetLayer = 1 << 6;
+        transform_Weapon = transform.Find(path_Transfrom_Weapon);
+        muzzlePoint = transform.Find(path_Transfrom_MuzzlePoint);
     }
 
     private void OnEnable()
     {
-        muzzlePoint = transform.Find("MuzzlePoint");
         EventManager.instance.onUpdatePlayerProperty += UpdateData;
     }
 
@@ -117,7 +120,7 @@ public class Weapon : MonoBehaviour
     protected virtual void Fire()
     {
         CheckIsCriticalHit();
-        ReleaseSingleProjectile(projectilePrefab, muzzlePoint.position, transform.rotation);
+        ReleaseSingleProjectile(projectilePrefab, muzzlePoint.position, transform_Weapon.rotation);
     }
 
     protected virtual Projectile ReleaseSingleProjectile(GameObject projectile, Vector3 muzzlePos, Quaternion rotation)
@@ -159,9 +162,10 @@ public class Weapon : MonoBehaviour
 
     private void TowardsClosetEnemy()
     {
-        Vector3 dir = Vector3.Normalize(GetClosetEnemy().transform.position - transform.position);
+        Vector3 dir = Vector3.Normalize(GetClosetEnemy().transform.position - transform_Weapon.position);
+        dir.z = 0;
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        transform_Weapon.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
     }
 
     private bool FindEnemyInRange()

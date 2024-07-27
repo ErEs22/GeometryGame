@@ -35,7 +35,6 @@ public class Projectile_Rocket : Projectile
 
     private void Explode()
     {
-        //TODO爆炸效果显示
         DisableProjectileCollider();
         flySpeed = 0;
         transform.DOScale(10.0f,0.2f).OnComplete(()=>{
