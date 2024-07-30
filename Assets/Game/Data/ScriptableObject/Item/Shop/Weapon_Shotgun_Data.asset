@@ -31,7 +31,7 @@ MonoBehaviour:
   - weaponProperty: 3
     propertyValue: 20
   - weaponProperty: 4
-    propertyValue: 400
+    propertyValue: 800
   - weaponProperty: 5
     propertyValue: 30
   - weaponProperty: 8

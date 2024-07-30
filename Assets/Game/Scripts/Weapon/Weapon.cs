@@ -61,7 +61,7 @@ public class Weapon : MonoBehaviour
     private float fireCountDown = 0;
     protected bool isCriticalHit = false;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         targetLayer = 1 << 6;
         transform_Weapon = transform.Find(path_Transfrom_Weapon);
@@ -160,7 +160,7 @@ public class Weapon : MonoBehaviour
         return closetEnemy;
     }
 
-    private void TowardsClosetEnemy()
+    protected virtual void TowardsClosetEnemy()
     {
         Vector3 dir = Vector3.Normalize(GetClosetEnemy().transform.position - transform_Weapon.position);
         dir.z = 0;

@@ -96,7 +96,6 @@ public class PredatorBoss : Enemy
     protected Projectile_Predator ReleaseSingleProjectile(float moveDirRad,Vector3 startPos,int flySpeed = 0)
     {
         Quaternion rotation = Quaternion.AngleAxis(moveDirRad, Vector3.forward);
-        Debug.Log(rotation);
         Projectile_Predator newProjectile = PoolManager.Release(newEnemyData.projectile, startPos,rotation).GetComponent<Projectile_Predator>();
         newProjectile.damage = enemyData.damage;
         newProjectile.flySpeed = flySpeed;

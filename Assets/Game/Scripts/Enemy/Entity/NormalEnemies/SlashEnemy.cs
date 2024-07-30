@@ -31,7 +31,7 @@ public class SlashEnemy : Enemy
     {
         GameObject damageObject = PoolManager.Release(newEnemyData.projectile);
         damageObject.GetComponent<Projectile_Slash>().damage = newEnemyData.damage;
-        // damageObject.GetComponent<Projectile_Slash>().SetDelayDeativate();
+        damageObject.GetComponent<Projectile_Slash>().Attack();
         int randomDeg = Random.Range(0,360);
         damageObject.transform.rotation = Quaternion.AngleAxis(randomDeg,Vector3.forward);
         damageObject.transform.position = playerTrans.position;

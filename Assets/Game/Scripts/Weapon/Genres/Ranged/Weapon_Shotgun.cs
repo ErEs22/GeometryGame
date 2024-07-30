@@ -22,7 +22,7 @@ public class Weapon_Shotgun : Weapon
     protected override void Fire()
     {
         CheckIsCriticalHit();
-        float angle = Mathf.Atan2(transform.right.y,transform.right.x) * Mathf.Rad2Deg;
+        float angle = Mathf.Atan2(transform_Weapon.right.y,transform_Weapon.right.x) * Mathf.Rad2Deg;
         angle -= anglePerProjectile;
         float timer = 0;
         DOTween.To(() => timer, x => timer = x,1,verticalProjectilInterval).OnStepComplete(() =>{

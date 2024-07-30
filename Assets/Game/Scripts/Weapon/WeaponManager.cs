@@ -5,11 +5,7 @@ public class WeaponManager : MonoBehaviour
 {
     [SerializeField] private GameObject defaultWeapon;
     [DisplayOnly] public List<Weapon> weapons = new List<Weapon>();
-    private PlayerManager playerManager;
-
-    private void Awake() {
-        playerManager = GetComponentInParent<PlayerManager>();
-    }
+    public PlayerManager playerManager;
 
     private void OnEnable() {
         EventManager.instance.onGenerateWeaonInInventory += GenerateWeaponsInInventory;
@@ -25,6 +21,10 @@ public class WeaponManager : MonoBehaviour
         
         // Invoke(nameof(ClearWeaponSlot),2);
         // Invoke(nameof(DisableAllWeapon),2);
+    }
+
+    private void LateUpdate() {
+        transform.position = playerManager.transform.position;
     }
 
     private void GenerateWeaponsInInventory()

@@ -199,13 +199,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 187567175}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.2, y: -13.4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1203777181}
-  m_RootOrder: 2
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &187567177
 MonoBehaviour:
@@ -221,6 +221,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   defaultWeapon: {fileID: 6764894451183402456, guid: 46b20ee62c7550647b94e91b2e2aac0a, type: 3}
   weapons: []
+  playerManager: {fileID: 1203777183}
 --- !u!1 &203101615
 GameObject:
   m_ObjectHideFlags: 0
@@ -253,11 +254,7 @@ MonoBehaviour:
   playerProjectilePools:
   - prefab: {fileID: 3994106403445518885, guid: c5f15d73f3e39b2479f712dbbf505e09, type: 3}
     size: 150
-  - prefab: {fileID: 3994106403445518885, guid: ca69b3bff52ee6046b459b1b73461a6b, type: 3}
-    size: 150
   - prefab: {fileID: 3994106403445518885, guid: 8f0b9e5f1015f0d4491c9c09f0718874, type: 3}
-    size: 150
-  - prefab: {fileID: 3994106403445518885, guid: c3e4919c8303ed7429301f186ad25804, type: 3}
     size: 150
   - prefab: {fileID: 3994106403445518885, guid: afb00c81b24e1fc4ebb297d47223ed1e, type: 3}
     size: 150
@@ -297,17 +294,9 @@ MonoBehaviour:
     size: 6
   - prefab: {fileID: 1588794813270412, guid: 456a35eff3519cf4e997f43ea81824f0, type: 3}
     size: 6
-  - prefab: {fileID: 6764894451183402456, guid: a97f25969f499dc418496bb0876294de, type: 3}
+  - prefab: {fileID: 1069497590386464, guid: deefce1e7606b1743a85d46e2f81b062, type: 3}
     size: 6
-  - prefab: {fileID: 6764894451183402456, guid: 3598a3b359f01cd48aa78423bb1477bb, type: 3}
-    size: 6
-  - prefab: {fileID: 6764894451183402456, guid: eecdff991c774854cb959f323ff499dc, type: 3}
-    size: 6
-  - prefab: {fileID: 6764894451183402456, guid: ff6d27389dc971844a6373bcf048f62e, type: 3}
-    size: 6
-  - prefab: {fileID: 6764894451183402456, guid: 057b45caf19008243abd77638e7c05ff, type: 3}
-    size: 6
-  - prefab: {fileID: 6764894451183402456, guid: 9a9d7de002279b441a38ef17246fea16, type: 3}
+  - prefab: {fileID: 1500440585460168, guid: 6d82c9dbbdff0754e9b25ddef22ada5d, type: 3}
     size: 6
   enemyPools:
   - prefab: {fileID: 5836960803617581082, guid: 383f1ef67f4b65b49a4c4cf162a70d4e, type: 3}
@@ -364,7 +353,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!224 &308179628 stripped
 RectTransform:
@@ -453,7 +442,7 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &343108893
 GameObject:
@@ -622,9 +611,9 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.1
+  near clip plane: 0.001
   far clip plane: 5000
-  field of view: 40
+  field of view: 80
   orthographic: 1
   orthographic size: 15
   m_Depth: 1
@@ -650,7 +639,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.2, y: -13.4, z: -10}
+  m_LocalPosition: {x: -0.2, y: -13.4, z: -18}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -777,7 +766,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemy: {fileID: 5836960803617581082, guid: ec74911f699c15f48afee37d41f0f31d, type: 3}
-  specificEnemy: {fileID: 5836960803617581082, guid: 5b5c272bc29dd584695219c663263ba3, type: 3}
+  specificEnemy: {fileID: 5836960803617581082, guid: 383f1ef67f4b65b49a4c4cf162a70d4e, type: 3}
 --- !u!114 &690686607
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -887,9 +876,9 @@ MonoBehaviour:
   m_LookAt: {fileID: 0}
   m_Follow: {fileID: 1203777181}
   m_Lens:
-    FieldOfView: 40
+    FieldOfView: 80
     OrthographicSize: 15
-    NearClipPlane: 0.1
+    NearClipPlane: 0.001
     FarClipPlane: 5000
     Dutch: 0
     ModeOverride: 0
@@ -912,7 +901,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1187453877}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.2, y: -13.4, z: -10}
+  m_LocalPosition: {x: -0.2, y: -13.4, z: -18}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -971,7 +960,6 @@ Transform:
   m_Children:
   - {fileID: 1580632361}
   - {fileID: 490522975}
-  - {fileID: 187567176}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1226,7 +1214,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1438279912
 GameObject:
@@ -1322,7 +1310,7 @@ RectTransform:
   m_Children:
   - {fileID: 126712965}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1405,7 +1393,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1478470778
 GameObject:
@@ -1524,7 +1512,7 @@ MonoBehaviour:
   m_TargetMovementOnly: 1
   m_ScreenX: 0.5
   m_ScreenY: 0.5
-  m_CameraDistance: 10
+  m_CameraDistance: 18
   m_DeadZoneWidth: 0.1
   m_DeadZoneHeight: 0.1
   m_DeadZoneDepth: 0
@@ -1695,7 +1683,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1898412125
 GameObject:
@@ -1726,7 +1714,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!224 &1953521631 stripped
 RectTransform:
@@ -2419,7 +2407,7 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: be110957589e0264fb01f95e6f8fa1d1, type: 2}
     - target: {fileID: 8205439287493643634, guid: 251a54746e55b1c44ad1ea85a09d0ad4, type: 3}
       propertyPath: currentCharacterAvailableWeapons.Array.size
-      value: 12
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 8205439287493643634, guid: 251a54746e55b1c44ad1ea85a09d0ad4, type: 3}
       propertyPath: currentCharacterAvailableWeapons.Array.data[0]
@@ -2448,11 +2436,11 @@ PrefabInstance:
     - target: {fileID: 8205439287493643634, guid: 251a54746e55b1c44ad1ea85a09d0ad4, type: 3}
       propertyPath: currentCharacterAvailableWeapons.Array.data[6]
       value: 
-      objectReference: {fileID: 11400000, guid: 7235e8c0fbf71d64794d407958cffc4b, type: 2}
+      objectReference: {fileID: 11400000, guid: 523004688d5ccca4cac914eb1828a8dd, type: 2}
     - target: {fileID: 8205439287493643634, guid: 251a54746e55b1c44ad1ea85a09d0ad4, type: 3}
       propertyPath: currentCharacterAvailableWeapons.Array.data[7]
       value: 
-      objectReference: {fileID: 11400000, guid: e0ce3d8ae6f6f8e439035284213a4c79, type: 2}
+      objectReference: {fileID: 11400000, guid: e8480bbb47f55d64c92c1fe954ab45c6, type: 2}
     - target: {fileID: 8205439287493643634, guid: 251a54746e55b1c44ad1ea85a09d0ad4, type: 3}
       propertyPath: currentCharacterAvailableWeapons.Array.data[8]
       value: 

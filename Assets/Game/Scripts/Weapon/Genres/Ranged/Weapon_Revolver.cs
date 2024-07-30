@@ -1,10 +1,19 @@
+using DG.Tweening;
 using UnityEngine;
 
 public class Weapon_Revolver : Weapon
 {
+    private const string path_Transform_Barrel = "Model/Weapon_Fixed/Weapon/Head/Barrel";
+    private Transform transform_Barrel;
     float changeAmmoTime = 2.0f;
     [SerializeField][DisplayOnly]
     int projectileLeftInAmmo = 6;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        transform_Barrel = transform.Find(path_Transform_Barrel);
+    }
 
     public override void InitData(Inventory_Weapon data)
     {
@@ -29,16 +38,19 @@ public class Weapon_Revolver : Weapon
 
     protected override void Fire()
     {
-        base.Fire();
-        Mathf.Clamp(--projectileLeftInAmmo,0,int.MaxValue);
-        if(projectileLeftInAmmo <= 0)
+        transform_Barrel.DOLocalRotate(Vector3.forward * 720f,0.25f,RotateMode.Fast).SetRelative().OnComplete(()=>
         {
-            currentFireInterval = changeAmmoTime;
-            projectileLeftInAmmo = 6;
-        }
-        else
-        {
-            currentFireInterval = fireInterval;
-        }
+            base.Fire();
+            Mathf.Clamp(--projectileLeftInAmmo,0,int.MaxValue);
+            if(projectileLeftInAmmo <= 0)
+            {
+                currentFireInterval = changeAmmoTime;
+                projectileLeftInAmmo = 6;
+            }
+            else
+            {
+                currentFireInterval = fireInterval;
+            }
+        });
     }
 }

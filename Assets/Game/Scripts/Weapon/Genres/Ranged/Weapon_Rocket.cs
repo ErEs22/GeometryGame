@@ -1,7 +1,26 @@
+using DG.Tweening;
 using UnityEngine;
 
 public class Weapon_Rocket : Weapon
 {
+    private const string path_Transform_Barrel = "Model/Weapon_Fixed/Weapon/Barrel";
+    private Transform transform_Barrel;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        transform_Barrel = transform.Find(path_Transform_Barrel);
+    }
+
+    protected override void Fire()
+    {
+        base.Fire();
+        Sequence seq = DOTween.Sequence();
+        seq.Append(transform_Barrel.DOLocalMoveZ(-0.7f,0.08f).SetRelative());
+        seq.Append(transform_Barrel.DOLocalMoveZ(0.7f,0.08f).SetRelative());
+        seq.Play();
+    }
+
     public override void InitData(Inventory_Weapon data)
     {
         base.InitData(data);

@@ -27,7 +27,7 @@ public class EnemyGenerator : MonoBehaviour
         enemyManager = GetComponent<EnemyManager>();
         playerPos = GlobalVar.playerTrans.position;
         // GenerateEnemysAroundPoint(Vector3.zero,30);
-        // GenerateEnemysInRandomPos(specificEnemy,1);
+        GenerateEnemysInRandomPos(specificEnemy,1);
     }
 
     private void Start()
@@ -173,12 +173,11 @@ public class EnemyGenerator : MonoBehaviour
     public void GenerateEnemy(GameObject enemy,Vector2 pos)
     {
         //关卡结束后停止生成敌人
-        if(LevelManager.levelStatus == eLevelStatus.Ended ||
-        GlobalVar.gameStatus == eGameStatus.Ended ||
-        GlobalVar.gameStatus == eGameStatus.MainMenu) return;
+        // if(LevelManager.levelStatus == eLevelStatus.Ended ||
+        // GlobalVar.gameStatus == eGameStatus.Ended ||
+        // GlobalVar.gameStatus == eGameStatus.MainMenu) return;
 
         Enemy newEnemy = PoolManager.Release(enemy, pos).GetComponent<Enemy>();
-        Debug.Log(GlobalVar.gameStatus.ToString() + "____" + newEnemy.gameObject.name.ToString());
         enemyManager.enemies.Add(newEnemy);
         newEnemy.Init(enemyManager);
         newEnemy.enemyGenerator = this;
