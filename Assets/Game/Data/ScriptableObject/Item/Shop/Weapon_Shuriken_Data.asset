@@ -10,29 +10,29 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8a98988e7b5a8d34fac1743b1f8c4dbc, type: 3}
-  m_Name: Weapon_Shotgun_Data
+  m_Name: Weapon_Shuriken_Data
   m_EditorClassIdentifier: 
   itemIcon: {fileID: 21300000, guid: 188bee68a52a0264fa91b146e139d28b, type: 3}
-  itemName: Shotgun
+  itemName: Shuriken
   itemType: Weapon
   itemCost: 20
-  itemLevel: 1
+  itemLevel: 4
   shopItemType: 1
   projectileSpeed: 40
-  prefab_Weapon: {fileID: 1080393431634716, guid: 20eeddbea29aaaf4f9b1b92c43cffa02, type: 3}
-  prefab_Projectile: {fileID: 3994106403445518885, guid: 8f0b9e5f1015f0d4491c9c09f0718874, type: 3}
+  prefab_Weapon: {fileID: 1206074395995300, guid: dbc4b96cfbaf72744a728b2e502235fa, type: 3}
+  prefab_Projectile: {fileID: 3994106403445518885, guid: f81d8a380e243854a80a42b2b1ef60c4, type: 3}
   itemProperties:
   - weaponProperty: 0
     propertyValue: 5
   - weaponProperty: 1
     propertyValue: 2
   - weaponProperty: 2
-    propertyValue: 0.5
+    propertyValue: 1
   - weaponProperty: 3
-    propertyValue: 20
+    propertyValue: 0
   - weaponProperty: 4
     propertyValue: 800
   - weaponProperty: 5
-    propertyValue: 30
+    propertyValue: 0
   - weaponProperty: 8
     propertyValue: 0.5

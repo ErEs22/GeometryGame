@@ -155,7 +155,7 @@ public class LevelManager : MonoBehaviour
             switch(currentLevel)
             {
                 case 5:
-                    enemyGenerator.GenerateEnemysAroundPoint(enemyManager.GetEnemyInCurrentEnemyListByName(EnemyName.HunterEnemy),enemySpawnCount);
+                    enemyGenerator.GenerateEnemysAroundRandomPoint(enemyManager.GetEnemyInCurrentEnemyListByName(EnemyName.HunterEnemy),enemySpawnCount);
                     await UniTask.Delay(500);
                     for(int i = 0; i < Mathf.FloorToInt(enemySpawnCount / 2); i++)
                     {
@@ -164,7 +164,7 @@ public class LevelManager : MonoBehaviour
                     await UniTask.Delay(GetLevelSpawnEnemysInterval() - 500);
                 break;
                 case 10:
-                    enemyGenerator.GenerateEnemysAroundPoint(enemyManager.GetEnemyInCurrentEnemyListByName(EnemyName.FlyEnemy),enemySpawnCount);
+                    enemyGenerator.GenerateEnemysAroundRandomPoint(enemyManager.GetEnemyInCurrentEnemyListByName(EnemyName.FlyEnemy),enemySpawnCount);
                     await UniTask.Delay(500);
                     for(int i = 0; i < Mathf.FloorToInt(enemySpawnCount / 2); i++)
                     {
@@ -173,7 +173,7 @@ public class LevelManager : MonoBehaviour
                     await UniTask.Delay(GetLevelSpawnEnemysInterval() - 500);
                 break;
                 case 15:
-                    enemyGenerator.GenerateEnemysAroundPoint(enemyManager.GetEnemyInCurrentEnemyListByName(EnemyName.HunterEnemy),enemySpawnCount);
+                    enemyGenerator.GenerateEnemysAroundRandomPoint(enemyManager.GetEnemyInCurrentEnemyListByName(EnemyName.HunterEnemy),enemySpawnCount);
                     await UniTask.Delay(500);
                     for(int i = 0; i < Mathf.FloorToInt(enemySpawnCount / 2); i++)
                     {

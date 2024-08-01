@@ -95,6 +95,11 @@ public class Projectile : MonoBehaviour
         Invoke(nameof(Deativate), lifeTime);
     }
 
+    public void CancelDelayDeativate()
+    {
+        CancelInvoke(nameof(Deativate));
+    }
+
     protected void Deativate()
     {
         if (gameObject.activeSelf == false) return;

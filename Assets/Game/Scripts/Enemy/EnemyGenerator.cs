@@ -10,31 +10,14 @@ public class EnemyGenerator : MonoBehaviour
     EnemyManager enemyManager;
     Vector2 playerPos;
 
-    struct RadDis
-    {
-        public float radius;
-        public int side;
-        public RadDis(float radius, int side)
-        {
-            this.radius = radius;
-            this.side = side;
-        }
+    private void Awake() {
+        enemyManager = GetComponent<EnemyManager>();
+        playerPos = GlobalVar.playerTrans.position;
     }
 
     private void OnEnable()
     {
-        // SetCrossPoint();
-        enemyManager = GetComponent<EnemyManager>();
-        playerPos = GlobalVar.playerTrans.position;
-        // GenerateEnemysAroundPoint(Vector3.zero,30);
-        GenerateEnemysInRandomPos(specificEnemy,1);
-    }
-
-    private void Start()
-    {
-        // enemyManager = GetComponent<EnemyManager>();
-        // playerPos = GlobalVar.playerObj.position;
-        // GenerateEnemysInRandomPos(1);
+        GenerateEnemysAroundPoint(specificEnemy,5,Vector3.zero);
     }
 
     /// <summary>
@@ -159,13 +142,23 @@ public class EnemyGenerator : MonoBehaviour
             GenerateEnemy(enemy,EyreUtility.GenerateRandomPosInRectExcludeCircle(playerPos,5));
         }
     }
-    public void GenerateEnemysAroundPoint(GameObject enemy, int count)
+    
+    public void GenerateEnemysAroundRandomPoint(GameObject enemy, int count)
     {
         // float radius = Mathf.Ceil(count / 6f) + 1;
         Vector2 randomCenterPos = EyreUtility.GenerateRandomPosInRectExcludeCircle(playerPos,5);
         for (int i = 0; i < count; i++)
         {
             Vector2 randomPos = EyreUtility.GenerateRandomPosInRectByPosExcludeCircle(randomCenterPos,playerPos,5,10,10);
+            GenerateEnemy(enemy,randomPos);
+        }
+    }
+
+    public void GenerateEnemysAroundPoint(GameObject enemy, int count,Vector3 point)
+    {
+        for (int i = 0; i < count; i++)
+        {
+            Vector2 randomPos = EyreUtility.GenerateRandomPosInRectByPosExcludeCircle(point,playerPos,5,15,15);
             GenerateEnemy(enemy,randomPos);
         }
     }

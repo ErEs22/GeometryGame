@@ -138,8 +138,7 @@ public class Weapon : MonoBehaviour
 
     protected bool CheckIsCriticalHit()
     {
-        float totalCirticalRate = (criticalRate + GameCoreData.PlayerProperties.criticalRate) * 0.01f;
-        isCriticalHit = EyreUtility.GetChanceResult(totalCirticalRate);
+        isCriticalHit = EyreUtility.GetChanceResult(criticalRate);
         return isCriticalHit;
     }
 

@@ -102,16 +102,16 @@ public static class EyreUtility
     /// 以指定点为原点在矩形范围内生成随机点，排除指定圆内的点
     /// </summary>
     /// <param name="relatePos">指定点</param>
-    /// <param name="circleCenter">排除圆的圆心</param>
-    /// <param name="circleRadius">排除圆的半径</param>
+    /// <param name="excludeCircleCenter">排除圆的圆心</param>
+    /// <param name="excludeCircleRadius">排除圆的半径</param>
     /// <param name="rectWidth">矩形宽</param>
     /// <param name="rectHeight">矩形高</param>
     /// <returns>随机点</returns>
-    public static Vector2 GenerateRandomPosInRectByPosExcludeCircle(Vector2 relatePos, Vector2 circleCenter, float circleRadius, float rectWidth, float rectHeight)
+    public static Vector2 GenerateRandomPosInRectByPosExcludeCircle(Vector2 relatePos, Vector2 excludeCircleCenter, float excludeCircleRadius, float rectWidth, float rectHeight)
     {
         Vector2 randomPos = new Vector2(Random.Range(-rectWidth / 2, rectWidth / 2), Random.Range(-rectHeight / 2, rectHeight / 2));
         randomPos = randomPos + relatePos;
-        while (Vector2.Distance(randomPos, circleCenter) < circleRadius)
+        while (Vector2.Distance(randomPos, excludeCircleCenter) < excludeCircleRadius)
         {
             randomPos = new Vector2(Random.Range(-rectWidth / 2, rectWidth / 2), Random.Range(-rectHeight / 2, rectHeight / 2));
             randomPos = randomPos + relatePos;
