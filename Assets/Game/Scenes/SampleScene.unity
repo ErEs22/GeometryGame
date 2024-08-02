@@ -219,7 +219,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0674b812e84d86942add40cbe691f8f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultWeapon: {fileID: 6764894451183402456, guid: 46b20ee62c7550647b94e91b2e2aac0a, type: 3}
+  defaultWeapon: {fileID: 1588794813270412, guid: 456a35eff3519cf4e997f43ea81824f0, type: 3}
   weapons: []
   playerManager: {fileID: 1203777183}
 --- !u!1 &203101615
@@ -266,6 +266,18 @@ MonoBehaviour:
     size: 150
   - prefab: {fileID: 3994106403445518885, guid: 3cdacb948dd385c4097cf5a537eb3afb, type: 3}
     size: 150
+  - prefab: {fileID: 3994106403445518885, guid: bbe5f9c24cc6684459207408c534476a, type: 3}
+    size: 150
+  - prefab: {fileID: 3994106403445518885, guid: 3ed85b2c6be0d4345bd2aef07afd51a6, type: 3}
+    size: 150
+  - prefab: {fileID: 3994106403445518885, guid: 0b512a1b5157ac54c9270edf03b78c32, type: 3}
+    size: 150
+  - prefab: {fileID: 3994106403445518885, guid: 934a7adf88ed53b46961d981c01b4439, type: 3}
+    size: 150
+  - prefab: {fileID: 3994106403445518885, guid: e4d54f5609a0f574eb39d8b6bad3c53a, type: 3}
+    size: 150
+  - prefab: {fileID: 3994106403445518885, guid: 5154b19ad5eb4374d96871389218dd64, type: 3}
+    size: 150
   enemyProjectilePools:
   - prefab: {fileID: 3994106403445518885, guid: 66218b1182b4e91469ba51eab84f106b, type: 3}
     size: 100
@@ -307,6 +319,8 @@ MonoBehaviour:
   - prefab: {fileID: 1206074395995300, guid: dbc4b96cfbaf72744a728b2e502235fa, type: 3}
     size: 6
   - prefab: {fileID: 1512905131166018, guid: 47175c7c60ccdeb41840028147e027bb, type: 3}
+    size: 6
+  - prefab: {fileID: 1359835491869086, guid: 852ddff3c3dcc324ba3a33ef5d7b0067, type: 3}
     size: 6
   enemyPools:
   - prefab: {fileID: 5836960803617581082, guid: 383f1ef67f4b65b49a4c4cf162a70d4e, type: 3}
@@ -429,7 +443,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: faeb6890b87a73043b3642dce039c1ac, type: 3}
-  m_Color: {r: 0, g: 0.78661054, b: 0.7924528, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -583,7 +597,8 @@ GameObject:
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
   - component: {fileID: 519420034}
-  m_Layer: 0
+  - component: {fileID: 519420035}
+  m_Layer: 10
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -690,6 +705,66 @@ MonoBehaviour:
   m_CameraActivatedEvent:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &519420035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 948f4100a11a5c24981795d21301da5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  volumeTrigger: {fileID: 519420032}
+  volumeLayer:
+    serializedVersion: 2
+    m_Bits: 1472
+  stopNaNPropagation: 1
+  finalBlitToCameraTarget: 0
+  antialiasingMode: 0
+  temporalAntialiasing:
+    jitterSpread: 0.75
+    sharpness: 0.25
+    stationaryBlending: 0.95
+    motionBlending: 0.85
+  subpixelMorphologicalAntialiasing:
+    quality: 2
+  fastApproximateAntialiasing:
+    fastMode: 0
+    keepAlpha: 0
+  fog:
+    enabled: 1
+    excludeSkybox: 1
+  debugLayer:
+    lightMeter:
+      width: 512
+      height: 256
+      showCurves: 1
+    histogram:
+      width: 512
+      height: 256
+      channel: 3
+    waveform:
+      exposure: 0.12
+      height: 256
+    vectorscope:
+      size: 256
+      exposure: 0.12
+    overlaySettings:
+      linearDepth: 0
+      motionColorIntensity: 4
+      motionGridSize: 64
+      colorBlindnessType: 0
+      colorBlindnessStrength: 1
+  m_Resources: {fileID: 11400000, guid: d82512f9c8e5d4a4d938b575d47f88d4, type: 2}
+  m_ShowToolkit: 1
+  m_ShowCustomSorter: 1
+  breakBeforeColorGrading: 0
+  m_BeforeTransparentBundles: []
+  m_BeforeStackBundles: []
+  m_AfterStackBundles: []
 --- !u!1 &690686603
 GameObject:
   m_ObjectHideFlags: 0
@@ -2417,7 +2492,7 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: be110957589e0264fb01f95e6f8fa1d1, type: 2}
     - target: {fileID: 8205439287493643634, guid: 251a54746e55b1c44ad1ea85a09d0ad4, type: 3}
       propertyPath: currentCharacterAvailableWeapons.Array.size
-      value: 11
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 8205439287493643634, guid: 251a54746e55b1c44ad1ea85a09d0ad4, type: 3}
       propertyPath: currentCharacterAvailableWeapons.Array.data[0]
@@ -2466,7 +2541,7 @@ PrefabInstance:
     - target: {fileID: 8205439287493643634, guid: 251a54746e55b1c44ad1ea85a09d0ad4, type: 3}
       propertyPath: currentCharacterAvailableWeapons.Array.data[11]
       value: 
-      objectReference: {fileID: 11400000, guid: 33be283f8ca651c4fb5e62ea9f6011b5, type: 2}
+      objectReference: {fileID: 11400000, guid: 48ad8abfa46aceb45b9698bbb2edab87, type: 2}
     - target: {fileID: 8205439287493643634, guid: 251a54746e55b1c44ad1ea85a09d0ad4, type: 3}
       propertyPath: currentCharacterAvailableWeapons.Array.data[12]
       value: 

@@ -20,7 +20,7 @@ MonoBehaviour:
   shopItemType: 1
   projectileSpeed: 40
   prefab_Weapon: {fileID: 1588794813270412, guid: 456a35eff3519cf4e997f43ea81824f0, type: 3}
-  prefab_Projectile: {fileID: 3994106403445518885, guid: c5f15d73f3e39b2479f712dbbf505e09, type: 3}
+  prefab_Projectile: {fileID: 3994106403445518885, guid: 3ed85b2c6be0d4345bd2aef07afd51a6, type: 3}
   itemProperties:
   - weaponProperty: 0
     propertyValue: 5

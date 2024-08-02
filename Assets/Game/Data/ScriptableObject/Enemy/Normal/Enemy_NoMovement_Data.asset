@@ -15,7 +15,7 @@ MonoBehaviour:
   name: NoMovementEnemy
   HP: 1000000
   moveSpeed: 0
-  damage: 0
+  damage: 5
   showlevel: 1
   isTowardsPlayer: 1
   eEnemyType: 0

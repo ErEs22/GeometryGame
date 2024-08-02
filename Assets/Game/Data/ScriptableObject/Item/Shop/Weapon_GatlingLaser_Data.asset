@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Weapon_GatlingLaser_Data
   m_EditorClassIdentifier: 
   itemIcon: {fileID: 21300000, guid: 188bee68a52a0264fa91b146e139d28b, type: 3}
-  itemName: SMG
+  itemName: GatlingLaser
   itemType: Weapon
   itemCost: 20
   itemLevel: 1

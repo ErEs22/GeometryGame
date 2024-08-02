@@ -8,6 +8,9 @@ TagManager:
   - EnemyProjectile
   - PlayerProjectile
   - DropItem
+  - FX
+  - World
+  - Target
   layers:
   - Default
   - TransparentFX
@@ -19,7 +22,7 @@ TagManager:
   - PlayerProjectile
   - EnemyProjectile
   - DropItem
-  - 
+  - PostProcessingCamera
   - 
   - 
   - 

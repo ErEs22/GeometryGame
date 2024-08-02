@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class Projectile_SniperGun : Projectile
 {
+    [HideInInspector]
     public GameObject splitProjectile;
     [HideInInspector]
     public bool isSplitedProjectile = false;
