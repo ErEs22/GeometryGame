@@ -17,7 +17,7 @@ public class EnemyGenerator : MonoBehaviour
 
     private void OnEnable()
     {
-        GenerateEnemysAroundPoint(specificEnemy,5,Vector3.zero);
+        // GenerateEnemysAroundPoint(specificEnemy,5,Vector3.zero);
     }
 
     /// <summary>

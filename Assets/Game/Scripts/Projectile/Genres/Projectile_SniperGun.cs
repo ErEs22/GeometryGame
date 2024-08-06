@@ -8,9 +8,14 @@ public class Projectile_SniperGun : Projectile
     public bool isSplitedProjectile = false;
     [HideInInspector]
     public int splitProjectilesCount = 5;
+    /// <summary>
+    /// 狙击子弹分裂前击中的物体，分裂后的子弹应忽略碰撞该物体
+    /// </summary>
+    private Collider2D hitedCollider = null;
 
     protected override void Hit(Collider2D otherCollider)
     {
+        if(hitedCollider != null && hitedCollider == otherCollider) return;
         otherCollider.TryGetComponent(out ITakeDamage damageObject);
         if (damageObject != null && otherCollider.tag == "Enemy")
         {
@@ -26,7 +31,7 @@ public class Projectile_SniperGun : Projectile
             else
             {
                 Deativate();
-                SpawnSplitProjectiles();
+                SpawnSplitProjectiles(otherCollider);
             }
         }
         else
@@ -35,13 +40,21 @@ public class Projectile_SniperGun : Projectile
         }
     }
 
-    private void SpawnSplitProjectiles()
+    private void SpawnSplitProjectiles(Collider2D hitCollider)
     {
-        //TODO 生成分裂子弹时需要防止碰到当前位置敌人
         for(int i = 0; i < splitProjectilesCount; i++)
         {
             Quaternion randomRotation = Quaternion.AngleAxis(Random.Range(0,360),Vector3.forward);
-            PoolManager.Release(splitProjectile,transform.position,randomRotation).GetComponent<Projectile_SniperGun>().isSplitedProjectile = true;
+            Projectile_SniperGun newProjectile = PoolManager.Release(splitProjectile,transform.position,randomRotation).GetComponent<Projectile_SniperGun>();
+            newProjectile.isSplitedProjectile = true;
+            newProjectile.hitedCollider = hitCollider;
+            newProjectile.isCriticalHit = isCriticalHit;
+            newProjectile.flySpeed = flySpeed;
+            newProjectile.lifeTime = lifeTime;
+            newProjectile.damage = 5 + splitProjectilesCount - 3;
+            newProjectile.knockBack = knockBack;
+            newProjectile.lifeStealPercentByWeapon = lifeStealPercentByWeapon;
+            newProjectile.SetDelayDeativate();
         }
     }
 }

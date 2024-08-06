@@ -61,7 +61,7 @@ public class LevelManager : MonoBehaviour
         Debug.Log("当前关卡：" + currentLevel);
         EventManager.instance.OnInitPlayerStatus();
         EventManager.instance.OnOpenUI(eUIID.PlayerStatusBar);
-        return;
+        // return;
         ClearPlayerUpgradeCount();
         StartLevelCountDown();
         enemyManager.SetCurrentEnemyList();

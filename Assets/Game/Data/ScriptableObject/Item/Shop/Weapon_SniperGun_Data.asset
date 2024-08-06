@@ -16,7 +16,7 @@ MonoBehaviour:
   itemName: SniperGun
   itemType: Weapon
   itemCost: 20
-  itemLevel: 3
+  itemLevel: 4
   shopItemType: 1
   projectileSpeed: 40
   prefab_Weapon: {fileID: 1512905131166018, guid: 47175c7c60ccdeb41840028147e027bb, type: 3}
