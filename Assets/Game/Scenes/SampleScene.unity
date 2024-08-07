@@ -869,7 +869,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemy: {fileID: 5836960803617581082, guid: ec74911f699c15f48afee37d41f0f31d, type: 3}
-  specificEnemy: {fileID: 5836960803617581082, guid: 383f1ef67f4b65b49a4c4cf162a70d4e, type: 3}
+  specificEnemy: {fileID: 5836960803617581082, guid: ef8d35c6b83c3ea48a01cb6f9ad64cf7, type: 3}
 --- !u!114 &690686607
 MonoBehaviour:
   m_ObjectHideFlags: 0

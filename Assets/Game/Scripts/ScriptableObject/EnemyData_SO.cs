@@ -11,6 +11,6 @@ public class EnemyData_SO : ScriptableObject
     public int damage = 1;
     public int showlevel = 1;
     public bool isTowardsPlayer = true;
-    public eEnemyType eEnemyType = eEnemyType.Normal;
+    public eEnemyType enemyType = eEnemyType.Normal;
     public GameObject enemyPrefab;
 }

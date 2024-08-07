@@ -19,6 +19,7 @@ public class Enemy : MonoBehaviour, ITakeDamage, IHeal
     [Header("Enemy Info---")]
     [SerializeField]
     protected EnemyData_SO enemyData;
+    [DisplayOnly]
     public new string name;
     [SerializeField][DisplayOnly]
     protected float maxHP = 0;
@@ -117,7 +118,7 @@ public class Enemy : MonoBehaviour, ITakeDamage, IHeal
         MoveSpeed = enemyData.moveSpeed;
         showlevel = enemyData.showlevel;
         name = enemyData.name;
-        enemyType = enemyData.eEnemyType;
+        enemyType = enemyData.enemyType;
         isTowardsPlayer = enemyData.isTowardsPlayer;
     }
 
@@ -175,7 +176,7 @@ public class Enemy : MonoBehaviour, ITakeDamage, IHeal
     {
         //Default Move Caculation
         moveDir *= MoveSpeed;
-        if(isTowardsPlayer)
+        if(isTowardsPlayer && moveSpeed != 0)
         {
             float angle1 = Mathf.Atan2(moveDir.y,moveDir.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.AngleAxis(angle1,transform.forward);

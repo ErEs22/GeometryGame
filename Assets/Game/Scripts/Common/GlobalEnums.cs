@@ -144,6 +144,7 @@ public enum eFPSOption
 public enum eEnemyType
 {
     Normal,
+    NoMovement,
     Elite,
     Boss,
 }

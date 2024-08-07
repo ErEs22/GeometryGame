@@ -43,12 +43,18 @@ public class SlashEnemy : Enemy
         if(Vector3.Distance(playerTrans.position,transform.position) < newEnemyData.runawayDistance)
         {
             //Run away
+            MoveSpeed = enemyData.moveSpeed;
             runAwayPos = playerTrans.position.normalized * -25;
             moveDir = Vector3.Normalize((runAwayPos - transform.position) + (transform.position - playerTrans.position));
         }
+        else if(Vector3.Distance(playerTrans.position,transform.position) > newEnemyData.runawayDistance + 2)
+        {
+            MoveSpeed = enemyData.moveSpeed;
+            base.UpdateMoveDirection();
+        }
         else
         {
-            base.UpdateMoveDirection();
+            MoveSpeed = 0;
         }
     }
 }

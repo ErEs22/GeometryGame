@@ -17,7 +17,7 @@ MonoBehaviour:
   moveSpeed: 5
   damage: 1
   showlevel: 20
-  isTowardsPlayer: 0
-  eEnemyType: 2
+  isTowardsPlayer: 1
+  enemyType: 0
   enemyPrefab: {fileID: 5836960803617581082, guid: ef8d35c6b83c3ea48a01cb6f9ad64cf7, type: 3}
   projectile: {fileID: 3994106403445518885, guid: 703ee4e0e1a816249a791c5786d9c8b9, type: 3}

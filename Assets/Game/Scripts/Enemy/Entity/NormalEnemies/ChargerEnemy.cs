@@ -11,16 +11,21 @@ public class ChargerEnemy : Enemy
     protected override void Skill()
     {
         isCharging = true;
-        Vector3 targetPos = transform.position + transform.right * 10;
+        MoveSpeed = 0;
+        var seq = DOTween.Sequence();
+        Vector3 targetDir = GlobalVar.playerTrans.position - transform.position;
+        targetDir.Normalize();
+        float angle = Mathf.Atan2(targetDir.y,targetDir.x) * Mathf.Rad2Deg;
+        Vector3 targetPos = transform.position + targetDir * 10;
         targetPos.x = Mathf.Clamp(targetPos.x,-GlobalVar.mapWidth,GlobalVar.mapWidth);
         targetPos.y = Mathf.Clamp(targetPos.y,-GlobalVar.mapHeight,GlobalVar.mapHeight);
-        MoveSpeed = 0;
-        transform.
-        transform.DOMove(targetPos, 1).SetDelay(0.5f).OnComplete(() =>
+        seq.Append(transform.DORotateQuaternion(Quaternion.AngleAxis(angle,Vector3.forward),0.1f));
+        seq.Append(transform.DOMove(targetPos, 1).SetDelay(0.5f).OnComplete(() =>
         {
             MoveSpeed = enemyData.moveSpeed;
             isCharging = false;
-        });
+        }));
+        seq.Play();
     }
 
     protected override void HandleMovement()
