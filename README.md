@@ -1,1 +1,1 @@
-This is a indie game.
+This is an indie game.
