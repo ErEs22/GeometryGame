@@ -153,7 +153,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canMove: 1
   dropItem: {fileID: 7987173864283598468, guid: e7d7ce21a90d0c24dbecba49146448a4, type: 3}
-  enemyData: {fileID: 11400000, guid: d6f6bc7dc4738d1448efafd8e495661c, type: 2}
+  enemyData: {fileID: 11400000, guid: 517048eba0cea594ea47c8e32f8b8fee, type: 2}
   name: 
   maxHP: 0
   HP: 0

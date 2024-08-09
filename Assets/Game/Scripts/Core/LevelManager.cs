@@ -67,6 +67,7 @@ public class LevelManager : MonoBehaviour
         enemyManager.SetCurrentEnemyList();
         StartSpawnEnemy();
         EventManager.instance.OnEnableLocomotionInput();
+        EventManager.instance.OnSetPlayerInvincible(false);
     }
 
     /// <summary>
@@ -81,6 +82,7 @@ public class LevelManager : MonoBehaviour
         enemyManager.SetCurrentEnemyList();
         StartSpawnEnemy();
         EventManager.instance.OnEnableLocomotionInput();
+        EventManager.instance.OnSetPlayerInvincible(true);
     }
 
     private void StartLevelCountDown()
@@ -134,6 +136,7 @@ public class LevelManager : MonoBehaviour
             EventManager.instance.OnGameover();
             Debug.Log("游戏结束，当前关卡：" + currentLevel + "关");
         }
+        EventManager.instance.OnSetPlayerInvincible(true);
         EventManager.instance.OnLevelEnd();
     }
     private void UpdateGameAndLevelStatusWhenLevelStart()

@@ -21,6 +21,7 @@ MonoBehaviour:
   projectileSpeed: 40
   prefab_Weapon: {fileID: 1512905131166018, guid: 47175c7c60ccdeb41840028147e027bb, type: 3}
   prefab_Projectile: {fileID: 3994106403445518885, guid: 3cdacb948dd385c4097cf5a537eb3afb, type: 3}
+  prefab_HitVFX: {fileID: 1124335935880280, guid: 25a4b54363e654c42a8ba185560dc93e, type: 3}
   itemProperties:
   - weaponProperty: 0
     propertyValue: 5

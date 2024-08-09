@@ -16,8 +16,8 @@ MonoBehaviour:
   HP: 1000
   moveSpeed: 5
   damage: 5
-  showlevel: 5
+  showlevel: 10
   isTowardsPlayer: 1
-  enemyType: 0
+  enemyType: 2
   enemyPrefab: {fileID: 5836960803617581082, guid: 9e9ab1873b4c38443b3114742ebc1af2, type: 3}
   projectile: {fileID: 2093875944032654269, guid: 8e45cad32ed9c6a448ca5c74ca764661, type: 3}

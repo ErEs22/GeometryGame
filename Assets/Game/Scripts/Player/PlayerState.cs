@@ -20,6 +20,7 @@ public class PlayerState : MonoBehaviour, ITakeDamage
     private int exp = 0;
     private int bonusCoin = 0;
     private int currentPlayerLevel = 1;
+    private bool invincible = false;
 
     private void Awake() {
         playerModelParentTrans = transform.Find(path_PlayerModel);
@@ -32,6 +33,7 @@ public class PlayerState : MonoBehaviour, ITakeDamage
         EventManager.instance.onCollectExpBall += CollectExpBall;
         EventManager.instance.onChangeBonusCoinCount += ChangeBonusCoinCount;
         EventManager.instance.onUpdatePlayerCurrentHP += UpdatePlayerCurrentHP;
+        EventManager.instance.onSetPlayerInvincible += SetPlayerInvincible;
     }
 
     private void OnDisable() {
@@ -40,6 +42,12 @@ public class PlayerState : MonoBehaviour, ITakeDamage
         EventManager.instance.onCollectExpBall -= CollectExpBall;
         EventManager.instance.onChangeBonusCoinCount -= ChangeBonusCoinCount;
         EventManager.instance.onUpdatePlayerCurrentHP -= UpdatePlayerCurrentHP;
+        EventManager.instance.onSetPlayerInvincible -= SetPlayerInvincible;
+    }
+
+    private void SetPlayerInvincible(bool isInvincible)
+    {
+        invincible = isInvincible;
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
@@ -152,7 +160,7 @@ public class PlayerState : MonoBehaviour, ITakeDamage
 
     public bool TakeDamage(int damage,bool isCritical = false)
     {
-        if(HP < 0) return false;
+        if(HP < 0 || invincible) return false;
         HP = Mathf.Clamp(HP - damage,0,int.MaxValue);
         EventManager.instance.OnUpdateHealthBar(HP,maxHP);
         EventManager.instance.OnHealthBarFlash(Color.red,Color.white);

@@ -218,23 +218,23 @@ public class Enemy : MonoBehaviour, ITakeDamage, IHeal
         // Debug.Log(this + " is taking damage,decrease " + damage + "HP");
         HP = Mathf.Clamp(HP - damage, 0, maxHP);
         EventManager.instance.OnDamageDisplay(damage,gameObject,isCritical);
-        //击中效果
-        takeDamageEffectTween.Kill();
-        transform.localScale = originScale;
-        takeDamageEffectTween = transform.DOScale(1f, 0.1f).SetRelative().SetEase(Ease.InSine).OnComplete(() =>
+        if(HP <= 0)
         {
-            takeDamageEffectTween = transform.DOScale(-1f,0.01f).SetRelative().OnComplete(()=>{
-                if(HP <= 0)
-                {
-                    enemyIsDead = true;
-                    Die();
-                }
-                else
-                {
-                    enemyIsDead = false;
-                }
-            });
-        });
+            enemyIsDead = true;
+            Die();
+        }
+        else
+        {
+            enemyIsDead = false;
+        }
+        //击中效果
+        // takeDamageEffectTween.Kill();
+        // transform.localScale = originScale;
+        // takeDamageEffectTween = transform.DOScale(1f, 0.1f).SetRelative().SetEase(Ease.InSine).OnComplete(() =>
+        // {
+        //     takeDamageEffectTween = transform.DOScale(-1f,0.01f).SetRelative().OnComplete(()=>{
+        //     });
+        // });
         return enemyIsDead;
     }
 

@@ -364,6 +364,9 @@ MonoBehaviour:
   micsPools:
   - prefab: {fileID: 8313142294153542670, guid: 0c745670f78b97149850b1cb51539b78, type: 3}
     size: 50
+  ProjectileVFX:
+  - prefab: {fileID: 1124335935880280, guid: 25a4b54363e654c42a8ba185560dc93e, type: 3}
+    size: 30
 --- !u!4 &203101617
 Transform:
   m_ObjectHideFlags: 0
@@ -869,7 +872,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemy: {fileID: 5836960803617581082, guid: ec74911f699c15f48afee37d41f0f31d, type: 3}
-  specificEnemy: {fileID: 5836960803617581082, guid: ef8d35c6b83c3ea48a01cb6f9ad64cf7, type: 3}
+  specificEnemy: {fileID: 5836960803617581082, guid: c088c8be760e84943bf96d0230830fae, type: 3}
 --- !u!114 &690686607
 MonoBehaviour:
   m_ObjectHideFlags: 0

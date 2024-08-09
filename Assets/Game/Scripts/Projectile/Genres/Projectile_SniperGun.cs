@@ -47,6 +47,7 @@ public class Projectile_SniperGun : Projectile
             Quaternion randomRotation = Quaternion.AngleAxis(Random.Range(0,360),Vector3.forward);
             Projectile_SniperGun newProjectile = PoolManager.Release(splitProjectile,transform.position,randomRotation).GetComponent<Projectile_SniperGun>();
             newProjectile.isSplitedProjectile = true;
+            newProjectile.hitVFXPrefab = hitVFXPrefab;
             newProjectile.hitedCollider = hitCollider;
             newProjectile.isCriticalHit = isCriticalHit;
             newProjectile.flySpeed = flySpeed;
@@ -54,7 +55,17 @@ public class Projectile_SniperGun : Projectile
             newProjectile.damage = 5 + splitProjectilesCount - 3;
             newProjectile.knockBack = knockBack;
             newProjectile.lifeStealPercentByWeapon = lifeStealPercentByWeapon;
+            newProjectile.pierceEnemyCount = 0;
             newProjectile.SetDelayDeativate();
+        }
+    }
+
+    protected override void Deativate()
+    {
+        base.Deativate();
+        if(isSplitedProjectile)
+        {
+            hitedCollider = null;
         }
     }
 }

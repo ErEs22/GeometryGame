@@ -126,12 +126,14 @@ public class Weapon : MonoBehaviour
     protected virtual Projectile ReleaseSingleProjectile(GameObject projectile, Vector3 muzzlePos, Quaternion rotation)
     {
         Projectile newProjectile = PoolManager.Release(projectile, muzzlePos, rotation).GetComponent<Projectile>();
+        newProjectile.hitVFXPrefab = inventory_Weapon.weaponData.prefab_HitVFX;
         newProjectile.isCriticalHit = isCriticalHit;
         newProjectile.flySpeed = projectileSpeed;
         newProjectile.lifeTime = (float)fireRange / (40 * newProjectile.flySpeed);
         newProjectile.damage = isCriticalHit ? EyreUtility.Round(damage * criticalMul) : damage;
         newProjectile.knockBack = knockBack;
         newProjectile.lifeStealPercentByWeapon = lifeSteal;
+        newProjectile.pierceEnemyCount = 0;
         newProjectile.SetDelayDeativate();
         return newProjectile;
     }

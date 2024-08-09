@@ -20,6 +20,8 @@ public class Projectile : MonoBehaviour
     [HideInInspector]
     public float lifeStealPercentByWeapon = 0;
     protected Collider2D selfCollider;
+    [HideInInspector]
+    public GameObject hitVFXPrefab;
 
     protected virtual void Awake() {
         selfCollider = GetComponent<Collider2D>();
@@ -27,7 +29,9 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        if(pierceEnemyCount == -1) return;
         Hit(other);
+        ShowHitVFX(other);
     }
 
     protected void DisableProjectileCollider()
@@ -68,6 +72,14 @@ public class Projectile : MonoBehaviour
         }
     }
 
+    protected virtual void ShowHitVFX(Collider2D otherCollider)
+    {
+        if(transform.tag != GameTag.PlayerProjectile || !otherCollider.TryGetComponent<ITakeDamage>(out ITakeDamage damageObject)) return;
+        Vector3 hitPos = transform.position;
+        hitPos.z = -5;
+        PoolManager.Release(hitVFXPrefab,hitPos);
+    }
+
     protected void LifeSteal(int damage)
     {
         int stealedHP = EyreUtility.Round(damage * lifeStealPercentByWeapon);
@@ -100,9 +112,11 @@ public class Projectile : MonoBehaviour
         CancelInvoke(nameof(Deativate));
     }
 
-    protected void Deativate()
+    protected virtual void Deativate()
     {
         if (gameObject.activeSelf == false) return;
+        //穿透次数为-1代表发射物已经碰撞过，无法再次碰撞造成伤害
+        pierceEnemyCount = -1;
         gameObject.SetActive(false);
     }
 

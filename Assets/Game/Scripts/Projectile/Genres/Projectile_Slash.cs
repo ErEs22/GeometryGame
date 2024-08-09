@@ -35,18 +35,28 @@ public class Projectile_Slash : Projectile
 
     public void Attack()
     {
-        SpriteRenderer spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-        spriteRenderer.color = Color.white;
+        // SpriteRenderer spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        // spriteRenderer.color = Color.white;
+        // DisableProjectileCollider();
+        // spriteRenderer.DOColor(Color.red, 0.5f).OnComplete(() =>
+        // {
+        //     spriteRenderer.color = Color.blue;
+        //     EnableProjectileCollider();
+        //     EyreUtility.SetDelay(0.1f, () =>
+        //     {
+        //         DisableProjectileCollider();
+        //         gameObject.SetActive(false);
+        //     });
+        // });
         DisableProjectileCollider();
-        spriteRenderer.DOColor(Color.red, 0.5f).OnComplete(() =>
+        EyreUtility.SetDelay(0.5f,()=>
         {
-            spriteRenderer.color = Color.blue;
             EnableProjectileCollider();
-            EyreUtility.SetDelay(0.1f, () =>
-            {
-                DisableProjectileCollider();
-                gameObject.SetActive(false);
-            });
+        });
+        EyreUtility.SetDelay(1.1f,()=>
+        {
+            DisableProjectileCollider();
+            gameObject.SetActive(false);
         });
     }
 }
