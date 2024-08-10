@@ -70,7 +70,6 @@ public class UIShopMenu : UIBase
     /// </summary>
     private List<ShopItem> allShopItems = new List<ShopItem>();
     private List<Item_Prop> allPropInventoryItems = new List<Item_Prop>();
-    [SerializeField][DisplayOnly]
     private List<Item_Weapon> allWeaponInventoryItems = new List<Item_Weapon>();
 
     private void Awake()

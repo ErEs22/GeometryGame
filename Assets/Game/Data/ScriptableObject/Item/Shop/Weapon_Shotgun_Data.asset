@@ -24,7 +24,7 @@ MonoBehaviour:
   prefab_HitVFX: {fileID: 1124335935880280, guid: 25a4b54363e654c42a8ba185560dc93e, type: 3}
   itemProperties:
   - weaponProperty: 0
-    propertyValue: 5
+    propertyValue: 10
   - weaponProperty: 1
     propertyValue: 2
   - weaponProperty: 2

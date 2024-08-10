@@ -6,7 +6,7 @@ public class Weapon_Revolver : Weapon
     private const string path_Transform_Barrel = "Model/Weapon_Fixed/Weapon/Head/Barrel";
     private Transform transform_Barrel;
     float changeAmmoTime = 2.0f;
-    [SerializeField][DisplayOnly]
+    [SerializeField]
     int projectileLeftInAmmo = 6;
 
     protected override void Awake()

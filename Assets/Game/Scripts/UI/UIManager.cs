@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
-    [SerializeField][DisplayOnly]
+    [SerializeField]
     private UIBase[] allUI;
 
     private void Awake() {

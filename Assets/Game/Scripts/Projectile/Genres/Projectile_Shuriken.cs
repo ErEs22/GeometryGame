@@ -3,7 +3,6 @@ using UnityEngine;
 public class Projectile_Shuriken : Projectile
 {
     private float bounceRange = 15f;
-    [DisplayOnly]
     public int bounceTimes = 1;
 
     protected override void Hit(Collider2D otherCollider)

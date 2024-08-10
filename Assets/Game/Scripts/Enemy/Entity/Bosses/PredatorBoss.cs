@@ -8,13 +8,13 @@ public class PredatorBoss : Enemy
 {
     float rotateTime = 0;
     float dashDistance = 15f;
-    EnemyData_WithProjectile_SO newEnemyData;
+    EnemyData_WithTwoProjectile_SO newEnemyData;
     Projectile_Predator[] aroundProjectiles = new Projectile_Predator[9];
 
     public override void Init(EnemyManager enemyManager)
     {
         base.Init(enemyManager);
-        newEnemyData = enemyData as EnemyData_WithProjectile_SO;
+        newEnemyData = enemyData as EnemyData_WithTwoProjectile_SO;
         Skill();
     }
 
@@ -28,7 +28,7 @@ public class PredatorBoss : Enemy
     {
         for(int i = 0; i < 9; i++)
         {
-            aroundProjectiles[i] = ReleaseSingleProjectile(0,transform.position);
+            aroundProjectiles[i] = ReleaseRotatingProjectile(0,transform.position);
         }
         while(HP > 0)
         {
@@ -74,7 +74,7 @@ public class PredatorBoss : Enemy
         Vector3 angleDir = new Vector3(Mathf.Sin(rotateAngle),Mathf.Cos(rotateAngle),0);
         for(int i = 0; i < 9; i++)
         {
-            float offset = i + 1 + ((i / 3) * 2);
+            float offset = (i * 1.5f) + 3 + ((i / 3) * 4);
             aroundProjectiles[i].transform.position = transform.position + angleDir * offset;
         }
     }
@@ -89,14 +89,34 @@ public class PredatorBoss : Enemy
     }
 
     /// <summary>
-    /// 释放发射物
+    /// 释放默认发射物
     /// </summary>
     /// <param name="dir">发射物初始方向</param>
     /// <param name="startPos">发射物初始位置</param>
     protected Projectile_Predator ReleaseSingleProjectile(float moveDirRad,Vector3 startPos,int flySpeed = 0)
     {
         Quaternion rotation = Quaternion.AngleAxis(moveDirRad, Vector3.forward);
-        Projectile_Predator newProjectile = PoolManager.Release(newEnemyData.projectile, startPos,rotation).GetComponent<Projectile_Predator>();
+        Projectile_Predator newProjectile = PoolManager.Release(newEnemyData.projectile1, startPos,rotation).GetComponent<Projectile_Predator>();
+        newProjectile.damage = enemyData.damage;
+        newProjectile.flySpeed = flySpeed;
+        // newProjectile.Attack();
+        if(flySpeed != 0)
+        {
+            newProjectile.lifeTime = 10;
+            newProjectile.SetDelayDeativate();
+        }
+        return newProjectile;
+    }
+
+    /// <summary>
+    /// 释放环Boss发射物
+    /// </summary>
+    /// <param name="dir">发射物初始方向</param>
+    /// <param name="startPos">发射物初始位置</param>
+    protected Projectile_Predator ReleaseRotatingProjectile(float moveDirRad,Vector3 startPos,int flySpeed = 0)
+    {
+        Quaternion rotation = Quaternion.AngleAxis(moveDirRad, Vector3.forward);
+        Projectile_Predator newProjectile = PoolManager.Release(newEnemyData.projectile2, startPos,rotation).GetComponent<Projectile_Predator>();
         newProjectile.damage = enemyData.damage;
         newProjectile.flySpeed = flySpeed;
         // newProjectile.Attack();

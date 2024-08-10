@@ -2,11 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
-using UnityEditor;
-using UnityEditor.EditorTools;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.InputSystem;
 
 /// <summary>
 /// 敌人基类
@@ -19,18 +15,14 @@ public class Enemy : MonoBehaviour, ITakeDamage, IHeal
     [Header("Enemy Info---")]
     [SerializeField]
     protected EnemyData_SO enemyData;
-    [DisplayOnly]
     public new string name;
-    [SerializeField][DisplayOnly]
+    [SerializeField]
     protected float maxHP = 0;
-    [SerializeField][DisplayOnly]
+    [SerializeField]
     protected float HP = 0;
     private float moveSpeed = 5f;
-    [DisplayOnly]
     public int showlevel = 1;
-    [DisplayOnly]
     public eEnemyType enemyType;
-    [DisplayOnly]
     public bool isTowardsPlayer = true;
     protected float MoveSpeed
     {
@@ -46,7 +38,6 @@ public class Enemy : MonoBehaviour, ITakeDamage, IHeal
     /// <summary>
     /// 速度影响百分比值（整数值 10%=>10）
     /// </summary>
-    [DisplayOnly]
     public int speedEffectPercent = 0;
     protected EnemyManager enemyManager;
     [HideInInspector]

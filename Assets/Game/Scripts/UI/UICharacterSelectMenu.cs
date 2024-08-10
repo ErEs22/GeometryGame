@@ -32,7 +32,6 @@ public class UICharacterSelectMenu : UIBase
     public List<CharacterData_SO> allCharactersData = new List<CharacterData_SO>();
     public List<ShopItemData_Weapon_SO> currentCharacterAvailableWeapons = new List<ShopItemData_Weapon_SO>();
     [SerializeField]
-    [DisplayOnly]
     private Item_Weapon_CharacterSelectMenu selectWeapon;//初始武器选择
     private Item_Character selectCharacter;//初始角色选择
 

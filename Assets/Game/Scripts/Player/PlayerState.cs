@@ -83,7 +83,7 @@ public class PlayerState : MonoBehaviour, ITakeDamage
         GameCoreData.PlayerProperties.attackSpeedMul = EyreUtility.Round((attackSpeedMul - 1) * 100);
         GameCoreData.PlayerProperties.criticalRate = EyreUtility.Round(criticalRate * 100);
         GameCoreData.PlayerProperties.attackRange = 0;
-        GameCoreData.PlayerProperties.moveSpeed = EyreUtility.Round((moveSpeed - 1) * 100);
+        GameCoreData.PlayerProperties.moveSpeed = EyreUtility.Round((moveSpeed - 10) * 10);
         Instantiate(playerData.characterPrefab,playerModelParentTrans);
         EventManager.instance.OnInitStatusBar(maxHP);
         playerCollider.enabled = true;

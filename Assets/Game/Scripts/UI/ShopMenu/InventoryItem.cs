@@ -11,7 +11,6 @@ public class InventoryItem : MonoBehaviour
     //------------
     protected Image img_ItemIcon;
     protected Image img_ItemLevelFilter;
-    [DisplayOnly]
     public int itemLevel = 1;
     public ShopItemData_SO itemData;
 

@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class Weapon_GlostScepter : Weapon
 {
-    [SerializeField][DisplayOnly]
+    [SerializeField]
     int enemyKilled = 0;
-    [SerializeField][DisplayOnly]
+    [SerializeField]
     int maxHPAdded = 0;
 
     public override void InitData(Inventory_Weapon data)

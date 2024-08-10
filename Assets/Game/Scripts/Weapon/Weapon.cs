@@ -1,7 +1,6 @@
 using System;
 using UnityEditor;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 public class Weapon : MonoBehaviour
 {
@@ -12,34 +11,24 @@ public class Weapon : MonoBehaviour
     protected GameObject projectilePrefab;
     [Header("Weapon Data---")]
     [SerializeField]
-    [DisplayOnly]
     public Inventory_Weapon inventory_Weapon;
     [SerializeField]
-    [DisplayOnly]
     protected int weaponLevel = 1;
     [SerializeField]
-    [DisplayOnly]
     protected int damage;
     [SerializeField]
-    [DisplayOnly]
     protected float fireInterval;
     [SerializeField]
-    [DisplayOnly]
     protected int fireRange;
     [SerializeField]
-    [DisplayOnly]
     protected float criticalMul;
     [SerializeField]
-    [DisplayOnly]
     protected float criticalRate;
     [SerializeField]
-    [DisplayOnly]
     protected int projectileSpeed;
     [SerializeField]
-    [DisplayOnly]
     protected int knockBack;
     [SerializeField]
-    [DisplayOnly]
     protected float lifeSteal;
     [HideInInspector]
     public EnemyManager enemyManager;
@@ -177,8 +166,10 @@ public class Weapon : MonoBehaviour
 
     private void OnDrawGizmos()
     {
+        #if UNITY_EDITOR
         Handles.color = Color.green;
         Handles.DrawWireDisc(transform.position, Vector3.forward, fireRange / 40);
+        #endif
     }
 
     protected virtual void SetDatabyType(ShopWeaponPropertyPair propertyPair, int weaponBaseLevel, int weaponCurrentLevel)

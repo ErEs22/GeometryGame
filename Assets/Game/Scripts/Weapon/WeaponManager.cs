@@ -4,7 +4,7 @@ using UnityEngine;
 public class WeaponManager : MonoBehaviour
 {
     [SerializeField] private GameObject defaultWeapon;
-    [DisplayOnly] public List<Weapon> weapons = new List<Weapon>();
+    public List<Weapon> weapons = new List<Weapon>();
     public PlayerManager playerManager;
 
     private void OnEnable() {

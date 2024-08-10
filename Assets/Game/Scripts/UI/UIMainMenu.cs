@@ -10,9 +10,9 @@ public class UIMainMenu : UIBase
     private const string path_Btn_Setting = "Buttons/Btn_Setting";
     private const string path_Btn_Exit = "Buttons/Btn_Exit";
     private const string path_SettingPanel = "SettingPanel/";
+    private const string path_SettingPanel_Btn_Save = path_SettingPanel + "Btn_Save";
     private const string path_SettingPanel_HorSelector_ScreenMode = path_SettingPanel + "Settings/ScreenMode/HorizontalSelector";
     private const string path_SettingPanel_Dropdown_Resolution = path_SettingPanel + "Settings/Resolution";
-    private const string path_SettingPanel_SwitchButton_CameraShake = path_SettingPanel + "Settings/CameraShake";
     private const string path_SettingPanel_SwitchButton_DamageNumberDisplay = path_SettingPanel + "Settings/DamageNumberDisplay";
     private const string path_SettingPanel_HorSelector_FPSLimit = path_SettingPanel + "Settings/FPSLimit/HorizontalSelector";
     private const string path_SettingPanel_Slider_MainVolume = path_SettingPanel + "Settings/MainVolume";
@@ -21,6 +21,7 @@ public class UIMainMenu : UIBase
     private Button btn_Start;
     private Button btn_Setting;
     private Button btn_Exit;
+    private Button btn_Setting_Save;
     private HorizontalSelector horSelector_ScreenMode;
     private TMP_Dropdown dropdown_Resolution;
     private SwitchButton btnSwitch_CameraShake;
@@ -36,9 +37,9 @@ public class UIMainMenu : UIBase
         btn_Start = transform.Find(path_Btn_Start).GetComponent<Button>();
         btn_Setting = transform.Find(path_Btn_Setting).GetComponent<Button>();
         btn_Exit = transform.Find(path_Btn_Exit).GetComponent<Button>();
+        btn_Setting_Save = transform.Find(path_SettingPanel_Btn_Save).GetComponent<Button>();
         horSelector_ScreenMode = transform.Find(path_SettingPanel_HorSelector_ScreenMode).GetComponent<HorizontalSelector>();
         dropdown_Resolution = transform.Find(path_SettingPanel_Dropdown_Resolution).GetComponent<TMP_Dropdown>();
-        btnSwitch_CameraShake = transform.Find(path_SettingPanel_SwitchButton_CameraShake).GetComponent<SwitchButton>();
         btnSwitch_DamageNumberDisplay = transform.Find(path_SettingPanel_SwitchButton_DamageNumberDisplay).GetComponent<SwitchButton>();
         horSelector_FPSLimit = transform.Find(path_SettingPanel_HorSelector_FPSLimit).GetComponent<HorizontalSelector>();
         slider_MainVolume = transform.Find(path_SettingPanel_Slider_MainVolume).GetComponent<Slider>();
@@ -54,13 +55,15 @@ public class UIMainMenu : UIBase
         btn_Start.onClick.AddListener(OnBtnStartClick);
         btn_Setting.onClick.AddListener(OnBtnSettingClick);
         btn_Exit.onClick.AddListener(OnBtnExitClick);
+        btn_Setting_Save.onClick.AddListener(OnBtnSaveSettingClick);
+        settingPanel.SetActive(false);
     }
 
     private void OnDisable() {
         btn_Start.onClick.RemoveAllListeners();
         btn_Setting.onClick.RemoveAllListeners();
         btn_Setting.onClick.RemoveAllListeners();
-        SaveGameSetting();
+        btn_Setting_Save.onClick.RemoveAllListeners();
     }
 
     private void SaveGameSetting()
@@ -69,7 +72,6 @@ public class UIMainMenu : UIBase
         GameCoreData.GameSetting.screenMode = screenMode;
         Enum.TryParse<eGameResolution>(dropdown_Resolution.options[dropdown_Resolution.value].text.Insert(0,"R_"),out eGameResolution gameResolution);
         GameCoreData.GameSetting.gameResolution = gameResolution;
-        GameCoreData.GameSetting.cameraShake = btnSwitch_CameraShake.isOn;
         GameCoreData.GameSetting.damageNumberDisplay = btnSwitch_DamageNumberDisplay.isOn;
         Enum.TryParse<eFPSOption>(horSelector_FPSLimit.selectOptions[horSelector_FPSLimit.selectIndex].optionName.Insert(0,"FPS_"),out eFPSOption fpsOption);
         GameCoreData.GameSetting.fpsLimit = fpsOption;
@@ -85,7 +87,6 @@ public class UIMainMenu : UIBase
         SaveSystem.Load<GameCoreData.SaveData_GameSetting>("GeometrySave.save").LoadData();
         horSelector_ScreenMode.InitComponent(GameCoreData.GameSetting.screenMode.ToString());
         dropdown_Resolution.value = (int)GameCoreData.GameSetting.gameResolution;
-        btnSwitch_CameraShake.SetButtonStatus(GameCoreData.GameSetting.cameraShake);
         btnSwitch_DamageNumberDisplay.SetButtonStatus(GameCoreData.GameSetting.damageNumberDisplay);
         horSelector_FPSLimit.InitComponent(GameCoreData.GameSetting.fpsLimit.ToString().Remove(0,4));
         slider_MainVolume.SetValueWithoutNotify(GameCoreData.GameSetting.mainVolume);
@@ -130,6 +131,12 @@ public class UIMainMenu : UIBase
         CloseUI();
     }
 
+    private void OnBtnSaveSettingClick()
+    {
+        SaveGameSetting();
+        ApplyGameSetting();
+    }
+
     private void OnBtnSettingClick()
     {
         settingPanel.SetActive(true);
@@ -144,5 +151,73 @@ public class UIMainMenu : UIBase
         #else
         Application.Quit();
         #endif
+    }
+
+    private void SetScreenResolution(eGameResolution resolution)
+    {
+        bool isFullScreen = GameCoreData.GameSetting.screenMode == eScreenMode.Windowed ? false : true;
+        switch (resolution)
+        {
+            case eGameResolution.R_2560X1440:
+                Screen.SetResolution(2560,1440,isFullScreen);
+            break;
+            case eGameResolution.R_1920X1080:
+                Screen.SetResolution(1920,1080,isFullScreen);
+            break;
+            case eGameResolution.R_1600X900:
+                Screen.SetResolution(1600,900,isFullScreen);
+            break;
+            case eGameResolution.R_1280X720:
+                Screen.SetResolution(1280,720,isFullScreen);
+            break;
+            case eGameResolution.R_960X540:
+                Screen.SetResolution(960,540,isFullScreen);
+            break;
+            case eGameResolution.R_800X450:
+                Screen.SetResolution(800,450,isFullScreen);
+            break;
+        }
+    }
+
+    private void SetScreenMode(eScreenMode screenMode)
+    {
+        switch (screenMode)
+        {
+            case eScreenMode.Windowed:
+            Screen.fullScreenMode = FullScreenMode.Windowed;
+            break;
+            case eScreenMode.BorderlessWindow:
+            Screen.fullScreenMode = FullScreenMode.MaximizedWindow;
+            break;
+            case eScreenMode.FullScreen:
+            Screen.fullScreenMode = FullScreenMode.FullScreenWindow;
+            break;
+        }
+    }
+
+    private void SetGameFPS(eFPSOption fPSOption)
+    {
+        switch(fPSOption)
+        {
+            case eFPSOption.FPS_30:
+            Application.targetFrameRate = 30;
+            break;
+            case eFPSOption.FPS_60:
+            Application.targetFrameRate = 60;
+            break;
+            case eFPSOption.FPS_120:
+            Application.targetFrameRate = 120;
+            break;
+            case eFPSOption.FPS_UnLimited:
+            Application.targetFrameRate = -1;
+            break;
+        }
+    }
+
+    private void ApplyGameSetting()
+    {
+        SetScreenResolution(GameCoreData.GameSetting.gameResolution);
+        SetScreenMode(GameCoreData.GameSetting.screenMode);
+        SetGameFPS(GameCoreData.GameSetting.fpsLimit);
     }
 }

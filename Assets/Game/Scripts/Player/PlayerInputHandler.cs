@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerInputHandler : MonoBehaviour, PlayerControlInput.ILocomotionActions
 {
-    [DisplayOnly] public Vector2 moveInput;
+    public Vector2 moveInput;
 
     private PlayerControlInput playerControlInput;
 

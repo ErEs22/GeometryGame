@@ -4,9 +4,9 @@ using UnityEngine;
 public class Weapon_Axe : Weapon_Melee
 {
 
-    [SerializeField][DisplayOnly]
+    [SerializeField]
     int enemyKilledSinceLastDamageIncrease = 0;
-    [SerializeField][DisplayOnly]
+    [SerializeField]
     int damageIncreased = 0;
 
     protected override void HitObject(Collider2D other)

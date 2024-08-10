@@ -10,7 +10,6 @@ public class GameCoreData
         {
             screenMode = GameSetting.screenMode;
             gameResolution = GameSetting.gameResolution;
-            cameraShake = GameSetting.cameraShake;
             damageNumberDisplay = GameSetting.damageNumberDisplay;
             fpsLimit = GameSetting.fpsLimit;
             mainVolume = GameSetting.mainVolume;
@@ -22,7 +21,6 @@ public class GameCoreData
         {
             GameSetting.screenMode = screenMode;
             GameSetting.gameResolution = gameResolution;
-            GameSetting.cameraShake = cameraShake;
             GameSetting.damageNumberDisplay = damageNumberDisplay;
             GameSetting.fpsLimit = fpsLimit;
             GameSetting.mainVolume = mainVolume;
@@ -53,7 +51,6 @@ public class GameCoreData
 
         public static eScreenMode screenMode = eScreenMode.FullScreen;
         public static eGameResolution gameResolution = eGameResolution.R_1920X1080;
-        public static bool cameraShake = false;
         public static bool damageNumberDisplay = false;
         public static eFPSOption fpsLimit = eFPSOption.FPS_120;
         public static float mainVolume = 1f;

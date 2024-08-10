@@ -61,7 +61,7 @@ public class LevelManager : MonoBehaviour
         Debug.Log("当前关卡：" + currentLevel);
         EventManager.instance.OnInitPlayerStatus();
         EventManager.instance.OnOpenUI(eUIID.PlayerStatusBar);
-        return;
+        // return;
         ClearPlayerUpgradeCount();
         StartLevelCountDown();
         enemyManager.SetCurrentEnemyList();
@@ -218,7 +218,10 @@ public class LevelManager : MonoBehaviour
     }
 
     private void ShowDamageValue(int damage,GameObject damageObject,bool isCritical){
-        DamageDisplay displayComp = PoolManager.Release(damageDisplayPrefab,damageObject.transform.position + new Vector3(1,1,0)).GetComponent<DamageDisplay>();
-        displayComp.InitDisplayData(damage,isCritical);
+        if(GameCoreData.GameSetting.damageNumberDisplay)
+        {
+            DamageDisplay displayComp = PoolManager.Release(damageDisplayPrefab,damageObject.transform.position + new Vector3(1,1,0)).GetComponent<DamageDisplay>();
+            displayComp.InitDisplayData(damage,isCritical);
+        }
     }
 }
