@@ -53,12 +53,12 @@ public class SwitchButton : Button
             if(isOn)
             {
                 btn_Switch.transform.DOMove(trans_RightPoint.position,switchTransitionTime);
-                img_Background.DOColor(Color.blue,switchTransitionTime);
+                img_Background.DOColor(GameColor.switchBtn_On,switchTransitionTime);
             }
             else
             {
                 btn_Switch.transform.DOMove(trans_LeftPoint.position,switchTransitionTime);
-                img_Background.DOColor(Color.white,switchTransitionTime);
+                img_Background.DOColor(GameColor.switchBtn_Off,switchTransitionTime);
             }
         }
     }
@@ -68,13 +68,13 @@ public class SwitchButton : Button
         if(isOn)
         {
             btn_Switch.transform.DOMove(trans_LeftPoint.position,switchTransitionTime);
-            img_Background.DOColor(Color.white,switchTransitionTime);
+            img_Background.DOColor(GameColor.switchBtn_Off,switchTransitionTime);
             isOn = !isOn;
         }
         else
         {
             btn_Switch.transform.DOMove(trans_RightPoint.position,switchTransitionTime);
-            img_Background.DOColor(Color.blue,switchTransitionTime);
+            img_Background.DOColor(GameColor.switchBtn_On,switchTransitionTime);
             isOn = !isOn;
         }
     }
