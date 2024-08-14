@@ -52,13 +52,13 @@ public class SwitchButton : Button
             this.isOn = isOn;
             if(isOn)
             {
-                btn_Switch.transform.DOMove(trans_RightPoint.position,switchTransitionTime);
-                img_Background.DOColor(GameColor.switchBtn_On,switchTransitionTime);
+                btn_Switch.transform.position = trans_RightPoint.position;
+                img_Background.color = GameColor.switchBtn_On;
             }
             else
             {
-                btn_Switch.transform.DOMove(trans_LeftPoint.position,switchTransitionTime);
-                img_Background.DOColor(GameColor.switchBtn_Off,switchTransitionTime);
+                btn_Switch.transform.position = trans_LeftPoint.position;
+                img_Background.color = GameColor.switchBtn_Off;
             }
         }
     }

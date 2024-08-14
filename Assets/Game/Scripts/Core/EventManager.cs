@@ -41,12 +41,24 @@ public class EventManager : MonoBehaviour
     public event UnityAction onClearAllExpBall = delegate{};
     public event UnityAction<CharacterData_SO> onSetCharacterData = delegate{};
     public event UnityAction<bool> onSetPlayerInvincible = delegate{};
+    public event UnityAction onDisableUIInput = delegate{};
+    public event UnityAction onEnableUIInput = delegate{};
 
     private void Awake() {
         if(instance == null)
         {
             instance = this;
         }
+    }
+
+    public void OnDisableUIInput()
+    {
+        onDisableUIInput.Invoke();
+    }
+
+    public void OnEnableUIInput()
+    {
+        onEnableUIInput.Invoke();
     }
 
     public void OnSetPlayerInvincible(bool isInvincible)

@@ -17,6 +17,12 @@ public class EggEnemy : Enemy
         base.Die();
     }
 
+    public override void DieWithoutAnyDropBonus()
+    {
+        CancelInvoke(nameof(Skill));
+        base.DieWithoutAnyDropBonus();
+    }
+
     protected override void Skill()
     {
         EnemyData_WithSplit_SO data = enemyData as EnemyData_WithSplit_SO;

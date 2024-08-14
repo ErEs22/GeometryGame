@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class UIBase :MonoBehaviour
 {
+    [HideInInspector]
     public eUIID uiID;
 
     private void Awake() {

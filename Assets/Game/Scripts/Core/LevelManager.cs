@@ -66,6 +66,7 @@ public class LevelManager : MonoBehaviour
         StartLevelCountDown();
         enemyManager.SetCurrentEnemyList();
         StartSpawnEnemy();
+        EventManager.instance.OnEnableUIInput();
         EventManager.instance.OnEnableLocomotionInput();
         EventManager.instance.OnSetPlayerInvincible(false);
     }
@@ -81,6 +82,7 @@ public class LevelManager : MonoBehaviour
         StartLevelCountDown();
         enemyManager.SetCurrentEnemyList();
         StartSpawnEnemy();
+        EventManager.instance.OnEnableUIInput();
         EventManager.instance.OnEnableLocomotionInput();
         EventManager.instance.OnSetPlayerInvincible(true);
     }
@@ -101,7 +103,7 @@ public class LevelManager : MonoBehaviour
             //     Debug.Log(ex);
             // }
             Debug.Log("当前关卡倒计时结束，关卡结束！");
-            if(GlobalVar.gameStatus == eGameStatus.Ended) return;
+            if(GlobalVar.gameStatus == eGameStatus.Ended || GlobalVar.gameStatus == eGameStatus.MainMenu) return;
             UpdateGameAndLevelStatusWhenLevelEnd();
         });
     }
@@ -109,11 +111,12 @@ public class LevelManager : MonoBehaviour
     private void Gameover()
     {
         waitForEndTweenTimer.Kill();
+        enemyManager.ClearAllEnemy();
     }
 
     private void UpdateGameAndLevelStatusWhenLevelEnd()
     {
-        //TODO 游戏结束后场景中还有未清除的物体,控制指定敌人在指定关卡生成
+        //TODO 控制指定敌人在指定关卡生成
         EventManager.instance.OnDisableLocomotionInput();
         levelStatus = eLevelStatus.Ended;
         if(currentLevel < 20)

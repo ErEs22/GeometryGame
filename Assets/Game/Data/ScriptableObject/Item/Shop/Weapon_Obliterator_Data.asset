@@ -16,7 +16,7 @@ MonoBehaviour:
   itemName: Obliterator
   itemType: Weapon
   itemCost: 20
-  itemLevel: 1
+  itemLevel: 3
   shopItemType: 1
   projectileSpeed: 40
   prefab_Weapon: {fileID: 1247444303257178, guid: 4fb4e7c257b767340b38f6f2ebe705ef, type: 3}

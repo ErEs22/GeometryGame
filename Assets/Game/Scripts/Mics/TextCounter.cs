@@ -34,7 +34,7 @@ public class TextCounter : MonoBehaviour
             Mathf.Clamp(start,minValue,maxValue);
             textComp.text = start.ToString();
             await UniTask.Delay(interval * 1000);
-            if(GlobalVar.gameStatus == eGameStatus.Ended)
+            if(GlobalVar.gameStatus == eGameStatus.Ended || GlobalVar.gameStatus == eGameStatus.MainMenu)
             {
                 ClearTextCountDown();
                 return;

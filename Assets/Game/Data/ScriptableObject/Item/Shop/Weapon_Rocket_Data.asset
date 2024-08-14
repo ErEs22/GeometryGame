@@ -16,7 +16,7 @@ MonoBehaviour:
   itemName: Rocket
   itemType: Weapon
   itemCost: 20
-  itemLevel: 1
+  itemLevel: 2
   shopItemType: 1
   projectileSpeed: 15
   prefab_Weapon: {fileID: 1563429932685834, guid: 7bf0e51e7a2c40e4ea14924f4296ff03, type: 3}

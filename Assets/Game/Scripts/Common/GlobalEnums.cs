@@ -89,13 +89,13 @@ public static class GameTag
 public static class GameColor
 {
     public static Color ShopItem_Locked = Color.white;
-    public static Color ShopItem_Level01 = new Color(0, 0, 0, 0);
-    public static Color ShopItem_Level02 = Color.blue;
-    public static Color ShopItem_Level03 = new Color(160f/255f, 32f/255f, 240f/255f);
-    public static Color ShopItem_Level04 = Color.red;
-    public static Color ShopItem_Level05 = new Color(1f,0.5f,0,1);
+    public static Color ShopItem_Level01 = new Color(1f,1f,1f,1f);
+    public static Color ShopItem_Level02 = new Color(0f,1f,239f/255f,1f);
+    public static Color ShopItem_Level03 = new Color(183f/256f, 0, 1f,1f);
+    public static Color ShopItem_Level04 = new Color(1f,0,13f/256f,1f);
+    public static Color ShopItem_Level05 = new Color(1f,0.5f,0,1f);
     public static Color switchBtn_Off = new Color(157f/256,157f/256,157f/256,1f);
-    public static Color switchBtn_On = new Color(0,77f/256f,183f/256f,1f);
+    public static Color switchBtn_On = new Color(0,77f/256f,183f/256f,1f);//00FFEF_2  B700FF_3  FF000D_4
 }
 
 [Serializable]
