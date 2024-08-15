@@ -26,13 +26,13 @@ public class TextCounter : MonoBehaviour
         int minValue = start > end ? end : start;
         int intervalSymbol = (end - start) / Mathf.Abs(end - start) * interval;
         int countTimes = EyreUtility.Round(Mathf.Ceil(EyreUtility.Divide(Mathf.Abs(end - start),interval)));
-        textComp.text = start.ToString();
+        textComp.text = "TimeLeft:" + start.ToString();
 
         for(int i = 0; i < countTimes; i++)
         {
             start += intervalSymbol;
             Mathf.Clamp(start,minValue,maxValue);
-            textComp.text = start.ToString();
+            textComp.text = "TimeLeft:" + start.ToString();
             await UniTask.Delay(interval * 1000);
             if(GlobalVar.gameStatus == eGameStatus.Ended || GlobalVar.gameStatus == eGameStatus.MainMenu)
             {

@@ -8,6 +8,7 @@ public class Item_Weapon : InventoryItem,IPointerEnterHandler,IPointerExitHandle
     public Inventory_Weapon inventory_Weapon;
     private Button btn_Item;
     private bool isClicked = false;
+    private int sellPrice = 0;
 
     protected override void Awake()
     {
@@ -42,10 +43,11 @@ public class Item_Weapon : InventoryItem,IPointerEnterHandler,IPointerExitHandle
         weaponInfoPanel.activeItem = this;
     }
 
-    public virtual void InitItemPropUI(WeaponInfoPanel weaponInfoPanel,ShopItemData_SO itemData,int itemLevel)
+    public virtual void InitItemPropUI(WeaponInfoPanel weaponInfoPanel,ShopItemData_SO itemData,int itemLevel,int sellPrice)
     {
         this.itemLevel = itemLevel;
         this.itemData = itemData;
+        this.sellPrice = sellPrice;
         img_ItemIcon.sprite = itemData.itemIcon;
         this.weaponInfoPanel = weaponInfoPanel;
         SetItemLevelFilterColor();
@@ -54,7 +56,7 @@ public class Item_Weapon : InventoryItem,IPointerEnterHandler,IPointerExitHandle
     private void ShowItemInfo()
     {
         weaponInfoPanel.transform.position = transform.position + new Vector3(120,340);
-        weaponInfoPanel.DisplayPropInfo(itemData as ShopItemData_Weapon_SO);
+        weaponInfoPanel.DisplayPropInfo(itemData as ShopItemData_Weapon_SO,itemLevel);
     }
 
     private void HideItemInfo()

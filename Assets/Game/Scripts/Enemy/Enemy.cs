@@ -234,7 +234,12 @@ public class Enemy : MonoBehaviour, ITakeDamage, IHeal
         //死亡后血量应为零
         HP = 0;
         //释放掉落经验球
-        PoolManager.Release(dropItem,EyreUtility.GetRandomPosAroundCertainPos(transform.position,1.0f)).GetComponent<ExpBall>().Init();
+        bool isBonusExp = false;
+        if(GameCoreData.PlayerProperties.bonusCoin > 0)
+        {
+            isBonusExp = true;
+        }
+        PoolManager.Release(dropItem,EyreUtility.GetRandomPosAroundCertainPos(transform.position,1.0f)).GetComponent<ExpBall>().Init(isBonusExp);
         enemyManager.enemies.Remove(this);
         gameObject.SetActive(false);
     }

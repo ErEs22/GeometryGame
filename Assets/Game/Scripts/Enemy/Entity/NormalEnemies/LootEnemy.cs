@@ -32,7 +32,12 @@ public class LootEnemy : Enemy
         //释放掉落经验球
         for(int i = 0; i < 8; i++)
         {
-            PoolManager.Release(dropItem,EyreUtility.GetRandomPosAroundCertainPos(transform.position,1.0f)).GetComponent<ExpBall>().Init();
+            bool isBonusExp = false;
+            if(GameCoreData.PlayerProperties.bonusCoin > 0)
+            {
+                isBonusExp = true;
+            }
+            PoolManager.Release(dropItem,EyreUtility.GetRandomPosAroundCertainPos(transform.position,1.0f)).GetComponent<ExpBall>().Init(isBonusExp);
         }
         gameObject.SetActive(false);
         enemyManager.enemies.Remove(this);

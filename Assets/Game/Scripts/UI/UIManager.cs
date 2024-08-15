@@ -36,6 +36,8 @@ public class UIManager : MonoBehaviour
             ui.InitUI();
             ui.CloseUI();
         }
+        EventManager.instance.OnOpenUI(eUIID.PlayerStatusBar);
+        EventManager.instance.OnDisableUIInput();
     }
 
     private void OpenUI(eUIID id)

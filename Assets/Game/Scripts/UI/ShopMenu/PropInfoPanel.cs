@@ -7,26 +7,25 @@ public class PropInfoPanel : MonoBehaviour
     //-----------Path
     private const string path_Img_ItemIcon = "Img_ItemIcon";
     private const string path_Text_ItemName = "Text_ItemName";
-    private const string path_Text_ItemType = "Text_ItemType";
+    private const string path_Text_ItemRareLevel = "Text_ItemRareLevel";
     private const string path_PropertiesParent = "Properties";
     //-----------
 
     private Image img_ItemIcon;
     private TextMeshProUGUI text_ItemName;
-    private TextMeshProUGUI text_ItemType;
+    private TextMeshProUGUI text_ItemRareLevel;
     private Transform trans_PropertiesParent;
     protected void Awake() {
         img_ItemIcon = transform.Find(path_Img_ItemIcon).GetComponent<Image>();
         text_ItemName = transform.Find(path_Text_ItemName).GetComponent<TextMeshProUGUI>();
-        text_ItemType = transform.Find(path_Text_ItemType).GetComponent<TextMeshProUGUI>();
+        text_ItemRareLevel = transform.Find(path_Text_ItemRareLevel).GetComponent<TextMeshProUGUI>();
         trans_PropertiesParent = transform.Find(path_PropertiesParent);
     }
 
-    public void DisplayPropInfo(ShopItemData_Prop_SO itemData)
+    public void DisplayPropInfo(ShopItemData_Prop_SO itemData,int currentLevel)
     {
         img_ItemIcon.sprite = itemData.itemIcon;
         text_ItemName.text = itemData.itemName;
-        text_ItemType.text = itemData.itemType;
         GameObject propertyObject = trans_PropertiesParent.GetChild(0).gameObject;
         SetPropertyText(propertyObject.GetComponent<TextMeshProUGUI>(),itemData.itemProperties[0].playerProperty,itemData.itemProperties[0].changeAmount);
         for(int i = 1; i < itemData.itemProperties.Count; i++)
@@ -35,6 +34,7 @@ public class PropInfoPanel : MonoBehaviour
             ShopPropPropertyPair data = itemData.itemProperties[i];
             SetPropertyText(textComp,data.playerProperty,data.changeAmount);
         }
+        SetItemRareLevelText(currentLevel);
     }
 
     public void ClearPropInfo()
@@ -73,6 +73,33 @@ public class PropInfoPanel : MonoBehaviour
             case ePlayerProperty.MoveSpeed:
                 textComp.text = "MoveSpeed:" + propertyValue + "%";
             break;
+        }
+    }
+
+    protected void SetItemRareLevelText(int itemLevel)
+    {
+        switch (itemLevel)
+        {
+            case 1:
+                text_ItemRareLevel.text = "Normal";
+                text_ItemRareLevel.color = GameColor.ShopItem_Level01;
+                break;
+            case 2:
+                text_ItemRareLevel.text = "Special";
+                text_ItemRareLevel.color = GameColor.ShopItem_Level02;
+                break;
+            case 3:
+                text_ItemRareLevel.text = "Rare";
+                text_ItemRareLevel.color = GameColor.ShopItem_Level03;
+                break;
+            case 4:
+                text_ItemRareLevel.text = "Epic";
+                text_ItemRareLevel.color = GameColor.ShopItem_Level04;
+                break;
+            case 5:
+                text_ItemRareLevel.color = GameColor.ShopItem_Level05;
+                break;
+            default: break;
         }
     }
 }

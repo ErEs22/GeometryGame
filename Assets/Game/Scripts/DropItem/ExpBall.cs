@@ -5,6 +5,8 @@ public class ExpBall : MonoBehaviour
 {
     [SerializeField]
     CircleCollider2D circleCollider;
+    [HideInInspector]
+    public bool isBonus = false;
 
     private void Awake() {
         circleCollider = GetComponent<CircleCollider2D>();
@@ -14,9 +16,19 @@ public class ExpBall : MonoBehaviour
         EventManager.instance.onLevelEnd += CollectBonusCoin;
     }
 
-    public void Init()
+    public void Init(bool isBonus = false)
     {
+        this.isBonus = isBonus;
         circleCollider.enabled = true;
+        if(isBonus)
+        {
+            EventManager.instance.OnChangeBonusCoinCount(-1);
+            transform.localScale = new Vector3(0.5f,0.5f,0.5f);
+        }
+        else
+        {
+            transform.localScale = new Vector3(0.3f,0.3f,0.3f);
+        }
     }
 
     private void ClearBall()

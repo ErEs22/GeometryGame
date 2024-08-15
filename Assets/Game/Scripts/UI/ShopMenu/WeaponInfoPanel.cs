@@ -7,7 +7,7 @@ public class WeaponInfoPanel : MonoBehaviour
     //-----------Path
     private const string path_Img_ItemIcon = "ItemInfo/Img_ItemIcon";
     private const string path_Text_ItemName = "ItemInfo/Text_ItemName";
-    private const string path_Text_ItemType = "ItemInfo/Text_ItemType";
+    private const string path_Text_ItemRareLevel = "ItemInfo/Text_ItemRareLevel";
     private const string path_PropertiesParent = "ItemInfo/Properties";
     private const string path_Btn_Combine = "Btn_Combine";
     private const string path_Btn_Sell = "Btn_Sell";
@@ -16,7 +16,7 @@ public class WeaponInfoPanel : MonoBehaviour
 
     private Image img_ItemIcon;
     private TextMeshProUGUI text_ItemName;
-    private TextMeshProUGUI text_ItemType;
+    private TextMeshProUGUI text_ItemRareLevel;
     private Button btn_Combine;
     private Button btn_Sell;
     private Button btn_Cancel;
@@ -26,7 +26,7 @@ public class WeaponInfoPanel : MonoBehaviour
     protected void Awake() {
         img_ItemIcon = transform.Find(path_Img_ItemIcon).GetComponent<Image>();
         text_ItemName = transform.Find(path_Text_ItemName).GetComponent<TextMeshProUGUI>();
-        text_ItemType = transform.Find(path_Text_ItemType).GetComponent<TextMeshProUGUI>();
+        text_ItemRareLevel = transform.Find(path_Text_ItemRareLevel).GetComponent<TextMeshProUGUI>();
         btn_Combine = transform.Find(path_Btn_Combine).GetComponent<Button>();
         btn_Sell = transform.Find(path_Btn_Sell).GetComponent<Button>();
         btn_Cancel = transform.Find(path_Btn_Cancel).GetComponent<Button>();
@@ -64,12 +64,12 @@ public class WeaponInfoPanel : MonoBehaviour
         transform.position = new Vector3(-9999,-9999);
     }
 
-    public void DisplayPropInfo(ShopItemData_Weapon_SO itemData)
+    public void DisplayPropInfo(ShopItemData_Weapon_SO itemData,int currentLevel)
     {
         ClearPropInfo();
         img_ItemIcon.sprite = itemData.itemIcon;
         text_ItemName.text = itemData.itemName;
-        text_ItemType.text = itemData.itemType;
+        SetItemRareLevelText(currentLevel);
         GameObject propertyObject = trans_PropertiesParent.GetChild(0).gameObject;
         SetPropertyText(propertyObject.GetComponent<TextMeshProUGUI>(),itemData.itemProperties[0].weaponProperty,itemData.itemProperties[0].propertyValue);
         for(int i = 1; i < itemData.itemProperties.Count; i++)
@@ -94,26 +94,56 @@ public class WeaponInfoPanel : MonoBehaviour
         switch(weaponProperty)
         {
             case eWeaponProperty.Damage:
-                textComp.text = "Damage:" + propertyValue * (PlayerPropertyHandler.damageMul * 0.01f + 1);
-            break;
+                textComp.text = "Damage:" + propertyValue * (GameCoreData.PlayerProperties.damageMul * 0.01f + 1);
+                break;
             case eWeaponProperty.CriticalMul:
-                textComp.text = "CriticalMul:" + propertyValue;
-            break;
+                textComp.text = "CriticalMul:x" + propertyValue;
+                break;
             case eWeaponProperty.FireInterval:
-                textComp.text = "FireInterval:" + (propertyValue / (PlayerPropertyHandler.attackSpeed * 0.01f + 1)).ToString("F2");
-            break;
+                textComp.text = "FireInterval:" + (propertyValue / (GameCoreData.PlayerProperties.attackSpeedMul * 0.01f + 1)).ToString("F2");
+                break;
             case eWeaponProperty.KnockBack:
                 textComp.text = "PushBack:" + propertyValue;
-            break;
+                break;
             case eWeaponProperty.AttackRange:
-                textComp.text = "AttackRange:" + (propertyValue + PlayerPropertyHandler.attackRange).ToString();
-            break;
+                textComp.text = "AttackRange:" + (propertyValue + GameCoreData.PlayerProperties.attackRange).ToString();
+                break;
             case eWeaponProperty.LifeSteal:
-                textComp.text = "LifeSteal:" + (propertyValue + PlayerPropertyHandler.lifeSteal).ToString();
-            break;
+                textComp.text = "LifeSteal:" + ((propertyValue + GameCoreData.PlayerProperties.lifeSteal) * 100).ToString() + "%";
+                break;
             case eWeaponProperty.DamageThrough:
                 textComp.text = "DamageThrough:" + propertyValue;
-            break;
+                break;
+            case eWeaponProperty.CriticalRate:
+                textComp.text = "CriticalRate:" + ((propertyValue * 100) + GameCoreData.PlayerProperties.criticalRate).ToString() + "%";
+                break;
+        }
+    }
+
+    protected void SetItemRareLevelText(int itemLevel)
+    {
+        switch (itemLevel)
+        {
+            case 1:
+                text_ItemRareLevel.text = "Normal";
+                text_ItemRareLevel.color = GameColor.ShopItem_Level01;
+                break;
+            case 2:
+                text_ItemRareLevel.text = "Special";
+                text_ItemRareLevel.color = GameColor.ShopItem_Level02;
+                break;
+            case 3:
+                text_ItemRareLevel.text = "Rare";
+                text_ItemRareLevel.color = GameColor.ShopItem_Level03;
+                break;
+            case 4:
+                text_ItemRareLevel.text = "Epic";
+                text_ItemRareLevel.color = GameColor.ShopItem_Level04;
+                break;
+            case 5:
+                text_ItemRareLevel.color = GameColor.ShopItem_Level05;
+                break;
+            default: break;
         }
     }
 }

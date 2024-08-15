@@ -12,7 +12,7 @@ using UnityEngine;
 public class LevelManager : MonoBehaviour
 {
 
-    public static int currentLevel = 5;
+    public static int currentLevel = 1;
     private int playerUpgradeCount = 0;
     public static eLevelStatus levelStatus = eLevelStatus.Running;
     public GameObject damageDisplayPrefab;
@@ -57,7 +57,7 @@ public class LevelManager : MonoBehaviour
 
     private void StartGame()
     {
-        currentLevel = 5;
+        currentLevel = 1;
         Debug.Log("当前关卡：" + currentLevel);
         EventManager.instance.OnInitPlayerStatus();
         EventManager.instance.OnOpenUI(eUIID.PlayerStatusBar);
@@ -66,6 +66,7 @@ public class LevelManager : MonoBehaviour
         StartLevelCountDown();
         enemyManager.SetCurrentEnemyList();
         StartSpawnEnemy();
+        EventManager.instance.OnLevelTextUpdate(currentLevel);
         EventManager.instance.OnEnableUIInput();
         EventManager.instance.OnEnableLocomotionInput();
         EventManager.instance.OnSetPlayerInvincible(false);
@@ -82,6 +83,7 @@ public class LevelManager : MonoBehaviour
         StartLevelCountDown();
         enemyManager.SetCurrentEnemyList();
         StartSpawnEnemy();
+        EventManager.instance.OnLevelTextUpdate(currentLevel);
         EventManager.instance.OnEnableUIInput();
         EventManager.instance.OnEnableLocomotionInput();
         EventManager.instance.OnSetPlayerInvincible(true);

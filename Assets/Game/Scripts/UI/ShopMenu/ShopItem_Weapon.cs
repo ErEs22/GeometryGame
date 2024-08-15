@@ -17,7 +17,6 @@ public class ShopItem_Weapon : ShopItem
     {
         btn_Purchase.onClick.RemoveAllListeners();
         btn_Lock.onClick.RemoveAllListeners();
-        ClearItemProperties();
     }
 
     private void OnBtnPurchaseClick()
@@ -44,7 +43,7 @@ public class ShopItem_Weapon : ShopItem
         {
             ColorBlock b = new ColorBlock();
             b = btn_Lock.colors;
-            b.normalColor = Color.grey;
+            b.normalColor = new Color(1,1,1,0);
             btn_Lock.colors = b;
         }
     }
@@ -67,10 +66,10 @@ public class ShopItem_Weapon : ShopItem
         {
             ColorBlock b = new ColorBlock();
             b = btn_Lock.colors;
-            b.normalColor = Color.grey;
+            b.normalColor = new Color(1,1,1,0);
             btn_Lock.colors = b;
         }
-        if(GameCoreData.PlayerProperties.coin >= itemData.itemCost)
+        if(GameCoreData.PlayerProperties.coin >= price)
         {
             isAffordable = true;
         }
@@ -78,14 +77,13 @@ public class ShopItem_Weapon : ShopItem
         {
             isAffordable = false;
         }
-        TextMeshProUGUI text = btn_Purchase.GetComponentInChildren<TextMeshProUGUI>();
         if(isAffordable)
         {
-            text.color = Color.black;
+            text_Btn_Purchase.color = Color.white;
         }
         else
         {
-            text.color = Color.red;
+            text_Btn_Purchase.color = Color.red;
         }
         for(int i = 0; i < itemData.itemProperties.Count; i++)
         {
@@ -101,8 +99,10 @@ public class ShopItem_Weapon : ShopItem
     public void InitItemProperties(int itemLevel)
     {
         this.itemLevel = itemLevel;
+        CaculateItemPrice(itemData.itemCost,itemData.itemLevel,itemLevel);
         img_ItemIcon.sprite = itemData.itemIcon;
         text_ItemName.text = itemData.itemName;
+        text_Btn_Purchase.text = price.ToString();
         GameObject text_Property = trans_PropertiesParent.GetChild(0).gameObject;
         SetPropertyText(text_Property.GetComponent<TextMeshProUGUI>(),itemData.itemProperties[0].weaponProperty,itemData.itemProperties[0].propertyValue);
         for(int i = 1; i < itemData.itemProperties.Count; i++)
@@ -111,7 +111,7 @@ public class ShopItem_Weapon : ShopItem
             ShopWeaponPropertyPair data = itemData.itemProperties[i];
             SetPropertyText(textComp,data.weaponProperty,data.propertyValue);
         }
-        SetItemLevelFilterColor();
+        SetItemRareLevelText(itemLevel);
     }
 
     private void ClearItemProperties()
@@ -129,25 +129,28 @@ public class ShopItem_Weapon : ShopItem
         {
             case eWeaponProperty.Damage:
                 textComp.text = "Damage:" + propertyValue * (GameCoreData.PlayerProperties.damageMul * 0.01f + 1);
-            break;
+                break;
             case eWeaponProperty.CriticalMul:
-                textComp.text = "CriticalMul:" + propertyValue;
-            break;
+                textComp.text = "CriticalMul:x" + propertyValue;
+                break;
             case eWeaponProperty.FireInterval:
                 textComp.text = "FireInterval:" + (propertyValue / (GameCoreData.PlayerProperties.attackSpeedMul * 0.01f + 1)).ToString("F2");
-            break;
+                break;
             case eWeaponProperty.KnockBack:
                 textComp.text = "PushBack:" + propertyValue;
-            break;
+                break;
             case eWeaponProperty.AttackRange:
                 textComp.text = "AttackRange:" + (propertyValue + GameCoreData.PlayerProperties.attackRange).ToString();
-            break;
+                break;
             case eWeaponProperty.LifeSteal:
-                textComp.text = "LifeSteal:" + (propertyValue + GameCoreData.PlayerProperties.lifeSteal).ToString();
-            break;
+                textComp.text = "LifeSteal:" + ((propertyValue + GameCoreData.PlayerProperties.lifeSteal) * 100).ToString() + "%";
+                break;
             case eWeaponProperty.DamageThrough:
                 textComp.text = "DamageThrough:" + propertyValue;
-            break;
+                break;
+            case eWeaponProperty.CriticalRate:
+                textComp.text = "CriticalRate:" + ((propertyValue * 100) + GameCoreData.PlayerProperties.criticalRate).ToString() + "%";
+                break;
         }
     }
 }

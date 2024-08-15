@@ -182,6 +182,8 @@ public class UICharacterSelectMenu : UIBase
         EventManager.instance.OnSetCharacterData(selectCharacter.characterData);
         EventManager.instance.OnGenerateWeaonInInventory();
         EventManager.instance.OnStartGame();
+        EventManager.instance.OnEnableLocomotionInput();
+        EventManager.instance.OnEnableUIInput();
     }
 
     private void OnBtnBackToMainMenuClick()
@@ -196,7 +198,8 @@ public class UICharacterSelectMenu : UIBase
         Inventory_Weapon weapon = new Inventory_Weapon
         {
             weaponLevel = selectWeapon.itemLevel,
-            weaponData = selectWeapon.itemData as ShopItemData_Weapon_SO
+            weaponData = selectWeapon.itemData as ShopItemData_Weapon_SO,
+            sellPrice = selectWeapon.itemData.itemCost,
         };
         GameInventory.Instance.AddWeaponToInventory(weapon);
     }
@@ -345,7 +348,7 @@ public class UICharacterSelectMenu : UIBase
                 break;
             case 4:
                 text_WeaponRareLevel.text = "Epic";
-                text_WeaponRareLevel.color = GameColor.ShopItem_Level05;
+                text_WeaponRareLevel.color = GameColor.ShopItem_Level04;
                 break;
             case 5:
                 img_WeaponLevelFilter.color = GameColor.ShopItem_Level05;
@@ -363,7 +366,7 @@ public class UICharacterSelectMenu : UIBase
                 textComp.text = "Damage:" + propertyValue * (GameCoreData.PlayerProperties.damageMul * 0.01f + 1);
                 break;
             case eWeaponProperty.CriticalMul:
-                textComp.text = "CriticalMul:" + propertyValue;
+                textComp.text = "CriticalMul:x" + propertyValue;
                 break;
             case eWeaponProperty.FireInterval:
                 textComp.text = "FireInterval:" + (propertyValue / (GameCoreData.PlayerProperties.attackSpeedMul * 0.01f + 1)).ToString("F2");
@@ -375,10 +378,13 @@ public class UICharacterSelectMenu : UIBase
                 textComp.text = "AttackRange:" + (propertyValue + GameCoreData.PlayerProperties.attackRange).ToString();
                 break;
             case eWeaponProperty.LifeSteal:
-                textComp.text = "LifeSteal:" + (propertyValue + GameCoreData.PlayerProperties.lifeSteal).ToString();
+                textComp.text = "LifeSteal:" + ((propertyValue + GameCoreData.PlayerProperties.lifeSteal) * 100).ToString() + "%";
                 break;
             case eWeaponProperty.DamageThrough:
                 textComp.text = "DamageThrough:" + propertyValue;
+                break;
+            case eWeaponProperty.CriticalRate:
+                textComp.text = "CriticalRate:" + ((propertyValue * 100) + GameCoreData.PlayerProperties.criticalRate).ToString() + "%";
                 break;
         }
     }

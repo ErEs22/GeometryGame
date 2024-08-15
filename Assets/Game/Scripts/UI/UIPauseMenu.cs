@@ -44,6 +44,8 @@ public class UIPauseMenu : UIBase
         GlobalVar.gameStatus = eGameStatus.MainMenu;
         LevelManager.levelStatus = eLevelStatus.Ended;
         CloseUI();
+        EventManager.instance.OnCloseUI(eUIID.ShopMenu);
+        EventManager.instance.OnCloseUI(eUIID.UpgradeMenu);
         EventManager.instance.OnOpenUI(eUIID.MainMenu);
         EventManager.instance.OnDisableLocomotionInput();
         EventManager.instance.OnGameover();

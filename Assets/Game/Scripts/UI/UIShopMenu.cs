@@ -9,6 +9,7 @@ using UnityEngine.UI;
 public class UIShopMenu : UIBase
 {
     //------------UIComponentRelatePath
+    string path_TextTitle = "Shop/Text_Title";
     string path_btn_StartLevel = "Btn_StartLevel";
     string path_btn_Refresh = "Shop/Btn_Refresh";
     string path_Items = "Shop/Items";
@@ -35,6 +36,7 @@ public class UIShopMenu : UIBase
     private PropInfoPanel propInfoPanel;
     private WeaponInfoPanel weaponInfoPanel;
     private Image img_Mask;
+    private TextMeshProUGUI text_Title;
     private TextMeshProUGUI text_UpgradeRewardCount;
     private TextMeshProUGUI text_Health_PropertyValue;
     private TextMeshProUGUI text_HPRegeneration_PropertyValue;
@@ -76,6 +78,7 @@ public class UIShopMenu : UIBase
     {
         btn_StartLevel = transform.Find(path_btn_StartLevel).GetComponent<Button>();
         btn_Refresh = transform.Find(path_btn_Refresh).GetComponent<Button>();
+        text_Title = transform.Find(path_TextTitle).GetComponent<TextMeshProUGUI>();
         text_CoinCount = transform.Find(path_Text_CoinCount).GetComponent<TextMeshProUGUI>();
         trans_ItemsParent = transform.Find(path_Items);
         trans_PropInventoryParent = transform.Find(path_PropInventoryParent);
@@ -111,6 +114,8 @@ public class UIShopMenu : UIBase
         InitPlayerProperties();
         UpdateWeaponInventory();
         UpdatePropInventory();
+        UpdateLevelText();
+        UpdateAllItemsUIInfo();
     }
 
     private void OnDisable()
@@ -128,13 +133,18 @@ public class UIShopMenu : UIBase
         EventManager.instance.onGameover -= ClearInventoryItems;
     }
 
+    private void UpdateLevelText()
+    {
+        text_Title.text = "Shop(Level" + LevelManager.currentLevel.ToString() + ")";
+    }
+
     private void UpdateWeaponInventory()
     {
         ClearWeaponInventory();
         GameInventory.Instance.inventoryWeapons.ForEach( weapon =>
         {
             Item_Weapon itemWeapon = Instantiate(prefab_InventoryItem_Weapon,trans_WeaponInventoryParent).GetComponent<Item_Weapon>();
-            itemWeapon.InitItemPropUI(weaponInfoPanel,weapon.weaponData,weapon.weaponLevel);
+            itemWeapon.InitItemPropUI(weaponInfoPanel,weapon.weaponData,weapon.weaponLevel,weapon.sellPrice);
             allWeaponInventoryItems.Add(itemWeapon);
             itemWeapon.inventory_Weapon = weapon;
         });
@@ -196,6 +206,8 @@ public class UIShopMenu : UIBase
 
     private void CombineWeaponInventoryItems(Item_Weapon weaponItem)
     {
+        //超过最高等级无法合成
+        if(weaponItem.itemLevel >= 4) return;
         for(int i = 0; i < allWeaponInventoryItems.Count; i++)
         {
             Item_Weapon item = allWeaponInventoryItems[i];
@@ -260,13 +272,13 @@ public class UIShopMenu : UIBase
 
     private void UpdateBtnRefreshUI()
     {
-        if(GameCoreData.PlayerProperties.coin < 20)
+        if(GameCoreData.PlayerProperties.coin < refreshCoinCost)
         {
             text_Btn_Refresh.color = Color.red;
         }
         else
         {
-            text_Btn_Refresh.color = Color.black;
+            text_Btn_Refresh.color = Color.white;
         }
     }
 
@@ -286,10 +298,12 @@ public class UIShopMenu : UIBase
         {
             item.UpdateUIInfo();
         });
+        UpdateBtnRefreshUI();
     }
 
     private void AddShopItemToInventory(ShopItemData_SO itemData,ShopItem shopItem)
     {
+        int price = shopItem.price;
         int coinCount = GameCoreData.PlayerProperties.coin;
         switch(itemData.shopItemType)
         {
@@ -312,9 +326,9 @@ public class UIShopMenu : UIBase
                     };
                     GameInventory.Instance.AddPropToInventory(newProp);
                 }
-                if(coinCount >= itemData.itemCost)
+                if(coinCount >= price)
                 {
-                    coinCount = Mathf.Clamp(coinCount - itemData.itemCost,0,int.MaxValue);
+                    coinCount = Mathf.Clamp(coinCount - price,0,int.MaxValue);
                     GameCoreData.PlayerProperties.coin = coinCount;
                 }
                 ShopItemData_Prop_SO itemPropData = itemData as ShopItemData_Prop_SO;
@@ -323,30 +337,37 @@ public class UIShopMenu : UIBase
                     EventManager.instance.OnUpdatePlayerProperty(item.playerProperty,item.changeAmount);
                 });
                 EventManager.instance.OnUpdateCoinCount();
-                shopItem.img_HideMask.gameObject.SetActive(true);
+                shopItem.SetItemInvisible();
                 shopItem.isLocked = false;
             break;
             case eShopItemType.Weapon:
                 if(allWeaponInventoryItems.Count >= 6)
                 {
+                    if(shopItem.itemLevel >= 4)
+                    {
+                        //超过最大等级，无法与背包中已有的武器进行合成
+                        return;
+                    }
+                    //在背包中寻找与要购买的武器是否有同等级相同的武器进行合成
                     for(int i = 0; i < allWeaponInventoryItems.Count; i++)
                     {
                         Item_Weapon item = allWeaponInventoryItems[i];
-                        if(itemData.itemName == item.itemData.itemName && itemData.itemLevel == item.itemLevel)
+                        if(itemData.itemName == item.itemData.itemName && shopItem.itemLevel == item.itemLevel)
                         {
                             item.UpgradeItemLevel();
-                            if(coinCount >= itemData.itemCost)
+                            if(coinCount >= price)
                             {
-                                coinCount = Mathf.Clamp(coinCount - itemData.itemCost,0,int.MaxValue);
+                                coinCount = Mathf.Clamp(coinCount - price,0,int.MaxValue);
                                 GameCoreData.PlayerProperties.coin = coinCount;
                             }
                             EventManager.instance.OnUpdateCoinCount();
-                            shopItem.img_HideMask.gameObject.SetActive(true);
+                            shopItem.SetItemInvisible();
                             shopItem.isLocked = false;
                             break;
                         }
-                        if(i == 6)
+                        if(i == 5)
                         {
+                            //未找到可合成的武器，需要删除或合成背包中的武器才能继续购买
                             Debug.Log("The weapon inventory is full,you need to clear some space to purchase it");
                             return;
                         }
@@ -354,21 +375,22 @@ public class UIShopMenu : UIBase
                 }
                 else
                 {
-                    if(coinCount >= itemData.itemCost)
+                    if(coinCount >= price)
                     {
-                        coinCount = Mathf.Clamp(coinCount - itemData.itemCost,0,int.MaxValue);
+                        coinCount = Mathf.Clamp(coinCount - price,0,int.MaxValue);
                         GameCoreData.PlayerProperties.coin = coinCount;
                     }
                     EventManager.instance.OnUpdateCoinCount();
                     Item_Weapon itemWeapon = Instantiate(prefab_InventoryItem_Weapon,trans_WeaponInventoryParent).GetComponent<Item_Weapon>();
-                    itemWeapon.InitItemPropUI(weaponInfoPanel,itemData,shopItem.itemLevel);
+                    itemWeapon.InitItemPropUI(weaponInfoPanel,itemData,shopItem.itemLevel,EyreUtility.Round(price * 0.8f));
                     allWeaponInventoryItems.Add(itemWeapon);
-                    shopItem.img_HideMask.gameObject.SetActive(true);
+                    shopItem.SetItemInvisible();
                     shopItem.isLocked = false;
                     //游戏武器背包同步添加
                     Inventory_Weapon inventory_Weapon = new Inventory_Weapon{
                         weaponData = itemData as ShopItemData_Weapon_SO,
                         weaponLevel = shopItem.itemLevel,
+                        sellPrice = EyreUtility.Round(price * 0.8f),
                     };
                     itemWeapon.inventory_Weapon = inventory_Weapon;
                     GameInventory.Instance.AddWeaponToInventory(inventory_Weapon);
@@ -482,6 +504,13 @@ public class UIShopMenu : UIBase
         {
             return false;
         }
+    }
+
+    private int CaculateItemPrice(int itemBaseCost,int itemBaseLevel,int itemCurrentLevel)
+    {
+        int price = 0;
+        price = itemBaseCost / itemBaseLevel * itemCurrentLevel;
+        return price;
     }
 
     private void UpdatePlayerStatusPropertiesUI(ePlayerProperty playerProperty,int propertyValue)

@@ -59,7 +59,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.39215687}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -132,9 +132,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62897e0edac01a141a08a5a1227982b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item_Level: 1
+  itemLevel: 1
   itemData: {fileID: 0}
   weaponInfoPanel: {fileID: 0}
+  inventory_Weapon:
+    weaponData: {fileID: 0}
+    weaponLevel: 1
 --- !u!114 &5020209484442906177
 MonoBehaviour:
   m_ObjectHideFlags: 0

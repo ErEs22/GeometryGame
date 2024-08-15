@@ -54,8 +54,9 @@ public class PlayerState : MonoBehaviour, ITakeDamage
         switch(other.tag)
         {
             case GameTag.DropItem:
-                other.GetComponent<ExpBall>().Collect(transform);
-                CollectExpBall();
+                ExpBall expBall = other.GetComponent<ExpBall>();
+                expBall.Collect(transform);
+                CollectExpBall(expBall.isBonus);
             break;
         }
     }
@@ -76,6 +77,10 @@ public class PlayerState : MonoBehaviour, ITakeDamage
         criticalRate = playerData.criticalRate;
         attackRange = playerData.attackRange;
         moveSpeed = playerData.moveSpeed;
+        exp = 0;
+        bonusCoin = 0;
+        GameCoreData.PlayerProperties.exp = exp;
+        GameCoreData.PlayerProperties.bonusCoin = bonusCoin;
         GameCoreData.PlayerProperties.maxHP = maxHP;
         GameCoreData.PlayerProperties.hpRegeneration = hpRegeneraePerSecond;
         GameCoreData.PlayerProperties.lifeSteal = EyreUtility.Round(lifeStealRate * 100);
@@ -89,12 +94,20 @@ public class PlayerState : MonoBehaviour, ITakeDamage
         playerCollider.enabled = true;
     }
 
-    private void CollectExpBall()
+    private void CollectExpBall(bool isBonus)
     {
         int currentLevelExpRequire = GetCurrentLevelExpRequire();
-        exp++;
-        GameCoreData.PlayerProperties.exp++;
-        GameCoreData.PlayerProperties.coin++;
+        if(isBonus)
+        {
+            exp += 2;
+            GameCoreData.PlayerProperties.coin += 2;
+        }
+        else
+        {
+            exp += 1;
+            GameCoreData.PlayerProperties.coin += 1;
+        }
+        GameCoreData.PlayerProperties.exp = exp;
         if(exp >= currentLevelExpRequire)
         {
             //角色升级
@@ -111,6 +124,8 @@ public class PlayerState : MonoBehaviour, ITakeDamage
     private void ChangeBonusCoinCount(int changeValue)
     {
         bonusCoin += changeValue;
+        bonusCoin = Mathf.Clamp(bonusCoin,0,int.MaxValue);
+        GameCoreData.PlayerProperties.bonusCoin = bonusCoin;
         EventManager.instance.OnUpdateBonusCoinCount(bonusCoin);
     }
 

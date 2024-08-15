@@ -128,7 +128,7 @@ public class UIUpgradeMenu : UIBase
 
     private void RefreshCoinCost()
     {
-        GameCoreData.PlayerProperties.CostCoin(20);
+        GameCoreData.PlayerProperties.CostCoin(refreshCoinCost);
         SetRefreshIncreaseCoinCost();
         EventManager.instance.OnUpdateCoinCount();
         UpdateBtnRefreshUI();
@@ -146,13 +146,13 @@ public class UIUpgradeMenu : UIBase
 
     private void UpdateBtnRefreshUI()
     {
-        if(GameCoreData.PlayerProperties.coin < 20)
+        if(GameCoreData.PlayerProperties.coin < refreshCoinCost)
         {
             text_Btn_Refresh.color = Color.red;
         }
         else
         {
-            text_Btn_Refresh.color = Color.black;
+            text_Btn_Refresh.color = Color.white;
         }
         text_Btn_Refresh.text = "Refresh(" + refreshCoinCost.ToString() + ")";
     }

@@ -14,7 +14,6 @@ public class ShopItem_Prop : ShopItem
     private void OnDisable() {
         btn_Purchase.onClick.RemoveAllListeners();
         btn_Lock.onClick.RemoveAllListeners();
-        ClearItemProperties();
     }
 
     private void OnBtnPurchaseClick()
@@ -36,15 +35,13 @@ public class ShopItem_Prop : ShopItem
             b = btn_Lock.colors;
             b.normalColor = Color.white;
             btn_Lock.colors = b;
-            // img_Lock.color = Color.white;
         }
         else
         {
             ColorBlock b = new ColorBlock();
             b = btn_Lock.colors;
-            b.normalColor = Color.grey;
+            b.normalColor = new Color(1,1,1,0);
             btn_Lock.colors = b;
-            // img_Lock.color = Color.grey;
         }
     }
 
@@ -66,10 +63,10 @@ public class ShopItem_Prop : ShopItem
         {
             ColorBlock b = new ColorBlock();
             b = btn_Lock.colors;
-            b.normalColor = Color.grey;
+            b.normalColor = new Color(1,1,1,0);
             btn_Lock.colors = b;
         }
-        if(GameCoreData.PlayerProperties.coin >= itemData.itemCost)
+        if(GameCoreData.PlayerProperties.coin >= price)
         {
             isAffordable = true;
         }
@@ -77,14 +74,13 @@ public class ShopItem_Prop : ShopItem
         {
             isAffordable = false;
         }
-        TextMeshProUGUI text = btn_Purchase.GetComponentInChildren<TextMeshProUGUI>();
         if(isAffordable)
         {
-            text.color = Color.black;
+            text_Btn_Purchase.color = Color.white;
         }
         else
         {
-            text.color = Color.red;
+            text_Btn_Purchase.color = Color.red;
         }
     }
 
@@ -94,8 +90,10 @@ public class ShopItem_Prop : ShopItem
     public void InitItemProperties(int itemLevel)
     {
         this.itemLevel = itemLevel;
+        CaculateItemPrice(itemData.itemCost,itemData.itemLevel,itemLevel);
         img_ItemIcon.sprite = itemData.itemIcon;
         text_ItemName.text = itemData.itemName;
+        text_Btn_Purchase.text = price.ToString();
         GameObject propertyObject = trans_PropertiesParent.GetChild(0).gameObject;
         SetPropertyText(propertyObject.GetComponent<TextMeshProUGUI>(),itemData.itemProperties[0].playerProperty,itemData.itemProperties[0].changeAmount);
         for(int i = 1; i < itemData.itemProperties.Count; i++)
@@ -104,7 +102,7 @@ public class ShopItem_Prop : ShopItem
             ShopPropPropertyPair data = itemData.itemProperties[i];
             SetPropertyText(textComp,data.playerProperty,data.changeAmount);
         }
-        SetItemLevelFilterColor();
+        SetItemRareLevelText(itemLevel);
     }
 
     private void ClearItemProperties()

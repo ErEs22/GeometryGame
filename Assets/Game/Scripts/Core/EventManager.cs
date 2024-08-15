@@ -18,7 +18,7 @@ public class EventManager : MonoBehaviour
     public event UnityAction onInitPlayerStatus = delegate{};
     public event UnityAction<Color,Color> onHealthBarFlash = delegate{};
     public event UnityAction<Color,Color> onExpBarFlash = delegate{};
-    public event UnityAction onCollectExpBall = delegate{};
+    public event UnityAction<bool> onCollectExpBall = delegate{};
     public event UnityAction<int> onShowUpgradeRewardCount = delegate{};
     public event UnityAction onPlayerUpgradeCountIncrease = delegate{};
     public event UnityAction<ePlayerProperty,int> onUpdatePlayerProperty = delegate{};
@@ -43,12 +43,18 @@ public class EventManager : MonoBehaviour
     public event UnityAction<bool> onSetPlayerInvincible = delegate{};
     public event UnityAction onDisableUIInput = delegate{};
     public event UnityAction onEnableUIInput = delegate{};
+    public event UnityAction<int> onLevelTextUpdate = delegate{};
 
     private void Awake() {
         if(instance == null)
         {
             instance = this;
         }
+    }
+
+    public void OnLevelTextUpdate(int currentLevel)
+    {
+        onLevelTextUpdate.Invoke(currentLevel);
     }
 
     public void OnDisableUIInput()
@@ -171,9 +177,9 @@ public class EventManager : MonoBehaviour
         onExpBarFlash.Invoke(startColor,endColor);
     }
 
-    public void OnCollectExpBall()
+    public void OnCollectExpBall(bool isBonus)
     {
-        onCollectExpBall.Invoke();
+        onCollectExpBall.Invoke(isBonus);
     }
 
     public void OnShowUpgradeRewardCount(int count)

@@ -33,7 +33,7 @@ public class Item_Prop : InventoryItem,IPointerEnterHandler,IPointerExitHandler
     private void ShowItemInfo()
     {
         propInfoPanel.transform.position = transform.position + new Vector3(120,210);
-        propInfoPanel.DisplayPropInfo(itemData as ShopItemData_Prop_SO);
+        propInfoPanel.DisplayPropInfo(itemData as ShopItemData_Prop_SO,itemLevel);
     }
 
     private void HideItemInfo()
