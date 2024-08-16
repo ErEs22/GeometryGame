@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a98988e7b5a8d34fac1743b1f8c4dbc, type: 3}
   m_Name: Weapon_Minigun_Data
   m_EditorClassIdentifier: 
-  itemIcon: {fileID: 21300000, guid: 188bee68a52a0264fa91b146e139d28b, type: 3}
+  itemIcon: {fileID: 21300000, guid: 90f3e482ab1609241828bdb5becd44a1, type: 3}
   itemName: Minigun
   itemType: Weapon
   itemCost: 20

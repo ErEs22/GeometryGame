@@ -49,5 +49,6 @@ public class UIPauseMenu : UIBase
         EventManager.instance.OnOpenUI(eUIID.MainMenu);
         EventManager.instance.OnDisableLocomotionInput();
         EventManager.instance.OnGameover();
+        EventManager.instance.OnLevelEnd();
     }
 }

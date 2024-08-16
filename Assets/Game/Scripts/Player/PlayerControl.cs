@@ -6,9 +6,14 @@ using UnityEngine;
 public class PlayerControl : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 10;
-    [SerializeField] private float turnSpeed = 0.1f;
+    [SerializeField] private float turnSpeed = 0.05f;
     private PlayerInputHandler playerInputHandler;
     private PlayerManager playerManager;
+    private Rigidbody2D rig;
+
+    private void Awake() {
+        rig = GetComponent<Rigidbody2D>();
+    }
 
     private void OnEnable() {
         playerInputHandler = GetComponent<PlayerInputHandler>();
@@ -22,6 +27,7 @@ public class PlayerControl : MonoBehaviour
 
     void HandleMove(){
         transform.position += (Vector3)playerInputHandler.moveInput * moveSpeed * Time.deltaTime;
+        // rig.velocity = playerInputHandler.moveInput * moveSpeed;//TODO 解决使用刚体速度移动产生抖动的问题
     }
 
     void HandleRotation(){

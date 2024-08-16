@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class ShopItem_Prop : ShopItem
@@ -38,6 +39,7 @@ public class ShopItem_Prop : ShopItem
         }
         else
         {
+            EventSystem.current.SetSelectedGameObject(null);
             ColorBlock b = new ColorBlock();
             b = btn_Lock.colors;
             b.normalColor = new Color(1,1,1,0);
