@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f41eedfc5a3925249a75a96f3c4413d2, type: 3}
   m_Name: UpgradeItem_Energy_Data
   m_EditorClassIdentifier: 
-  icon: {fileID: 7482667652216324306, guid: 5c260fe5e532ca144ba86785b800ae6e, type: 3}
-  itemName: Right
+  icon: {fileID: 21300000, guid: e04fe15d30dfa47249081e8067a544c5, type: 3}
+  itemName: Energy
   valueAmount: 5
   effectProperty: 5
