@@ -165,6 +165,7 @@ GameObject:
   - component: {fileID: 8809415235045500693}
   - component: {fileID: 5020209484442906178}
   - component: {fileID: 5020209484442906188}
+  - component: {fileID: 5076274687542532971}
   m_Layer: 5
   m_Name: Item_Weapon_CharacterSelectMenu
   m_TagString: Untagged
@@ -257,6 +258,7 @@ MonoBehaviour:
   inventory_Weapon:
     weaponData: {fileID: 0}
     weaponLevel: 1
+    sellPrice: 0
   uICharacterSelectMenu: {fileID: 0}
   isSelected: 0
 --- !u!222 &5020209484442906178
@@ -288,6 +290,24 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls: []
+--- !u!114 &5076274687542532971
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5020209484442906183}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ab75da3d3ff15a498d725b5bb73240f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverAudioData:
+    clip: {fileID: 8300000, guid: 673f8eb28c059ca46b522928f1c001b0, type: 3}
+    volume: 1
+  clickAudioData:
+    clip: {fileID: 0}
+    volume: 1
 --- !u!1 &5020209485406846616
 GameObject:
   m_ObjectHideFlags: 0

@@ -240,6 +240,7 @@ GameObject:
   - component: {fileID: 4495829500926405854}
   - component: {fileID: 3546360364537534508}
   - component: {fileID: 6097505813018068079}
+  - component: {fileID: 1536142778562094938}
   m_Layer: 5
   m_Name: Item_Character
   m_TagString: Untagged
@@ -346,3 +347,21 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1536142778562094938
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8115329039772754289}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ab75da3d3ff15a498d725b5bb73240f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverAudioData:
+    clip: {fileID: 8300000, guid: 673f8eb28c059ca46b522928f1c001b0, type: 3}
+    volume: 1
+  clickAudioData:
+    clip: {fileID: 0}
+    volume: 1

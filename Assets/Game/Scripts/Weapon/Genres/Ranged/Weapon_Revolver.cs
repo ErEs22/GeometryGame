@@ -40,6 +40,7 @@ public class Weapon_Revolver : Weapon
     {
         transform_Barrel.DOLocalRotate(Vector3.forward * 720f,0.25f,RotateMode.Fast).SetRelative().OnComplete(()=>
         {
+            AudioManager.Instance.PlaySFX(AudioManager.Instance.weaponFireSFX_2);
             base.Fire();
             Mathf.Clamp(--projectileLeftInAmmo,0,int.MaxValue);
             if(projectileLeftInAmmo <= 0)

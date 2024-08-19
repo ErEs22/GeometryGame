@@ -14,6 +14,7 @@ public class Weapon_Rocket : Weapon
 
     protected override void Fire()
     {
+        AudioManager.Instance.PlaySFX(AudioManager.Instance.weaponFireSFX_4);
         base.Fire();
         Sequence seq = DOTween.Sequence();
         seq.Append(transform_Barrel.DOLocalMoveZ(-0.7f,0.08f).SetRelative());

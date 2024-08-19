@@ -57,6 +57,7 @@ public class UIMainMenu : UIBase
         btn_Exit.onClick.AddListener(OnBtnExitClick);
         btn_Setting_Save.onClick.AddListener(OnBtnSaveSettingClick);
         settingPanel.SetActive(false);
+        AudioManager.Instance.PlayBGM(AudioManager.Instance.menuBGM);
     }
 
     private void OnDisable() {
@@ -80,6 +81,7 @@ public class UIMainMenu : UIBase
         GameCoreData.GameSetting.soundEffectVolume = slider_SoundEffectVolume.value;
         GameCoreData.SaveData_GameSetting settingData = new GameCoreData.SaveData_GameSetting();
         SaveSystem.Save("GeometrySave.save",settingData);
+        AudioManager.Instance.UpdateAudioInfo();
     }
 
     private void LoadGameSetting()

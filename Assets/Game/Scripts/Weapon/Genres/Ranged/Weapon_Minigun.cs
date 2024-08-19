@@ -57,6 +57,7 @@ public class Weapon_Minigun : Weapon
 
     protected override void Fire()
     {
+        AudioManager.Instance.PlaySFX(AudioManager.Instance.weaponFireSFX_1);
         CheckIsCriticalHit();
         Vector3 muzzlePos = Vector3.zero;
         if (transform_LastMuzzlePoint == transform_MuzzlePoint_2)

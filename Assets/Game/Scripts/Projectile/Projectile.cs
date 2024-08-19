@@ -32,6 +32,7 @@ public class Projectile : MonoBehaviour
         if(pierceEnemyCount == -1) return;
         Hit(other);
         ShowHitVFX(other);
+        AudioManager.Instance.PlaySFX(AudioManager.Instance.explodeSFX);
     }
 
     protected void DisableProjectileCollider()

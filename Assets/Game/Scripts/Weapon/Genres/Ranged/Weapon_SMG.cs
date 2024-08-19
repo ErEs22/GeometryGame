@@ -17,4 +17,10 @@ public class Weapon_SMG : Weapon
         base.TowardsClosetEnemy();
         transform_Barrel.Rotate(Vector3.forward,barrelRotateSpeed * Time.deltaTime,Space.Self);
     }
+
+    protected override void Fire()
+    {
+        AudioManager.Instance.PlaySFX(AudioManager.Instance.weaponFireSFX_1);
+        base.Fire();
+    }
 }

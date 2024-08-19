@@ -13,6 +13,12 @@ public class Weapon_GlostScepter : Weapon
         fireRange = 400 + (50 * weaponLevel) - 50;
     }
 
+    protected override void Fire()
+    {
+        AudioManager.Instance.PlaySFX(AudioManager.Instance.weaponFireSFX_2);
+        base.Fire();
+    }
+
     protected override Projectile ReleaseSingleProjectile(GameObject projectile, Vector3 muzzlePos, Quaternion rotation)
     {
         Projectile_GlostScepter newProjectile = base.ReleaseSingleProjectile(projectile, muzzlePos, rotation) as Projectile_GlostScepter;

@@ -20,6 +20,7 @@ public class Weapon_ChainGun : Weapon
 
     protected override void Fire()
     {
+        AudioManager.Instance.PlaySFX(AudioManager.Instance.weaponFireSFX_3);
         CheckIsCriticalHit();
         float angle = Mathf.Atan2(transform_Weapon.right.y,transform_Weapon.right.x) * Mathf.Rad2Deg;
         angle -= anglePerProjectile;

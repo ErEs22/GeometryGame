@@ -182,6 +182,7 @@ public class PlayerState : MonoBehaviour, ITakeDamage
         //死亡
         if(HP == 0)
         {
+            AudioManager.Instance.PlaySFX(AudioManager.Instance.gameoverSFX);
             LevelManager.levelStatus = eLevelStatus.Ended;
             GlobalVar.gameStatus = eGameStatus.Ended;
             playerCollider.enabled = false;

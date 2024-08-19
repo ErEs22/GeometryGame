@@ -44,6 +44,7 @@ public class ExpBall : MonoBehaviour
         transform.DOMove(collideTrans.transform.position,0.1f).OnComplete(()=>
         {
             gameObject.SetActive(false);
+            AudioManager.Instance.PlaySFX(AudioManager.Instance.expCollectSFX);
         });
     }
 

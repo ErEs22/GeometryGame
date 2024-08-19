@@ -57,6 +57,7 @@ public class LevelManager : MonoBehaviour
 
     private void StartGame()
     {
+        AudioManager.Instance.PlayBGM(AudioManager.Instance.inGameBGM);
         currentLevel = 1;
         Debug.Log("当前关卡：" + currentLevel);
         EventManager.instance.OnInitPlayerStatus();
@@ -86,7 +87,7 @@ public class LevelManager : MonoBehaviour
         EventManager.instance.OnLevelTextUpdate(currentLevel);
         EventManager.instance.OnEnableUIInput();
         EventManager.instance.OnEnableLocomotionInput();
-        EventManager.instance.OnSetPlayerInvincible(true);
+        EventManager.instance.OnSetPlayerInvincible(false);
     }
 
     private void StartLevelCountDown()
