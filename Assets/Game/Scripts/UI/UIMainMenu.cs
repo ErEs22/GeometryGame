@@ -46,9 +46,8 @@ public class UIMainMenu : UIBase
         slider_BackgroundVolume = transform.Find(path_SettingPanel_Slider_BackgroundVolume).GetComponent<Slider>();
         slider_SoundEffectVolume = transform.Find(path_SettingPanel_Slider_SoundEffectVolume).GetComponent<Slider>();
         settingPanel = transform.Find(path_SettingPanel).gameObject;
-    }
-
-    private void Start() {
+        LoadGameSetting(true);
+        AudioManager.Instance.UpdateAudioInfo();
     }
 
     private void OnEnable() {
@@ -84,16 +83,23 @@ public class UIMainMenu : UIBase
         AudioManager.Instance.UpdateAudioInfo();
     }
 
-    private void LoadGameSetting()
+    private void LoadGameSetting(bool audioOnly)
     {
-        SaveSystem.Load<GameCoreData.SaveData_GameSetting>("GeometrySave.save").LoadData();
-        horSelector_ScreenMode.InitComponent(GameCoreData.GameSetting.screenMode.ToString());
-        dropdown_Resolution.value = (int)GameCoreData.GameSetting.gameResolution;
-        btnSwitch_DamageNumberDisplay.SetButtonStatus(GameCoreData.GameSetting.damageNumberDisplay);
-        horSelector_FPSLimit.InitComponent(GameCoreData.GameSetting.fpsLimit.ToString().Remove(0,4));
-        slider_MainVolume.SetValueWithoutNotify(GameCoreData.GameSetting.mainVolume);
-        slider_BackgroundVolume.SetValueWithoutNotify(GameCoreData.GameSetting.backgroundVolume);
-        slider_SoundEffectVolume.SetValueWithoutNotify(GameCoreData.GameSetting.soundEffectVolume);
+        if (audioOnly)
+        {
+            SaveSystem.Load<GameCoreData.SaveData_GameSetting>("GeometrySave.save").LoadData();
+        }
+        else
+        {
+            SaveSystem.Load<GameCoreData.SaveData_GameSetting>("GeometrySave.save").LoadData();
+            horSelector_ScreenMode.InitComponent(GameCoreData.GameSetting.screenMode.ToString());
+            dropdown_Resolution.value = (int)GameCoreData.GameSetting.gameResolution;
+            btnSwitch_DamageNumberDisplay.SetButtonStatus(GameCoreData.GameSetting.damageNumberDisplay);
+            horSelector_FPSLimit.InitComponent(GameCoreData.GameSetting.fpsLimit.ToString().Remove(0,4));
+            slider_MainVolume.SetValueWithoutNotify(GameCoreData.GameSetting.mainVolume);
+            slider_BackgroundVolume.SetValueWithoutNotify(GameCoreData.GameSetting.backgroundVolume);
+            slider_SoundEffectVolume.SetValueWithoutNotify(GameCoreData.GameSetting.soundEffectVolume);
+        }
     }
 
     private void InitSettingPanel()
@@ -143,7 +149,7 @@ public class UIMainMenu : UIBase
     {
         settingPanel.SetActive(true);
         InitSettingPanel();
-        LoadGameSetting();
+        LoadGameSetting(false);
     }
 
     private void OnBtnExitClick()

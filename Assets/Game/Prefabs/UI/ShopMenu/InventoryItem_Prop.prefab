@@ -462,9 +462,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ab75da3d3ff15a498d725b5bb73240f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hoverAudioData:
-    clip: {fileID: 8300000, guid: 673f8eb28c059ca46b522928f1c001b0, type: 3}
-    volume: 1
-  clickAudioData:
-    clip: {fileID: 0}
-    volume: 1
+  clickSFX: 0

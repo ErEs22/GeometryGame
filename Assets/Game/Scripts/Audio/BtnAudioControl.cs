@@ -4,18 +4,19 @@ using UnityEngine.EventSystems;
 [RequireComponent(typeof(EventTrigger))]
 public class BtnAudioControl : MonoBehaviour,IPointerEnterHandler,IPointerClickHandler
 {
-
-    public AudioData hoverAudioData;
-    public AudioData clickAudioData;
+    public bool clickSFX = true;
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        AudioManager.Instance.PlaySFX(hoverAudioData);
+        AudioManager.Instance.PlaySFX(AudioManager.Instance.hoverAudioSFX);
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        AudioManager.Instance.PlaySFX(clickAudioData);
+        if(clickSFX)
+        {
+            AudioManager.Instance.PlaySFX(AudioManager.Instance.clickAudioSFX);
+        }
     }
 
 }

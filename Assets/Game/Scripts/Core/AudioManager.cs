@@ -17,6 +17,8 @@ public class AudioManager : MonoBehaviour
     public AudioData explodeSFX;
     public AudioData expCollectSFX;
     public AudioData gameoverSFX;
+    public AudioData hoverAudioSFX;
+    public AudioData clickAudioSFX;
 
     private void Awake() {
         if(Instance == null)
@@ -54,8 +56,11 @@ public class AudioManager : MonoBehaviour
 
     public void UpdateAudioInfo()
     {
-        audioSource_BGM.volume = currentBGMAudioData.volume * GameCoreData.GameSetting.backgroundVolume * GameCoreData.GameSetting.mainVolume;
-        audioSource_SFX.volume = currentSFXAudioData.volume * GameCoreData.GameSetting.soundEffectVolume * GameCoreData.GameSetting.mainVolume;
+        if(currentBGMAudioData != null)
+        {
+            audioSource_BGM.volume = currentBGMAudioData.volume * GameCoreData.GameSetting.backgroundVolume * GameCoreData.GameSetting.mainVolume;
+        }
+        audioSource_SFX.volume = GameCoreData.GameSetting.soundEffectVolume * GameCoreData.GameSetting.mainVolume;
     }
 
 }

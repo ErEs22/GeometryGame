@@ -162,3 +162,5 @@ MonoBehaviour:
   ProjectileVFX:
   - prefab: {fileID: 1124335935880280, guid: 25a4b54363e654c42a8ba185560dc93e, type: 3}
     size: 30
+  - prefab: {fileID: 100004, guid: 265b2f0dda6d1eb42bb71cf97a3b38ce, type: 3}
+    size: 30

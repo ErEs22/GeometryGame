@@ -49,11 +49,11 @@ public class Projectile_Slash : Projectile
         //     });
         // });
         DisableProjectileCollider();
-        EyreUtility.SetDelay(0.5f,()=>
+        EyreUtility.SetDelay(0.3f,()=>
         {
             EnableProjectileCollider();
         });
-        EyreUtility.SetDelay(1.1f,()=>
+        EyreUtility.SetDelay(0.6f,()=>
         {
             DisableProjectileCollider();
             gameObject.SetActive(false);

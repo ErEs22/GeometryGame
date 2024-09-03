@@ -37,10 +37,10 @@ public class Projectile_Rocket : Projectile
     {
         DisableProjectileCollider();
         flySpeed = 0;
-        transform.DOScale(10.0f,0.2f).OnComplete(()=>{
-            transform.localScale.Set(1,1,1);
-            Deativate();
-        });
+        // transform.DOScale(10.0f,0.2f).OnComplete(()=>{
+        //     transform.localScale.Set(1,1,1);
+        //     Deativate();
+        // });
         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position,4.0f);
         foreach (Collider2D collider in colliders )
         {
