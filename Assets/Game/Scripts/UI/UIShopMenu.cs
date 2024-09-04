@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -28,6 +29,7 @@ public class UIShopMenu : UIBase
     private string path_AttackRange_PropertyValue = "PlayerStatusInfo/Properties/AttackRange/Text_PropertyValue";
     private string path_MoveSpeed_PropertyValue = "PlayerStatusInfo/Properties/MoveSpeed/Text_PropertyValue";
     //------------End
+    private Vector2[] shopItemStartPos = {new Vector2(220,-210),new Vector2(540,-396),new Vector2(860,-210),new Vector2(1180,-396)};
     private Button btn_StartLevel;
     private Button btn_Refresh;
     private Transform trans_ItemsParent;
@@ -434,7 +436,19 @@ public class UIShopMenu : UIBase
             //第一次生成四个物品
             for(int i = 0; i < 4; i++)
             {
-                GenerateItem(allItemDatas[EyreUtility.GetRandomNumbersInBetween(0,allItemDatas.Count - 1,1)[0]]);
+                RectTransform itemTrans = GenerateItem(allItemDatas[EyreUtility.GetRandomNumbersInBetween(0,allItemDatas.Count - 1,1)[0]]);
+                if((i + 1) % 2 == 0)
+                {
+                    itemTrans.anchoredPosition = new Vector2(shopItemStartPos[i].x,shopItemStartPos[i].y - 300);
+                    Debug.Log(itemTrans.localPosition);
+                    itemTrans.DOAnchorPosY(shopItemStartPos[i].y,0.5f);
+                }
+                if((i + 1) % 2 == 1)
+                {
+                    itemTrans.anchoredPosition = new Vector2(shopItemStartPos[i].x,shopItemStartPos[i].y + 300);
+                    Debug.Log(itemTrans.localPosition);
+                    itemTrans.DOAnchorPosY(shopItemStartPos[i].y,0.5f);
+                }
                 if(allShopItems.Count >= 4) break;
             }
         }
@@ -446,7 +460,19 @@ public class UIShopMenu : UIBase
             for(int i = 0; i < 4; i++)
             {
                 if(allShopItems.Count >= 4) break;
-                GenerateItem(allItemDatas[EyreUtility.GetRandomNumbersInBetween(0,allItemDatas.Count - 1,1)[0]]);
+                RectTransform itemTrans = GenerateItem(allItemDatas[EyreUtility.GetRandomNumbersInBetween(0,allItemDatas.Count - 1,1)[0]]);
+                if((i + 1) % 2 == 0)
+                {
+                    itemTrans.anchoredPosition = new Vector2(shopItemStartPos[i].x,shopItemStartPos[i].y - 300);
+                    Debug.Log(itemTrans.localPosition);
+                    itemTrans.DOAnchorPosY(shopItemStartPos[i].y,0.5f);
+                }
+                if((i + 1) % 2 == 1)
+                {
+                    itemTrans.anchoredPosition = new Vector2(shopItemStartPos[i].x,shopItemStartPos[i].y + 300);
+                    Debug.Log(itemTrans.localPosition);
+                    itemTrans.DOAnchorPosY(shopItemStartPos[i].y,0.5f);
+                }
             }
         }
     }
@@ -473,7 +499,7 @@ public class UIShopMenu : UIBase
         text_CoinCount.text = GameCoreData.PlayerProperties.coin.ToString();
     }
 
-    private void GenerateItem(ShopItemData_SO itemData)
+    private RectTransform GenerateItem(ShopItemData_SO itemData)
     {
         switch(itemData.shopItemType)
         {
@@ -483,14 +509,16 @@ public class UIShopMenu : UIBase
                 itemProp.itemData = itemData as ShopItemData_Prop_SO;
                 itemProp.InitItemProperties(3);
                 itemProp.UpdateUIInfo();
-            break;
+            return itemProp.GetComponent<RectTransform>();
             case eShopItemType.Weapon:
                 ShopItem_Weapon itemWeapon = Instantiate(prefab_ShopItem_Weapon,trans_ItemsParent).GetComponent<ShopItem_Weapon>();
                 allShopItems.Add(itemWeapon);
                 itemWeapon.itemData = itemData as ShopItemData_Weapon_SO;
                 itemWeapon.InitItemProperties(4);
                 itemWeapon.UpdateUIInfo();
-            break;
+            return itemWeapon.GetComponent<RectTransform>();
+            default:
+            return null;
         }
     }
 
