@@ -30,6 +30,14 @@ public class UIShopMenu : UIBase
     private string path_MoveSpeed_PropertyValue = "PlayerStatusInfo/Properties/MoveSpeed/Text_PropertyValue";
     //------------End
     private Vector2[] shopItemStartPos = {new Vector2(220,-210),new Vector2(540,-396),new Vector2(860,-210),new Vector2(1180,-396)};
+    private Vector2[] shopInventoryItemPos = {
+        new Vector2(82,46),
+        new Vector2(82,-46),
+        new Vector2(0,-93f),
+        new Vector2(-82,-46),
+        new Vector2(-82,46),
+        new Vector2(0,93f)
+        };
     private Button btn_StartLevel;
     private Button btn_Refresh;
     private Transform trans_ItemsParent;
@@ -146,6 +154,7 @@ public class UIShopMenu : UIBase
         GameInventory.Instance.inventoryWeapons.ForEach( weapon =>
         {
             Item_Weapon itemWeapon = Instantiate(prefab_InventoryItem_Weapon,trans_WeaponInventoryParent).GetComponent<Item_Weapon>();
+            itemWeapon.transform.localPosition = shopInventoryItemPos[allWeaponInventoryItems.Count];
             itemWeapon.InitItemPropUI(weaponInfoPanel,weapon.weaponData,weapon.weaponLevel,weapon.sellPrice);
             allWeaponInventoryItems.Add(itemWeapon);
             itemWeapon.inventory_Weapon = weapon;
@@ -385,6 +394,7 @@ public class UIShopMenu : UIBase
                     EventManager.instance.OnUpdateCoinCount();
                     Item_Weapon itemWeapon = Instantiate(prefab_InventoryItem_Weapon,trans_WeaponInventoryParent).GetComponent<Item_Weapon>();
                     itemWeapon.InitItemPropUI(weaponInfoPanel,itemData,shopItem.itemLevel,EyreUtility.Round(price * 0.8f));
+                    itemWeapon.transform.localPosition = shopInventoryItemPos[allWeaponInventoryItems.Count];
                     allWeaponInventoryItems.Add(itemWeapon);
                     shopItem.SetItemInvisible();
                     shopItem.isLocked = false;
@@ -429,7 +439,7 @@ public class UIShopMenu : UIBase
         CloseUI();
     }
 
-    private void RefreshAllItems()
+    private async void RefreshAllItems()
     {
         if(trans_ItemsParent.childCount <= 0)
         {
@@ -457,6 +467,7 @@ public class UIShopMenu : UIBase
             //刷新四个物品
             //销毁已有物品
             ClearShopItems();
+            await UniTask.Delay(400);
             for(int i = 0; i < 4; i++)
             {
                 if(allShopItems.Count >= 4) break;
@@ -482,14 +493,29 @@ public class UIShopMenu : UIBase
     /// </summary>
     private void ClearShopItems()
     {
-        for(int i = 0; i < allShopItems.Count; i++)
+        for(int i = 0; i < 4; i++)
         {
-            if(!allShopItems[i].isLocked)
+            if(!allShopItems[0].isLocked)
             {
-                GameObject item = allShopItems[i].gameObject;
-                allShopItems.RemoveAt(i);
-                Destroy(item.gameObject);
-                i--;
+                RectTransform itemTrans = allShopItems[0].GetComponent<RectTransform>();
+                GameObject itemObject = allShopItems[0].gameObject;
+                allShopItems.RemoveAt(0);
+                if((i + 1) % 2 == 0)
+                {
+                    itemTrans.DOAnchorPosY(shopItemStartPos[i].y - 300,0.3f).OnComplete(()=>
+                    {
+                        Destroy(itemObject);
+                        Debug.Log("SSSSSSSSSSS");
+                    });
+                }
+                if((i + 1) % 2 == 1)
+                {
+                    itemTrans.DOAnchorPosY(shopItemStartPos[i].y + 300,0.3f).OnComplete(()=>
+                    {
+                        Destroy(itemObject);
+                        Debug.Log("SSSSSSSSSSS");
+                    });
+                }
             }
         }
     }

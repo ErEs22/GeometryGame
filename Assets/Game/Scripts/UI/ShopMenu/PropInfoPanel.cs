@@ -1,3 +1,4 @@
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -22,6 +23,11 @@ public class PropInfoPanel : MonoBehaviour
         trans_PropertiesParent = transform.Find(path_PropertiesParent);
     }
 
+    public void HidePanel()
+    {
+        transform.GetComponent<RectTransform>().DOAnchorPosY(-400,0.3f);
+    }
+
     public void DisplayPropInfo(ShopItemData_Prop_SO itemData,int currentLevel)
     {
         img_ItemIcon.sprite = itemData.itemIcon;
@@ -35,6 +41,7 @@ public class PropInfoPanel : MonoBehaviour
             SetPropertyText(textComp,data.playerProperty,data.changeAmount);
         }
         SetItemRareLevelText(currentLevel);
+        transform.GetComponent<RectTransform>().DOAnchorPosY(0,0.3f);
     }
 
     public void ClearPropInfo()

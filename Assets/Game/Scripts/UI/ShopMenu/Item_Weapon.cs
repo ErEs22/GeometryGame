@@ -55,13 +55,12 @@ public class Item_Weapon : InventoryItem,IPointerEnterHandler,IPointerExitHandle
 
     private void ShowItemInfo()
     {
-        weaponInfoPanel.transform.position = transform.position + new Vector3(120,340);
         weaponInfoPanel.DisplayPropInfo(itemData as ShopItemData_Weapon_SO,itemLevel);
     }
 
     private void HideItemInfo()
     {
-        weaponInfoPanel.transform.position = new Vector3(-9999,-9999);
+        weaponInfoPanel.HidePanel();
     }
 
     public virtual void OnPointerExit(PointerEventData eventData)

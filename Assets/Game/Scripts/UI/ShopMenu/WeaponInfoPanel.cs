@@ -1,3 +1,4 @@
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -58,10 +59,10 @@ public class WeaponInfoPanel : MonoBehaviour
         EventManager.instance.OnSellWeaponInventoryItems(activeItem);
     }
 
-    private void HidePanel()
+    public void HidePanel()
     {
         EventManager.instance.OnHideShopMenuMask();
-        transform.position = new Vector3(-9999,-9999);
+        transform.GetComponent<RectTransform>().DOAnchorPosY(-400,0.3f);
     }
 
     public void DisplayPropInfo(ShopItemData_Weapon_SO itemData,int currentLevel)
@@ -78,6 +79,7 @@ public class WeaponInfoPanel : MonoBehaviour
             ShopWeaponPropertyPair data = itemData.itemProperties[i];
             SetPropertyText(textComp,data.weaponProperty,data.propertyValue);
         }
+        transform.GetComponent<RectTransform>().DOAnchorPosY(0,0.3f);
     }
 
     public void ClearPropInfo()
