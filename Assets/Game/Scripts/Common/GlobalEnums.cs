@@ -94,8 +94,8 @@ public static class GameColor
     public static Color ShopItem_Level03 = new Color(183f/256f, 0, 1f,1f);
     public static Color ShopItem_Level04 = new Color(1f,0,13f/256f,1f);
     public static Color ShopItem_Level05 = new Color(1f,0.5f,0,1f);
-    public static Color switchBtn_Off = new Color(157f/256,157f/256,157f/256,1f);
-    public static Color switchBtn_On = new Color(0,77f/256f,183f/256f,1f);//00FFEF_2  B700FF_3  FF000D_4
+    public static Color switchBtn_Off = new Color(44f/255f,121f/255f,159f/255f,1f);
+    public static Color switchBtn_On = new Color(66f/255f,237f/255f,248f/255f,1f);//00FFEF_2  B700FF_3  FF000D_4
 }
 
 [Serializable]

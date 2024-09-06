@@ -505,7 +505,6 @@ public class UIShopMenu : UIBase
                     itemTrans.DOAnchorPosY(shopItemStartPos[i].y - 300,0.3f).OnComplete(()=>
                     {
                         Destroy(itemObject);
-                        Debug.Log("SSSSSSSSSSS");
                     });
                 }
                 if((i + 1) % 2 == 1)
@@ -513,7 +512,6 @@ public class UIShopMenu : UIBase
                     itemTrans.DOAnchorPosY(shopItemStartPos[i].y + 300,0.3f).OnComplete(()=>
                     {
                         Destroy(itemObject);
-                        Debug.Log("SSSSSSSSSSS");
                     });
                 }
             }

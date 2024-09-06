@@ -1,3 +1,5 @@
+using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,6 +21,7 @@ public class UIUpgradeMenu : UIBase
     private string path_MoveSpeed_PropertyValue = "PlayerStatusInfo/Properties/MoveSpeed/Text_PropertyValue";
     //------------
 
+    private Vector2[] upgradeItemStartPos = {new Vector2(220,-210),new Vector2(540,-396),new Vector2(860,-210),new Vector2(1180,-396)};
     private Button btn_Refresh;
     private Transform upgradeItemsParent;
     private TextMeshProUGUI text_UpgradeRewardCount;
@@ -167,19 +170,47 @@ public class UIUpgradeMenu : UIBase
         }
     }
 
-    private void GenerateUpgradeItems(int count)
+    private async void GenerateUpgradeItems(int count)
     {
         if(upgradeItemsParent.childCount > 0)
         {
             for(int i = 0; i < upgradeItemsParent.childCount; i++)
             {
-                Destroy(upgradeItemsParent.GetChild(i).gameObject);
+                RectTransform itemTrans = upgradeItemsParent.GetChild(i).GetComponent<RectTransform>();
+                if((i + 1) % 2 == 0)
+                {
+                    itemTrans.DOAnchorPosY(upgradeItemStartPos[i].y - 300,0.3f).OnComplete(()=>
+                    {
+                        Destroy(itemTrans.gameObject);
+                    });
+                }
+                if((i + 1) % 2 == 1)
+                {
+                    itemTrans.DOAnchorPosY(upgradeItemStartPos[i].y + 300,0.3f).OnComplete(()=>
+                    {
+                        Destroy(itemTrans.gameObject);
+                    });
+                }
             }
         }
+        await UniTask.Delay(400);
         int[] randomNumArr = EyreUtility.GetRandomNumbersInBetween(0,itemDatas.Length - 1,count);
         for(int i = 0; i < count; i++)
         {
             UpgradeItem item = Instantiate(upgradeItemPrefab,upgradeItemsParent).GetComponent<UpgradeItem>();
+            RectTransform itemTrans = item.GetComponent<RectTransform>();
+            if((i + 1) % 2 == 0)
+            {
+                itemTrans.anchoredPosition = new Vector2(upgradeItemStartPos[i].x,upgradeItemStartPos[i].y - 300);
+                Debug.Log(itemTrans.localPosition);
+                itemTrans.DOAnchorPosY(upgradeItemStartPos[i].y,0.5f);
+            }
+            if((i + 1) % 2 == 1)
+            {
+                itemTrans.anchoredPosition = new Vector2(upgradeItemStartPos[i].x,upgradeItemStartPos[i].y + 300);
+                Debug.Log(itemTrans.localPosition);
+                itemTrans.DOAnchorPosY(upgradeItemStartPos[i].y,0.5f);
+            }
             item.Init(itemDatas[randomNumArr[i]],1);
         }
     }
