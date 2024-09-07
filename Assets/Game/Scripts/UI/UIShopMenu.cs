@@ -15,7 +15,7 @@ public class UIShopMenu : UIBase
     string path_btn_Refresh = "Shop/Btn_Refresh";
     string path_Items = "Shop/Items";
     string path_Text_CoinCount = "Shop/Text_CoinCount";
-    string path_PropInventoryParent = "PropInventory/Scroll View/Viewport/Items";
+    string path_PropInventoryParent = "PropInventory/Items";
     string path_WeaponInventoryParent = "WeaponInventory/Items";
     string path_PropInfoPanel = "PropInventory/ItemPropInfoPanel";
     string path_WeaponInfoPanel = "WeaponInventory/ItemWeaponInfoPanel";
@@ -30,7 +30,7 @@ public class UIShopMenu : UIBase
     private string path_MoveSpeed_PropertyValue = "PlayerStatusInfo/Properties/MoveSpeed/Text_PropertyValue";
     //------------End
     private Vector2[] shopItemStartPos = {new Vector2(220,-210),new Vector2(540,-396),new Vector2(860,-210),new Vector2(1180,-396)};
-    private Vector2[] shopInventoryItemPos = {
+    private Vector2[] weaponInventoryItemPos = {
         new Vector2(82,46),
         new Vector2(82,-46),
         new Vector2(0,-93f),
@@ -38,6 +38,23 @@ public class UIShopMenu : UIBase
         new Vector2(-82,46),
         new Vector2(0,93f)
         };
+    private Vector2[] propInventoryItemPos = {
+        new Vector2(50,-50),
+        new Vector2(150,-50),
+        new Vector2(250,-50),
+        new Vector2(350,-50),
+        new Vector2(450,-50),
+        new Vector2(0,-136),
+        new Vector2(100,-136),
+        new Vector2(200,-136),
+        new Vector2(300,-136),
+        new Vector2(400,-136),
+        new Vector2(50,-222),
+        new Vector2(150,-222),
+        new Vector2(250,-222),
+        new Vector2(350,-222),
+        new Vector2(450,-222)
+    };
     private Button btn_StartLevel;
     private Button btn_Refresh;
     private Transform trans_ItemsParent;
@@ -154,7 +171,7 @@ public class UIShopMenu : UIBase
         GameInventory.Instance.inventoryWeapons.ForEach( weapon =>
         {
             Item_Weapon itemWeapon = Instantiate(prefab_InventoryItem_Weapon,trans_WeaponInventoryParent).GetComponent<Item_Weapon>();
-            itemWeapon.transform.localPosition = shopInventoryItemPos[allWeaponInventoryItems.Count];
+            itemWeapon.transform.localPosition = weaponInventoryItemPos[allWeaponInventoryItems.Count];
             itemWeapon.InitItemPropUI(weaponInfoPanel,weapon.weaponData,weapon.weaponLevel,weapon.sellPrice);
             allWeaponInventoryItems.Add(itemWeapon);
             itemWeapon.inventory_Weapon = weapon;
@@ -179,6 +196,7 @@ public class UIShopMenu : UIBase
         GameInventory.Instance.inventoryProps.ForEach( prop =>
         {
             Item_Prop itemProp = Instantiate(prefab_InventoryItem_Prop,trans_PropInventoryParent).GetComponent<Item_Prop>();
+            itemProp.GetComponent<RectTransform>().anchoredPosition = propInventoryItemPos[allPropInventoryItems.Count];
             itemProp.InitItemPropUI(propInfoPanel,prop.propData,prop.propLevel);
             allPropInventoryItems.Add(itemProp);
         });
@@ -329,6 +347,7 @@ public class UIShopMenu : UIBase
                 else
                 {
                     Item_Prop itemProp = Instantiate(prefab_InventoryItem_Prop,trans_PropInventoryParent).GetComponent<Item_Prop>();
+                    itemProp.GetComponent<RectTransform>().anchoredPosition = propInventoryItemPos[allPropInventoryItems.Count];
                     itemProp.InitItemPropUI(propInfoPanel,itemData,shopItem.itemLevel);
                     allPropInventoryItems.Add(itemProp);
                     Inventory_Prop newProp = new Inventory_Prop{
@@ -394,7 +413,7 @@ public class UIShopMenu : UIBase
                     EventManager.instance.OnUpdateCoinCount();
                     Item_Weapon itemWeapon = Instantiate(prefab_InventoryItem_Weapon,trans_WeaponInventoryParent).GetComponent<Item_Weapon>();
                     itemWeapon.InitItemPropUI(weaponInfoPanel,itemData,shopItem.itemLevel,EyreUtility.Round(price * 0.8f));
-                    itemWeapon.transform.localPosition = shopInventoryItemPos[allWeaponInventoryItems.Count];
+                    itemWeapon.transform.localPosition = weaponInventoryItemPos[allWeaponInventoryItems.Count];
                     allWeaponInventoryItems.Add(itemWeapon);
                     shopItem.SetItemInvisible();
                     shopItem.isLocked = false;
