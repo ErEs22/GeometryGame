@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: TestShopItem_Prop 6
   m_EditorClassIdentifier: 
   itemIcon: {fileID: 21300000, guid: 15796e4ae016b10489dfa16e0c2766db, type: 3}
-  itemName: Snake
+  itemName: Prop6
   itemType: Prop
   itemCost: 20
   itemLevel: 1

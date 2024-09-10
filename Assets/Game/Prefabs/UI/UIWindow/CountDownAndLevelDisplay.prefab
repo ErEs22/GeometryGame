@@ -107,15 +107,15 @@ MonoBehaviour:
       m_Calls: []
   m_text: 60
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: eba8d1e53f1b901499e7bf23686e334e, type: 2}
-  m_sharedMaterial: {fileID: 9169491878848125232, guid: eba8d1e53f1b901499e7bf23686e334e, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: b89c83482449b0947a8dfc8e7f0b8c4d, type: 2}
+  m_sharedMaterial: {fileID: 3022487166422974913, guid: b89c83482449b0947a8dfc8e7f0b8c4d, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4294964992
+  m_fontColor: {r: 0, g: 0.96862745, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -132,8 +132,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 60
-  m_fontSizeBase: 60
+  m_fontSize: 50
+  m_fontSizeBase: 50
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -256,15 +256,15 @@ MonoBehaviour:
       m_Calls: []
   m_text: 60
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: eba8d1e53f1b901499e7bf23686e334e, type: 2}
-  m_sharedMaterial: {fileID: 9169491878848125232, guid: eba8d1e53f1b901499e7bf23686e334e, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: b89c83482449b0947a8dfc8e7f0b8c4d, type: 2}
+  m_sharedMaterial: {fileID: 3022487166422974913, guid: b89c83482449b0947a8dfc8e7f0b8c4d, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4294964992
+  m_fontColor: {r: 0, g: 0.96862745, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -281,8 +281,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 70
-  m_fontSizeBase: 70
+  m_fontSize: 56
+  m_fontSizeBase: 56
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
