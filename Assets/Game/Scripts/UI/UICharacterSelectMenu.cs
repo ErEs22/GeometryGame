@@ -485,11 +485,11 @@ public class UICharacterSelectMenu : UIBase
         }
         if(sign == "+")
         {
-            textComp.color = Color.green;
+            textComp.color = GameColor.text_Buff;
         }
         else
         {
-            textComp.color = Color.red;
+            textComp.color = GameColor.text_Debuff;
         }
     }
 }

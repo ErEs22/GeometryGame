@@ -78,11 +78,11 @@ public class ShopItem_Prop : ShopItem
         }
         if(isAffordable)
         {
-            text_Btn_Purchase.color = Color.white;
+            text_Btn_Purchase.color = GameColor.text_Buff;
         }
         else
         {
-            text_Btn_Purchase.color = Color.red;
+            text_Btn_Purchase.color = GameColor.text_Debuff;
         }
     }
 

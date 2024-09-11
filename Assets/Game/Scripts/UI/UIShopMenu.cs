@@ -20,6 +20,7 @@ public class UIShopMenu : UIBase
     string path_PropInfoPanel = "PropInventory/ItemPropInfoPanel";
     string path_WeaponInfoPanel = "WeaponInventory/ItemWeaponInfoPanel";
     string path_Img_Mask = "WeaponInventory/Mask";
+    private string path_Text_RefreshCost = "Shop/Btn_Refresh/Text_RefreshCost";
     private string path_Health_PropertyValue = "PlayerStatusInfo/Properties/Health/Text_PropertyValue";
     private string path_HPRegeneration_PropertyValue = "PlayerStatusInfo/Properties/HPRegeneration/Text_PropertyValue";
     private string path_StealHP_PropertyValue = "PlayerStatusInfo/Properties/StealHP/Text_PropertyValue";
@@ -73,7 +74,7 @@ public class UIShopMenu : UIBase
     private TextMeshProUGUI text_CriticalRate_PropertyValue;
     private TextMeshProUGUI text_AttackRange_PropertyValue;
     private TextMeshProUGUI text_MoveSpeed_PropertyValue;
-    private TextMeshProUGUI text_Btn_Refresh;
+    private TextMeshProUGUI text_Btn_RefreshCost;
     private int healthPropertyValue;
     private int hpRegenerationPropertyValue;
     private int stealHPPropertyValue;
@@ -121,7 +122,7 @@ public class UIShopMenu : UIBase
         text_CriticalRate_PropertyValue = transform.Find(path_CriticalRate_PropertyValue).GetComponent<TextMeshProUGUI>();
         text_AttackRange_PropertyValue = transform.Find(path_AttackRange_PropertyValue).GetComponent<TextMeshProUGUI>();
         text_MoveSpeed_PropertyValue = transform.Find(path_MoveSpeed_PropertyValue).GetComponent<TextMeshProUGUI>();
-        text_Btn_Refresh = btn_Refresh.GetComponentInChildren<TextMeshProUGUI>();
+        text_Btn_RefreshCost = transform.Find(path_Text_RefreshCost).GetComponent<TextMeshProUGUI>();
     }
 
     private void OnEnable()
@@ -290,24 +291,24 @@ public class UIShopMenu : UIBase
     private void SetFirstRefreshCoinCost()
     {
         refreshCoinCost = LevelManager.currentLevel + Mathf.Clamp(EyreUtility.Round(0.5f * LevelManager.currentLevel),1,int.MaxValue);
-        text_Btn_Refresh.text = "Refresh(" + refreshCoinCost.ToString() + ")";
+        text_Btn_RefreshCost.text = refreshCoinCost.ToString();
     }
 
     private void SetRefreshIncreaseCoinCost()
     {
         refreshCoinCost += Mathf.Clamp(EyreUtility.Round(0.5f * LevelManager.currentLevel),1,int.MaxValue);
-        text_Btn_Refresh.text = "Refresh(" + refreshCoinCost.ToString() + ")";
+        text_Btn_RefreshCost.text = refreshCoinCost.ToString();
     }
 
     private void UpdateBtnRefreshUI()
     {
         if(GameCoreData.PlayerProperties.coin < refreshCoinCost)
         {
-            text_Btn_Refresh.color = Color.red;
+            text_Btn_RefreshCost.color = GameColor.text_Debuff;
         }
         else
         {
-            text_Btn_Refresh.color = Color.white;
+            text_Btn_RefreshCost.color = GameColor.text_Buff;
         }
     }
 

@@ -16,7 +16,7 @@ MonoBehaviour:
   itemName: MedicalGun
   itemType: Weapon
   itemCost: 20
-  itemLevel: 4
+  itemLevel: 1
   shopItemType: 1
   projectileSpeed: 40
   prefab_Weapon: {fileID: 1359835491869086, guid: 852ddff3c3dcc324ba3a33ef5d7b0067, type: 3}

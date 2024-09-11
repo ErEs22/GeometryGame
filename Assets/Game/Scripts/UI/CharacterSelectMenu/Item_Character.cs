@@ -5,9 +5,9 @@ using UnityEngine.UI;
 public class Item_Character : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler
 {
     private const string path_Img_CharacterIcon = "Img_CharacterIcon";
-    private const string path_Img_SelectMark = "Img_ItemSelectMark";
+    private const string path_Img_Background = "Img_Background";
+    private Image img_Background;
     private Image img_CharacterIcon;
-    private Image img_ItemSelectMark;
     private Button btn_Self;
     public UICharacterSelectMenu uICharacterSelectMenu;
     public CharacterData_SO characterData;
@@ -15,9 +15,9 @@ public class Item_Character : MonoBehaviour,IPointerEnterHandler,IPointerExitHan
 
     private void Awake() {
         btn_Self = GetComponent<Button>();
+        img_Background = transform.Find(path_Img_Background).GetComponent<Image>();
         img_CharacterIcon = transform.Find(path_Img_CharacterIcon).GetComponent<Image>();
-        img_ItemSelectMark = transform.Find(path_Img_SelectMark).GetComponent<Image>();
-        img_ItemSelectMark.gameObject.SetActive(false);
+        img_Background.color = GameColor.btn_Normal;
     }
 
     private void OnEnable() {
@@ -39,26 +39,26 @@ public class Item_Character : MonoBehaviour,IPointerEnterHandler,IPointerExitHan
     {
         isSelected = true;
         uICharacterSelectMenu.SelectCharacter(this);
-        img_ItemSelectMark.gameObject.SetActive(true);
+        img_Background.color = GameColor.btn_Select;
     }
 
     public void UnSelectCharacter()
     {
         isSelected = false;
-        img_ItemSelectMark.gameObject.SetActive(false);
+        img_Background.color = GameColor.btn_Normal;
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
         uICharacterSelectMenu.UpdateSelectingCharacterInfo(characterData);
-        img_ItemSelectMark.gameObject.SetActive(true);
+        img_Background.color = GameColor.btn_Select;
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
         if(!isSelected)
         {
-            img_ItemSelectMark.gameObject.SetActive(false);
+            img_Background.color = GameColor.btn_Normal;
         }
         uICharacterSelectMenu.UpdateSelectedCharacterInfo();
     }

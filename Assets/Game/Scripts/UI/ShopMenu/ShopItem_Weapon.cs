@@ -81,11 +81,11 @@ public class ShopItem_Weapon : ShopItem
         }
         if(isAffordable)
         {
-            text_Btn_Purchase.color = Color.white;
+            text_Btn_Purchase.color = GameColor.text_Buff;
         }
         else
         {
-            text_Btn_Purchase.color = Color.red;
+            text_Btn_Purchase.color = GameColor.text_Debuff;
         }
         for(int i = 0; i < itemData.itemProperties.Count; i++)
         {

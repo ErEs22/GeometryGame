@@ -16,7 +16,7 @@ public class InventoryItem : MonoBehaviour
 
     protected virtual void Awake() {
         img_ItemIcon = transform.Find(path_Img_ItemIcon).GetComponent<Image>();
-        img_ItemLevelFilter = transform.Find(path_Img_ItemLevelFilter).GetComponent<Image>();
+        transform.Find(path_Img_ItemLevelFilter).TryGetComponent<Image>(out img_ItemLevelFilter);
     }
 
     protected void SetItemLevelFilterColor()

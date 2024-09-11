@@ -4,16 +4,16 @@ using UnityEngine.UI;
 
 public class Item_Weapon_CharacterSelectMenu : Item_Weapon
 {
-    private const string path_Img_ItemSelectMark = "Img_ItemSelectMark";
-    private Image img_ItemSelectMark;
+    private const string path_Img_Background = "Img_Background";
+    private Image img_Background;
     public UICharacterSelectMenu uICharacterSelectMenu;
     public bool isSelected = false;
 
     protected override void Awake()
     {
         base.Awake();
-        img_ItemSelectMark = transform.Find(path_Img_ItemSelectMark).GetComponent<Image>();
-        img_ItemSelectMark.gameObject.SetActive(false);
+        img_Background = transform.Find(path_Img_Background).GetComponent<Image>();
+        img_Background.color = GameColor.btn_Normal;
     }
 
     public void InitItemPropUI(ShopItemData_SO itemData,UICharacterSelectMenu uICharacterSelectMenu)
@@ -26,27 +26,27 @@ public class Item_Weapon_CharacterSelectMenu : Item_Weapon
     protected override void OnBtnItemClick()
     {
         isSelected = true;
-        img_ItemSelectMark.gameObject.SetActive(true);
+        img_Background.color = GameColor.btn_Select;
         uICharacterSelectMenu.SelectWeapon(this);
     }
 
     public void UnSelectWeapon()
     {
         isSelected = false;
-        img_ItemSelectMark.gameObject.SetActive(false);
+        img_Background.color = GameColor.btn_Normal;
     }
 
     public override void OnPointerEnter(PointerEventData eventData)
     {
         uICharacterSelectMenu.UpdateSelectingWeaponInfo(itemData as ShopItemData_Weapon_SO);
-        img_ItemSelectMark.gameObject.SetActive(true);
+        img_Background.color = GameColor.btn_Select;
     }
 
     public override void OnPointerExit(PointerEventData eventData)
     {
         if(!isSelected)
         {
-            img_ItemSelectMark.gameObject.SetActive(false);
+            img_Background.color = GameColor.btn_Normal;
         }
         uICharacterSelectMenu.UpdateSelectedWeaponInfo();
     }

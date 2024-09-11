@@ -1,10 +1,7 @@
 fileFormatVersion: 2
-guid: cecf54cc51b954a43bae735c578399a8
+guid: 469e7e67c41313347b207c943802f80f
 TextureImporter:
-  internalIDToNameTable:
-  - first:
-      213: 21300000
-    second: btn_common_f_0
+  internalIDToNameTable: []
   externalObjects: {}
   serializedVersion: 12
   mipmaps:
@@ -45,7 +42,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -118,41 +115,19 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites:
-    - serializedVersion: 2
-      name: btn_common_f_0
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 358
-        height: 190
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 169, y: 86, z: 166, w: 86}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 02305410000000000800000000000000
-      internalID: 21300000
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
+    sprites: []
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 559c07fdf3271bb4b8df69071178fdab
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable:
-      btn_common_f_0: 21300000
-  spritePackingTag: 00_Common
+    nameFileIdTable: {}
+  spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
   userData: 

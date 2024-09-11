@@ -11,6 +11,7 @@ public class UIUpgradeMenu : UIBase
     private string path_Text_UpgradeRewardCount = "Text_UpgradeRewardCount";
     private string path_UpgradeCountTip = "UpgradeCountTip";
     private string path_UpgradeItems = "UpgradeItems";
+    private string path_Text_RefreshCost = "Btn_Refresh/Text_RefreshCost";
     private string path_Health_PropertyValue = "PlayerStatusInfo/Properties/Health/Text_PropertyValue";
     private string path_HPRegeneration_PropertyValue = "PlayerStatusInfo/Properties/HPRegeneration/Text_PropertyValue";
     private string path_StealHP_PropertyValue = "PlayerStatusInfo/Properties/StealHP/Text_PropertyValue";
@@ -62,7 +63,7 @@ public class UIUpgradeMenu : UIBase
         text_CriticalRate_PropertyValue = transform.Find(path_CriticalRate_PropertyValue).GetComponent<TextMeshProUGUI>();
         text_AttackRange_PropertyValue = transform.Find(path_AttackRange_PropertyValue).GetComponent<TextMeshProUGUI>();
         text_MoveSpeed_PropertyValue = transform.Find(path_MoveSpeed_PropertyValue).GetComponent<TextMeshProUGUI>();
-        text_Btn_Refresh = btn_Refresh.GetComponentInChildren<TextMeshProUGUI>();
+        text_Btn_Refresh = transform.Find(path_Text_RefreshCost).GetComponentInChildren<TextMeshProUGUI>();
     }
 
     private void OnEnable() {
@@ -151,13 +152,13 @@ public class UIUpgradeMenu : UIBase
     {
         if(GameCoreData.PlayerProperties.coin < refreshCoinCost)
         {
-            text_Btn_Refresh.color = Color.red;
+            text_Btn_Refresh.color = GameColor.text_Debuff;
         }
         else
         {
-            text_Btn_Refresh.color = Color.white;
+            text_Btn_Refresh.color = GameColor.text_Buff;
         }
-        text_Btn_Refresh.text = "Refresh(" + refreshCoinCost.ToString() + ")";
+        text_Btn_Refresh.text = refreshCoinCost.ToString();
     }
 
     private void UpgradeRewardCount(int count)

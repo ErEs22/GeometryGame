@@ -32,7 +32,7 @@ public class Item_Weapon : InventoryItem,IPointerEnterHandler,IPointerExitHandle
     public void UpgradeItemLevel()
     {
         itemLevel++;
-        SetItemLevelFilterColor();
+        // SetItemLevelFilterColor();
     }
 
     protected virtual void OnBtnItemClick()
@@ -50,7 +50,7 @@ public class Item_Weapon : InventoryItem,IPointerEnterHandler,IPointerExitHandle
         this.sellPrice = sellPrice;
         img_ItemIcon.sprite = itemData.itemIcon;
         this.weaponInfoPanel = weaponInfoPanel;
-        SetItemLevelFilterColor();
+        // SetItemLevelFilterColor();
     }
 
     private void ShowItemInfo()
