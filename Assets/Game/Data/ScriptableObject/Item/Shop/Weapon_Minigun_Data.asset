@@ -15,8 +15,8 @@ MonoBehaviour:
   itemIcon: {fileID: 21300000, guid: 90f3e482ab1609241828bdb5becd44a1, type: 3}
   itemName: Minigun
   itemType: Weapon
-  itemCost: 20
-  itemLevel: 1
+  itemCost: 127
+  itemLevel: 3
   shopItemType: 1
   projectileSpeed: 40
   prefab_Weapon: {fileID: 1110718186611134, guid: 8ecb14fbc1d45154ea38c5351febb02e, type: 3}
@@ -24,14 +24,16 @@ MonoBehaviour:
   prefab_HitVFX: {fileID: 1124335935880280, guid: 25a4b54363e654c42a8ba185560dc93e, type: 3}
   itemProperties:
   - weaponProperty: 0
-    propertyValue: 10
+    propertyValue: 1
   - weaponProperty: 1
-    propertyValue: 2
+    propertyValue: 1.75
   - weaponProperty: 2
     propertyValue: 0.09
   - weaponProperty: 3
-    propertyValue: 5
+    propertyValue: 3
   - weaponProperty: 4
-    propertyValue: 800
+    propertyValue: 400
   - weaponProperty: 5
     propertyValue: 0
+  - weaponProperty: 8
+    propertyValue: 0.01

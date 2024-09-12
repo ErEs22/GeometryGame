@@ -190,7 +190,17 @@ public class LevelManager : MonoBehaviour
                     }
                     await UniTask.Delay(GetLevelSpawnEnemysInterval() - 500);
                 break;
+                case 20:
+                    enemyGenerator.GenerateEnemysInRandomPos(enemyManager.GetFirstBoss(),1);
+                    enemyGenerator.GenerateEnemysInRandomPos(enemyManager.GetSecondBoss(),1);
+                    for (int i = 0; i < enemySpawnCount; i++)
+                    {
+                        enemyGenerator.GenerateEnemysInRandomPos(enemyManager.GetEnemyInCurrentEnemyListRandomly(), 1);
+                    }
+                    await UniTask.Delay(GetLevelSpawnEnemysInterval());
+                break;
                 default:
+                    enemyGenerator.GenerateEnemysInRandomPos(enemyManager.GetEliteEnemyInCurrentEnemyList(),1);
                     for (int i = 0; i < enemySpawnCount; i++)
                     {
                         enemyGenerator.GenerateEnemysInRandomPos(enemyManager.GetEnemyInCurrentEnemyListRandomly(), 1);

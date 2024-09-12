@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GameCoreData
@@ -59,6 +60,7 @@ public class GameCoreData
     }
     public static class PlayerProperties
     {
+        //这部分的数值除100才是原始数值，因为要显示为百分比，所以不是小数
         public static int coin = 0;
         public static int maxHP = 20;
         public static int hpRegeneration = 0;
@@ -71,6 +73,22 @@ public class GameCoreData
         public static int exp = 0;
         public static int bonusCoin = 0;
         public static int currentPlayerLevel = 1;
+
+        public static void ResetPlayerProperties()
+        {
+            coin = 0;
+            maxHP = 20;
+            hpRegeneration = 0;
+            lifeSteal = 0;
+            damageMul = 0;
+            attackSpeedMul = 0;
+            criticalRate = 0;
+            attackRange = 0;
+            moveSpeed = 0;
+            exp = 0;
+            bonusCoin = 0;
+            currentPlayerLevel = 0;
+        }
 
         public static void CostCoin(int cost)
         {

@@ -13,9 +13,11 @@ MonoBehaviour:
   m_Name: Enemy_Fly_Data
   m_EditorClassIdentifier: 
   name: FlyEnemy
-  HP: 100
-  moveSpeed: 5
+  HP: 15
+  moveSpeed: 12
   damage: 1
-  showlevel: 1
+  showlevel: 4
+  isTowardsPlayer: 1
+  enemyType: 0
   enemyPrefab: {fileID: 5836960803617581082, guid: 586f18ed8d24b51409e4dcd9f38446ee, type: 3}
   projectile: {fileID: 3994106403445518885, guid: eb7329fd41853844eb05cbed865bd920, type: 3}

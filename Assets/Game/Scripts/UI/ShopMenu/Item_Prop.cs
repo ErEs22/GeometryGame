@@ -8,20 +8,28 @@ public class Item_Prop : InventoryItem,IPointerEnterHandler,IPointerExitHandler
     protected TextMeshProUGUI text_ItemCount;
     public PropInfoPanel propInfoPanel;
     private int itemPropCount = 0;
+    private bool isShowDetail = false;
 
     protected override void Awake() {
         base.Awake();
         text_ItemCount = transform.Find(path_Text_ItemCount).GetComponent<TextMeshProUGUI>();
     }
 
-    public void InitItemPropUI(PropInfoPanel propInfoPanel,ShopItemData_SO itemData,int itemLevel)
+    public void InitItemPropUI(PropInfoPanel propInfoPanel,ShopItemData_SO itemData,int itemLevel,int propCount = 1,bool isShowDetail = true)
     {
         this.itemLevel = itemLevel;
         this.itemData = itemData;
         this.propInfoPanel = propInfoPanel;
+        this.isShowDetail = isShowDetail;
         img_ItemIcon.sprite = itemData.itemIcon;
-        IncreaseItemPropCount();
+        InitPropCount(propCount);
         // SetItemLevelFilterColor();
+    }
+
+    public void InitPropCount(int count)
+    {
+        itemPropCount = count;
+        text_ItemCount.text = "X" + itemPropCount.ToString();
     }
 
     public void IncreaseItemPropCount()
@@ -43,13 +51,17 @@ public class Item_Prop : InventoryItem,IPointerEnterHandler,IPointerExitHandler
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        ShowItemInfo();
-        Debug.Log("PointerEnter");
+        if(isShowDetail)
+        {
+            ShowItemInfo();
+        }
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        HideItemInfo();
-        Debug.Log("PointerExit");
+        if(isShowDetail)
+        {
+            HideItemInfo();
+        }
     }
 }

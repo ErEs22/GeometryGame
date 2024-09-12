@@ -24,16 +24,16 @@ MonoBehaviour:
   prefab_HitVFX: {fileID: 1124335935880280, guid: 25a4b54363e654c42a8ba185560dc93e, type: 3}
   itemProperties:
   - weaponProperty: 0
-    propertyValue: 10
+    propertyValue: 3
   - weaponProperty: 1
     propertyValue: 2
   - weaponProperty: 2
-    propertyValue: 0.5
+    propertyValue: 1.37
   - weaponProperty: 3
-    propertyValue: 20
+    propertyValue: 8
   - weaponProperty: 4
-    propertyValue: 800
+    propertyValue: 350
   - weaponProperty: 5
     propertyValue: 0.3
   - weaponProperty: 8
-    propertyValue: 0.5
+    propertyValue: 0.03

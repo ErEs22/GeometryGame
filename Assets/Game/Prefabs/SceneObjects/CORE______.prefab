@@ -56,8 +56,17 @@ MonoBehaviour:
   nearbyDistanceThreshold: 5
   enemies: []
   currentLevelEnemys: []
-  allEnemysData:
+  allEliteEnemys:
+  - {fileID: 11400000, guid: 9a9741dad0b122546ab04d9a50d36f81, type: 2}
+  - {fileID: 11400000, guid: bec58af24734e0d45932a965d910c92b, type: 2}
+  - {fileID: 11400000, guid: 0f8768363d84a0247b3886cbc4771aa6, type: 2}
+  - {fileID: 11400000, guid: d6f6bc7dc4738d1448efafd8e495661c, type: 2}
+  allBosses:
+  - {fileID: 11400000, guid: 5421f2103c6e1ef46a2f9f72c5ec5f4e, type: 2}
+  - {fileID: 11400000, guid: 14b616f4234071e40ae98d521173ff21, type: 2}
+  allNormalEnemys:
   - {fileID: 11400000, guid: e34c409332ec9634997a000a200c4837, type: 2}
+  - {fileID: 11400000, guid: fd0140eaf51db6145bce74ec30244657, type: 2}
   - {fileID: 11400000, guid: a8b465a857d08354ca084abcc4d199ca, type: 2}
   - {fileID: 11400000, guid: d8339e1295e41ed4abacae9d778da351, type: 2}
   - {fileID: 11400000, guid: 56545e628faf32740944d7eb7f505222, type: 2}
@@ -66,13 +75,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2e011c0f2847e3b41a632ce37380847d, type: 2}
   - {fileID: 11400000, guid: e5a64f3f511530a4ca5c4bf8a01bbdd9, type: 2}
   - {fileID: 11400000, guid: 517048eba0cea594ea47c8e32f8b8fee, type: 2}
-  - {fileID: 11400000, guid: fd0140eaf51db6145bce74ec30244657, type: 2}
-  - {fileID: 11400000, guid: d6f6bc7dc4738d1448efafd8e495661c, type: 2}
-  - {fileID: 11400000, guid: 9a9741dad0b122546ab04d9a50d36f81, type: 2}
-  - {fileID: 11400000, guid: bec58af24734e0d45932a965d910c92b, type: 2}
-  - {fileID: 11400000, guid: 0f8768363d84a0247b3886cbc4771aa6, type: 2}
-  - {fileID: 11400000, guid: 5421f2103c6e1ef46a2f9f72c5ec5f4e, type: 2}
-  - {fileID: 11400000, guid: 14b616f4234071e40ae98d521173ff21, type: 2}
 --- !u!114 &1138700212607902178
 MonoBehaviour:
   m_ObjectHideFlags: 0

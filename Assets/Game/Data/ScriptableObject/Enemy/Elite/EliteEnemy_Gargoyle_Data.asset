@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: EliteEnemy_Gargoyle_Data
   m_EditorClassIdentifier: 
   name: Colossus
-  HP: 1000
-  moveSpeed: 5
-  damage: 5
-  showlevel: 15
+  HP: 12000
+  moveSpeed: 17.5
+  damage: 1
+  showlevel: 17
   isTowardsPlayer: 1
   enemyType: 2
   enemyPrefab: {fileID: 5836960803617581082, guid: ae793086b4122ca45a968c72f8f1d042, type: 3}

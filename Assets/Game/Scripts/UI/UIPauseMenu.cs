@@ -50,5 +50,6 @@ public class UIPauseMenu : UIBase
         EventManager.instance.OnDisableLocomotionInput();
         EventManager.instance.OnGameover();
         EventManager.instance.OnLevelEnd();
+        GameCoreData.PlayerProperties.ResetPlayerProperties();
     }
 }

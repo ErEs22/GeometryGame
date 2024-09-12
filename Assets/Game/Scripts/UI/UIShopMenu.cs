@@ -484,10 +484,29 @@ public class UIShopMenu : UIBase
         }
         else
         {
+            //确认商店目前是否空了
+            bool isShopEmpty = true;
+            for(int i = 0; i < 4; i++)
+            {
+                if(allShopItems[i].isPruchased == false)
+                {
+                    isShopEmpty = false;
+                    break;
+                }
+            }
             //刷新四个物品
             //销毁已有物品
             ClearShopItems();
-            await UniTask.Delay(400);
+            //商店空了则取消刷新动画等待时间
+            if(isShopEmpty == true)
+            {
+                await UniTask.Delay(100);
+            }
+            else
+            {
+                await UniTask.Delay(400);
+            }
+            //如果四个物品都已经被购买，则取消等待时间
             for(int i = 0; i < 4; i++)
             {
                 if(allShopItems.Count >= 4) break;
@@ -551,14 +570,14 @@ public class UIShopMenu : UIBase
                 ShopItem_Prop itemProp = Instantiate(prefab_ShopItem_Prop,trans_ItemsParent).GetComponent<ShopItem_Prop>();
                 allShopItems.Add(itemProp);
                 itemProp.itemData = itemData as ShopItemData_Prop_SO;
-                itemProp.InitItemProperties(3);
+                itemProp.InitItemProperties(1);
                 itemProp.UpdateUIInfo();
             return itemProp.GetComponent<RectTransform>();
             case eShopItemType.Weapon:
                 ShopItem_Weapon itemWeapon = Instantiate(prefab_ShopItem_Weapon,trans_ItemsParent).GetComponent<ShopItem_Weapon>();
                 allShopItems.Add(itemWeapon);
                 itemWeapon.itemData = itemData as ShopItemData_Weapon_SO;
-                itemWeapon.InitItemProperties(4);
+                itemWeapon.InitItemProperties(1);
                 itemWeapon.UpdateUIInfo();
             return itemWeapon.GetComponent<RectTransform>();
             default:

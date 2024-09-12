@@ -24,6 +24,7 @@ public class ShopItem_Prop : ShopItem
             return;
         }
         EventManager.instance.OnAddShopItemToInventory(itemData,this);
+        isPruchased = true;
     }
 
     private void OnBtnLockClick()
@@ -91,6 +92,7 @@ public class ShopItem_Prop : ShopItem
     /// </summary>
     public void InitItemProperties(int itemLevel)
     {
+        isPruchased = false;
         this.itemLevel = itemLevel;
         CaculateItemPrice(itemData.itemCost,itemData.itemLevel,itemLevel);
         img_ItemIcon.sprite = itemData.itemIcon;

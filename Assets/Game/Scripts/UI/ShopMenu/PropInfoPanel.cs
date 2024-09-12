@@ -28,6 +28,11 @@ public class PropInfoPanel : MonoBehaviour
         transform.GetComponent<RectTransform>().DOAnchorPosY(-400,0.3f);
     }
 
+    public void ShowPanel()
+    {
+        transform.GetComponent<RectTransform>().DOAnchorPosY(0,0.3f);
+    }
+
     public void DisplayPropInfo(ShopItemData_Prop_SO itemData,int currentLevel)
     {
         img_ItemIcon.sprite = itemData.itemIcon;

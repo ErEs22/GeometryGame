@@ -13,8 +13,10 @@ MonoBehaviour:
   m_Name: Enemy_Hunter_Data
   m_EditorClassIdentifier: 
   name: HunterEnemy
-  HP: 100
-  moveSpeed: 10
+  HP: 1
+  moveSpeed: 18
   damage: 1
-  showlevel: 1
+  showlevel: 2
+  isTowardsPlayer: 1
+  enemyType: 0
   enemyPrefab: {fileID: 5836960803617581082, guid: 6303eb4e544c88b499362ce985f4d02f, type: 3}

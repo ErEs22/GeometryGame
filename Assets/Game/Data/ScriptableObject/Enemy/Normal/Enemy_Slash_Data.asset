@@ -13,10 +13,12 @@ MonoBehaviour:
   m_Name: Enemy_Slash_Data
   m_EditorClassIdentifier: 
   name: SlashEnemy
-  HP: 100
+  HP: 50
   moveSpeed: 10
   damage: 1
-  showlevel: 1
+  showlevel: 4
+  isTowardsPlayer: 1
+  enemyType: 0
   enemyPrefab: {fileID: 5836960803617581082, guid: 660bd8d7ad26b8d46a51eaf8c61f7094, type: 3}
   projectile: {fileID: 2093875944032654269, guid: cbfc3c0c4a6bacf49a04822aa6c47d31, type: 3}
   runawayDistance: 10

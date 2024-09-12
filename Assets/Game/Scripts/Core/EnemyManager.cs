@@ -16,7 +16,9 @@ public class EnemyManager : MonoBehaviour
     public float nearbyDistanceThreshold = 6;
     public List<Enemy> enemies = new List<Enemy>();//游戏内正在活动的敌人
     public List<GameObject> currentLevelEnemys = new List<GameObject>();//当前关卡可生成的敌人种类
-    public List<EnemyData_SO> allEnemysData = new List<EnemyData_SO>();//游戏内所有敌人数据
+    public List<EnemyData_SO> allEliteEnemys = new List<EnemyData_SO>();//游戏所有精英敌人
+    public List<EnemyData_SO> allBosses = new List<EnemyData_SO>();//游戏中所有Boss
+    public List<EnemyData_SO> allNormalEnemys = new List<EnemyData_SO>();//游戏内所有敌人数据
     // public List<GameObject> allEnemys = new List<GameObject>();//游戏内所有敌人
 
     private void OnEnable() {
@@ -51,7 +53,7 @@ public class EnemyManager : MonoBehaviour
     public void SetCurrentEnemyList()
     {
         currentLevelEnemys.Clear();
-        foreach (EnemyData_SO enemy in allEnemysData)
+        foreach (EnemyData_SO enemy in allNormalEnemys)
         {
             if(enemy.showlevel <= LevelManager.currentLevel)
             {
@@ -65,6 +67,29 @@ public class EnemyManager : MonoBehaviour
     {
         int randomIndex = Random.Range(0,currentLevelEnemys.Count);
         return currentLevelEnemys[randomIndex];
+    }
+
+    public GameObject GetEliteEnemyInCurrentEnemyList()
+    {
+        for(int i = 0; i < allEliteEnemys.Count; i++)
+        {
+            if(allEliteEnemys[i].showlevel == LevelManager.currentLevel)
+            {
+                return allEliteEnemys[i].enemyPrefab;
+            }
+        }
+        Debug.Log("Current Level Does Not Have Any Enemy To Spawn");
+        return null;
+    }
+
+    public GameObject GetFirstBoss()
+    {
+        return allBosses[0].enemyPrefab;
+    }
+
+    public GameObject GetSecondBoss()
+    {
+        return allBosses[1].enemyPrefab;
     }
 
     public GameObject GetEnemyInCurrentEnemyListByName(string name)

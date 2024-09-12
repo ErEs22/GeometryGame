@@ -83,6 +83,7 @@ public class GameInventory : MonoBehaviour
 
     public float CaculateWeaponDataByLevel(eWeaponProperty weaponProperty,float propertyBaseValue,int weaponBaseLevel,int weaponTargetLevel)
     {
+        //TODO 引用武器属性根据等级计算的公式
         switch(weaponProperty)
         {
             case eWeaponProperty.Damage:

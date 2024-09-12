@@ -70,6 +70,7 @@ public class UICharacterSelectMenu : UIBase
         btn_BackToMainMenu.onClick.AddListener(OnBtnBackToMainMenuClick);
         GenerateAllCharacters();
         GenerateAllWeapons();
+        ClearCharacterAndWeaponInfoPanel();
     }
 
     private void OnDisable()

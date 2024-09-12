@@ -65,6 +65,11 @@ public class WeaponInfoPanel : MonoBehaviour
         transform.GetComponent<RectTransform>().DOAnchorPosY(-400,0.3f);
     }
 
+    public void ShowPanel()
+    {
+        transform.GetComponent<RectTransform>().DOAnchorPosY(0,0.3f);
+    }
+
     public void DisplayPropInfo(ShopItemData_Weapon_SO itemData,int currentLevel)
     {
         ClearPropInfo();
@@ -111,7 +116,7 @@ public class WeaponInfoPanel : MonoBehaviour
                 textComp.text = "AttackRange:" + (propertyValue + GameCoreData.PlayerProperties.attackRange).ToString();
                 break;
             case eWeaponProperty.LifeSteal:
-                textComp.text = "LifeSteal:" + ((propertyValue + GameCoreData.PlayerProperties.lifeSteal) * 100).ToString() + "%";
+                textComp.text = "LifeSteal:" + ((propertyValue * 100)+ GameCoreData.PlayerProperties.lifeSteal).ToString() + "%";
                 break;
             case eWeaponProperty.DamageThrough:
                 textComp.text = "DamageThrough:" + propertyValue;

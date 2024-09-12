@@ -9,6 +9,7 @@ public class Item_Weapon : InventoryItem,IPointerEnterHandler,IPointerExitHandle
     private Button btn_Item;
     private bool isClicked = false;
     private int sellPrice = 0;
+    private bool isShowDetail = false;
 
     protected override void Awake()
     {
@@ -32,24 +33,29 @@ public class Item_Weapon : InventoryItem,IPointerEnterHandler,IPointerExitHandle
     public void UpgradeItemLevel()
     {
         itemLevel++;
+        inventory_Weapon.weaponLevel++;
         // SetItemLevelFilterColor();
     }
 
     protected virtual void OnBtnItemClick()
     {
-        isClicked = true;
-        EventManager.instance.OnShowShopMenuMask();
-        weaponInfoPanel.transform.position = transform.position + new Vector3(120,340);
-        weaponInfoPanel.activeItem = this;
+        if(isShowDetail)
+        {
+            isClicked = true;
+            EventManager.instance.OnShowShopMenuMask();
+            weaponInfoPanel.ShowPanel();
+            weaponInfoPanel.activeItem = this;
+        }
     }
 
-    public virtual void InitItemPropUI(WeaponInfoPanel weaponInfoPanel,ShopItemData_SO itemData,int itemLevel,int sellPrice)
+    public virtual void InitItemPropUI(WeaponInfoPanel weaponInfoPanel,ShopItemData_SO itemData,int itemLevel,int sellPrice,bool isShowDetail = true)
     {
         this.itemLevel = itemLevel;
         this.itemData = itemData;
         this.sellPrice = sellPrice;
         img_ItemIcon.sprite = itemData.itemIcon;
         this.weaponInfoPanel = weaponInfoPanel;
+        this.isShowDetail = isShowDetail;
         // SetItemLevelFilterColor();
     }
 
@@ -65,14 +71,17 @@ public class Item_Weapon : InventoryItem,IPointerEnterHandler,IPointerExitHandle
 
     public virtual void OnPointerExit(PointerEventData eventData)
     {
-        if(isClicked) return;
+        if(isClicked || !isShowDetail) return;
         HideItemInfo();
     }
 
     public virtual void OnPointerEnter(PointerEventData eventData)
     {
-        isClicked = false;
-        weaponInfoPanel.activeItem = this;
-        ShowItemInfo();
+        if(isShowDetail)
+        {
+            isClicked = false;
+            weaponInfoPanel.activeItem = this;
+            ShowItemInfo();
+        }
     }
 }

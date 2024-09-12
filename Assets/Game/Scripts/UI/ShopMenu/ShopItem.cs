@@ -26,6 +26,7 @@ public class ShopItem : MonoBehaviour
     protected Image img_ItemLevelFilter;
     public bool isLocked = false;
     public bool isAffordable = true;
+    public bool isPruchased = false;
     public int itemLevel = 1;
     public int price = 0;
 

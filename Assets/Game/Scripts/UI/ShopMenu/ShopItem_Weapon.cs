@@ -27,6 +27,7 @@ public class ShopItem_Weapon : ShopItem
             return;
         }
         EventManager.instance.OnAddShopItemToInventory(itemData,this);
+        isPruchased = true;
     }
 
     private void OnBtnLockClick()
@@ -100,6 +101,7 @@ public class ShopItem_Weapon : ShopItem
     /// </summary>
     public void InitItemProperties(int itemLevel)
     {
+        isPruchased = false;
         this.itemLevel = itemLevel;
         CaculateItemPrice(itemData.itemCost,itemData.itemLevel,itemLevel);
         img_ItemIcon.sprite = itemData.itemIcon;
@@ -145,7 +147,7 @@ public class ShopItem_Weapon : ShopItem
                 textComp.text = "AttackRange:" + (propertyValue + GameCoreData.PlayerProperties.attackRange).ToString();
                 break;
             case eWeaponProperty.LifeSteal:
-                textComp.text = "LifeSteal:" + ((propertyValue + GameCoreData.PlayerProperties.lifeSteal) * 100).ToString() + "%";
+                textComp.text = "LifeSteal:" + ((propertyValue * 100) + GameCoreData.PlayerProperties.lifeSteal).ToString() + "%";
                 break;
             case eWeaponProperty.DamageThrough:
                 textComp.text = "DamageThrough:" + propertyValue;

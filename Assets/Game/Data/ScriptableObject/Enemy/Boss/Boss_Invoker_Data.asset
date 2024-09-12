@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Boss_Invoker_Data
   m_EditorClassIdentifier: 
   name: Invoker
-  HP: 1000
-  moveSpeed: 5
-  damage: 1
+  HP: 29000
+  moveSpeed: 15
+  damage: 25
   showlevel: 20
   isTowardsPlayer: 1
   enemyType: 3

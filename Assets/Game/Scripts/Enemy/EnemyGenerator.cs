@@ -171,7 +171,7 @@ public class EnemyGenerator : MonoBehaviour
         // if(LevelManager.levelStatus == eLevelStatus.Ended ||
         // GlobalVar.gameStatus == eGameStatus.Ended ||
         // GlobalVar.gameStatus == eGameStatus.MainMenu) return;
-
+        if(enemy == null) return;
         Enemy newEnemy = PoolManager.Release(enemy, pos).GetComponent<Enemy>();
         enemyManager.enemies.Add(newEnemy);
         newEnemy.Init(enemyManager);

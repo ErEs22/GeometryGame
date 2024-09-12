@@ -15,8 +15,8 @@ MonoBehaviour:
   itemIcon: {fileID: 21300000, guid: ec20cea41390f1645b82cffdc9c79846, type: 3}
   itemName: SniperGun
   itemType: Weapon
-  itemCost: 20
-  itemLevel: 4
+  itemCost: 115
+  itemLevel: 3
   shopItemType: 1
   projectileSpeed: 40
   prefab_Weapon: {fileID: 1512905131166018, guid: 47175c7c60ccdeb41840028147e027bb, type: 3}
@@ -24,16 +24,16 @@ MonoBehaviour:
   prefab_HitVFX: {fileID: 1124335935880280, guid: 25a4b54363e654c42a8ba185560dc93e, type: 3}
   itemProperties:
   - weaponProperty: 0
-    propertyValue: 5
+    propertyValue: 50
   - weaponProperty: 1
-    propertyValue: 2
+    propertyValue: 3
   - weaponProperty: 2
-    propertyValue: 1
+    propertyValue: 2.4
   - weaponProperty: 3
-    propertyValue: 0
+    propertyValue: 30
   - weaponProperty: 4
     propertyValue: 800
   - weaponProperty: 5
     propertyValue: 0
   - weaponProperty: 8
-    propertyValue: 0.5
+    propertyValue: 0.2

@@ -15,7 +15,7 @@ MonoBehaviour:
   itemIcon: {fileID: 21300000, guid: a8ca4b2565b7daa4484c5ef2d6809381, type: 3}
   itemName: Rocket
   itemType: Weapon
-  itemCost: 20
+  itemCost: 56
   itemLevel: 1
   shopItemType: 1
   projectileSpeed: 30
@@ -24,14 +24,16 @@ MonoBehaviour:
   prefab_HitVFX: {fileID: 100004, guid: 265b2f0dda6d1eb42bb71cf97a3b38ce, type: 3}
   itemProperties:
   - weaponProperty: 0
-    propertyValue: 5
+    propertyValue: 30
   - weaponProperty: 1
     propertyValue: 2
   - weaponProperty: 2
-    propertyValue: 1.7
+    propertyValue: 1.78
   - weaponProperty: 3
-    propertyValue: 5
+    propertyValue: 15
   - weaponProperty: 4
-    propertyValue: 800
+    propertyValue: 500
   - weaponProperty: 5
     propertyValue: 0
+  - weaponProperty: 8
+    propertyValue: 0.03

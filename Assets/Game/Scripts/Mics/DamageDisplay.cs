@@ -28,11 +28,11 @@ public class DamageDisplay : MonoBehaviour
         text.text = damage.ToString();
         if(isCritical)
         {
-            text.color = Color.yellow;
+            text.color = GameColor.text_Debuff;
         }
         else
         {
-            text.color = Color.white;
+            text.color = GameColor.text_Buff;
         }
     }
 }

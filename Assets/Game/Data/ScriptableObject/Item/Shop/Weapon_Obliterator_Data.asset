@@ -15,8 +15,8 @@ MonoBehaviour:
   itemIcon: {fileID: 21300000, guid: 0aa8abbf15022694f86a664f0b5f6645, type: 3}
   itemName: Obliterator
   itemType: Weapon
-  itemCost: 20
-  itemLevel: 1
+  itemCost: 127
+  itemLevel: 3
   shopItemType: 1
   projectileSpeed: 40
   prefab_Weapon: {fileID: 1247444303257178, guid: 4fb4e7c257b767340b38f6f2ebe705ef, type: 3}
@@ -24,14 +24,16 @@ MonoBehaviour:
   prefab_HitVFX: {fileID: 1124335935880280, guid: 25a4b54363e654c42a8ba185560dc93e, type: 3}
   itemProperties:
   - weaponProperty: 0
-    propertyValue: 100
+    propertyValue: 250
   - weaponProperty: 1
     propertyValue: 2
   - weaponProperty: 2
-    propertyValue: 3
+    propertyValue: 3.23
   - weaponProperty: 3
     propertyValue: 0
   - weaponProperty: 4
     propertyValue: 800
   - weaponProperty: 5
     propertyValue: 0
+  - weaponProperty: 8
+    propertyValue: 0.3
