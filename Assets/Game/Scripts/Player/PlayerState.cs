@@ -8,19 +8,20 @@ public class PlayerState : MonoBehaviour, ITakeDamage
     private Transform playerModelParentTrans;
     private Collider2D playerCollider;
     public CharacterData_SO playerData;
-    private int HP = 20;
-    private int maxHP = 20;
-    private int hpRegeneraePerSecond = 0;
-    private float lifeStealRate = 0.0f;
-    private float damageMul = 1.0f;
-    private float attackSpeedMul = 1.0f;
-    private float criticalRate = 0.0f;
-    private int attackRange = 450;
-    private float moveSpeed = 10;
-    private int exp = 0;
-    private int bonusCoin = 0;
-    private int currentPlayerLevel = 1;
-    private bool invincible = false;
+    //数值计算方式为小数模式
+    [SerializeField]private int HP = 20;
+    [SerializeField]private int maxHP = 20;
+    [SerializeField]private int hpRegeneraePerSecond = 0;
+    [SerializeField]private float lifeStealRate = 0.0f;
+    [SerializeField]private float damageMul = 1.0f;
+    [SerializeField]private float attackSpeedMul = 1.0f;
+    [SerializeField]private float criticalRate = 0.0f;
+    [SerializeField]private int attackRange = 450;
+    [SerializeField]private float moveSpeed = 10;
+    [SerializeField]private int exp = 0;
+    [SerializeField]private int bonusCoin = 0;
+    [SerializeField]private int currentPlayerLevel = 1;
+    [SerializeField]private bool invincible = false;
 
     private void Awake() {
         playerModelParentTrans = transform.Find(path_PlayerModel);
@@ -87,7 +88,7 @@ public class PlayerState : MonoBehaviour, ITakeDamage
         GameCoreData.PlayerProperties.damageMul = EyreUtility.Round((damageMul - 1) * 100);
         GameCoreData.PlayerProperties.attackSpeedMul = EyreUtility.Round((attackSpeedMul - 1) * 100);
         GameCoreData.PlayerProperties.criticalRate = EyreUtility.Round(criticalRate * 100);
-        GameCoreData.PlayerProperties.attackRange = 0;
+        GameCoreData.PlayerProperties.attackRange = attackRange;
         GameCoreData.PlayerProperties.moveSpeed = EyreUtility.Round((moveSpeed - 10) * 10);
         Instantiate(playerData.characterPrefab,playerModelParentTrans);
         EventManager.instance.OnInitStatusBar(maxHP);
@@ -168,8 +169,8 @@ public class PlayerState : MonoBehaviour, ITakeDamage
         this.damageMul = 1 + (damageMul * 0.01f);
         attackSpeedMul = 1 + (attackSpeed * 0.01f);
         this.criticalRate = criticalRate * 0.01f;
-        this.attackRange = playerData.attackRange + attackRange;
-        this.moveSpeed = Mathf.FloorToInt(playerData.moveSpeed * (1 + (moveSpeed * 0.01f)));
+        this.attackRange = attackRange;
+        this.moveSpeed = 10 * (1 + (moveSpeed * 0.01f));
         EventManager.instance.OnUpdateHealthBar(HP,this.maxHP);
     }
 

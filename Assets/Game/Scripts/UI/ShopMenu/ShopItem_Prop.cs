@@ -1,4 +1,5 @@
 using TMPro;
+using UnityEditor.U2D.Aseprite;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -145,6 +146,12 @@ public class ShopItem_Prop : ShopItem
             case ePlayerProperty.MoveSpeed:
                 textComp.text = "MoveSpeed:" + propertyValue + "%";
             break;
+            case ePlayerProperty.EnemyMoveSpeed:
+                textComp.text = "EnemyMoveSpeed:" + propertyValue + "%";
+                break;
+            case ePlayerProperty.PickUpRange:
+                textComp.text = "PickUpRange:" + propertyValue + "%";
+                break;
         }
     }
 

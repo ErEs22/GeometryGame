@@ -44,12 +44,18 @@ public class EventManager : MonoBehaviour
     public event UnityAction onDisableUIInput = delegate{};
     public event UnityAction onEnableUIInput = delegate{};
     public event UnityAction<int> onLevelTextUpdate = delegate{};
+    public event UnityAction<float> onIncreaseCollectRange = delegate{};
 
     private void Awake() {
         if(instance == null)
         {
             instance = this;
         }
+    }
+
+    public void OnIncreaseCollectRange(float expendRangeRate)
+    {
+        onIncreaseCollectRange.Invoke(expendRangeRate);
     }
 
     public void OnLevelTextUpdate(int currentLevel)
@@ -221,6 +227,13 @@ public class EventManager : MonoBehaviour
             case ePlayerProperty.MoveSpeed:
                 GameCoreData.PlayerProperties.moveSpeed += changeValue;
             break;
+            case ePlayerProperty.EnemyMoveSpeed:
+                GameCoreData.EnemyBuffs.moveSpeed += changeValue;
+                break;
+            case ePlayerProperty.PickUpRange:
+                GameCoreData.PlayerProperties.pickUpRange += changeValue;
+                OnIncreaseCollectRange(GameCoreData.PlayerProperties.pickUpRange * 0.01f);
+                break;
         }
         onUpdatePlayerProperty.Invoke(playerProperty,changeValue);
     }

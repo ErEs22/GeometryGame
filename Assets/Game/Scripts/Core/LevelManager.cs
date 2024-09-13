@@ -21,6 +21,7 @@ public class LevelManager : MonoBehaviour
     PlayerState playerState;
     CancellationTokenSource waitForEndTokenSource;
     TweenerCore<float,float,FloatOptions> waitForEndTweenTimer;
+    private bool isSpecialEnemySpawned = false;
 
     private void Awake()
     {
@@ -58,6 +59,7 @@ public class LevelManager : MonoBehaviour
     private void StartGame()
     {
         AudioManager.Instance.PlayBGM(AudioManager.Instance.inGameBGM);
+        isSpecialEnemySpawned = false;
         currentLevel = 1;
         Debug.Log("当前关卡：" + currentLevel);
         EventManager.instance.OnInitPlayerStatus();
@@ -78,6 +80,7 @@ public class LevelManager : MonoBehaviour
     /// </summary>
     private void StartLevel()
     {
+        isSpecialEnemySpawned = false;
         currentLevel++;
         Debug.Log("当前关卡：" + currentLevel);
         ClearPlayerUpgradeCount();
@@ -191,8 +194,12 @@ public class LevelManager : MonoBehaviour
                     await UniTask.Delay(GetLevelSpawnEnemysInterval() - 500);
                 break;
                 case 20:
-                    enemyGenerator.GenerateEnemysInRandomPos(enemyManager.GetFirstBoss(),1);
-                    enemyGenerator.GenerateEnemysInRandomPos(enemyManager.GetSecondBoss(),1);
+                    if(isSpecialEnemySpawned == false)
+                    {
+                        enemyGenerator.GenerateEnemysInRandomPos(enemyManager.GetFirstBoss(),1);
+                        enemyGenerator.GenerateEnemysInRandomPos(enemyManager.GetSecondBoss(),1);
+                        isSpecialEnemySpawned = true;
+                    }
                     for (int i = 0; i < enemySpawnCount; i++)
                     {
                         enemyGenerator.GenerateEnemysInRandomPos(enemyManager.GetEnemyInCurrentEnemyListRandomly(), 1);
@@ -200,7 +207,11 @@ public class LevelManager : MonoBehaviour
                     await UniTask.Delay(GetLevelSpawnEnemysInterval());
                 break;
                 default:
-                    enemyGenerator.GenerateEnemysInRandomPos(enemyManager.GetEliteEnemyInCurrentEnemyList(),1);
+                    if(isSpecialEnemySpawned == false)
+                    {
+                        enemyGenerator.GenerateEnemysInRandomPos(enemyManager.GetEliteEnemyInCurrentEnemyList(),1);
+                        isSpecialEnemySpawned = true;
+                    }
                     for (int i = 0; i < enemySpawnCount; i++)
                     {
                         enemyGenerator.GenerateEnemysInRandomPos(enemyManager.GetEnemyInCurrentEnemyListRandomly(), 1);

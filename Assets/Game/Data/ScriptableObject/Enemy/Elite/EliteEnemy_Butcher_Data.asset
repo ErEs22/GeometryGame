@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe36575410b2f424ea53c1cddef6da62, type: 3}
   m_Name: EliteEnemy_Butcher_Data
   m_EditorClassIdentifier: 
-  name: RhinoEliteEnemy
+  name: ButcherEliteEnemy
   HP: 7500
   moveSpeed: 10
   damage: 1
   showlevel: 11
   isTowardsPlayer: 1
   enemyType: 2
-  enemyPrefab: {fileID: 5836960803617581082, guid: 9e9ab1873b4c38443b3114742ebc1af2, type: 3}
+  enemyPrefab: {fileID: 5836960803617581082, guid: cd26dd5b903a04b4f85f81aadb6999ef, type: 3}
   projectile: {fileID: 2093875944032654269, guid: 8e45cad32ed9c6a448ca5c74ca764661, type: 3}

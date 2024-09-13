@@ -2504,7 +2504,7 @@ GameObject:
   - component: {fileID: 4000008617217150}
   - component: {fileID: 198000014889734708}
   - component: {fileID: 199000013496902674}
-  m_Layer: 13
+  m_Layer: 11
   m_Name: Particle System
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2522,7 +2522,7 @@ GameObject:
   - component: {fileID: 4000014501538180}
   - component: {fileID: 198000011219630626}
   - component: {fileID: 199000013978687902}
-  m_Layer: 13
+  m_Layer: 11
   m_Name: Particle System
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2557,7 +2557,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4000013177429082}
   - component: {fileID: 108000014702174052}
-  m_Layer: 13
+  m_Layer: 11
   m_Name: Directional light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2576,7 +2576,7 @@ GameObject:
   - component: {fileID: 33000009837651172}
   - component: {fileID: 64000010146108908}
   - component: {fileID: 23000009527845116}
-  m_Layer: 13
+  m_Layer: 11
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2593,7 +2593,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4000011794260320}
   - component: {fileID: 108000011685102792}
-  m_Layer: 13
+  m_Layer: 11
   m_Name: Point light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2794,7 +2794,7 @@ Camera:
   m_Depth: -99
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 8192
+    m_Bits: 10240
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 8400000, guid: 6d066bf56bf666948abdc6dc0f812429, type: 2}
   m_TargetDisplay: 0

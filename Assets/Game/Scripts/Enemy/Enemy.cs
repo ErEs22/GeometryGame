@@ -166,7 +166,7 @@ public class Enemy : MonoBehaviour, ITakeDamage, IHeal
     protected virtual void HandleMovement()
     {
         //Default Move Caculation
-        moveDir *= MoveSpeed;
+        moveDir *= MoveSpeed * (1f + (GameCoreData.EnemyBuffs.moveSpeed * 0.01f));
         if(isTowardsPlayer && moveSpeed != 0)
         {
             float angle1 = Mathf.Atan2(moveDir.y,moveDir.x) * Mathf.Rad2Deg;

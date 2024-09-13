@@ -15,11 +15,11 @@ MonoBehaviour:
   characterIcon: {fileID: 21300000, guid: 9846e9cfad7a04640b88e0e1c51b4d48, type: 3}
   characterPrefab: {fileID: 1421609400158560, guid: c983fb9c9213469498a08ad23efb41be, type: 3}
   characterName: Ship_02
-  HP: 80
+  HP: 40
   hpRegeneratePerSecond: 0
-  lifeStealRate: 0
-  damageMul: 1
-  attackSpeedMul: 1
-  criticalRate: 0
-  attackRange: 400
-  moveSpeed: 9
+  lifeStealRate: 0.03
+  damageMul: 1.05
+  attackSpeedMul: 1.05
+  criticalRate: 0.03
+  attackRange: 0
+  moveSpeed: 10

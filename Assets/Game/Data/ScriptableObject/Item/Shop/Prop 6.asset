@@ -10,18 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 77eded1a09bffd641b30c9fdda2e77f9, type: 3}
-  m_Name: TestShopItem_Prop 4
+  m_Name: Prop 6
   m_EditorClassIdentifier: 
-  itemIcon: {fileID: 21300000, guid: 8ab42979fa6700841a202dbc8d5e1a4b, type: 3}
-  itemName: Prop4
+  itemIcon: {fileID: 21300000, guid: 15796e4ae016b10489dfa16e0c2766db, type: 3}
+  itemName: "\u4FE1\u53F7\u5854"
   itemType: Prop
-  itemCost: 20
-  itemLevel: 1
+  itemCost: 75
+  itemLevel: 3
   shopItemType: 0
   itemProperties:
-  - playerProperty: 0
-    changeAmount: 10
-  - playerProperty: 2
-    changeAmount: 5
-  - playerProperty: 4
-    changeAmount: 10
+  - playerProperty: 5
+    changeAmount: 8

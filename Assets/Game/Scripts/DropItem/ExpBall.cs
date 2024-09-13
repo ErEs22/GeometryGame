@@ -14,6 +14,11 @@ public class ExpBall : MonoBehaviour
 
     private void OnEnable() {
         EventManager.instance.onLevelEnd += CollectBonusCoin;
+        EventManager.instance.onIncreaseCollectRange += UpdateCollectRange;
+    }
+
+    private void OnDisable() {
+        EventManager.instance.onIncreaseCollectRange -= UpdateCollectRange;
     }
 
     public void Init(bool isBonus = false)
@@ -29,6 +34,11 @@ public class ExpBall : MonoBehaviour
         {
             transform.localScale = new Vector3(0.3f,0.3f,0.3f);
         }
+    }
+
+    private void UpdateCollectRange(float expendRangeRate)
+    {
+        circleCollider.radius = 8 * (1 + expendRangeRate);
     }
 
     private void ClearBall()

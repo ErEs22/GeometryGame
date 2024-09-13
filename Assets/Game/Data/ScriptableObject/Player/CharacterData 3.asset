@@ -18,8 +18,8 @@ MonoBehaviour:
   HP: 30
   hpRegeneratePerSecond: 0
   lifeStealRate: 0
-  damageMul: 1
-  attackSpeedMul: 1
+  damageMul: 1.05
+  attackSpeedMul: 1.08
   criticalRate: 0
-  attackRange: 400
-  moveSpeed: 10
+  attackRange: 0
+  moveSpeed: 10.5

@@ -49,6 +49,8 @@ public enum ePlayerProperty
     CriticalRate,
     AttackRange,
     MoveSpeed,
+    EnemyMoveSpeed,
+    PickUpRange,
 }
 
 public enum eWeaponProperty

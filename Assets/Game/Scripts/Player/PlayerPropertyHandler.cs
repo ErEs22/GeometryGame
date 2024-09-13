@@ -5,7 +5,8 @@ using UnityEngine;
 public class PlayerPropertyHandler : MonoBehaviour
 {
     private PlayerState playerState;
-    public static int maxHP = 100;
+    //数值计算模式为百分比模式
+    public static int maxHP = 40;
     public static int hpRegeneration = 1;
     public static int lifeSteal = 5;
     public static int damageMul = 0;
@@ -61,7 +62,16 @@ public class PlayerPropertyHandler : MonoBehaviour
                 moveSpeed = GameCoreData.PlayerProperties.moveSpeed;
             break;
         }
-        playerState.UpdatePlayerStatus(maxHP,hpRegeneration,lifeSteal,damageMul,attackSpeed,criticalRate,attackRange,moveSpeed);
+        playerState.UpdatePlayerStatus(
+            GameCoreData.PlayerProperties.maxHP,
+            GameCoreData.PlayerProperties.hpRegeneration,
+            GameCoreData.PlayerProperties.lifeSteal,
+            GameCoreData.PlayerProperties.damageMul,
+            GameCoreData.PlayerProperties.attackSpeedMul,
+            GameCoreData.PlayerProperties.criticalRate,
+            GameCoreData.PlayerProperties.attackRange,
+            GameCoreData.PlayerProperties.moveSpeed
+        );
     }
 
 }

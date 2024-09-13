@@ -392,6 +392,8 @@ public class UICharacterSelectMenu : UIBase
 
     private void SetCharacterPropertyText(TextMeshProUGUI textComp, ePlayerProperty characterProperty, float propertyValue)
     {
+        textComp.gameObject.name = "Text_Ability";
+        textComp.enabled = true;
         string sign = "";
         switch (characterProperty)
         {
@@ -421,7 +423,7 @@ public class UICharacterSelectMenu : UIBase
                 if (propertyValue != 0)
                 {
                     sign = propertyValue > 0 ? "+" : "-";
-                    textComp.text = sign + Mathf.Abs(propertyValue) + "%LifeSteal:";
+                    textComp.text = sign + Mathf.Abs(propertyValue * 100) + "%LifeSteal:";
                 }
                 else
                 {
@@ -432,7 +434,7 @@ public class UICharacterSelectMenu : UIBase
                 if(propertyValue != 1)
                 {
                     sign = propertyValue > 1 ? "+" : "-";
-                    textComp.text = sign + Mathf.Abs(propertyValue - 1) * 100 + "%DamageMul:";
+                    textComp.text = sign + EyreUtility.Round(Mathf.Abs(propertyValue - 1) * 100) + "%DamageMul:";
                 }
                 else
                 {
@@ -443,7 +445,7 @@ public class UICharacterSelectMenu : UIBase
                 if (propertyValue != 1)
                 {
                     sign = propertyValue > 1 ? "+": "-";
-                    textComp.text = sign + Mathf.Abs(propertyValue - 1) * 100 + "%AttackSpeed:";
+                    textComp.text = sign + EyreUtility.Round(Mathf.Abs(propertyValue - 1) * 100) + "%AttackSpeed:";
                 }
                 else
                 {
@@ -454,7 +456,7 @@ public class UICharacterSelectMenu : UIBase
                 if (propertyValue != 0)
                 {
                     sign = propertyValue > 0 ? "+" : "-";
-                    textComp.text = sign + Mathf.Abs(propertyValue) + "%CriticalRate:";
+                    textComp.text = sign + EyreUtility.Round(Mathf.Abs(propertyValue * 100)) + "%CriticalRate:";
                 }
                 else
                 {
@@ -462,10 +464,10 @@ public class UICharacterSelectMenu : UIBase
                 }
                 break;
             case ePlayerProperty.AttackRange:
-                if (propertyValue != 400)
+                if (propertyValue != 0)
                 {
-                    sign = propertyValue > 400 ? "+" : "-";
-                    textComp.text = sign + Mathf.Abs(propertyValue - 400) + "AttackRange:";
+                    sign = propertyValue > 0 ? "+" : "-";
+                    textComp.text = sign + Mathf.Abs(propertyValue) + "AttackRange:";
                 }
                 else
                 {
