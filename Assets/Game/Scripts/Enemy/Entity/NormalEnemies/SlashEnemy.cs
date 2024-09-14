@@ -39,7 +39,6 @@ public class SlashEnemy : Enemy
 
     protected override void UpdateMoveDirection()
     {
-        //TODO优化移动方案，防止在边界条件下抽搐
         if(Vector3.Distance(playerTrans.position,transform.position) < newEnemyData.runawayDistance)
         {
             //Run away

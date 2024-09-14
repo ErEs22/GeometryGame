@@ -1,11 +1,11 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class UIShopMenu : UIBase
 {
@@ -101,6 +101,10 @@ public class UIShopMenu : UIBase
     private List<ShopItem> allShopItems = new List<ShopItem>();
     private List<Item_Prop> allPropInventoryItems = new List<Item_Prop>();
     private List<Item_Weapon> allWeaponInventoryItems = new List<Item_Weapon>();
+    private List<ShopItemData_SO> allTier1Items = new List<ShopItemData_SO>();
+    private List<ShopItemData_SO> allTier2Items = new List<ShopItemData_SO>();
+    private List<ShopItemData_SO> allTier3Items = new List<ShopItemData_SO>();
+    private List<ShopItemData_SO> allTier4Items = new List<ShopItemData_SO>();
 
     private void Awake()
     {
@@ -123,6 +127,7 @@ public class UIShopMenu : UIBase
         text_AttackRange_PropertyValue = transform.Find(path_AttackRange_PropertyValue).GetComponent<TextMeshProUGUI>();
         text_MoveSpeed_PropertyValue = transform.Find(path_MoveSpeed_PropertyValue).GetComponent<TextMeshProUGUI>();
         text_Btn_RefreshCost = transform.Find(path_Text_RefreshCost).GetComponent<TextMeshProUGUI>();
+        SortAllTierShopItems();
     }
 
     private void OnEnable()
@@ -159,6 +164,49 @@ public class UIShopMenu : UIBase
         EventManager.instance.onSellWeaponInventoryItems -= SellWeaponInventoryItems;
         EventManager.instance.onUpdatePlayerProperty -= UpdatePlayerStatusPropertiesUI;
         EventManager.instance.onGameover -= ClearInventoryItems;
+    }
+
+    private void SortAllTierShopItems()
+    {
+        foreach (ShopItemData_SO item in allItemDatas)
+        {
+            switch(item.itemLevel)
+            {
+                case 1:
+                    allTier1Items.Add(item);
+                break;
+                case 2:
+                    allTier2Items.Add(item);
+                break;
+                case 3:
+                    allTier3Items.Add(item);
+                break;
+                case 4:
+                    allTier4Items.Add(item);
+                break;
+            }
+        }
+    }
+
+    private ShopItemData_SO GetItemDataByChance()
+    {
+        float randomNum = Random.Range(0f,1f);
+        if(randomNum <= 0.7f)
+        {
+            return allTier1Items[EyreUtility.GetRandomNumbersInBetween(0,allTier1Items.Count - 1,1)[0]];
+        }
+        else if(randomNum > 0.7f && randomNum <= 0.85f)
+        {
+            return allTier2Items[EyreUtility.GetRandomNumbersInBetween(0,allTier2Items.Count - 1,1)[0]];
+        }
+        else if(randomNum > 0.85f && randomNum <= 0.95f)
+        {
+            return allTier3Items[EyreUtility.GetRandomNumbersInBetween(0,allTier3Items.Count - 1,1)[0]];
+        }
+        else
+        {
+            return allTier4Items[EyreUtility.GetRandomNumbersInBetween(0,allTier4Items.Count - 1,1)[0]];
+        }
     }
 
     private void UpdateLevelText()
@@ -231,7 +279,6 @@ public class UIShopMenu : UIBase
         text_CriticalRate_PropertyValue.text = GameCoreData.PlayerProperties.criticalRate.ToString() + "%";
         text_AttackRange_PropertyValue.text = GameCoreData.PlayerProperties.attackRange.ToString();
         text_MoveSpeed_PropertyValue.text = GameCoreData.PlayerProperties.moveSpeed.ToString() + "%";
-        //TODO加载玩家存档，当玩家有处在游戏中的的存档
     }
 
     private void CombineWeaponInventoryItems(Item_Weapon weaponItem)
@@ -259,7 +306,7 @@ public class UIShopMenu : UIBase
     {
         allWeaponInventoryItems.Remove(weaponItem);
         GameInventory.Instance.RemoveWeaponFromInventory(weaponItem.inventory_Weapon);
-        GameCoreData.PlayerProperties.coin += EyreUtility.Round(weaponItem.itemData.itemLevel * weaponItem.itemData.itemCost * 0.8f);
+        GameCoreData.PlayerProperties.coin += EyreUtility.Round(weaponItem.itemData.itemCost / weaponItem.itemData.itemLevel * weaponItem.itemLevel * 0.8f);
         EventManager.instance.OnUpdateCoinCount();
         Destroy(weaponItem.gameObject);
     }
@@ -466,17 +513,15 @@ public class UIShopMenu : UIBase
             //第一次生成四个物品
             for(int i = 0; i < 4; i++)
             {
-                RectTransform itemTrans = GenerateItem(allItemDatas[EyreUtility.GetRandomNumbersInBetween(0,allItemDatas.Count - 1,1)[0]]);
+                RectTransform itemTrans = GenerateItem(GetItemDataByChance());
                 if((i + 1) % 2 == 0)
                 {
                     itemTrans.anchoredPosition = new Vector2(shopItemStartPos[i].x,shopItemStartPos[i].y - 300);
-                    Debug.Log(itemTrans.localPosition);
                     itemTrans.DOAnchorPosY(shopItemStartPos[i].y,0.5f);
                 }
                 if((i + 1) % 2 == 1)
                 {
                     itemTrans.anchoredPosition = new Vector2(shopItemStartPos[i].x,shopItemStartPos[i].y + 300);
-                    Debug.Log(itemTrans.localPosition);
                     itemTrans.DOAnchorPosY(shopItemStartPos[i].y,0.5f);
                 }
                 if(allShopItems.Count >= 4) break;
@@ -510,7 +555,7 @@ public class UIShopMenu : UIBase
             for(int i = 0; i < 4; i++)
             {
                 if(allShopItems.Count >= 4) break;
-                RectTransform itemTrans = GenerateItem(allItemDatas[EyreUtility.GetRandomNumbersInBetween(0,allItemDatas.Count - 1,1)[0]]);
+                RectTransform itemTrans = GenerateItem(GetItemDataByChance());
                 if((i + 1) % 2 == 0)
                 {
                     itemTrans.anchoredPosition = new Vector2(shopItemStartPos[i].x,shopItemStartPos[i].y - 300);

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Predator
   HP: 29000
-  moveSpeed: 10
+  moveSpeed: 6.6
   damage: 25
   showlevel: 20
   isTowardsPlayer: 1

@@ -1506,11 +1506,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 06ddeb282f975ee46944132fa3c8f67a, type: 2}
   - {fileID: 11400000, guid: d088cb740fe7cd64289a6dc4dcdea060, type: 2}
   - {fileID: 11400000, guid: 8379911263dd175419753ab3736f4b6b, type: 2}
-  - {fileID: 11400000, guid: 523004688d5ccca4cac914eb1828a8dd, type: 2}
   - {fileID: 11400000, guid: fc72fc04540ffba4f9c62fc40e335000, type: 2}
   - {fileID: 11400000, guid: 78dd9440c48aa834182e59c67594feeb, type: 2}
   - {fileID: 11400000, guid: 48afef3907bf6004c8a1b1952fa7f678, type: 2}
   - {fileID: 11400000, guid: 48ad8abfa46aceb45b9698bbb2edab87, type: 2}
+  - {fileID: 11400000, guid: 42ffefbb75f4b0f42903914fe93cdd08, type: 2}
   selectWeapon: {fileID: 0}
 --- !u!1 &5553047254473640596
 GameObject:

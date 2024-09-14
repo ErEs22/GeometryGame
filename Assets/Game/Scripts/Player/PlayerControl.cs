@@ -27,7 +27,7 @@ public class PlayerControl : MonoBehaviour
 
     void HandleMove(){
         transform.position += (Vector3)playerInputHandler.moveInput * moveSpeed * Time.deltaTime;
-        // rig.velocity = playerInputHandler.moveInput * moveSpeed;//TODO 解决使用刚体速度移动产生抖动的问题
+        // rig.velocity = playerInputHandler.moveInput * moveSpeed;
     }
 
     void HandleRotation(){

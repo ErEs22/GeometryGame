@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 700776885542380104}
   m_LocalRotation: {x: -0.50000006, y: 0.49999997, z: -0.49999997, w: 0.5000001}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.12, y: 0.12, z: 0.12}
+  m_LocalScale: {x: 0.14, y: 0.14, z: 0.14}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 5836960803617581087}
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 5836960803617581087}
   - component: {fileID: 1383854026698244026}
   - component: {fileID: -702514971242849775}
-  - component: {fileID: 8834872331537615988}
+  - component: {fileID: 437588059231565009}
   m_Layer: 6
   m_Name: GargoyleEliteEnemy
   m_TagString: Enemy
@@ -164,8 +164,8 @@ MonoBehaviour:
   enemyGenerator: {fileID: 0}
   nearbyEnemys: []
   collisionRiskEnemys: []
---- !u!58 &8834872331537615988
-CircleCollider2D:
+--- !u!70 &437588059231565009
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -177,6 +177,6 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 1.5
+  m_Offset: {x: -0.0625757, y: -0.046931744}
+  m_Size: {x: 3.0656002, y: 4.8490047}
+  m_Direction: 0

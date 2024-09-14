@@ -13,10 +13,8 @@ public class test : MonoBehaviour
     //     gameObject.SetActive(false);
     //     Debug.Log("This is after deactive");
     // }
-
-    private void OnEnable() {
-        transform.DOScale(5.0f,1.0f).SetRelative().OnStepComplete(()=>{
-            transform.DOScale(-5.0f,1.0f).SetRelative();
-        });
+    
+    private void OnTriggerEnter2D(Collider2D other) {
+        Debug.Log(gameObject.name + "IS TRIGGER");
     }
 }

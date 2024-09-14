@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 9110121791162337760}
   m_LocalRotation: {x: -0.4999999, y: 0.49999854, z: -0.49999997, w: 0.50000167}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
+  m_LocalScale: {x: 0.11, y: 0.11, z: 0.11}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 9110121791571914325}
@@ -124,6 +124,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerData: {fileID: 11400000, guid: be110957589e0264fb01f95e6f8fa1d1, type: 2}
+  HP: 20
+  maxHP: 20
+  hpRegeneraePerSecond: 0
+  lifeStealRate: 0
+  damageMul: 1
+  attackSpeedMul: 1
+  criticalRate: 0
+  attackRange: 450
+  moveSpeed: 10
+  exp: 0
+  bonusCoin: 0
+  currentPlayerLevel: 1
+  invincible: 0
 --- !u!114 &9110121791571914347
 MonoBehaviour:
   m_ObjectHideFlags: 0

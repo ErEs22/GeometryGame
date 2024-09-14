@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: ButcherEliteEnemy
   HP: 7500
-  moveSpeed: 10
+  moveSpeed: 4.4
   damage: 1
   showlevel: 11
   isTowardsPlayer: 1

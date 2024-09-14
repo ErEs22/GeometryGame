@@ -97,7 +97,6 @@ public class UIUpgradeMenu : UIBase
         text_CriticalRate_PropertyValue.text = GameCoreData.PlayerProperties.criticalRate.ToString() + "%";
         text_AttackRange_PropertyValue.text = GameCoreData.PlayerProperties.attackRange.ToString();
         text_MoveSpeed_PropertyValue.text = GameCoreData.PlayerProperties.moveSpeed.ToString() + "%";
-        //TODO加载玩家存档，当玩家有处在游戏中的的存档
     }
 
     private void ClearAllChildTips()

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Colossus
   HP: 12000
-  moveSpeed: 17.5
+  moveSpeed: 7.7
   damage: 1
   showlevel: 17
   isTowardsPlayer: 1

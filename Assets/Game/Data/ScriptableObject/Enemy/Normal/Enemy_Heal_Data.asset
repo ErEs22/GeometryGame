@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: HealEnemy
   HP: 10
-  moveSpeed: 20
+  moveSpeed: 8.8
   damage: 1
   showlevel: 7
   isTowardsPlayer: 1

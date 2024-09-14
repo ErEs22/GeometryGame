@@ -26,7 +26,6 @@ public class LootEnemy : Enemy
 
     public override void Die()
     {
-        //TODO 掉落箱子和材料
         //死亡后血量应为零
         HP = 0;
         //释放掉落经验球

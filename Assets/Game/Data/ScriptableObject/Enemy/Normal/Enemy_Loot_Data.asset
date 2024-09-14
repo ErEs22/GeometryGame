@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: LootEnemy
   HP: 50
-  moveSpeed: 15
+  moveSpeed: 7.8
   damage: 1
   showlevel: 3
   isTowardsPlayer: 1

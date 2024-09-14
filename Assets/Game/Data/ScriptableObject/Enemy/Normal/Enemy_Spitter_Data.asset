@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: SpitterEnemy
   HP: 8
-  moveSpeed: 10
+  moveSpeed: 4.5
   damage: 1
   showlevel: 4
   isTowardsPlayer: 1

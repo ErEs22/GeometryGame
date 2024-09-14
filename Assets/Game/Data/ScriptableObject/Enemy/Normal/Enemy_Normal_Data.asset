@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: NormalEnemy
   HP: 3
-  moveSpeed: 10
+  moveSpeed: 6.6
   damage: 1
   showlevel: 1
   isTowardsPlayer: 1

@@ -69,6 +69,7 @@ MonoBehaviour:
   knockBack: 0
   isCriticalHit: 0
   lifeStealPercentByWeapon: 0
+  hitVFXPrefab: {fileID: 0}
   weaponShootBy: {fileID: 0}
 --- !u!1 &8575177906696856170
 GameObject:
@@ -4906,7 +4907,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8575296028751039040}
   m_LocalRotation: {x: -0, y: 0.70710677, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 5}
   m_LocalScale: {x: 0.9, y: 0.9, z: 0.9}
   m_ConstrainProportionsScale: 1
   m_Children:

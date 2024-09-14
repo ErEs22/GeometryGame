@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class PoolManager : MonoBehaviour
 {
-    //TODO 优化对象池管理，自动添加对象以生成对象池
     static Dictionary<GameObject, Pool> dictionary;
 
     [SerializeField]

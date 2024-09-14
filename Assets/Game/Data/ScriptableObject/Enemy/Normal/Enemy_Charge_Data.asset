@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: ChargeEnemy
   HP: 4
-  moveSpeed: 20
+  moveSpeed: 8.8
   damage: 1
   showlevel: 3
   isTowardsPlayer: 1

@@ -19,7 +19,7 @@ MonoBehaviour:
   hpRegeneratePerSecond: 2
   lifeStealRate: 0
   damageMul: 1
-  attackSpeedMul: 1
+  attackSpeedMul: 2
   criticalRate: 0
   attackRange: 50
   moveSpeed: 10.5

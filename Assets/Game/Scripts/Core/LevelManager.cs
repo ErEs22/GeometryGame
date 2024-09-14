@@ -122,7 +122,6 @@ public class LevelManager : MonoBehaviour
 
     private void UpdateGameAndLevelStatusWhenLevelEnd()
     {
-        //TODO 控制指定敌人在指定关卡生成
         EventManager.instance.OnDisableLocomotionInput();
         levelStatus = eLevelStatus.Ended;
         if(currentLevel < 20)
@@ -156,7 +155,6 @@ public class LevelManager : MonoBehaviour
 
     private async void StartSpawnEnemy()
     {
-        //TODO 精英和Boss关才能生成对应的精英怪和Boss
         if(levelStatus == eLevelStatus.Ended || GlobalVar.gameStatus == eGameStatus.Ended){
             enemyManager.ClearAllEnemy();
             return;
@@ -240,7 +238,7 @@ public class LevelManager : MonoBehaviour
     private int GetLevelTime()
     {
         int levelTime = 20 + Mathf.Clamp((currentLevel - 1) * 5, 0, 40);
-        Debug.Log("当前关卡时间为：" + levelTime + "秒");
+        // Debug.Log("当前关卡时间为：" + levelTime + "秒");
         return levelTime;
     }
 

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public class PlayerState : MonoBehaviour, ITakeDamage
@@ -26,6 +27,10 @@ public class PlayerState : MonoBehaviour, ITakeDamage
     private void Awake() {
         playerModelParentTrans = transform.Find(path_PlayerModel);
         playerCollider = GetComponent<Collider2D>();
+    }
+
+    private void Start() {
+        AutoRegenerateHealth();
     }
 
     private void OnEnable() {
@@ -194,5 +199,16 @@ public class PlayerState : MonoBehaviour, ITakeDamage
             return true;
         }
         return false;
+    }
+
+    public void AutoRegenerateHealth()
+    {
+        EyreUtility.SetDelay(10f / hpRegeneraePerSecond,(()=>
+        {
+            if(hpRegeneraePerSecond > 0)
+            {
+                Mathf.Clamp(HP + 1,0,maxHP);
+            }
+        })).SetLoops(-1);
     }
 }

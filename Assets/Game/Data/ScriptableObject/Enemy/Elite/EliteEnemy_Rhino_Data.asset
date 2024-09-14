@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: RhinoEliteEnemy
   HP: 5000
-  moveSpeed: 12.5
+  moveSpeed: 5.5
   damage: 1
   showlevel: 8
   isTowardsPlayer: 1

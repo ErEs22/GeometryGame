@@ -13,11 +13,13 @@ public class WeaponInfoPanel : MonoBehaviour
     private const string path_Btn_Combine = "Btn_Combine";
     private const string path_Btn_Sell = "Btn_Sell";
     private const string path_Btn_Cancel = "Btn_Cancel";
+    private const string path_Text_Sell = path_Btn_Sell + "/Text";
     //-----------
 
     private Image img_ItemIcon;
     private TextMeshProUGUI text_ItemName;
     private TextMeshProUGUI text_ItemRareLevel;
+    private TextMeshProUGUI text_Sell;
     private Button btn_Combine;
     private Button btn_Sell;
     private Button btn_Cancel;
@@ -28,6 +30,7 @@ public class WeaponInfoPanel : MonoBehaviour
         img_ItemIcon = transform.Find(path_Img_ItemIcon).GetComponent<Image>();
         text_ItemName = transform.Find(path_Text_ItemName).GetComponent<TextMeshProUGUI>();
         text_ItemRareLevel = transform.Find(path_Text_ItemRareLevel).GetComponent<TextMeshProUGUI>();
+        text_Sell = transform.Find(path_Text_Sell).GetComponent<TextMeshProUGUI>();
         btn_Combine = transform.Find(path_Btn_Combine).GetComponent<Button>();
         btn_Sell = transform.Find(path_Btn_Sell).GetComponent<Button>();
         btn_Cancel = transform.Find(path_Btn_Cancel).GetComponent<Button>();
@@ -75,6 +78,7 @@ public class WeaponInfoPanel : MonoBehaviour
         ClearPropInfo();
         img_ItemIcon.sprite = itemData.itemIcon;
         text_ItemName.text = itemData.itemName;
+        text_Sell.text = "Sell(" + EyreUtility.Round(itemData.itemCost / itemData.itemLevel * currentLevel * 0.8f).ToString() + ")";
         SetItemRareLevelText(currentLevel);
         GameObject propertyObject = trans_PropertiesParent.GetChild(0).gameObject;
         SetPropertyText(propertyObject.GetComponent<TextMeshProUGUI>(),itemData.itemProperties[0].weaponProperty,itemData.itemProperties[0].propertyValue);

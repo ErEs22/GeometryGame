@@ -18,6 +18,7 @@ public class ExpBall : MonoBehaviour
     }
 
     private void OnDisable() {
+        EventManager.instance.onLevelEnd -= CollectBonusCoin;
         EventManager.instance.onIncreaseCollectRange -= UpdateCollectRange;
     }
 
@@ -61,6 +62,7 @@ public class ExpBall : MonoBehaviour
     private void CollectBonusCoin()
     {
         EventManager.instance.OnChangeBonusCoinCount(1);
+        Debug.Log("COLLECT BONUS COIN");
         EventManager.instance.onLevelEnd -= CollectBonusCoin;
         ClearBall();
     }

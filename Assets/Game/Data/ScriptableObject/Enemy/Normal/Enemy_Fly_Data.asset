@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: FlyEnemy
   HP: 15
-  moveSpeed: 12
+  moveSpeed: 7.8
   damage: 1
   showlevel: 4
   isTowardsPlayer: 1

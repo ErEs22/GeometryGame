@@ -30,7 +30,6 @@ public class UIManager : MonoBehaviour
 
     private void InitUIWindow()
     {
-        //TODO 窗口有时错乱出现
         foreach (var ui in allUI)
         {
             ui.InitUI();

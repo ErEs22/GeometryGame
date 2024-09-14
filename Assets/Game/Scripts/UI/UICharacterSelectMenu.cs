@@ -181,10 +181,10 @@ public class UICharacterSelectMenu : UIBase
         CloseUI();
         AddWeaponToGameInventory();
         EventManager.instance.OnSetCharacterData(selectCharacter.characterData);
-        EventManager.instance.OnGenerateWeaonInInventory();
         EventManager.instance.OnStartGame();
         EventManager.instance.OnEnableLocomotionInput();
         EventManager.instance.OnEnableUIInput();
+        EventManager.instance.OnGenerateWeaonInInventory();
     }
 
     private void OnBtnBackToMainMenuClick()

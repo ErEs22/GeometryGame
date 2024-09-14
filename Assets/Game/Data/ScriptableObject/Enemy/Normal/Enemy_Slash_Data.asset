@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: SlashEnemy
   HP: 50
-  moveSpeed: 10
+  moveSpeed: 6.6
   damage: 1
   showlevel: 4
   isTowardsPlayer: 1

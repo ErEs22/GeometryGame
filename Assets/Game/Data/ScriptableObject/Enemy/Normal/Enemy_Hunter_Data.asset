@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: HunterEnemy
   HP: 1
-  moveSpeed: 18
+  moveSpeed: 8.5
   damage: 1
   showlevel: 2
   isTowardsPlayer: 1
