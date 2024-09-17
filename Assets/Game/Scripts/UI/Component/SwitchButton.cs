@@ -50,28 +50,28 @@ public class SwitchButton : Button
 
     public void SetButtonStatus(bool isOn)
     {
-        if(this.isOn == isOn)
+        this.isOn = isOn;
+        if(isOn)
         {
-            return;
+            btn_Switch.transform.position = trans_RightPoint.position;
+            text_SwitchON.color = GameColor.switchBtn_On;
+            text_SwitchOFF.color = GameColor.switchBtn_Off;
+            // img_Background.color = GameColor.switchBtn_On;
         }
         else
         {
-            this.isOn = isOn;
-            if(isOn)
-            {
-                btn_Switch.transform.position = trans_RightPoint.position;
-                text_SwitchON.color = GameColor.switchBtn_On;
-                text_SwitchOFF.color = GameColor.switchBtn_Off;
-                // img_Background.color = GameColor.switchBtn_On;
-            }
-            else
-            {
-                btn_Switch.transform.position = trans_LeftPoint.position;
-                text_SwitchOFF.color = GameColor.switchBtn_On;
-                text_SwitchON.color = GameColor.switchBtn_Off;
-                // img_Background.color = GameColor.switchBtn_Off;
-            }
+            btn_Switch.transform.position = trans_LeftPoint.position;
+            text_SwitchOFF.color = GameColor.switchBtn_On;
+            text_SwitchON.color = GameColor.switchBtn_Off;
+            // img_Background.color = GameColor.switchBtn_Off;
         }
+        // if(this.isOn == isOn)
+        // {
+        //     return;
+        // }
+        // else
+        // {
+        // }
     }
 
     public void OnBtnSwitchClick()

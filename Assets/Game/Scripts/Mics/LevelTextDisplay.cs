@@ -19,6 +19,6 @@ public class LevelTextDisplay : MonoBehaviour
 
     private void UpdateTextContent(int currentLevel)
     {
-        text_Level.text = "CurrentLevel:" + currentLevel.ToString();
+        text_Level.text = "关卡:" + currentLevel.ToString();
     }
 }

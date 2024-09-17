@@ -6,8 +6,8 @@ public class GlobalVar : MonoBehaviour
 {
     public static GlobalVar Instance;
     public static Transform playerTrans;
-    public static float mapWidth = 50;
-    public static float mapHeight = 50;
+    public static float mapWidth = 45;
+public static float mapHeight = 45;
     public static eGameStatus gameStatus = eGameStatus.MainMenu;
 
     private void Awake() {

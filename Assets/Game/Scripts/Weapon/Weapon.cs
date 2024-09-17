@@ -175,6 +175,7 @@ public class Weapon : MonoBehaviour
     protected virtual void SetDatabyType(ShopWeaponPropertyPair propertyPair, int weaponBaseLevel, int weaponCurrentLevel)
     {
         float propertyValue = GameInventory.Instance.CaculateWeaponDataByLevel(propertyPair.weaponProperty, propertyPair.propertyValue, weaponBaseLevel, weaponCurrentLevel);
+        // Debug.Log(gameObject.name + ":" + propertyPair.weaponProperty.ToString() + ":" + propertyValue + "Level:" + weaponBaseLevel + weaponCurrentLevel);
         switch (propertyPair.weaponProperty)
         {
             case eWeaponProperty.Damage:

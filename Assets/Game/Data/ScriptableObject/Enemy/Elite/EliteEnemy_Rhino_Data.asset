@@ -15,9 +15,11 @@ MonoBehaviour:
   name: RhinoEliteEnemy
   HP: 5000
   moveSpeed: 5.5
-  damage: 1
+  damage: 13
   showlevel: 8
   isTowardsPlayer: 1
+  hpIncreasePerWave: 0
+  damageIncreasePerWave: 0
   enemyType: 2
   enemyPrefab: {fileID: 5836960803617581082, guid: 9e9ab1873b4c38443b3114742ebc1af2, type: 3}
   projectile: {fileID: 3994106403445518885, guid: 5ff5464979edf3f488ecbbd6283f2fa3, type: 3}

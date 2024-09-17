@@ -6,16 +6,16 @@ public class UIFinishMenu : UIBase
 {
     //------------UIComponentRelatePath
     private string path_Btn_MainMenu = "Btn_MainMenu";
-    private string path_Health_PropertyValue = "PlayerStatusInfo/Properties/Health/Text_PropertyValue";
-    private string path_HPRegeneration_PropertyValue = "PlayerStatusInfo/Properties/HPRegeneration/Text_PropertyValue";
-    private string path_StealHP_PropertyValue = "PlayerStatusInfo/Properties/StealHP/Text_PropertyValue";
-    private string path_DamageMul_PropertyValue = "PlayerStatusInfo/Properties/DamageMul/Text_PropertyValue";
-    private string path_AttackSpeed_PropertyValue = "PlayerStatusInfo/Properties/AttackSpeed/Text_PropertyValue";
-    private string path_CriticalRate_PropertyValue = "PlayerStatusInfo/Properties/CriticalRate/Text_PropertyValue";
-    private string path_AttackRange_PropertyValue = "PlayerStatusInfo/Properties/AttackRange/Text_PropertyValue";
-    private string path_MoveSpeed_PropertyValue = "PlayerStatusInfo/Properties/MoveSpeed/Text_PropertyValue";
-    string path_PropInventoryParent = "PropInventory/Items";
-    string path_WeaponInventoryParent = "WeaponInventory/Items";
+    private string path_Health_PropertyValue = "CompleteInfo/PlayerStatusInfo/Properties/Health/Text_PropertyValue";
+    private string path_HPRegeneration_PropertyValue = "CompleteInfo/PlayerStatusInfo/Properties/HPRegeneration/Text_PropertyValue";
+    private string path_StealHP_PropertyValue = "CompleteInfo/PlayerStatusInfo/Properties/StealHP/Text_PropertyValue";
+    private string path_DamageMul_PropertyValue = "CompleteInfo/PlayerStatusInfo/Properties/DamageMul/Text_PropertyValue";
+    private string path_AttackSpeed_PropertyValue = "CompleteInfo/PlayerStatusInfo/Properties/AttackSpeed/Text_PropertyValue";
+    private string path_CriticalRate_PropertyValue = "CompleteInfo/PlayerStatusInfo/Properties/CriticalRate/Text_PropertyValue";
+    private string path_AttackRange_PropertyValue = "CompleteInfo/PlayerStatusInfo/Properties/AttackRange/Text_PropertyValue";
+    private string path_MoveSpeed_PropertyValue = "CompleteInfo/PlayerStatusInfo/Properties/MoveSpeed/Text_PropertyValue";
+    string path_PropInventoryParent = "CompleteInfo/PropInventory/Items";
+    string path_WeaponInventoryParent = "CompleteInfo/WeaponInventory/Items";
     //------------End
     private Button btn_MainMenu;
     private TextMeshProUGUI text_Health_PropertyValue;

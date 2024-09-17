@@ -39,6 +39,8 @@ public class UIShopMenu : UIBase
         new Vector2(-82,46),
         new Vector2(0,93f)
         };
+    [SerializeField]
+    private bool[] weaponOccupation = {false,false,false,false,false,false};
     private Vector2[] propInventoryItemPos = {
         new Vector2(50,-50),
         new Vector2(150,-50),
@@ -191,15 +193,15 @@ public class UIShopMenu : UIBase
     private ShopItemData_SO GetItemDataByChance()
     {
         float randomNum = Random.Range(0f,1f);
-        if(randomNum <= 0.7f)
+        if(randomNum <= 0.8f)
         {
             return allTier1Items[EyreUtility.GetRandomNumbersInBetween(0,allTier1Items.Count - 1,1)[0]];
         }
-        else if(randomNum > 0.7f && randomNum <= 0.85f)
+        else if(randomNum > 0.8f && randomNum <= 0.9f)
         {
             return allTier2Items[EyreUtility.GetRandomNumbersInBetween(0,allTier2Items.Count - 1,1)[0]];
         }
-        else if(randomNum > 0.85f && randomNum <= 0.95f)
+        else if(randomNum > 0.9f && randomNum <= 0.97f)
         {
             return allTier3Items[EyreUtility.GetRandomNumbersInBetween(0,allTier3Items.Count - 1,1)[0]];
         }
@@ -211,7 +213,7 @@ public class UIShopMenu : UIBase
 
     private void UpdateLevelText()
     {
-        text_Title.text = "Shop(Level" + LevelManager.currentLevel.ToString() + ")";
+        text_Title.text = "商店(关卡" + LevelManager.currentLevel.ToString() + ")";
     }
 
     private void UpdateWeaponInventory()
@@ -220,7 +222,8 @@ public class UIShopMenu : UIBase
         GameInventory.Instance.inventoryWeapons.ForEach( weapon =>
         {
             Item_Weapon itemWeapon = Instantiate(prefab_InventoryItem_Weapon,trans_WeaponInventoryParent).GetComponent<Item_Weapon>();
-            itemWeapon.transform.localPosition = weaponInventoryItemPos[allWeaponInventoryItems.Count];
+            SetItemInventoryPos(itemWeapon);
+            // itemWeapon.transform.localPosition = weaponInventoryItemPos[allWeaponInventoryItems.Count];
             itemWeapon.InitItemPropUI(weaponInfoPanel,weapon.weaponData,weapon.weaponLevel,weapon.sellPrice);
             allWeaponInventoryItems.Add(itemWeapon);
             itemWeapon.inventory_Weapon = weapon;
@@ -233,6 +236,7 @@ public class UIShopMenu : UIBase
         for(int i = 0; i < allWeaponInventoryItems.Count; i++)
         {
             Item_Weapon weapon = allWeaponInventoryItems[i];
+            SetItemInventoryPosFree(weapon);
             allWeaponInventoryItems.RemoveAt(i);
             Destroy(weapon.gameObject);
             i--;
@@ -292,6 +296,7 @@ public class UIShopMenu : UIBase
             if(weaponItem == item) continue;
             if(weaponItem.itemData.itemName == item.itemData.itemName && weaponItem.itemLevel == item.itemLevel)
             {
+                SetItemInventoryPosFree(weaponItem);
                 allWeaponInventoryItems.Remove(weaponItem);
                 GameInventory.Instance.RemoveWeaponFromInventory(weaponItem.inventory_Weapon);
                 weaponItem.Combine();
@@ -304,6 +309,7 @@ public class UIShopMenu : UIBase
 
     private void SellWeaponInventoryItems(Item_Weapon weaponItem)
     {
+        SetItemInventoryPosFree(weaponItem);
         allWeaponInventoryItems.Remove(weaponItem);
         GameInventory.Instance.RemoveWeaponFromInventory(weaponItem.inventory_Weapon);
         GameCoreData.PlayerProperties.coin += EyreUtility.Round(weaponItem.itemData.itemCost / weaponItem.itemData.itemLevel * weaponItem.itemLevel * 0.8f);
@@ -461,7 +467,8 @@ public class UIShopMenu : UIBase
                     EventManager.instance.OnUpdateCoinCount();
                     Item_Weapon itemWeapon = Instantiate(prefab_InventoryItem_Weapon,trans_WeaponInventoryParent).GetComponent<Item_Weapon>();
                     itemWeapon.InitItemPropUI(weaponInfoPanel,itemData,shopItem.itemLevel,EyreUtility.Round(price * 0.8f));
-                    itemWeapon.transform.localPosition = weaponInventoryItemPos[allWeaponInventoryItems.Count];
+                    SetItemInventoryPos(itemWeapon);
+                    // itemWeapon.transform.localPosition = weaponInventoryItemPos[allWeaponInventoryItems.Count];
                     allWeaponInventoryItems.Add(itemWeapon);
                     shopItem.SetItemInvisible();
                     shopItem.isLocked = false;
@@ -476,6 +483,26 @@ public class UIShopMenu : UIBase
                 }
             break;
         }
+    }
+
+    private void SetItemInventoryPos(Item_Weapon item)
+    {
+        for(int i = 0; i < 6; i++)
+        {
+            if(weaponOccupation[i] == false)
+            {
+                item.transform.localPosition = weaponInventoryItemPos[i];
+                item.posIndex = i;
+                weaponOccupation[i] = true;
+                break;
+            }
+        }
+    }
+
+    private void SetItemInventoryPosFree(Item_Weapon item)
+    {
+        weaponOccupation[item.posIndex] = false;
+        item.posIndex = -1;
     }
 
     /// <summary>
@@ -559,13 +586,11 @@ public class UIShopMenu : UIBase
                 if((i + 1) % 2 == 0)
                 {
                     itemTrans.anchoredPosition = new Vector2(shopItemStartPos[i].x,shopItemStartPos[i].y - 300);
-                    Debug.Log(itemTrans.localPosition);
                     itemTrans.DOAnchorPosY(shopItemStartPos[i].y,0.5f);
                 }
                 if((i + 1) % 2 == 1)
                 {
                     itemTrans.anchoredPosition = new Vector2(shopItemStartPos[i].x,shopItemStartPos[i].y + 300);
-                    Debug.Log(itemTrans.localPosition);
                     itemTrans.DOAnchorPosY(shopItemStartPos[i].y,0.5f);
                 }
             }
@@ -615,14 +640,14 @@ public class UIShopMenu : UIBase
                 ShopItem_Prop itemProp = Instantiate(prefab_ShopItem_Prop,trans_ItemsParent).GetComponent<ShopItem_Prop>();
                 allShopItems.Add(itemProp);
                 itemProp.itemData = itemData as ShopItemData_Prop_SO;
-                itemProp.InitItemProperties(1);
+                itemProp.InitItemProperties(itemProp.itemData.itemLevel);
                 itemProp.UpdateUIInfo();
             return itemProp.GetComponent<RectTransform>();
             case eShopItemType.Weapon:
                 ShopItem_Weapon itemWeapon = Instantiate(prefab_ShopItem_Weapon,trans_ItemsParent).GetComponent<ShopItem_Weapon>();
                 allShopItems.Add(itemWeapon);
                 itemWeapon.itemData = itemData as ShopItemData_Weapon_SO;
-                itemWeapon.InitItemProperties(1);
+                itemWeapon.InitItemProperties(itemWeapon.itemData.itemLevel);
                 itemWeapon.UpdateUIInfo();
             return itemWeapon.GetComponent<RectTransform>();
             default:

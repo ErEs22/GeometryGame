@@ -1,5 +1,4 @@
 using TMPro;
-using UnityEditor.U2D.Aseprite;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -123,34 +122,34 @@ public class ShopItem_Prop : ShopItem
         switch(playerProperty)
         {
             case ePlayerProperty.MaxHP:
-                textComp.text = "MaxHP:" + propertyValue;
+                textComp.text = "生命值:" + propertyValue;
             break;
             case ePlayerProperty.HPRegeneration:
-                textComp.text = "HPRegeneration:" + propertyValue;
+                textComp.text = "生命恢复:" + propertyValue;
             break;
             case ePlayerProperty.lifeSteal:
-                textComp.text = "LifeSteal:" + propertyValue + "%";
+                textComp.text = "生命吸取:" + propertyValue + "%";
             break;
             case ePlayerProperty.DamageMul:
-                textComp.text = "DamageMul:" + propertyValue + "%";
+                textComp.text = "伤害:" + propertyValue + "%";
             break;
             case ePlayerProperty.AttackSpeed:
-                textComp.text = "AttackSpeed:" + propertyValue + "%";
+                textComp.text = "攻击速度:" + propertyValue + "%";
             break;
             case ePlayerProperty.CriticalRate:
-                textComp.text = "CriticalRate:" + propertyValue + "%";
+                textComp.text = "暴击率:" + propertyValue + "%";
             break;
             case ePlayerProperty.AttackRange:
-                textComp.text = "AttackRange:" + propertyValue;
+                textComp.text = "范围:" + propertyValue;
             break;
             case ePlayerProperty.MoveSpeed:
-                textComp.text = "MoveSpeed:" + propertyValue + "%";
+                textComp.text = "移动速度:" + propertyValue + "%";
             break;
             case ePlayerProperty.EnemyMoveSpeed:
-                textComp.text = "EnemyMoveSpeed:" + propertyValue + "%";
+                textComp.text = "敌人移动速度:" + propertyValue + "%";
                 break;
             case ePlayerProperty.PickUpRange:
-                textComp.text = "PickUpRange:" + propertyValue + "%";
+                textComp.text = "拾取范围:" + propertyValue + "%";
                 break;
         }
     }

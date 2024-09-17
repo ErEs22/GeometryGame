@@ -47,6 +47,7 @@ public class UIMainMenu : UIBase
         slider_SoundEffectVolume = transform.Find(path_SettingPanel_Slider_SoundEffectVolume).GetComponent<Slider>();
         settingPanel = transform.Find(path_SettingPanel).gameObject;
         LoadGameSetting(true);
+        ApplyGameSetting();
         AudioManager.Instance.UpdateAudioInfo();
     }
 
@@ -68,13 +69,12 @@ public class UIMainMenu : UIBase
 
     private void SaveGameSetting()
     {
-        Enum.TryParse<eScreenMode>(horSelector_ScreenMode.selectOptions[horSelector_ScreenMode.selectIndex].optionName,out eScreenMode screenMode);
-        GameCoreData.GameSetting.screenMode = screenMode;
-        Enum.TryParse<eGameResolution>(dropdown_Resolution.options[dropdown_Resolution.value].text.Insert(0,"R_"),out eGameResolution gameResolution);
-        GameCoreData.GameSetting.gameResolution = gameResolution;
+        GameCoreData.GameSetting.screenMode = GetScreenModeSetting();
+        // Enum.TryParse<eGameResolution>(dropdown_Resolution.options[dropdown_Resolution.value].text.Insert(0,"R_"),out eGameResolution gameResolution);
+        GameCoreData.GameSetting.gameResolution = GetGameResolutionSetting();
         GameCoreData.GameSetting.damageNumberDisplay = btnSwitch_DamageNumberDisplay.isOn;
-        Enum.TryParse<eFPSOption>(horSelector_FPSLimit.selectOptions[horSelector_FPSLimit.selectIndex].optionName.Insert(0,"FPS_"),out eFPSOption fpsOption);
-        GameCoreData.GameSetting.fpsLimit = fpsOption;
+        // Enum.TryParse<eFPSOption>(horSelector_FPSLimit.selectOptions[horSelector_FPSLimit.selectIndex].optionName.Insert(0,"FPS_"),out eFPSOption fpsOption);
+        GameCoreData.GameSetting.fpsLimit = GetFPSLimitSetting();
         GameCoreData.GameSetting.mainVolume = slider_MainVolume.value;
         GameCoreData.GameSetting.backgroundVolume = slider_BackgroundVolume.value;
         GameCoreData.GameSetting.soundEffectVolume = slider_SoundEffectVolume.value;
@@ -83,19 +83,123 @@ public class UIMainMenu : UIBase
         AudioManager.Instance.UpdateAudioInfo();
     }
 
+    private eScreenMode GetScreenModeSetting()
+    {
+        switch(horSelector_ScreenMode.selectIndex)
+        {
+            case 0:
+                return eScreenMode.FullScreen;
+            case 1:
+                return eScreenMode.BorderlessWindow;
+            case 2:
+                return eScreenMode.Windowed;
+            default:
+                return eScreenMode.FullScreen;
+        }
+    }
+
+    private void SetScreenModeSetting()
+    {
+        int optionIndex = 0;
+        switch(GameCoreData.GameSetting.screenMode)
+        {
+            case eScreenMode.FullScreen:
+                optionIndex = 0;
+                break;
+            case eScreenMode.BorderlessWindow:
+                optionIndex = 1;
+                break;
+            case eScreenMode.Windowed:
+                optionIndex = 2;
+                break;
+        }
+        horSelector_ScreenMode.InitComponent(optionIndex);
+    }
+
+    private eFPSOption GetFPSLimitSetting()
+    {
+        switch(horSelector_FPSLimit.selectIndex)
+        {
+            case 0:
+                return eFPSOption.FPS_30;
+            case 1:
+                return eFPSOption.FPS_60;
+            case 2:
+                return eFPSOption.FPS_120;
+            case 3:
+                return eFPSOption.FPS_UnLimited;
+            default:
+                return eFPSOption.FPS_UnLimited;
+        }
+    }
+
+    private void SetFPSLimitSetting()
+    {
+        int optionIndex = 0;
+        switch(GameCoreData.GameSetting.fpsLimit)
+        {
+            case eFPSOption.FPS_30:
+                optionIndex = 0;
+                break;
+            case eFPSOption.FPS_60:
+                optionIndex = 1;
+                break;
+            case eFPSOption.FPS_120:
+                optionIndex = 2;
+                break;
+            case eFPSOption.FPS_UnLimited:
+                optionIndex = 3;
+                break;
+        }
+        horSelector_FPSLimit.InitComponent(optionIndex);
+    }
+
+    private eGameResolution GetGameResolutionSetting()
+    {
+        switch(dropdown_Resolution.value)
+        {
+            case 0:
+                return eGameResolution.R_2560X1440;
+            case 1:
+                return eGameResolution.R_1920X1080;
+            case 2:
+                return eGameResolution.R_1600X900;
+            case 3:
+                return eGameResolution.R_1280X720;
+            case 4:
+                return eGameResolution.R_960X540;
+            case 5:
+                return eGameResolution.R_800X450;
+            default:
+                return eGameResolution.R_1920X1080;
+        }
+    }
+
     private void LoadGameSetting(bool audioOnly)
     {
         if (audioOnly)
         {
-            SaveSystem.Load<GameCoreData.SaveData_GameSetting>("GeometrySave.save").LoadData();
+            GameCoreData.SaveData_GameSetting data = SaveSystem.Load<GameCoreData.SaveData_GameSetting>("GeometrySave.save");
+            if(data != default)
+            {
+                data.LoadData();
+            }
         }
         else
         {
-            SaveSystem.Load<GameCoreData.SaveData_GameSetting>("GeometrySave.save").LoadData();
-            horSelector_ScreenMode.InitComponent(GameCoreData.GameSetting.screenMode.ToString());
+            GameCoreData.SaveData_GameSetting data = SaveSystem.Load<GameCoreData.SaveData_GameSetting>("GeometrySave.save");
+            if(data != default)
+            {
+                data.LoadData();
+            }
+            else
+            {
+                return;
+            }
+            SetScreenModeSetting();
             dropdown_Resolution.value = (int)GameCoreData.GameSetting.gameResolution;
             btnSwitch_DamageNumberDisplay.SetButtonStatus(GameCoreData.GameSetting.damageNumberDisplay);
-            horSelector_FPSLimit.InitComponent(GameCoreData.GameSetting.fpsLimit.ToString().Remove(0,4));
+            SetFPSLimitSetting();
             slider_MainVolume.SetValueWithoutNotify(GameCoreData.GameSetting.mainVolume);
             slider_BackgroundVolume.SetValueWithoutNotify(GameCoreData.GameSetting.backgroundVolume);
             slider_SoundEffectVolume.SetValueWithoutNotify(GameCoreData.GameSetting.soundEffectVolume);

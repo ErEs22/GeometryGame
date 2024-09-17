@@ -235,7 +235,7 @@ public class UICharacterSelectMenu : UIBase
         img_CharacterInfoIcon.sprite = data.characterIcon;
         img_CharacterInfoIcon.color = Color.white;
         text_CharacterInfoName.text = data.characterName;
-        text_CharacterRareLevel.text = "Normal";
+        text_CharacterRareLevel.text = "普通";
         GameObject text_Property = trans_CharacterProperties_Parent.GetChild(0).gameObject;
         GameObject[] textList = new GameObject[7];
         for(int i = 0; i < 7; i++)
@@ -260,7 +260,7 @@ public class UICharacterSelectMenu : UIBase
         img_CharacterInfoIcon.sprite = data.characterIcon;
         img_CharacterInfoIcon.color = Color.white;
         text_CharacterInfoName.text = data.characterName;
-        text_CharacterRareLevel.text = "Normal";
+        text_CharacterRareLevel.text = "普通";
         GameObject text_Property = trans_CharacterProperties_Parent.GetChild(0).gameObject;
         GameObject[] textList = new GameObject[7];
         for(int i = 0; i < 7; i++)
@@ -336,19 +336,19 @@ public class UICharacterSelectMenu : UIBase
         switch (itemLevel)
         {
             case 1:
-                text_WeaponRareLevel.text = "Normal";
+                text_WeaponRareLevel.text = "普通";
                 text_WeaponRareLevel.color = GameColor.ShopItem_Level01;
                 break;
             case 2:
-                text_WeaponRareLevel.text = "Special";
+                text_WeaponRareLevel.text = "特殊";
                 text_WeaponRareLevel.color = GameColor.ShopItem_Level02;
                 break;
             case 3:
-                text_WeaponRareLevel.text = "Rare";
+                text_WeaponRareLevel.text = "稀有";
                 text_WeaponRareLevel.color = GameColor.ShopItem_Level03;
                 break;
             case 4:
-                text_WeaponRareLevel.text = "Epic";
+                text_WeaponRareLevel.text = "传说";
                 text_WeaponRareLevel.color = GameColor.ShopItem_Level04;
                 break;
             case 5:
@@ -364,28 +364,28 @@ public class UICharacterSelectMenu : UIBase
         switch (weaponProperty)
         {
             case eWeaponProperty.Damage:
-                textComp.text = "Damage:" + propertyValue * (GameCoreData.PlayerProperties.damageMul * 0.01f + 1);
+                textComp.text = "伤害:" + propertyValue * (GameCoreData.PlayerProperties.damageMul * 0.01f + 1);
                 break;
             case eWeaponProperty.CriticalMul:
-                textComp.text = "CriticalMul:x" + propertyValue;
+                textComp.text = "暴击伤害:x" + propertyValue;
                 break;
             case eWeaponProperty.FireInterval:
-                textComp.text = "FireInterval:" + (propertyValue / (GameCoreData.PlayerProperties.attackSpeedMul * 0.01f + 1)).ToString("F2");
+                textComp.text = "攻击间隔:" + (propertyValue / (GameCoreData.PlayerProperties.attackSpeedMul * 0.01f + 1)).ToString("F2");
                 break;
             case eWeaponProperty.KnockBack:
-                textComp.text = "PushBack:" + propertyValue;
+                textComp.text = "击退:" + propertyValue;
                 break;
             case eWeaponProperty.AttackRange:
-                textComp.text = "AttackRange:" + (propertyValue + GameCoreData.PlayerProperties.attackRange).ToString();
+                textComp.text = "范围:" + (propertyValue + GameCoreData.PlayerProperties.attackRange).ToString();
                 break;
             case eWeaponProperty.LifeSteal:
-                textComp.text = "LifeSteal:" + ((propertyValue + GameCoreData.PlayerProperties.lifeSteal) * 100).ToString() + "%";
+                textComp.text = "生命吸取:" + ((propertyValue + GameCoreData.PlayerProperties.lifeSteal) * 100).ToString() + "%";
                 break;
             case eWeaponProperty.DamageThrough:
-                textComp.text = "DamageThrough:" + propertyValue;
+                textComp.text = "穿透:" + propertyValue;
                 break;
             case eWeaponProperty.CriticalRate:
-                textComp.text = "CriticalRate:" + ((propertyValue * 100) + GameCoreData.PlayerProperties.criticalRate).ToString() + "%";
+                textComp.text = "暴击率:" + ((propertyValue * 100) + GameCoreData.PlayerProperties.criticalRate).ToString() + "%";
                 break;
         }
     }
@@ -400,8 +400,8 @@ public class UICharacterSelectMenu : UIBase
             case ePlayerProperty.MaxHP:
                 if (propertyValue != 40)
                 {
-                    sign = propertyValue > 40 ? "+" : "-";
-                    textComp.text = sign + Mathf.Abs(propertyValue - 40) + "MaxHP:";
+                    sign = propertyValue > 40 ? "∮" : "-";
+                    textComp.text = sign + Mathf.Abs(propertyValue - 40) + "生命值:";
                 }
                 else
                 {
@@ -411,8 +411,8 @@ public class UICharacterSelectMenu : UIBase
             case ePlayerProperty.HPRegeneration:
                 if (propertyValue != 0)
                 {
-                    sign = propertyValue > 0 ? "+" : "-";
-                    textComp.text = sign + Mathf.Abs(propertyValue) + "HPRegeneration:";
+                    sign = propertyValue > 0 ? "∮" : "-";
+                    textComp.text = sign + Mathf.Abs(propertyValue) + "生命再生:";
                 }
                 else
                 {
@@ -422,8 +422,8 @@ public class UICharacterSelectMenu : UIBase
             case ePlayerProperty.lifeSteal:
                 if (propertyValue != 0)
                 {
-                    sign = propertyValue > 0 ? "+" : "-";
-                    textComp.text = sign + Mathf.Abs(propertyValue * 100) + "%LifeSteal:";
+                    sign = propertyValue > 0 ? "∮" : "-";
+                    textComp.text = sign + Mathf.Abs(propertyValue * 100) + "%生命吸取:";
                 }
                 else
                 {
@@ -433,8 +433,8 @@ public class UICharacterSelectMenu : UIBase
             case ePlayerProperty.DamageMul:
                 if(propertyValue != 1)
                 {
-                    sign = propertyValue > 1 ? "+" : "-";
-                    textComp.text = sign + EyreUtility.Round(Mathf.Abs(propertyValue - 1) * 100) + "%DamageMul:";
+                    sign = propertyValue > 1 ? "∮" : "-";
+                    textComp.text = sign + EyreUtility.Round(Mathf.Abs(propertyValue - 1) * 100) + "%伤害:";
                 }
                 else
                 {
@@ -444,8 +444,8 @@ public class UICharacterSelectMenu : UIBase
             case ePlayerProperty.AttackSpeed:
                 if (propertyValue != 1)
                 {
-                    sign = propertyValue > 1 ? "+": "-";
-                    textComp.text = sign + EyreUtility.Round(Mathf.Abs(propertyValue - 1) * 100) + "%AttackSpeed:";
+                    sign = propertyValue > 1 ? "∮": "-";
+                    textComp.text = sign + EyreUtility.Round(Mathf.Abs(propertyValue - 1) * 100) + "%攻击速度:";
                 }
                 else
                 {
@@ -455,8 +455,8 @@ public class UICharacterSelectMenu : UIBase
             case ePlayerProperty.CriticalRate:
                 if (propertyValue != 0)
                 {
-                    sign = propertyValue > 0 ? "+" : "-";
-                    textComp.text = sign + EyreUtility.Round(Mathf.Abs(propertyValue * 100)) + "%CriticalRate:";
+                    sign = propertyValue > 0 ? "∮" : "-";
+                    textComp.text = sign + EyreUtility.Round(Mathf.Abs(propertyValue * 100)) + "%暴击率:";
                 }
                 else
                 {
@@ -466,8 +466,8 @@ public class UICharacterSelectMenu : UIBase
             case ePlayerProperty.AttackRange:
                 if (propertyValue != 0)
                 {
-                    sign = propertyValue > 0 ? "+" : "-";
-                    textComp.text = sign + Mathf.Abs(propertyValue) + "AttackRange:";
+                    sign = propertyValue > 0 ? "∮" : "-";
+                    textComp.text = sign + Mathf.Abs(propertyValue) + "范围:";
                 }
                 else
                 {
@@ -477,8 +477,8 @@ public class UICharacterSelectMenu : UIBase
             case ePlayerProperty.MoveSpeed:
                 if (propertyValue != 10)
                 {
-                    sign = propertyValue > 10 ? "+" : "-";
-                    textComp.text = sign + Mathf.Abs(propertyValue - 10) * 10 + "%MoveSpeed:";
+                    sign = propertyValue > 10 ? "∮" : "-";
+                    textComp.text = sign + Mathf.Abs(propertyValue - 10) * 10 + "%移动速度:";
                 }
                 else
                 {
@@ -486,7 +486,7 @@ public class UICharacterSelectMenu : UIBase
                 }
                 break;
         }
-        if(sign == "+")
+        if(sign == "∮")
         {
             textComp.color = GameColor.text_Buff;
         }

@@ -20,7 +20,7 @@ public class FPSDisplay : MonoBehaviour
     {
         while(true)
         {
-            text.text = Mathf.Floor(1.0f / Time.deltaTime).ToString();
+            text.text = "FPS:" + Mathf.Floor(1.0f / Time.deltaTime).ToString();
             await UniTask.Delay(1000);
         }
     }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.UIElements.Experimental;
 
 /// <summary>
 /// 敌人基类
@@ -20,6 +21,8 @@ public class Enemy : MonoBehaviour, ITakeDamage, IHeal
     protected float maxHP = 0;
     [SerializeField]
     protected float HP = 0;
+    [SerializeField]
+    private int damage = 1;
     private float moveSpeed = 5f;
     public int showlevel = 1;
     public eEnemyType enemyType;
@@ -88,7 +91,7 @@ public class Enemy : MonoBehaviour, ITakeDamage, IHeal
         otherCollider.TryGetComponent<ITakeDamage>(out ITakeDamage damageObject);
         if(damageObject != null)
         {
-            damageObject.TakeDamage(enemyData.damage);
+            damageObject.TakeDamage(damage);
         }
         else
         {
@@ -104,13 +107,27 @@ public class Enemy : MonoBehaviour, ITakeDamage, IHeal
     public virtual void Init(EnemyManager enemyManager)
     {
         this.enemyManager = enemyManager;
-        maxHP = enemyData.HP;
-        HP = enemyData.HP;
+        maxHP = CaculateEnemyPropertiesByLevel(eEnemyProperty.HP,enemyData);
+        HP = maxHP;
+        damage = EyreUtility.Round(CaculateEnemyPropertiesByLevel(eEnemyProperty.Damage,enemyData));
         MoveSpeed = enemyData.moveSpeed;
         showlevel = enemyData.showlevel;
         name = enemyData.name;
         enemyType = enemyData.enemyType;
         isTowardsPlayer = enemyData.isTowardsPlayer;
+    }
+
+    public float CaculateEnemyPropertiesByLevel(eEnemyProperty enemyProperty,EnemyData_SO data)
+    {
+        switch(enemyProperty)
+        {
+            case eEnemyProperty.HP:
+                return data.HP + (LevelManager.currentLevel * data.hpIncreasePerWave);
+            case eEnemyProperty.Damage:
+                return data.damage + (LevelManager.currentLevel * data.damageIncreasePerWave);
+            default:
+                return 0;
+        }
     }
 
     public async void ApplyStatusChangeInTime(eStatusType statusType, int percentChange, float effectTime)

@@ -15,9 +15,11 @@ MonoBehaviour:
   name: Colossus
   HP: 10000
   moveSpeed: 6.6
-  damage: 1
+  damage: 21
   showlevel: 14
   isTowardsPlayer: 1
+  hpIncreasePerWave: 0
+  damageIncreasePerWave: 0
   enemyType: 2
   enemyPrefab: {fileID: 5836960803617581082, guid: c088c8be760e84943bf96d0230830fae, type: 3}
   projectile: {fileID: 2093875944032654269, guid: 2da7f435ddb533d43a2228b66aca35f9, type: 3}

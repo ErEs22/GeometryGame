@@ -67,19 +67,19 @@ public class ShopItem : MonoBehaviour
         switch (itemLevel)
         {
             case 1:
-                text_ItemRareLevel.text = "Normal";
+                text_ItemRareLevel.text = "普通";
                 text_ItemRareLevel.color = GameColor.ShopItem_Level01;
                 break;
             case 2:
-                text_ItemRareLevel.text = "Special";
+                text_ItemRareLevel.text = "特殊";
                 text_ItemRareLevel.color = GameColor.ShopItem_Level02;
                 break;
             case 3:
-                text_ItemRareLevel.text = "Rare";
+                text_ItemRareLevel.text = "稀有";
                 text_ItemRareLevel.color = GameColor.ShopItem_Level03;
                 break;
             case 4:
-                text_ItemRareLevel.text = "Epic";
+                text_ItemRareLevel.text = "传说";
                 text_ItemRareLevel.color = GameColor.ShopItem_Level04;
                 break;
             case 5:

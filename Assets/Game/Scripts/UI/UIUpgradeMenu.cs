@@ -202,13 +202,11 @@ public class UIUpgradeMenu : UIBase
             if((i + 1) % 2 == 0)
             {
                 itemTrans.anchoredPosition = new Vector2(upgradeItemStartPos[i].x,upgradeItemStartPos[i].y - 300);
-                Debug.Log(itemTrans.localPosition);
                 itemTrans.DOAnchorPosY(upgradeItemStartPos[i].y,0.5f);
             }
             if((i + 1) % 2 == 1)
             {
                 itemTrans.anchoredPosition = new Vector2(upgradeItemStartPos[i].x,upgradeItemStartPos[i].y + 300);
-                Debug.Log(itemTrans.localPosition);
                 itemTrans.DOAnchorPosY(upgradeItemStartPos[i].y,0.5f);
             }
             item.Init(itemDatas[randomNumArr[i]],1);

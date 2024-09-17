@@ -156,3 +156,9 @@ public enum eEnemyType
     Elite,
     Boss,
 }
+
+public enum eEnemyProperty
+{
+    HP,
+    Damage,
+}

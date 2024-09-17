@@ -15,9 +15,11 @@ MonoBehaviour:
   name: ButcherEliteEnemy
   HP: 7500
   moveSpeed: 4.4
-  damage: 1
+  damage: 17
   showlevel: 11
   isTowardsPlayer: 1
+  hpIncreasePerWave: 0
+  damageIncreasePerWave: 0
   enemyType: 2
   enemyPrefab: {fileID: 5836960803617581082, guid: cd26dd5b903a04b4f85f81aadb6999ef, type: 3}
   projectile: {fileID: 2093875944032654269, guid: 8e45cad32ed9c6a448ca5c74ca764661, type: 3}

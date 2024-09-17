@@ -34,11 +34,22 @@ public class HorizontalSelector : MonoBehaviour,IMoveHandler
     private void OnEnable() {
         btn_SelectLeft.onClick.AddListener(OnBtnSelectLeftClick);
         btn_SelectRight.onClick.AddListener(OnBtnSelectRightClick);
+        SetDefaultOption();
     }
 
     private void OnDisable() {
         btn_SelectLeft.onClick.RemoveAllListeners();
         btn_SelectRight.onClick.RemoveAllListeners();
+    }
+
+    private void SetDefaultOption()
+    {
+        selectOptions.ForEach((option)=>{
+            if(option.defaultOption)
+            {
+                text_Selected.text = option.optionName;
+            }
+        });
     }
 
     private void OnBtnSelectLeftClick()
@@ -59,17 +70,18 @@ public class HorizontalSelector : MonoBehaviour,IMoveHandler
         }
     }
 
-    public void InitComponent(string optionName)
+    public void InitComponent(int optionIndex)
     {
-        foreach (OptionData option in selectOptions)
-        {
-            if(option.optionName == optionName)
-            {
-                text_Selected.text = optionName;
-                selectIndex = selectOptions.IndexOf(option);
-                return;
-            }
-        }
+        Debug.Log(optionIndex + "   " + selectOptions.Count);
+        text_Selected.text = selectOptions[optionIndex].optionName;
+        selectIndex = optionIndex;
+        // foreach (OptionData option in selectOptions)
+        // {
+        //     if(option.optionName == optionName)
+        //     {
+        //         return;
+        //     }
+        // }
         /*
         int selectedCount = 0;
         string optionName = "";

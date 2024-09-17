@@ -62,28 +62,28 @@ public class PropInfoPanel : MonoBehaviour
         switch(playerProperty)
         {
             case ePlayerProperty.MaxHP:
-                textComp.text = "MaxHP:" + propertyValue;
+                textComp.text = "生命值:" + propertyValue;
             break;
             case ePlayerProperty.HPRegeneration:
-                textComp.text = "HPRegeneration:" + propertyValue;
+                textComp.text = "生命再生:" + propertyValue;
             break;
             case ePlayerProperty.lifeSteal:
-                textComp.text = "LifeSteal:" + propertyValue + "%";
+                textComp.text = "生命吸取:" + propertyValue + "%";
             break;
             case ePlayerProperty.DamageMul:
-                textComp.text = "DamageMul:" + propertyValue + "%";
+                textComp.text = "伤害:" + propertyValue + "%";
             break;
             case ePlayerProperty.AttackSpeed:
-                textComp.text = "AttackSpeed:" + propertyValue + "%";
+                textComp.text = "攻击速度:" + propertyValue + "%";
             break;
             case ePlayerProperty.CriticalRate:
-                textComp.text = "CriticalRate:" + propertyValue + "%";
+                textComp.text = "暴击率:" + propertyValue + "%";
             break;
             case ePlayerProperty.AttackRange:
-                textComp.text = "AttackRange:" + propertyValue;
+                textComp.text = "范围:" + propertyValue;
             break;
             case ePlayerProperty.MoveSpeed:
-                textComp.text = "MoveSpeed:" + propertyValue + "%";
+                textComp.text = "移动速度:" + propertyValue + "%";
             break;
         }
     }
@@ -93,19 +93,19 @@ public class PropInfoPanel : MonoBehaviour
         switch (itemLevel)
         {
             case 1:
-                text_ItemRareLevel.text = "Normal";
+                text_ItemRareLevel.text = "普通";
                 text_ItemRareLevel.color = GameColor.ShopItem_Level01;
                 break;
             case 2:
-                text_ItemRareLevel.text = "Special";
+                text_ItemRareLevel.text = "特殊";
                 text_ItemRareLevel.color = GameColor.ShopItem_Level02;
                 break;
             case 3:
-                text_ItemRareLevel.text = "Rare";
+                text_ItemRareLevel.text = "稀有";
                 text_ItemRareLevel.color = GameColor.ShopItem_Level03;
                 break;
             case 4:
-                text_ItemRareLevel.text = "Epic";
+                text_ItemRareLevel.text = "传说";
                 text_ItemRareLevel.color = GameColor.ShopItem_Level04;
                 break;
             case 5:

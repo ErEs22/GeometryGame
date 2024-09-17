@@ -28,14 +28,14 @@ public class GameCoreData
             GameSetting.backgroundVolume = backgroundVolume;
             GameSetting.soundEffectVolume = soundEffectVolume;
         }
-        public eScreenMode screenMode;
-        public eGameResolution gameResolution;
+        public eScreenMode screenMode = eScreenMode.FullScreen;
+        public eGameResolution gameResolution = eGameResolution.R_1920X1080;
         public bool cameraShake;
-        public bool damageNumberDisplay;
-        public eFPSOption fpsLimit;
-        public float mainVolume;
-        public float backgroundVolume;
-        public float soundEffectVolume;
+        public bool damageNumberDisplay = true;
+        public eFPSOption fpsLimit = eFPSOption.FPS_UnLimited;
+        public float mainVolume = 1;
+        public float backgroundVolume = 1;
+        public float soundEffectVolume = 1;
     }
     public static class GameSetting
     {

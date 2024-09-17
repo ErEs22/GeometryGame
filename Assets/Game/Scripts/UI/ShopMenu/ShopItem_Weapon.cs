@@ -132,28 +132,28 @@ public class ShopItem_Weapon : ShopItem
         switch(weaponProperty)
         {
             case eWeaponProperty.Damage:
-                textComp.text = "Damage:" + propertyValue * (GameCoreData.PlayerProperties.damageMul * 0.01f + 1);
+                textComp.text = "伤害:" + propertyValue * (GameCoreData.PlayerProperties.damageMul * 0.01f + 1);
                 break;
             case eWeaponProperty.CriticalMul:
-                textComp.text = "CriticalMul:x" + propertyValue;
+                textComp.text = "暴击伤害:x" + propertyValue;
                 break;
             case eWeaponProperty.FireInterval:
-                textComp.text = "FireInterval:" + (propertyValue / (GameCoreData.PlayerProperties.attackSpeedMul * 0.01f + 1)).ToString("F2");
+                textComp.text = "攻击间隔:" + (propertyValue / (GameCoreData.PlayerProperties.attackSpeedMul * 0.01f + 1)).ToString("F2");
                 break;
             case eWeaponProperty.KnockBack:
-                textComp.text = "PushBack:" + propertyValue;
+                textComp.text = "击退:" + propertyValue;
                 break;
             case eWeaponProperty.AttackRange:
-                textComp.text = "AttackRange:" + (propertyValue + GameCoreData.PlayerProperties.attackRange).ToString();
+                textComp.text = "范围:" + (propertyValue + GameCoreData.PlayerProperties.attackRange).ToString();
                 break;
             case eWeaponProperty.LifeSteal:
-                textComp.text = "LifeSteal:" + ((propertyValue * 100) + GameCoreData.PlayerProperties.lifeSteal).ToString() + "%";
+                textComp.text = "生命吸取:" + ((propertyValue * 100) + GameCoreData.PlayerProperties.lifeSteal).ToString() + "%";
                 break;
             case eWeaponProperty.DamageThrough:
-                textComp.text = "DamageThrough:" + propertyValue;
+                textComp.text = "穿透:" + propertyValue;
                 break;
             case eWeaponProperty.CriticalRate:
-                textComp.text = "CriticalRate:" + ((propertyValue * 100) + GameCoreData.PlayerProperties.criticalRate).ToString() + "%";
+                textComp.text = "暴击率:" + ((propertyValue * 100) + GameCoreData.PlayerProperties.criticalRate).ToString() + "%";
                 break;
         }
     }

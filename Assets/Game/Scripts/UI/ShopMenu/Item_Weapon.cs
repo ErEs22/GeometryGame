@@ -10,6 +10,7 @@ public class Item_Weapon : InventoryItem,IPointerEnterHandler,IPointerExitHandle
     private bool isClicked = false;
     private int sellPrice = 0;
     private bool isShowDetail = false;
+    public int posIndex = -1;
 
     protected override void Awake()
     {

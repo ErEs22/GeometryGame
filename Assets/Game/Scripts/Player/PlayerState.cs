@@ -111,7 +111,7 @@ public class PlayerState : MonoBehaviour, ITakeDamage
         else
         {
             exp += 1;
-            GameCoreData.PlayerProperties.coin += 99;
+            GameCoreData.PlayerProperties.coin += 1;
         }
         GameCoreData.PlayerProperties.exp = exp;
         if(exp >= currentLevelExpRequire)
