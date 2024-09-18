@@ -184,6 +184,19 @@ public class UIMainMenu : UIBase
             {
                 data.LoadData();
             }
+            else
+            {
+                GameCoreData.SaveData_GameSetting newSettingData = new GameCoreData.SaveData_GameSetting();
+                newSettingData.screenMode = eScreenMode.FullScreen;
+                newSettingData.fpsLimit = eFPSOption.FPS_UnLimited;
+                newSettingData.gameResolution = eGameResolution.R_1920X1080;
+                newSettingData.damageNumberDisplay = true;
+                newSettingData.mainVolume = 1f;
+                newSettingData.backgroundVolume = 1f;
+                newSettingData.soundEffectVolume = 1f;
+                newSettingData.LoadData();
+                SaveSystem.Save("GeometrySave.save",newSettingData);
+            }
         }
         else
         {
