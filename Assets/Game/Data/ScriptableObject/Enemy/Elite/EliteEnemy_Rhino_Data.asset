@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: EliteEnemy_Rhino_Data
   m_EditorClassIdentifier: 
   name: RhinoEliteEnemy
-  HP: 5000
+  HP: 2500
   moveSpeed: 5.5
   damage: 13
   showlevel: 8

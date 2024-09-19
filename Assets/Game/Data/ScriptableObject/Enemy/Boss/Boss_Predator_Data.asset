@@ -13,11 +13,13 @@ MonoBehaviour:
   m_Name: Boss_Predator_Data
   m_EditorClassIdentifier: 
   name: Predator
-  HP: 29000
+  HP: 15000
   moveSpeed: 6.6
   damage: 25
   showlevel: 20
   isTowardsPlayer: 1
+  hpIncreasePerWave: 0
+  damageIncreasePerWave: 0
   enemyType: 3
   enemyPrefab: {fileID: 5836960803617581082, guid: 5b5c272bc29dd584695219c663263ba3, type: 3}
   projectile1: {fileID: 3994106403445518885, guid: 4470064e02fa64b449dd233092c62e82, type: 3}

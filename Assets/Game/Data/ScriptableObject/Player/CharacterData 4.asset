@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterIcon: {fileID: 21300000, guid: d819e3d47130cde4495c9adf3d0d5ab7, type: 3}
   characterPrefab: {fileID: 1525581290968928, guid: 208dd9f8fdbc4b1468c56d5f0d61c061, type: 3}
-  characterName: Ship_04
+  characterName: "\u75BE\u653B\u8230"
   HP: 40
   hpRegeneratePerSecond: 0
   lifeStealRate: 0.05

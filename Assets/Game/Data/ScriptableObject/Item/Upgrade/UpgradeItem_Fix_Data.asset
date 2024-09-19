@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: UpgradeItem_Fix_Data
   m_EditorClassIdentifier: 
   icon: {fileID: 21300000, guid: 9b974deb64b814abba511b496f9ef1a7, type: 3}
-  itemName: Fix
+  itemName: "\u5DE5\u5177"
   valueAmount: 2
   effectProperty: 1

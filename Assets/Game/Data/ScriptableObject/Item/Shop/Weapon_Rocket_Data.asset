@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Weapon_Rocket_Data
   m_EditorClassIdentifier: 
   itemIcon: {fileID: 21300000, guid: a8ca4b2565b7daa4484c5ef2d6809381, type: 3}
-  itemName: Rocket
+  itemName: "\u5DE8\u70AE"
   itemType: Weapon
   itemCost: 56
   itemLevel: 1

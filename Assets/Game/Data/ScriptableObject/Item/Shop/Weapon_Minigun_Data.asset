@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Weapon_Minigun_Data
   m_EditorClassIdentifier: 
   itemIcon: {fileID: 21300000, guid: 90f3e482ab1609241828bdb5becd44a1, type: 3}
-  itemName: Minigun
+  itemName: "\u8FF7\u4F60\u70AE"
   itemType: Weapon
   itemCost: 127
   itemLevel: 3

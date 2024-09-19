@@ -9,7 +9,6 @@ using UnityEngine;
 
     [SerializeField] GameObject prefab;
     [SerializeField] int size = 1;
-
     Queue<GameObject> queue;
 
     Transform parent;

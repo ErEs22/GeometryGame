@@ -93,7 +93,7 @@ public class Weapon : MonoBehaviour
         projectileSpeed = data.weaponData.projectileSpeed;
         data.weaponData.itemProperties.ForEach(propertyData =>
         {
-            SetDatabyType(propertyData, data.weaponData.itemLevel, weaponLevel);
+            SetDatabyType(propertyData, data.weaponData.itemLevel, data.weaponLevel);
         });
     }
 
@@ -102,7 +102,7 @@ public class Weapon : MonoBehaviour
         //方法参数无作用，为配合事件绑定才加上的
         inventory_Weapon.weaponData.itemProperties.ForEach(propertyData =>
         {
-            SetDatabyType(propertyData,inventory_Weapon.weaponData.itemLevel,weaponLevel);
+            SetDatabyType(propertyData,inventory_Weapon.weaponData.itemLevel,inventory_Weapon.weaponLevel);
         });
     }
 

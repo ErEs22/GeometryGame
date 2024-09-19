@@ -41,7 +41,7 @@ public class Projectile_Rocket : Projectile
         //     transform.localScale.Set(1,1,1);
         //     Deativate();
         // });
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position,4.0f);
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position,4.0f,1<<6);
         foreach (Collider2D collider in colliders )
         {
             collider.TryGetComponent(out ITakeDamage takeDamageComp);

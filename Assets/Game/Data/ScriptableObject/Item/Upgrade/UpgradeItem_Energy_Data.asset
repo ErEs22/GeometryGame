@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: UpgradeItem_Energy_Data
   m_EditorClassIdentifier: 
   icon: {fileID: 21300000, guid: e04fe15d30dfa47249081e8067a544c5, type: 3}
-  itemName: Energy
+  itemName: "\u80FD\u91CF"
   valueAmount: 3
   effectProperty: 5

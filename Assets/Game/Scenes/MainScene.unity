@@ -14034,6 +14034,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 8008081655786214730, guid: 64239c9f5414f614299c0906f50288c2, type: 3}
+      propertyPath: playerWeaponPools.Array.data[5].size
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 8008081655786214731, guid: 64239c9f5414f614299c0906f50288c2, type: 3}
       propertyPath: m_RootOrder
       value: 8

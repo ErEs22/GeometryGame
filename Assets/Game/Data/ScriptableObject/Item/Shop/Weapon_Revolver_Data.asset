@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Weapon_Revolver_Data
   m_EditorClassIdentifier: 
   itemIcon: {fileID: 21300000, guid: bb466b3a965e1564eae1cb20ba4668dd, type: 3}
-  itemName: Revolver
+  itemName: "\u80FD\u91CF\u70AE"
   itemType: Weapon
   itemCost: 20
   itemLevel: 1

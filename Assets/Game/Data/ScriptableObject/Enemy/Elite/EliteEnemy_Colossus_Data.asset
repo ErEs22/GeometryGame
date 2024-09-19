@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: EliteEnemy_Colossus_Data
   m_EditorClassIdentifier: 
   name: Colossus
-  HP: 10000
+  HP: 5000
   moveSpeed: 6.6
   damage: 21
   showlevel: 14

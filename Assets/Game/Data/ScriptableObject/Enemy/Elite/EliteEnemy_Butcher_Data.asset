@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: EliteEnemy_Butcher_Data
   m_EditorClassIdentifier: 
   name: ButcherEliteEnemy
-  HP: 7500
+  HP: 3500
   moveSpeed: 4.4
   damage: 17
   showlevel: 11

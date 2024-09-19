@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Weapon_SniperGun_Data
   m_EditorClassIdentifier: 
   itemIcon: {fileID: 21300000, guid: ec20cea41390f1645b82cffdc9c79846, type: 3}
-  itemName: SniperGun
+  itemName: "\u8FDC\u653B\u70AE"
   itemType: Weapon
   itemCost: 115
   itemLevel: 3

@@ -105,7 +105,7 @@ public class WeaponInfoPanel : MonoBehaviour
         switch(weaponProperty)
         {
             case eWeaponProperty.Damage:
-                textComp.text = "伤害:" + propertyValue * (GameCoreData.PlayerProperties.damageMul * 0.01f + 1);
+                textComp.text = "伤害:" + EyreUtility.Round(propertyValue * (GameCoreData.PlayerProperties.damageMul * 0.01f + 1));
                 break;
             case eWeaponProperty.CriticalMul:
                 textComp.text = "暴击伤害:x" + propertyValue;

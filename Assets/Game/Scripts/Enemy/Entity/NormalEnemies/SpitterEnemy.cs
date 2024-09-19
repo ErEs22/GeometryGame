@@ -24,7 +24,7 @@ public class SpitterEnemy : Enemy
         Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
         Projectile newProjectile = PoolManager.Release(newEnemyData.projectile, transform.position, rotation).GetComponent<Projectile>();
         newProjectile.lifeTime = 10;
-        newProjectile.flySpeed = 20;
+        newProjectile.flySpeed = 10;
         newProjectile.damage = enemyData.damage;
         newProjectile.SetDelayDeativate();
     }

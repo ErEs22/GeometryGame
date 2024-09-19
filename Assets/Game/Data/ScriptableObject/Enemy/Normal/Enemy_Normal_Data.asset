@@ -18,7 +18,7 @@ MonoBehaviour:
   damage: 1
   showlevel: 1
   isTowardsPlayer: 1
-  hpIncreasePerWave: 2
+  hpIncreasePerWave: 1
   damageIncreasePerWave: 1
   enemyType: 0
   enemyPrefab: {fileID: 5836960803617581082, guid: ec74911f699c15f48afee37d41f0f31d, type: 3}

@@ -13,11 +13,13 @@ MonoBehaviour:
   m_Name: Boss_Invoker_Data
   m_EditorClassIdentifier: 
   name: Invoker
-  HP: 29000
+  HP: 15000
   moveSpeed: 7.7
   damage: 25
   showlevel: 20
   isTowardsPlayer: 1
+  hpIncreasePerWave: 0
+  damageIncreasePerWave: 0
   enemyType: 3
   enemyPrefab: {fileID: 5836960803617581082, guid: ef8d35c6b83c3ea48a01cb6f9ad64cf7, type: 3}
   projectile: {fileID: 3994106403445518885, guid: 703ee4e0e1a816249a791c5786d9c8b9, type: 3}

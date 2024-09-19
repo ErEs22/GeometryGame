@@ -53,6 +53,7 @@ public class WeaponManager : MonoBehaviour
                 Weapon removedWeapon = weapons[i];
                 weapons.RemoveAt(i);
                 Destroy(removedWeapon.gameObject);
+                // removedWeapon.gameObject.SetActive(false);
                 i--;
             }
         }

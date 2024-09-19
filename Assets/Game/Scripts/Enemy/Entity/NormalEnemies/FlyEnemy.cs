@@ -36,7 +36,10 @@ public class FlyEnemy : Enemy
     public override bool TakeDamage(int damage,bool isCritical = false)
     {
         bool isDead = base.TakeDamage(damage);
-        Skill();
+        if(isDead)
+        {
+            Skill();
+        }
         return isDead;
     }
 }

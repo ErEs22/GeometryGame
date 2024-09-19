@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: UpgradeItem_Body_Data
   m_EditorClassIdentifier: 
   icon: {fileID: 21300000, guid: 98e621c72befa42f2b3600b36cc6bb68, type: 3}
-  itemName: Body
+  itemName: "\u8239\u4F53"
   valueAmount: 3
   effectProperty: 0

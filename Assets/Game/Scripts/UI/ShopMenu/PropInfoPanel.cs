@@ -65,7 +65,7 @@ public class PropInfoPanel : MonoBehaviour
                 textComp.text = "生命值:" + propertyValue;
             break;
             case ePlayerProperty.HPRegeneration:
-                textComp.text = "生命再生:" + propertyValue;
+                textComp.text = "生命恢复:" + propertyValue;
             break;
             case ePlayerProperty.lifeSteal:
                 textComp.text = "生命吸取:" + propertyValue + "%";
@@ -84,6 +84,9 @@ public class PropInfoPanel : MonoBehaviour
             break;
             case ePlayerProperty.MoveSpeed:
                 textComp.text = "移动速度:" + propertyValue + "%";
+            break;
+            case ePlayerProperty.PickUpRange:
+                textComp.text = "拾取范围" + propertyValue + "%";
             break;
         }
     }

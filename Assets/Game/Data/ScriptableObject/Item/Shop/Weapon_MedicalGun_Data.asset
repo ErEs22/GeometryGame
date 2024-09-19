@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Weapon_MedicalGun_Data
   m_EditorClassIdentifier: 
   itemIcon: {fileID: 21300000, guid: 2a4fedf4207fb0e44af8d2b94d3ddd50, type: 3}
-  itemName: MedicalGun
+  itemName: "\u76FE\u70AE"
   itemType: Weapon
   itemCost: 15
   itemLevel: 1
