@@ -137,7 +137,7 @@ public class PlayerState : MonoBehaviour, ITakeDamage
 
     private int GetCurrentLevelExpRequire()
     {
-        return 20 + LevelManager.currentLevel * 5;
+        return (LevelManager.currentLevel + 3) * (LevelManager.currentLevel + 3);
     }
 
     public void UpdatePlayerCurrentHP(int hpChange)

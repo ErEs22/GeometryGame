@@ -232,7 +232,7 @@ public class LevelManager : MonoBehaviour
 
     private int GetLevelSpawnEnemysInterval()
     {
-        return EyreUtility.Round(1000 * (3 - (0.1f * currentLevel)));
+        return EyreUtility.Round(1000 * (2.5f - (0.1f * currentLevel)));
     }
 
     private int GetLevelTime()

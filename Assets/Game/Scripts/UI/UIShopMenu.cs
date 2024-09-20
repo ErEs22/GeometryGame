@@ -103,10 +103,10 @@ public class UIShopMenu : UIBase
     private List<ShopItem> allShopItems = new List<ShopItem>();
     private List<Item_Prop> allPropInventoryItems = new List<Item_Prop>();
     private List<Item_Weapon> allWeaponInventoryItems = new List<Item_Weapon>();
-    private List<ShopItemData_SO> allTier1Items = new List<ShopItemData_SO>();
-    private List<ShopItemData_SO> allTier2Items = new List<ShopItemData_SO>();
-    private List<ShopItemData_SO> allTier3Items = new List<ShopItemData_SO>();
-    private List<ShopItemData_SO> allTier4Items = new List<ShopItemData_SO>();
+    public List<ShopItemData_SO> allTier1Items = new List<ShopItemData_SO>();
+    public List<ShopItemData_SO> allTier2Items = new List<ShopItemData_SO>();
+    public List<ShopItemData_SO> allTier3Items = new List<ShopItemData_SO>();
+    public List<ShopItemData_SO> allTier4Items = new List<ShopItemData_SO>();
 
     private void Awake()
     {
@@ -193,15 +193,15 @@ public class UIShopMenu : UIBase
     private ShopItemData_SO GetItemDataByChance()
     {
         float randomNum = Random.Range(0f,1f);
-        if(randomNum <= 0.8f)
+        if(randomNum <= 0.9f)
         {
             return allTier1Items[EyreUtility.GetRandomNumbersInBetween(0,allTier1Items.Count - 1,1)[0]];
         }
-        else if(randomNum > 0.8f && randomNum <= 0.9f)
+        else if(randomNum > 0.9f && randomNum <= 0.95f)
         {
             return allTier2Items[EyreUtility.GetRandomNumbersInBetween(0,allTier2Items.Count - 1,1)[0]];
         }
-        else if(randomNum > 0.9f && randomNum <= 0.97f)
+        else if(randomNum > 0.95f && randomNum <= 0.98f)
         {
             return allTier3Items[EyreUtility.GetRandomNumbersInBetween(0,allTier3Items.Count - 1,1)[0]];
         }
@@ -250,7 +250,7 @@ public class UIShopMenu : UIBase
         {
             Item_Prop itemProp = Instantiate(prefab_InventoryItem_Prop,trans_PropInventoryParent).GetComponent<Item_Prop>();
             itemProp.GetComponent<RectTransform>().anchoredPosition = propInventoryItemPos[allPropInventoryItems.Count];
-            itemProp.InitItemPropUI(propInfoPanel,prop.propData,prop.propLevel);
+            itemProp.InitItemPropUI(propInfoPanel,prop.propData,prop.propLevel,prop.propAmount);
             allPropInventoryItems.Add(itemProp);
         });
     }

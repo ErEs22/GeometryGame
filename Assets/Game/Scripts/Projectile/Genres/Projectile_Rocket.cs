@@ -3,6 +3,9 @@ using UnityEngine;
 
 public class Projectile_Rocket : Projectile
 {
+    private void OnEnable() {
+        EnableProjectileCollider();
+    }
 
     protected override void Hit(Collider2D otherCollider)
     {

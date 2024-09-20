@@ -412,7 +412,7 @@ public class UICharacterSelectMenu : UIBase
                 if (propertyValue != 0)
                 {
                     sign = propertyValue > 0 ? "∮" : "-";
-                    textComp.text = sign + Mathf.Abs(propertyValue) + "生命再生:";
+                    textComp.text = sign + Mathf.Abs(propertyValue) + "生命恢复:";
                 }
                 else
                 {

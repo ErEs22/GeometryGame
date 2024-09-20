@@ -44,19 +44,19 @@ public class UpgradeItem : MonoBehaviour
     private void SetUpgradeItemLevelByChance()
     {
         float randomNum = Random.Range(0f,1f);
-        if(randomNum <= 0.8f)
+        if(randomNum <= 0.9f)
         {
             itemLevel = 1;
             text_ItemLevelDisplay.text = "1级";
             text_ItemLevelDisplay.color = GameColor.ShopItem_Level01;
         }
-        else if(randomNum > 0.8f && randomNum <= 0.9f)
+        else if(randomNum > 0.9f && randomNum <= 0.95f)
         {
             itemLevel = 2;
             text_ItemLevelDisplay.text = "2级";
             text_ItemLevelDisplay.color = GameColor.ShopItem_Level02;
         }
-        else if(randomNum > 0.9f && randomNum <= 0.97f)
+        else if(randomNum > 0.95f && randomNum <= 0.98f)
         {
             itemLevel = 3;
             text_ItemLevelDisplay.text = "3级";
@@ -85,7 +85,7 @@ public class UpgradeItem : MonoBehaviour
                 text_ItemDescription.text = sign + valueAmount + "生命值";
             break;
             case ePlayerProperty.HPRegeneration:
-                text_ItemDescription.text = sign + valueAmount + "生命再生";
+                text_ItemDescription.text = sign + valueAmount + "生命恢复";
             break;
             case ePlayerProperty.lifeSteal:
                 text_ItemDescription.text = sign + valueAmount + "%生命吸取";
@@ -110,7 +110,7 @@ public class UpgradeItem : MonoBehaviour
 
     private void OnUpgradeBtnClick()
     {
-        EventManager.instance.OnUpdatePlayerProperty(itemData.effectProperty,itemData.valueAmount);
+        EventManager.instance.OnUpdatePlayerProperty(itemData.effectProperty,valueAmount);
         EventManager.instance.OnUpgradeButtonClick();
     }
 }

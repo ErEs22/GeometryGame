@@ -21,6 +21,7 @@ public class Item_Prop : InventoryItem,IPointerEnterHandler,IPointerExitHandler
         this.itemData = itemData;
         this.propInfoPanel = propInfoPanel;
         this.isShowDetail = isShowDetail;
+        this.itemPropCount = propCount;
         img_ItemIcon.sprite = itemData.itemIcon;
         InitPropCount(propCount);
         // SetItemLevelFilterColor();
